@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关注</title>
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./index.css">
+</head>
+<script src="./rem.js"></script>
+<body>
+    <div class="wrap login">
+        <div class="loginTop">
+            <!-- <h1>
+                <img src = "../../images/mipmap-xhdpi-v4/hk_login_logo.png" />
+            </h1> -->
+            <p>让沟通成为一种习惯</p>
+        </div>
+        <div class="loginFrom">
+            <label class="tab">
+                <span id="num">手机号</span>
+                <input type="number" name="phone" id="userNumber">
+                <br/>
+                <hr/>
+            </label>
+            <label class="tab">
+                <span id="passW">密码</span>
+                <input type="password" name="passWord" id="userPwd">
+                <br/>
+                <hr/>
+            </label>
+            <button id="submit" class="submit">登录</button>
+            <br/>
+            <router-link to="/forget" class="forget">忘记密码</router-link>
+        </div>
+        <div class="loginBotton">
+            <p class="agree">
+                登录即代表阅读并同意用户<b>服务协议</b>
+            </p>
+        </div>
+    </div>
+</body>
+<script>
+// //封装ajax
+// function createXHR(){
+//         if(XMLHttpRequest == undefined){
+//             // 准备ActiveXObject的参数
+//             var versions = ['MSXML2.XMLttp.6.0','MSXML2.XMLttp.3.0','MSXML2.XMLttp'];
+            
+//             for(var i = 0;i<versions.length;i++){
+//                     try{
+//                     // 创建通信对象
+//                     return new ActiveXObject(versions[i]); 
+//                         break;
+//                     }catch(e){
+
+//                 }
+//             }
+            
+//         }else{
+//             return new XMLHttpRequest();
+//         }
+        
+//     }
+    
+// function myAjax(type,url,isAsyn,data,callback){
+//         // 调用创建通信的对象的方法
+//         var xhr = createXHR();
+                
+//         // 为对象添加监听通信事件
+//         xhr.onreadystatechange = function(){
+//         if(xhr.readyState == 4){
+//             if(xhr.status==200||xhr.status==304){
+//                 // 获取数据
+//                 var json = xhr.responseText;
+//                 // 解析json字符串
+//                 var obj = JSON.parse(json);
+//                 // 调用回调函数把值返回callback函数；
+//                 callback(obj);
+//                 }
+//             }
+    
+//         }
+//         // 如果请求类型是get类型
+//         if(type.toLowerCase() == 'get'){
+//             // 先在url后面拼接
+//             url+="?";
+//             // 遍历参数对象，实现url地址的拼接
+//             for(var pro in data){
+//                 // 在url后边拼接data的属性名拼接data的属性值拼接&
+//                 url += (pro+"="+data[pro]+"&");
+                
+//             }
+//             // 截取url
+//             url = url.substr(0,url.length-1);
+//             // 将data赋值null
+//                 data = null;
+//         }else{
+//             // 不是get方法把data转换为json字符串直接返回
+//             data = JSON.stringify(data);
+//         }
+//         // 初始化通信对象
+//         xhr.open(type,url,isAsyn)
+//         // 发送请求
+//         xhr.send(data);
+// }
+//获取文本框内容     
+var submit = document.getElementById('submit')
+submit.onclick = function () {
+    var phone = document.getElementById('userNumber').value,
+         pwd = document.getElementById('userPwd').value;
+         window.test.login(phone,pwd);
+    // myAjax('post','ajax.json',true,{phone:phone, pwd:pwd},function(obj){
+    //     console.log(obj);
+    // })
+};    
+</script>
+</html>
