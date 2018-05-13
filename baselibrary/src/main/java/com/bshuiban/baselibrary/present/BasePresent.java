@@ -10,10 +10,16 @@ import okhttp3.ResponseBody;
  */
 public class BasePresent<T> {
     protected T view;
+    protected RetrofitService.CallHTML callHTML;
     protected retrofit2.Call<ResponseBody> call;
 
     public BasePresent(T t) {
         this.view = t;
+        initCallHtml();
+    }
+
+    protected void initCallHtml() {
+
     }
 
     public void cancel() {
@@ -31,9 +37,8 @@ public class BasePresent<T> {
      * 访问网络
      * @param key 方法名
      * @param json json串
-     * @param callHTML 回调
      */
-    public void askInternet(String key,String json,RetrofitService.CallHTML callHTML){
-        RetrofitService.getInstance().getServiceResult(key,json,callHTML);
+    public void askInternet(String key,String json){
+        call=RetrofitService.getInstance().getServiceResult(key,json,callHTML);
     }
 }
