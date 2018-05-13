@@ -26,16 +26,14 @@ public class BasePresent<T> {
     public boolean isEffective() {
         return null != view;
     }
-    public void askInternet(String key,String json){
-        RetrofitService.getInstance().getServiceResult(key,json,new RetrofitService.CallTest(){
-            @Override
-            protected void result(String s) {
-                super.result(s);
-            }
-        });
+
+    /**
+     * 访问网络
+     * @param key 方法名
+     * @param json json串
+     * @param callHTML 回调
+     */
+    public void askInternet(String key,String json,RetrofitService.CallHTML callHTML){
+        RetrofitService.getInstance().getServiceResult(key,json,callHTML);
     }
-/*
-    protected Map<String, Object> getMapinf(Object... objects) {
-        return null;
-    }*/
 }

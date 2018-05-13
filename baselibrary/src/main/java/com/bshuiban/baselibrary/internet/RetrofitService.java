@@ -140,6 +140,8 @@ public class RetrofitService {
                         if(null!=data&&data.isJsonArray()){
                             JsonArray asJsonArray = data.getAsJsonArray();
                             success(gson.toJson(asJsonArray));
+                        }else{
+                            success(null);
                         }
                     }else{
                         String error = jsonObject.get("msg").getAsString();
