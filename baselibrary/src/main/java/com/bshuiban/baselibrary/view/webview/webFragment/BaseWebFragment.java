@@ -1,12 +1,14 @@
 package com.bshuiban.baselibrary.view.webview.webFragment;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-
 import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.baselibrary.view.fragment.BaseFragment;
+import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
 
 /**
  * Created by xinheng on 2018/5/11.<br/>
@@ -14,6 +16,10 @@ import com.bshuiban.baselibrary.view.fragment.BaseFragment;
  */
 public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
     protected WebView mWebView;
+    protected String TAG="HTML5";
+    protected void setTAG(String tag){
+        TAG=tag;
+    }
     protected WebView getWebView(Context context){
         WebView webView = new WebView(context);
         webView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
@@ -27,6 +33,17 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
         return settings;
     }
 
+    /**
+     * 标识 android
+     * 类名 BaseWebActivity.WebViewInterface
+     */
+    protected void registerWebViewH5Interface(){
+        mWebView.addJavascriptInterface(new WebViewInterface(), "android");
+    }
+    protected void loadJavascriptMethod(String methodName,String json){
+        mWebView.loadUrl("javascript:" + methodName + "('" + json + "' ");
+    }
+
     @Override
     public void onDestroyView() {
         if(null!=mWebView){
@@ -37,5 +54,42 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
             mWebView=null;
         }
         super.onDestroyView();
+    }
+    class WebViewInterface {
+        @JavascriptInterface
+        public void log(String msg){
+            Log.e(TAG, "log: "+msg );
+        }
+        @JavascriptInterface
+        public void logTag(String tag,String msg){
+            Log.e(TAG, "logTag: tag="+tag+", smg="+msg );
+        }
+        @JavascriptInterface
+        public void dealWithJson(final String key, final String json){
+            if(null!=baseRunnable){
+                baseRunnable.reSetParma(key,json);
+            }else{
+                baseRunnable=new BaseRunnable(key,json);
+            }
+            getActivity().runOnUiThread(baseRunnable);
+        }
+    }
+    private BaseWebFragment.BaseRunnable baseRunnable;
+    class BaseRunnable implements Runnable {
+        private String json;
+        private String key;
+
+        public BaseRunnable(String key, String json){
+            this.key=key;
+            this.json=json;
+        }
+        public void reSetParma(String key, String json){
+            this.key=key;
+            this.json=json;
+        }
+        @Override
+        public void run() {
+            tPresent.askInternet(key,json);
+        }
     }
 }
