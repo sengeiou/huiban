@@ -8,8 +8,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.baselibrary.view.fragment.BaseFragment;
-import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
-
 /**
  * Created by xinheng on 2018/5/11.<br/>
  * describe：含有webView的fragment
