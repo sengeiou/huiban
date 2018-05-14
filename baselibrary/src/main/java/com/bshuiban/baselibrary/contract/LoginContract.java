@@ -1,12 +1,8 @@
 package com.bshuiban.baselibrary.contract;
 
-import android.app.Activity;
-
-import com.bshuiban.baselibrary.view.activity.BaseActivity;
+import com.bshuiban.baselibrary.model.LoginResultBean;
 
 import java.util.Map;
-
-import okhttp3.ResponseBody;
 
 /**
  * Created by xinheng on 2018/4/25.<br/>
@@ -25,7 +21,7 @@ public interface LoginContract {
          * @return
          */
         String getPassWord();
-        void loginSuccessToNextActivity(Class<?> cls);
+        void loginSuccessToNextActivity(Class<?> cls, LoginResultBean.Data loginData);
     }
     interface Present{
         /**

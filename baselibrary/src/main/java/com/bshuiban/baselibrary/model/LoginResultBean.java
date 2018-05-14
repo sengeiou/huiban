@@ -34,21 +34,22 @@ public class LoginResultBean extends ResultBean {
     }
 
     public class Data {
-        private int userId;
-
+        private String userId;
+        private String passWord;
         private int userType;
 
         private String realName;
 
         private String icoPath;
 
-        private int schoolId;
+        private String schoolId;
 
         private String schoolName;
 
-        private List<Integer> classId;
+        private List<String> classId;
+        private String classId1;
 
-        private int gradeId;
+        private String gradeId;
 
         private String otherId;
 
@@ -56,12 +57,20 @@ public class LoginResultBean extends ResultBean {
 
         private List<String> className;
 
-        public void setUserId(int userId) {
+        public void setUserId(String userId) {
             this.userId = userId;
         }
 
-        public int getUserId() {
+        public String getUserId() {
             return this.userId;
+        }
+
+        public String getPassWord() {
+            return passWord;
+        }
+
+        public void setPassWord(String passWord) {
+            this.passWord = passWord;
         }
 
         public void setUserType(int userType) {
@@ -88,11 +97,11 @@ public class LoginResultBean extends ResultBean {
             return this.icoPath;
         }
 
-        public void setSchoolId(int schoolId) {
+        public void setSchoolId(String schoolId) {
             this.schoolId = schoolId;
         }
 
-        public int getSchoolId() {
+        public String getSchoolId() {
             return this.schoolId;
         }
 
@@ -104,19 +113,26 @@ public class LoginResultBean extends ResultBean {
             return this.schoolName;
         }
 
-        public void setClassId(List<Integer> classId) {
+        public void setClassId(List<String> classId) {
             this.classId = classId;
+            if(null!=classId&&classId.size()==0){
+                classId1=classId.get(0);
+            }
         }
 
-        public List<Integer> getClassId() {
+        public String getClassId1() {
+            return classId1;
+        }
+
+        public List<String> getClassId() {
             return this.classId;
         }
 
-        public void setGradeId(int gradeId) {
+        public void setGradeId(String gradeId) {
             this.gradeId = gradeId;
         }
 
-        public int getGradeId() {
+        public String getGradeId() {
             return this.gradeId;
         }
 

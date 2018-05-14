@@ -5,6 +5,7 @@ import android.util.Log;
 import com.bshuiban.baselibrary.contract.LoginContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 import com.bshuiban.baselibrary.model.LoginResultBean;
+import com.bshuiban.baselibrary.utils.aes.AESUtils;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -26,23 +27,24 @@ public class LoginPresent extends BasePresent<LoginContract.View> implements Log
     @Override
     public void login(String accountNumber, String password) {
         //call = RetrofitService.getInstance().getServiceResult("logInByUidAndPwd", getMapJson(accountNumber, password), new RetrofitService.CallTest());
-        call = RetrofitService.getInstance().getServiceResult("logInByUidAndPwd", getMapJson(accountNumber, password), new RetrofitService.CallResult<LoginResultBean>(LoginResultBean.class) {
+        RetrofitService.CallResult<LoginResultBean> callResult = new RetrofitService.CallResult<LoginResultBean>(LoginResultBean.class) {
             @Override
             protected void success(LoginResultBean loginResultBean) {
-                Log.e(TAG, "success: "+(new Gson().toJson(loginResultBean)));
+                String s = new Gson().toJson(loginResultBean);
+                Log.e(TAG, "success: " + s);
                 LoginResultBean.Data data = loginResultBean.getData();
-                List<Integer> classId = data.getClassId();
+                List<String> classId = data.getClassId();
                 List<String> className = data.getClassName();
-                int gradeId = data.getGradeId();
-                int userId = data.getUserId();
+                String gradeId = data.getGradeId();
+                String userId = data.getUserId();
                 int userType = data.getUserType();
                 String otherId = data.getOtherId();
                 String schoolName = data.getSchoolName();
-                int schoolId = data.getSchoolId();
-//                if (isEffective()) {
-//                    view.dismissDialog();
-//                    view.loginSuccessToNextActivity(getNextActivity(userType));
-//                }
+                String schoolId = data.getSchoolId();
+                if (isEffective()) {
+                    view.dismissDialog();
+                    view.loginSuccessToNextActivity(getNextActivity(userType), data);
+                }
             }
 
             @Override
@@ -52,7 +54,8 @@ public class LoginPresent extends BasePresent<LoginContract.View> implements Log
                     view.fail(t);
                 }
             }
-        });
+        };
+        call = RetrofitService.getInstance().getServiceResult("logInByUidAndPwd", getMapJson(accountNumber, password), callResult);
     }
 
     @Override

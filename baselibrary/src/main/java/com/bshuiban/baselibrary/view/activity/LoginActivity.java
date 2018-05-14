@@ -1,10 +1,14 @@
 package com.bshuiban.baselibrary.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.LoginContract;
+import com.bshuiban.baselibrary.model.LoginResultBean;
 import com.bshuiban.baselibrary.present.LoginPresent;
+import com.bshuiban.baselibrary.utils.aes.AESUtils;
 
 /**
  * 登录页
@@ -30,7 +34,7 @@ public class LoginActivity extends BaseActivity<LoginPresent> implements LoginCo
     }
 
     @Override
-    public void loginSuccessToNextActivity(Class<?> cls) {
+    public void loginSuccessToNextActivity(Class<?> cls, LoginResultBean.Data loginDataResJson) {
         if(null==cls){
             toast("账号类型错误");
             return;

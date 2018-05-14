@@ -19,9 +19,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.baselibrary.view.activity.BaseActivity;
 
-public class BaseWebActivity extends BaseActivity {
+public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
     protected WebView mWebView;
     protected String TAG="HTML5";
     protected void setTAG(String tag){
@@ -47,8 +48,18 @@ public class BaseWebActivity extends BaseActivity {
     protected void registerWebViewH5Interface(){
         mWebView.addJavascriptInterface(new WebViewInterface(), "android");
     }
-    protected void loadJavascriptMethod(String methodName,String json){
-        mWebView.loadUrl("javascript:" + methodName + "('" + json + "'");
+    protected void loadJavascriptMethod(String methodName,String... datas){
+        StringBuffer stringBuffer=new StringBuffer();
+        int i1 = datas.length - 1;
+        for (int i = 0; i < datas.length; i++) {
+            stringBuffer.append("'");
+            stringBuffer.append(datas[i]);
+            stringBuffer.append("'");
+            if(i< i1){
+                stringBuffer.append(",");
+            }
+        }
+        mWebView.loadUrl("javascript:" + methodName + "('" + stringBuffer.toString() + "')");
     }
     protected void initWebClinet(WebView webView){
         webView.setWebViewClient(new WebViewClient(){
