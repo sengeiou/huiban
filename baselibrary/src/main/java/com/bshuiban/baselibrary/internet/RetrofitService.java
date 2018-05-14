@@ -43,11 +43,12 @@ public class RetrofitService {
         return getRetrofit().create(BaseCall.class);
     }
     public void getServiceResultForResString(String modu,String resString, CallResTest callback){
-        Log.e(TAG, "getServiceResultForResString: "+modu+", "+resString );
+        //Log.e(TAG, "getServiceResultForResString: "+modu+", "+resString );
         retrofit2.Call<ResponseBody> cipherText = getResponseBodyCall().getCipherText(modu, resString);
         try {
             String string = cipherText.execute().body().string();
             String s = AESUtils.desEncrypt(string);
+            System.out.print(s+"\n");
             callback.result(s);
         } catch (IOException e) {
             e.printStackTrace();
@@ -183,13 +184,15 @@ public class RetrofitService {
         protected void result(String s){
 
         };
+        protected void error(String s){}
         @Override
         public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
             if(null!=t){
                 t.printStackTrace();
             }
             //Log.e(TAG, "onResponse: result = 网络错误" );
-            System.out.print("网络错误");
+            //System.out.print("网络错误");
+            error("网络错误");
         }
     }
     private static final String TAG="TAG"+RetrofitService.class.getSimpleName();

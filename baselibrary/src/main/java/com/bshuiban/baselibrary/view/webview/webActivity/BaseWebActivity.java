@@ -48,7 +48,7 @@ public class BaseWebActivity extends BaseActivity {
         mWebView.addJavascriptInterface(new WebViewInterface(), "android");
     }
     protected void loadJavascriptMethod(String methodName,String json){
-        mWebView.loadUrl("javascript:" + methodName + "('" + json + "' ");
+        mWebView.loadUrl("javascript:" + methodName + "('" + json + "'");
     }
     protected void initWebClinet(WebView webView){
         webView.setWebViewClient(new WebViewClient(){
@@ -133,7 +133,7 @@ public class BaseWebActivity extends BaseActivity {
             Log.e(TAG, "logTag: tag="+tag+", smg="+msg );
         }
         @JavascriptInterface
-        public void dealWithJson(final String key, final String json){
+        public void dealWithJson(String key, String json){
             if(null!=baseRunnable){
                 baseRunnable.reSetParma(key,json);
             }else{

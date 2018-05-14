@@ -32,7 +32,7 @@ public class Main2Activity extends AppCompatActivity {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         webView.addJavascriptInterface(new Test(),"test");
-        webView.loadUrl("file:///android_asset/login111.html");
+        webView.loadUrl("file:///android_asset/login.html");
         Log.e(TAG, "log: msg = loadUrl" );
     }
     class Test{
@@ -46,6 +46,11 @@ public class Main2Activity extends AppCompatActivity {
             RetrofitService.getInstance().getServiceResult("logInByUidAndPwd",getMapJson(userId,passWord),new RetrofitService.CallTest(){
                 @Override
                 protected void result(String s) {
+                    webView.loadUrl("javascript:fn('"+s+"')");
+                }
+
+                @Override
+                protected void error(String s) {
                     webView.loadUrl("javascript:fn('"+s+"')");
                 }
             });

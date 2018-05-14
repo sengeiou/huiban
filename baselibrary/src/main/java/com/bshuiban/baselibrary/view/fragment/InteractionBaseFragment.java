@@ -4,10 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.bshuiban.baselibrary.view.interfaces.OnFragmentInteractionListener;
 
 /**
  * Created by xinheng on 2018/4/25.<br/>
@@ -18,7 +19,9 @@ public abstract class InteractionBaseFragment extends BaseFragment {
     protected OnFragmentInteractionListener mListener;
 
     public abstract void update(Bundle bundle);
-    protected abstract int getLayoutResource();
+    protected int getLayoutResource(){
+        return -1;
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -33,20 +36,19 @@ public abstract class InteractionBaseFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayoutResource(),container,false);
+        View fragmentView = getFragmentView();
+        if(null== fragmentView) {
+            return inflater.inflate(getLayoutResource(), container, false);
+        }else{
+            return fragmentView;
+        }
     }
-
+    protected View getFragmentView(){
+        return null;
+    }
     public boolean isEffective(){
         return null!=mListener;
     }
 
 
-    public interface OnFragmentInteractionListener {
-        /**
-         * 启动其他fragment
-         * @param tag
-         * @param bundle
-         */
-        void onFragmentInteraction(String tag, Bundle bundle);
-    }
 }

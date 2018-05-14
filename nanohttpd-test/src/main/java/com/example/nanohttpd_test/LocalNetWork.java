@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.Log;
 
@@ -53,7 +54,11 @@ public abstract class LocalNetWork extends NanoHTTPD {
         Map<String, String> stringStringHashMap = session.getParms();
         String key = stringStringHashMap.get("key");
         String param = stringStringHashMap.get("param");
-        response = askInternet(key, param);
+        if(!TextUtils.isEmpty(key)&&!TextUtils.isEmpty(param)){
+            response = askInternet(key, param);
+        }else {
+            response = getCloseResponse();
+        }
         response.addHeader("Access-Control-Allow-Origin", "*");
         return response;
     }

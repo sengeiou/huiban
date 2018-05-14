@@ -9,13 +9,11 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/rg_container">
     </FrameLayout>
-    <RadioGroup
+    <com.bshuiban.baselibrary.view.customer.BottomBar
         android:id="@+id/rg_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorAccent"
-        android:orientation="horizontal"
         >
-    </RadioGroup>
+    </com.bshuiban.baselibrary.view.customer.BottomBar>
 </RelativeLayout>

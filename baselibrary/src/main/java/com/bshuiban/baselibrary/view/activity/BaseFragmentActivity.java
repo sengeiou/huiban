@@ -6,12 +6,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.bshuiban.baselibrary.view.fragment.InteractionBaseFragment;
+import com.bshuiban.baselibrary.view.interfaces.OnFragmentInteractionListener;
 
 /**
  * Created by xinheng on 2018/4/25.<br/>
  * describe：fragment切换封装
  */
-public abstract class BaseFragmentActivity<T extends Fragment> extends BaseActivity implements InteractionBaseFragment.OnFragmentInteractionListener{
+public abstract class BaseFragmentActivity<T extends Fragment> extends BaseActivity implements OnFragmentInteractionListener {
     protected  T tFragment;
 
     /**

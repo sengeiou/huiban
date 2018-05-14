@@ -1,6 +1,7 @@
 package com.bshuiban.baselibrary.view.webview.webFragment;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
@@ -63,7 +64,10 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
             Log.e(TAG, "logTag: tag="+tag+", smg="+msg );
         }
         @JavascriptInterface
-        public void dealWithJson(final String key, final String json){
+        public void dealWithJson(String key, String json){
+            if(null==json){
+                json=getJsonString();
+            }
             if(null!=baseRunnable){
                 baseRunnable.reSetParma(key,json);
             }else{
@@ -73,6 +77,9 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
         }
     }
     private BaseWebFragment.BaseRunnable baseRunnable;
+    protected String getJsonString(){
+        return null;
+    }
     class BaseRunnable implements Runnable {
         private String json;
         private String key;
@@ -87,6 +94,14 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
         }
         @Override
         public void run() {
+            if(TextUtils.isEmpty(key)){
+                toast("key 错误");
+                return;
+            }
+            if(TextUtils.isEmpty(json)){
+                toast("json数据错误");
+                return;
+            }
             tPresent.askInternet(key,json);
         }
     }

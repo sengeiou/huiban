@@ -3,8 +3,10 @@
     package="com.bshuiban.student">
 
     <application>
-        <activity android:name=".view.activity.StudentHomeActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".view.activity.StudentHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Main11Activity"></activity>
     </application>
 
 </manifest>

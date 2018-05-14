@@ -12,7 +12,9 @@ import android.widget.RadioGroup;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.utils.ViewUtils;
+import com.bshuiban.baselibrary.view.customer.BottomBar;
 import com.bshuiban.baselibrary.view.fragment.InteractionBaseFragment;
+import com.bshuiban.baselibrary.view.interfaces.OnFragmentInteractionListener;
 
 /**
  * 首页
@@ -25,13 +27,13 @@ public abstract class HomePageActivity extends BaseFragmentActivity<InteractionB
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        RadioGroup rg_container = (RadioGroup) findViewById(R.id.rg_container);
+        BottomBar rg_container = (BottomBar) findViewById(R.id.rg_container);
         navigationView.setNavigationItemSelectedListener(this);
         initNavigationView(navigationView);
-        initRadioGroup(rg_container);
+        initBottomBar(rg_container);
     }
     protected abstract void initNavigationView(NavigationView navigationView);
-    protected abstract void initRadioGroup(RadioGroup radioGroup);
+    protected abstract void initBottomBar(BottomBar bottomBar);
     @SuppressLint("ResourceType")
     protected RadioButton getRadioButton(){
         RadioButton radioButton=new RadioButton(this);
