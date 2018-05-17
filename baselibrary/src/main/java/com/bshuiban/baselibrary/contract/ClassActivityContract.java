@@ -1,12 +1,16 @@
 package com.bshuiban.baselibrary.contract;
 
+import com.bshuiban.baselibrary.model.ClassActivityBean;
+
+import java.util.List;
+
 /**
  * Created by xinheng on 2018/5/9.<br/>
  * describe：
  */
 public interface ClassActivityContract {
     interface View extends BaseView{
-        void updateViewForData();
+        void updateViewForData(List<ClassActivityBean.DataBean> data);
     }
     interface Present{
         /**

@@ -1,20 +1,22 @@
 package com.bshuiban.baselibrary.view.fragment;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.adapter.ClassActivityAdapter;
 import com.bshuiban.baselibrary.contract.ClassActivityContract;
 import com.bshuiban.baselibrary.model.ClassActivityBean;
 import com.bshuiban.baselibrary.present.ClassActivityPresent;
 
+import java.util.List;
+
 /**
  * Created by xinheng on 2018/5/9.<br/>
  * describe：班级活动页面
  */
-public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean,ClassActivityAdapter,ClassActivityPresent> implements ClassActivityContract.View {
-
+public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean.DataBean,ClassActivityAdapter,ClassActivityPresent> implements ClassActivityContract.View {
     @Override
-    public void updateViewForData() {
-
+    public void updateViewForData(List<ClassActivityBean.DataBean> data) {
+        adapter.updateList(data);
     }
 
     @Override
@@ -49,6 +51,6 @@ public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean
 
     @Override
     protected void startPresent() {
-        tPresent.askInternetForClassActivityData("", start,limit);
+        tPresent.askInternetForClassActivityData(User.getInstance().getClassId(), start,limit);
     }
 }

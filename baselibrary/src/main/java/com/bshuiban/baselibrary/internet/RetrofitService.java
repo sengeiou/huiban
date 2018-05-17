@@ -98,7 +98,6 @@ public class RetrofitService {
                 Log.e(TAG, "onResponse: "+string );
                 String s = AESUtils.desEncrypt(string);
                 Log.e(TAG, "onResponse: "+s);
-
                 T t = gson.fromJson(s, tClass);
                 result(t);
             } catch (Exception e) {

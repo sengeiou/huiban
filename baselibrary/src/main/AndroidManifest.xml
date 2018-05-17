@@ -11,9 +11,11 @@
             android:name=".view.webview.webActivity.WebLoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.webview.webActivity.CollectionListActivity"
+        <activity
+            android:name=".view.webview.webActivity.CollectionListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.activity.ClassActivity"></activity>
     </application>
 
 </manifest>

@@ -13,9 +13,6 @@ import com.bshuiban.baselibrary.view.customer.BottomBarTab;
 import com.bshuiban.baselibrary.view.webview.webFragment.InteractionBaseWebViewFragment;
 import com.bshuiban.student.R;
 import com.bshuiban.student.view.fragment.StudentHomePageFragment;
-import com.bumptech.glide.Glide;
-
-import java.util.List;
 
 /**
  * 学生端首页

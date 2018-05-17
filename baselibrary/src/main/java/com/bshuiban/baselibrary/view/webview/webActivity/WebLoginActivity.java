@@ -83,12 +83,12 @@ public class WebLoginActivity extends BaseWebActivity<LoginPresent> implements L
     public void loginSuccessToNextActivity(Class<?> cls, LoginResultBean.Data loginData) {
         saveUserData(loginData);
         dismissDialog();
-        //startActivity(new Intent(getApplicationContext(), cls));
-        try {
-            startActivity(new Intent(getApplicationContext(), Class.forName("com.bshuiban.baselibrary.view.webview.webActivity.CollectionListActivity")));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        startActivity(new Intent(getApplicationContext(), cls));
+//        try {
+//            startActivity(new Intent(getApplicationContext(), Class.forName("com.b")));
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
         finish();
     }
 

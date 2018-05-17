@@ -5,4 +5,12 @@
             <enum name="sun" value="0" />
         </attr>
     </declare-styleable>
+    <declare-styleable name="LineTextView">
+        <attr name="lineType" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="bottom" value="1"/>
+        </attr>
+        <attr name="lineColor" format="color"/>
+        <attr name="lineWidth" format="dimension"/>
+    </declare-styleable>
 </resources>

@@ -24,9 +24,9 @@ public class ExampleUnitTest {
         //new ClassActivityPresent(null).askInternetForClassActivityData("3000153",0,20);
         //new ClassSchedulePresent(null).askInternetForScheduleData("3000153");
         //new HomePageParent(null).test();{"userId":"2030246","start":0,"limit":20}
-        new HomePageParent(null).getMessageList("2030246");
+        //new HomePageParent(null).getMessageList("2030246");
 //        RetrofitService.getInstance().getServiceResult("getClassNoticeList","{\"userId\":\"2030246\",\"start\":0,\"limit\":20}",new RetrofitService.CallTest());
-
+        new ClassActivityPresent(null).askInternetForClassActivityData("3000153",0,20);
         Thread.sleep(3000);
 
     }

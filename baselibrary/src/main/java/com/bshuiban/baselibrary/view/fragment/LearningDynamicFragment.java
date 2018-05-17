@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.adapter.LearningDynamicAdapter;
 import com.bshuiban.baselibrary.contract.LearningDynamicContract;
 import com.bshuiban.baselibrary.model.LearningDynamicBean;
@@ -55,7 +56,7 @@ public class LearningDynamicFragment extends RecycleViewFragment<LearningDynamic
 
     @Override
     protected void startPresent() {
-        tPresent.askInternetForLearningDynamicData("", start, limit);
+        tPresent.askInternetForLearningDynamicData(User.getInstance().getUserId(), start, limit);
     }
 
     @Override
