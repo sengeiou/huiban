@@ -41,4 +41,8 @@ public class BasePresent<T> {
     public void askInternet(String key,String json){
         call=RetrofitService.getInstance().getServiceResult(key,json,callHTML);
     }
+    public void askInternet(String key,String json,RetrofitService.CallHTML callHTML){
+        call=RetrofitService.getInstance().getServiceResult(key,json,callHTML);
+    }
+
 }

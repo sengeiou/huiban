@@ -25,22 +25,16 @@ public class LoginPresent extends BasePresent<LoginContract.View> implements Log
     }
 
     @Override
-    public void login(String accountNumber, String password) {
+    public void login(String accountNumber, final String password) {
         //call = RetrofitService.getInstance().getServiceResult("logInByUidAndPwd", getMapJson(accountNumber, password), new RetrofitService.CallTest());
         RetrofitService.CallResult<LoginResultBean> callResult = new RetrofitService.CallResult<LoginResultBean>(LoginResultBean.class) {
             @Override
             protected void success(LoginResultBean loginResultBean) {
                 String s = new Gson().toJson(loginResultBean);
-                Log.e(TAG, "success: " + s);
+                Log.e("TAG", "success: " + s);
                 LoginResultBean.Data data = loginResultBean.getData();
-                List<String> classId = data.getClassId();
-                List<String> className = data.getClassName();
-                String gradeId = data.getGradeId();
-                String userId = data.getUserId();
+                data.setPassWord(password);
                 int userType = data.getUserType();
-                String otherId = data.getOtherId();
-                String schoolName = data.getSchoolName();
-                String schoolId = data.getSchoolId();
                 if (isEffective()) {
                     view.dismissDialog();
                     view.loginSuccessToNextActivity(getNextActivity(userType), data);
@@ -55,7 +49,8 @@ public class LoginPresent extends BasePresent<LoginContract.View> implements Log
                 }
             }
         };
-        call = RetrofitService.getInstance().getServiceResult("logInByUidAndPwd", getMapJson(accountNumber, password), callResult);
+        Map<String, Object> mapJson = getMapJson(accountNumber, password);
+        call = RetrofitService.getInstance().getServiceResult("logInByUidAndPwd", mapJson, callResult);
     }
 
     @Override
@@ -65,6 +60,30 @@ public class LoginPresent extends BasePresent<LoginContract.View> implements Log
         map.put("userPwd", password);
         map.put("terminal", "7");//登录终端7慧班学生,8慧班老师,9慧班家长
         return map;
+    }
+
+    @Override
+    public void askInternet(String key, String json) {
+        call = RetrofitService.getInstance().getServiceResult("logInByUidAndPwd", json, new RetrofitService.CallResult<LoginResultBean>(LoginResultBean.class) {
+            @Override
+            protected void success(LoginResultBean loginResultBean) {
+                LoginResultBean.Data data = loginResultBean.getData();
+                int userType = data.getUserType();
+                Log.e(TAG, "success: "+ loginResultBean.toString());
+                if (isEffective()) {
+                    view.dismissDialog();
+                    view.loginSuccessToNextActivity(getNextActivity(userType), data);
+                }
+            }
+
+            @Override
+            protected void error(String error) {
+                if(isEffective()){
+                    view.fail(error);
+                }
+            }
+        });
+
     }
 
     @Override

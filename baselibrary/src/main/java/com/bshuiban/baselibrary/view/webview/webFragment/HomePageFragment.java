@@ -9,6 +9,9 @@ import com.bshuiban.baselibrary.present.HomePageParent;
 /**
  * Created by xinheng on 2018/5/14.<br/>
  * describe：首页
+ * 1.获取今日学生课表  classList
+ * 2.慧辅导两条数据 train
+ * 3.留言列表 message
  */
 public class HomePageFragment extends InteractionBaseWebViewFragment<HomePageParent> implements HomePageContract.View {
 
@@ -16,15 +19,19 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tPresent=new HomePageParent(this);
-        tPresent.askInternet("",getJsonString());
     }
+
+    @Override
+    protected void delete(String messageId, String pid) {
+        tPresent.delete(messageId,pid);
+    }
+
+    protected void addRecevier(String json){
+        tPresent.addRecevier(json);
+    }
+
     @Override
     public void update(Bundle bundle) {
-
-    }
-
-    @Override
-    public void updateView() {
 
     }
 
@@ -40,6 +47,21 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
 
     @Override
     public void fail(String error) {
+        toast(error);
+    }
 
+    @Override
+    public void updateTodayClassSchedule(String json) {
+        loadJavascriptMethod("classList",json);
+    }
+
+    @Override
+    public void updateHuiFuDao(String json) {
+        loadJavascriptMethod("train",json);
+    }
+
+    @Override
+    public void updateMessageList(String json) {
+        loadJavascriptMethod("message",json);
     }
 }

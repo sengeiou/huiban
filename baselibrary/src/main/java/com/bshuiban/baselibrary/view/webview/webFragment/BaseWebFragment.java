@@ -42,7 +42,14 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
     protected void loadJavascriptMethod(String methodName,String json){
         mWebView.loadUrl("javascript:" + methodName + "('" + json + "' ");
     }
-
+    /**
+     * 加载本地网页
+     * @param name
+     */
+    protected void loadFileHtml(String name){
+        mWebView.loadUrl("file:///android_asset/"+name+".html");
+        //webView.loadUrl("content://com.ansen.webview/sdcard/test.html");
+    }
     @Override
     public void onDestroyView() {
         if(null!=mWebView){
@@ -54,7 +61,24 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
         }
         super.onDestroyView();
     }
+    protected void delete(String messageId, String pid){
+
+    }
     class WebViewInterface {
+        /**
+         * 删除
+         * @param messageId 消息id
+         * @param pid 上一级留言id
+         */
+        @JavascriptInterface
+        public void delete(final String messageId, final String pid){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    delete(messageId,pid);
+                }
+            });
+        }
         @JavascriptInterface
         public void log(String msg){
             Log.e(TAG, "log: "+msg );

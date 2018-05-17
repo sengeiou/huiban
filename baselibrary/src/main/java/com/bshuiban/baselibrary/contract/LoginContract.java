@@ -14,13 +14,13 @@ public interface LoginContract {
          * 获取用户输入的账号
          * @return
          */
-        String getUserAccountNumber();
+        //String getUserAccountNumber();
 
         /**
          * 获取用户输入的密码
          * @return
          */
-        String getPassWord();
+        //String getPassWord();
         void loginSuccessToNextActivity(Class<?> cls, LoginResultBean.Data loginData);
     }
     interface Present{

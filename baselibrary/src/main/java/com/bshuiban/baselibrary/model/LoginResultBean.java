@@ -159,5 +159,24 @@ public class LoginResultBean extends ResultBean {
         public List<String> getClassName() {
             return this.className;
         }
+
+        @Override
+        public String toString() {
+            return "Data{" +
+                    "userId='" + userId + '\'' +
+                    ", passWord='" + passWord + '\'' +
+                    ", userType=" + userType +
+                    ", realName='" + realName + '\'' +
+                    ", icoPath='" + icoPath + '\'' +
+                    ", schoolId='" + schoolId + '\'' +
+                    ", schoolName='" + schoolName + '\'' +
+                    ", classId=" + classId +
+                    ", classId1='" + classId1 + '\'' +
+                    ", gradeId='" + gradeId + '\'' +
+                    ", otherId='" + otherId + '\'' +
+                    ", vipDays=" + vipDays +
+                    ", className=" + className +
+                    '}';
+        }
     }
 }

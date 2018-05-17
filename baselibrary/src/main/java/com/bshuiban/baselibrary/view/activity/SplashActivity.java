@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.view.webview.webActivity.WebLoginActivity;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
@@ -19,7 +20,7 @@ import com.yanzhenjie.permission.PermissionYes;
 import java.util.List;
 
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
     Handler mHandler = new Handler(Looper.getMainLooper());
     ImageView ivSplash;
 
@@ -66,7 +67,13 @@ public class SplashActivity extends AppCompatActivity {
                 //if(SharedPreferencesUtils.instance(getApplication()).getBooleanKey(SharedPreferencesUtils.SP_IS_FIRST_STUDENT_LOGIN,true)){
                     //startActivity(new Intent(SplashActivity.this, GuideActivity.class));
                 //}else{
-                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                try {
+                    //startActivity(new Intent(SplashActivity.this,Class.forName("com.bshuiban.student.view.activity.StudentHomeActivity")));
+                    startActivity(new Intent(SplashActivity.this,Class.forName("com.bshuiban.baselibrary.view.webview.webActivity.WebLoginActivity")));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                finish();
                 //}
             }
         },2000);

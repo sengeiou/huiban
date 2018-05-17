@@ -9,18 +9,8 @@ import com.bshuiban.baselibrary.model.LoginResultBean;
  * describe：
  */
 public class HuiBanApplication extends Application {
-    private LoginResultBean.Data data;
     @Override
     public void onCreate() {
         super.onCreate();
-    }
-    public String getUserId(){
-        return data.getUserId();
-    }
-    public String getClassId(){
-        return data.getClassId1();
-    }
-    public LoginResultBean.Data getUserData(){
-        return data;
     }
 }

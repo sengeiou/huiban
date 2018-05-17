@@ -33,6 +33,15 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
         webView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
         return webView;
     }
+
+    /**
+     * 加载本地网页
+     * @param name
+     */
+    protected void loadFileHtml(String name){
+        mWebView.loadUrl("file:///android_asset/"+name+".html");
+        //webView.loadUrl("content://com.ansen.webview/sdcard/test.html");
+    }
     protected WebSettings setWebViewSetting(WebView webView){
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -59,7 +68,10 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
                 stringBuffer.append(",");
             }
         }
-        mWebView.loadUrl("javascript:" + methodName + "('" + stringBuffer.toString() + "')");
+        String url = "javascript:" + methodName + "(" + stringBuffer.toString() + ")";
+        Log.e(TAG, "loadJavascriptMethod: "+url );
+        //mWebView.loadUrl("javascript:setLoginData('2030246','111111')");
+        mWebView.loadUrl(url);
     }
     protected void initWebClinet(WebView webView){
         webView.setWebViewClient(new WebViewClient(){
@@ -143,6 +155,39 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
         public void logTag(String tag,String msg){
             Log.e(TAG, "logTag: tag="+tag+", smg="+msg );
         }
+        /**
+         * 列表获取更多数据
+         * @param action true-->下拉刷新，false-->上拉加载
+         */
+        @JavascriptInterface
+        public void getMoreData(boolean action) {
+            if (null == loadMoreDataRunnable) {
+                loadMoreDataRunnable = new LoadMoreDataRunnable(action);
+            } else {
+                loadMoreDataRunnable.setTag(action);
+            }
+            runOnUiThread(loadMoreDataRunnable);
+        }
+
+        /**
+         * 删除
+         * @param messageId 消息id
+         * @param pid 上一级留言id
+         */
+        @JavascriptInterface
+        public void delete(final String messageId, final String pid){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    delete(messageId,pid);
+                }
+            });
+        }
+        /**
+         * H5提供的接口数据
+         * @param key
+         * @param json
+         */
         @JavascriptInterface
         public void dealWithJson(String key, String json){
             if(null!=baseRunnable){
@@ -152,6 +197,38 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
             }
             runOnUiThread(baseRunnable);
         }
+    }
+    private LoadMoreDataRunnable loadMoreDataRunnable;
+    class LoadMoreDataRunnable implements Runnable{
+        private boolean tag;
+        public LoadMoreDataRunnable(boolean tag){
+            if(tag){
+                refresh();
+            }else {
+                loadMoreData();
+            }
+        }
+        @Override
+        public void run() {
+
+        }
+
+        public void setTag(boolean tag) {
+            this.tag = tag;
+        }
+    }
+
+    /**
+     * 下拉刷新
+     */
+    protected void refresh(){
+
+    }
+    protected void loadMoreData(){
+
+    }
+    protected void delete(String messageId,String pid){
+
     }
     private BaseRunnable baseRunnable;
     class BaseRunnable implements Runnable {
@@ -168,7 +245,10 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
         }
         @Override
         public void run() {
-            tPresent.askInternet(key,json);
+            dealWidth(key,json);
         }
+    }
+    protected void dealWidth(String key, String json){
+
     }
 }

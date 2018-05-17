@@ -2,4 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bshuiban.baselibrary">
 
+    <application>
+        <activity
+            android:name=".view.activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.webview.webActivity.WebLoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.webview.webActivity.CollectionListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+    </application>
+
 </manifest>

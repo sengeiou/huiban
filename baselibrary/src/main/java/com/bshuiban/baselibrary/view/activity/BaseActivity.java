@@ -19,7 +19,7 @@ public class BaseActivity<T extends BasePresent> extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new SystemStatusManager(this).setTranslucentStatus(R.color.colorPrimary);
+        new SystemStatusManager(this).setTranslucentStatus(R.color.guide_start_btn);
     }
     /**
      * 吐司

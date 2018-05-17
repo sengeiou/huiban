@@ -23,6 +23,10 @@ img, div, body, html, ul, li, a {
   -webkit-touch-callout: none;
 }
 
+input,button,textarea {
+  outline: none;
+}
+
 body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -50,6 +54,7 @@ html, body, .wrap {
   display: flex;
   flex-direction: column;
   position: relative;
+  padding-top:0.4rem;
 }
 
 .wrap footer {
@@ -217,7 +222,7 @@ html, body, .wrap {
 .wrap header {
   width: 100%;
   height: 0.9rem;
-  background-image: url("../images/mipmap-xxhdpi-v4/login_btn_bg.png");
+  background-image: url("../images/reset/login_btn_bg.png");
   background-position: -0.5rem;
   position: relative;
   font-size: 0.5rem;

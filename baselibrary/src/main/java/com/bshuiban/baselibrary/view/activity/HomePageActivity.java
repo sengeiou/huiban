@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
@@ -19,9 +20,9 @@ import com.bshuiban.baselibrary.view.interfaces.OnFragmentInteractionListener;
 /**
  * 首页
  */
-public abstract class HomePageActivity extends BaseFragmentActivity<InteractionBaseFragment>
+public abstract class HomePageActivity<T extends Fragment> extends BaseFragmentActivity<T>
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    protected int mNowPosition =-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,17 +35,17 @@ public abstract class HomePageActivity extends BaseFragmentActivity<InteractionB
     }
     protected abstract void initNavigationView(NavigationView navigationView);
     protected abstract void initBottomBar(BottomBar bottomBar);
-    @SuppressLint("ResourceType")
+   /* @SuppressLint("ResourceType")
     protected RadioButton getRadioButton(){
         RadioButton radioButton=new RadioButton(this);
         radioButton.setLayoutParams(new RadioGroup.LayoutParams(0,RadioGroup.LayoutParams.WRAP_CONTENT,1));
         //radioButton.setText();
         radioButton.setTextColor(getResources().getColorStateList(R.drawable.home_pager_color));
         return radioButton;
-    }
-    protected StateListDrawable getStateListDrawable(int selectedId,int unSelectedId){
+    }*/
+   /* protected StateListDrawable getStateListDrawable(int selectedId,int unSelectedId){
         return ViewUtils.getSeleDrawable(getApplicationContext(),selectedId,unSelectedId);
-    }
+    }*/
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

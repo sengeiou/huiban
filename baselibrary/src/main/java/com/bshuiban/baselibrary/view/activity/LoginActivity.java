@@ -23,7 +23,7 @@ public class LoginActivity extends BaseActivity<LoginPresent> implements LoginCo
     }
 
 
-    @Override
+    /*@Override
     public String getUserAccountNumber() {
         return null;
     }
@@ -31,7 +31,7 @@ public class LoginActivity extends BaseActivity<LoginPresent> implements LoginCo
     @Override
     public String getPassWord() {
         return null;
-    }
+    }*/
 
     @Override
     public void loginSuccessToNextActivity(Class<?> cls, LoginResultBean.Data loginDataResJson) {

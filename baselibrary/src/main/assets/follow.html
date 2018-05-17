@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关注</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<script src="./js/rem.js"></script>
+<script src="./js/jquery.min.js"></script>
+<body>
+    <div class="wrap follow">
+            <header>
+        <span>
+                
+        </span> 
+        <span>
+            <input type="text">
+            <i class="search"><img src="./images/reset/ic_search.png" alt=""></i>
+        </span>
+        <b class="details"></b>
+            </header>
+            <main>
+
+            </main>
+    </div>
+</body>
+<script>
+    function getContent (data) {
+        var data = JSON.parse(data);
+        window.android.log(data.length)
+        for (var i=0; i<data.length; i++) {
+            var nowMsg = $('main').html();
+            $('main').html(nowMsg + `
+                <div class="content">
+                    <dl>
+                        <dt></dt>
+                        <dd>
+                            <p>${data[i].name}</p>
+                            <p>${data[i].subjectName}</p>
+                        </dd>
+                    </dl>
+                    <div class="right">
+                        <aside>
+                            <img src="./images/reset/ic_message.png">
+                            <a href="../leaveMsg/leave.html">留言</a>
+                        </aside>
+                        <aside>
+                            <img src="./images/reset/ic_has_concerned.png">
+                            <span class="removeFollow">取消关注</span>
+                        </aside>
+                    </div>
+                </div>
+            `);
+            if (data[i].ico == '') {
+                $('.content:eq('+i+') dl dt').html(`<img src="./images/index/tube_class@2x.png" alt="" />`);
+            }else {
+                $('.content:eq('+i+') dl dt').html(`<img src="${data[i].ico}" alt="" />`);
+            }
+        }
+        
+    }
+    //取消关注
+    $('.removeFollow').bind('click', function () {
+        console.log("取消关注");
+    });
+</script>
+</html>
