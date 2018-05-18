@@ -4,7 +4,7 @@ package com.bshuiban.baselibrary.contract;
  * Created by xinheng on 2018/5/16.<br/>
  * describe：
  */
-public interface CollectionContract {
+public interface ListContract {
     interface View extends BaseView{
         /**
          * 更新数据
@@ -16,5 +16,6 @@ public interface CollectionContract {
         void loadMoreData();
         void refresh();
         void getInterNetData();
+        void updateView(String json);
     }
 }

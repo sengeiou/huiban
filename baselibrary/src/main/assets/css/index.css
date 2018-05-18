@@ -1861,7 +1861,7 @@
   font-size: 0.28rem;
 }
 
-.leave main .list dl dd p span, .leave main .replyBox dl dd p span {
+.leave main .list dl dd p span {
   display: inline-block;
   color: #aaa;
   width: 1rem;
@@ -1891,6 +1891,68 @@
   line-height: 0.6rem;
   color: #aaa;
 }
+.leave .replyList li{
+  width: 100%;
+  border-bottom: solid 1px #eee;
+  position: relative;
+  padding-bottom: 1rem;
+}
+.leave .replyList li .removeReply {
+  position: absolute;
+  bottom: 0.2rem;
+  right: 0;
+  background: #ccc;
+}
+.leave .replyList p {
+  text-align: center;
+  line-height: 2rem;
+  color: #aaa;
+}
+.leave .replyList h3 {
+  font-size: 0.3rem;
+  line-height: 0.5rem;
+  text-indent: 0.4rem;
+}
+.leave .replyList h3:nth-child(1) {
+  color: #00c7b5;
+}
+.leave .replyList h3:nth-child(2) span{
+  display: block;
+  padding: 0 0.6rem;
+  word-wrap: break-word;
+}
+.leave .replyList h3:nth-child(2) time{
+  display: block;
+  width: 100%;
+  color: #ccc;
+  font-size: 0.2rem;
+  text-align: right;
+  padding-right: 0.4rem;
+}
+
+.replyBox .rBox {
+  width: 100%;
+  height: 1.5rem;
+  border-top: solid 1px #eee;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+}
+
+.replyBox .rBox input {
+  width: 80%;
+  height: 0.5rem;
+  margin: 0.2rem;
+  border: solid 1px #ccc;
+}
+
+.replyBox .rBox button {
+  position: absolute;
+  right: 0.1rem;
+  bottom: 0.2rem;
+}
+
 .follow header .details {
   display: block;
   width: 0.39rem;
@@ -1900,6 +1962,7 @@
   top: 0.25rem;
   background-repeat: no-repeat;
   background-size: 100%;
+  background-image: url("../images/work/more@2x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
@@ -1938,7 +2001,7 @@
   height: 2rem;
   display: flex;
   justify-content: space-between;
-  font-size: 0.24rem;
+  font-size: 0.28rem;
   border-bottom: solid 1px #eee;
 }
 .follow main .content dl {

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--关注-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,14 +14,14 @@
 <body>
     <div class="wrap follow">
             <header>
-        <span>
-                
-        </span> 
-        <span>
-            <input type="text">
-            <i class="search"><img src="./images/reset/ic_search.png" alt=""></i>
-        </span>
-        <b class="details"></b>
+		<span>
+		    	<i class="back"></i>
+		</span>	
+		<span>
+			<input type="text">
+			<i class="search"><img src="./images/reset/ic_search.png" alt=""></i>
+		</span>
+		<b class="details"></b>
             </header>
             <main>
 
@@ -28,9 +29,9 @@
     </div>
 </body>
 <script>
+    var data = '[{"id":2,"userId":2030219,"roleId":2,"attUserId":2030219,"addTime":1521023086,"name":"\u694a\u694a","ico":"","subjectName":"\u7269\u7406","isAttention":1},{"id":1,"userId":2030219,"roleId":2,"attUserId":2029881,"addTime":1521023080,"name":"\u4f0a\u67ad","ico":"","subjectName":"\u7269\u7406","isAttention":1}]';
     function getContent (data) {
-        var data = JSON.parse(data);
-        window.android.log(data.length)
+        var data = JSON.parse(data);   
         for (var i=0; i<data.length; i++) {
             var nowMsg = $('main').html();
             $('main').html(nowMsg + `
@@ -45,7 +46,7 @@
                     <div class="right">
                         <aside>
                             <img src="./images/reset/ic_message.png">
-                            <a href="../leaveMsg/leave.html">留言</a>
+                            <i class="lMsg">留言</i>
                         </aside>
                         <aside>
                             <img src="./images/reset/ic_has_concerned.png">
@@ -62,9 +63,21 @@
         }
         
     }
+    getContent(data);
     //取消关注
     $('.removeFollow').bind('click', function () {
-        console.log("取消关注");
+        var ind = $(this).parents('.content').index();
+        var attUserId = JSON.parse(data)[ind].attUserId;
+        var msg = JSON.stringify({"attUserId": attUserId});
+        window.android.dealWithJson("deleteUserAttention",msg);
+    });
+    //返回上级页面
+    $('.back').bind('click', function () {
+       //
+    });
+    //点击跳转到去留言
+    $('.lMsg').bind('click', function () {
+        //console.log('去留言');
     });
 </script>
 </html>

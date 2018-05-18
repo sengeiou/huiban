@@ -15,7 +15,8 @@
             android:name=".view.webview.webActivity.CollectionListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.activity.ClassActivity"></activity>
+        <activity android:name=".view.activity.ClassActivity" />
+        <activity android:name=".view.webview.webActivity.GuanZhuListActivity"></activity>
     </application>
 
 </manifest>

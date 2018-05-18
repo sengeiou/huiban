@@ -10,7 +10,7 @@ import android.webkit.JavascriptInterface;
  * describe：列表
  */
 public class MessageList {
-    Handler handler;
+    protected Handler handler;
     private MessageListListener onListener;
     private ListRunnable runnable;
 
@@ -117,8 +117,29 @@ public class MessageList {
         }
 
     }
+    public static class OnMessageListListener implements MessageListListener{
 
-    interface MessageListListener {
+        @Override
+        public void deleteMessageItem(String messageId, String pid) {
+
+        }
+
+        @Override
+        public void replayMessage(String json) {
+
+        }
+
+        @Override
+        public void loadMore() {
+
+        }
+
+        @Override
+        public void refresh() {
+
+        }
+    }
+    public interface MessageListListener {
         void deleteMessageItem(String messageId, String pid);//0
 
         void replayMessage(String json);//1

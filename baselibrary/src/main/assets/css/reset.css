@@ -54,7 +54,6 @@ html, body, .wrap {
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-top:0.4rem;
 }
 
 .wrap footer {
@@ -242,7 +241,7 @@ html, body, .wrap {
   z-index: 100;
 }
 
-.wrap header span:nth-child(1) a {
+.wrap header span:nth-child(1) i {
   display: block;
   width: 0.22rem;
   height: 0.36rem;

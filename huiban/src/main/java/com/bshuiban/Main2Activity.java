@@ -43,7 +43,7 @@ public class Main2Activity extends AppCompatActivity {
         @JavascriptInterface
         public void login(String userId,String passWord){
 
-            RetrofitService.getInstance().getServiceResult("logInByUidAndPwd",getMapJson(userId,passWord),new RetrofitService.CallTest(){
+            RetrofitService.getInstance().getServiceMapResult("logInByUidAndPwd",getMapJson(userId,passWord),new RetrofitService.CallTest(){
                 @Override
                 protected void result(String s) {
                     webView.loadUrl("javascript:fn('"+s+"')");

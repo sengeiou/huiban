@@ -34,7 +34,7 @@ public class LoginResultBean extends ResultBean {
     }
 
     public class Data {
-        private String userId;
+        private String userId="2030246";
         private String passWord;
         private int userType;
 

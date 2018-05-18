@@ -1,5 +1,6 @@
 package com.bshuiban.baselibrary.internet;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.bshuiban.baselibrary.model.ResultBean;
@@ -15,9 +16,7 @@ import java.util.Map;
 
 import okhttp3.HttpUrl;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -67,18 +66,21 @@ public class RetrofitService {
 
     }
 
-    public retrofit2.Call<ResponseBody> getServiceResult(String modu, Map<String, Object> map, Callback<ResponseBody> callback) {
+    public retrofit2.Call<ResponseBody> getServiceMapResult(String modu, Map<String, Object> map, Callback<ResponseBody> callback) {
         String json = gson.toJson(map);
         map.clear();
         return getServiceResult(modu, json, callback);
     }
 
     public retrofit2.Call<ResponseBody> getServiceResult(String modu, String data, Callback<ResponseBody> callback) {
-        //System.out.print(data+"\n");
-        Log.e(TAG, "getServiceResult: " + modu+", "+data);
-        String encrypt = AESUtils.encrypt(data);
-        //System.out.print(encrypt+"\n");
-        Log.e(TAG, "getServiceResult: " + encrypt);
+        String encrypt = null;
+        if (!android.text.TextUtils.isEmpty(data)) {
+            Log.e(TAG, "getServiceResult: " + modu + ", " + data);
+            Log.e(TAG, "getServiceResult: " + encrypt);
+        } else {
+            data = "{\"xxx\":\"xxx\"}";
+        }
+        encrypt = AESUtils.encrypt(data);
         retrofit2.Call<ResponseBody> cipherText = getResponseBodyCall().getCipherText(modu, encrypt);
         cipherText.enqueue(callback);
         return cipherText;
@@ -95,9 +97,9 @@ public class RetrofitService {
         public void onResponse(retrofit2.Call<ResponseBody> call, Response<ResponseBody> response) {
             try {
                 String string = response.body().string();
-                Log.e(TAG, "onResponse: "+string );
+                Log.e(TAG, "onResponse: " + string);
                 String s = AESUtils.desEncrypt(string);
-                Log.e(TAG, "onResponse: "+s);
+                Log.e(TAG, "onResponse: " + s);
                 T t = gson.fromJson(s, tClass);
                 result(t);
             } catch (Exception e) {
@@ -158,12 +160,15 @@ public class RetrofitService {
             String key = url.queryParameter("key");
             String param = url.queryParameter("param");
             //String host = url.host();
-            Log.e(TAG, "onResponse: url="+url.toString());
-            Log.e(TAG, "onResponse: key="+key+", param="+AESUtils.desEncrypt(param));
+            Log.e(TAG, "onResponse: url=" + url.toString());
+            if (!TextUtils.isEmpty(param)) {
+                param = AESUtils.desEncrypt(param);
+            }
+            Log.e(TAG, "onResponse: key=" + key + ", param=" + param);
             try {
                 string = response.body().string();
                 String s = AESUtils.desEncrypt(string);
-                Log.e(TAG, "onResponse: "+s );
+                Log.e(TAG, "onResponse: " + s);
                 JsonElement parse = new JsonParser().parse(s);
                 if (parse.isJsonObject()) {
                     JsonObject jsonObject = parse.getAsJsonObject();
@@ -194,6 +199,7 @@ public class RetrofitService {
         public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
 
         }
+
         /**
          * 接口数据提示成功
          *
@@ -208,6 +214,7 @@ public class RetrofitService {
          */
         protected abstract void fail(String error);
     }
+
     public static abstract class CallHTML implements Callback<ResponseBody> {
 
         @Override
@@ -218,24 +225,28 @@ public class RetrofitService {
             String key = url.queryParameter("key");
             String param = url.queryParameter("param");
             //String host = url.host();
-            Log.e(TAG, "onResponse: url="+url.toString());
-            Log.e(TAG, "onResponse: key="+key+", param="+AESUtils.desEncrypt(param));
+            Log.e(TAG, "onResponse: url=" + url.toString());
+            Log.e(TAG, "onResponse: key=" + key + ", param=" + AESUtils.desEncrypt(param));
             try {
                 string = response.body().string();
                 String s = AESUtils.desEncrypt(string);
-                Log.e(TAG, "onResponse: "+s );
+                Log.e(TAG, "onResponse: " + s);
                 JsonElement parse = new JsonParser().parse(s);
                 if (parse.isJsonObject()) {
                     JsonObject jsonObject = parse.getAsJsonObject();
                     String code = jsonObject.get("code").getAsString();
                     if (ResultBean.isSuccess(code)) {
                         JsonElement data = jsonObject.get("data");
-                        if (null != data && data.isJsonArray()) {
-                            JsonArray asJsonArray = data.getAsJsonArray();
-                            if (null != asJsonArray && asJsonArray.size() > 0) {
-                                success(gson.toJson(asJsonArray));
+                        if (null != data) {
+                            if (data.isJsonArray()) {
+                                JsonArray asJsonArray = data.getAsJsonArray();
+                                if (null != asJsonArray && asJsonArray.size() > 0) {
+                                    success(gson.toJson(asJsonArray));
+                                } else {
+                                    success(null);
+                                }
                             } else {
-                                success(null);
+                                success(gson.toJson(data));
                             }
                         } else {
                             success(null);

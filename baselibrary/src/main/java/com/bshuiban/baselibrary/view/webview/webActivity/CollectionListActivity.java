@@ -5,11 +5,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
-import com.bshuiban.baselibrary.contract.CollectionContract;
+import com.bshuiban.baselibrary.contract.ListContract;
 import com.bshuiban.baselibrary.present.CollectionPresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
 
-public class CollectionListActivity extends BaseWebActivity<CollectionPresent> implements CollectionContract.View{
+public class CollectionListActivity extends BaseWebActivity<CollectionPresent> implements ListContract.View{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

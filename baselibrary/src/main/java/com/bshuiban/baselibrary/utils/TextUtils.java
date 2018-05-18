@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import com.bshuiban.baselibrary.model.User;
+
 /**
  * Created by xinheng on 2018/5/3.<br/>
  * describe：文本工具
@@ -78,5 +80,11 @@ public class TextUtils {
     public static void drawTextCenter(String text, float x, float center, Paint paint, Canvas canvas) {
         float textBaseLine = getTextBaseLine(center, paint);
         canvas.drawText(text, x, textBaseLine, paint);
+    }
+    public static String getUserIdListJson(String userId,int start,int limit){
+        return "{\"userId\":\""+userId+"\",\"start\":"+start+",\"limit\":"+limit+"}";
+    }
+    public static String getUserIdListIndexJson(String userId,int start,int limit){
+        return "{\"userId\":\""+userId+"\",\"index\":"+start+",\"limit\":"+limit+"}";
     }
 }

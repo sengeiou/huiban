@@ -50,7 +50,7 @@ public class LoginPresent extends BasePresent<LoginContract.View> implements Log
             }
         };
         Map<String, Object> mapJson = getMapJson(accountNumber, password);
-        call = RetrofitService.getInstance().getServiceResult("logInByUidAndPwd", mapJson, callResult);
+        call = RetrofitService.getInstance().getServiceMapResult("logInByUidAndPwd", mapJson, callResult);
     }
 
     @Override

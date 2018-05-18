@@ -31,7 +31,7 @@ public class GeneralSituationPresent extends BasePresent<GeneralSituationContrac
      * @param userId
      */
     private void getClassInfo(String classId,String userId){
-        call = RetrofitService.getInstance().getServiceResult("getClassInfo", getMapinf(classId, userId), new RetrofitService.CallResult<GeneralBean>(GeneralBean.class) {
+        call = RetrofitService.getInstance().getServiceMapResult("getClassInfo", getMapinf(classId, userId), new RetrofitService.CallResult<GeneralBean>(GeneralBean.class) {
             @Override
             protected void success(GeneralBean generalBean) {
                 if(isEffective()){
