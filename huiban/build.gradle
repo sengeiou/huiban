@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.bshuiban"
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
 
@@ -20,6 +20,10 @@ android {
         }
     }
     buildToolsVersion '27.0.3'
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {

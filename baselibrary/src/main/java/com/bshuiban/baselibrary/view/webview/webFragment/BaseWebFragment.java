@@ -1,12 +1,17 @@
 package com.bshuiban.baselibrary.view.webview.webFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
 import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.baselibrary.view.fragment.BaseFragment;
 /**
@@ -31,6 +36,32 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
         settings.setLoadWithOverviewMode(true);
         return settings;
     }
+    /**
+     * 加载本地网页
+     * @param name
+     */
+    protected void loadFileHtml(String name){
+        mWebView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                webViewLoadFinished();
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.e(TAG, "shouldOverrideUrlLoading: "+url );
+                return true;
+            }
+        });
+        setWebViewSetting(mWebView);
+        //webView.loadUrl("content://com.ansen.webview/sdcard/test.html");
+        mWebView.loadUrl("file:///android_asset/"+name+".html");
+    }
+
+    protected void webViewLoadFinished() {
+
+    }
 
     /**
      * 标识 android
@@ -39,16 +70,17 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
     protected void registerWebViewH5Interface(){
         mWebView.addJavascriptInterface(new WebViewInterface(), "android");
     }
+    /**
+     * 标识 android
+     * 类名 BaseWebActivity.WebViewInterface
+     * @param object 类
+     */
+    @SuppressLint("JavascriptInterface")
+    protected void registerWebViewH5Interface(Object object){
+        mWebView.addJavascriptInterface(object, "android");
+    }
     protected void loadJavascriptMethod(String methodName,String json){
         mWebView.loadUrl("javascript:" + methodName + "('" + json + "' ");
-    }
-    /**
-     * 加载本地网页
-     * @param name
-     */
-    protected void loadFileHtml(String name){
-        mWebView.loadUrl("file:///android_asset/"+name+".html");
-        //webView.loadUrl("content://com.ansen.webview/sdcard/test.html");
     }
     @Override
     public void onDestroyView() {

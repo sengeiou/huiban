@@ -6,7 +6,7 @@
 .indexWrap main .topBox {
   width: 100%;
   height: 6rem;
-  background-image: url("images/index/bj_top@2x.png");
+  background-image: url("../images/index/bj_top@2x.png");
   background-size: 100% 4.1rem;
   background-repeat: no-repeat;
   position: relative;
@@ -14,13 +14,13 @@
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap main .topBox {
-    background-image: url("images/index/bj_top@2x.png");
+    background-image: url("../images/index/bj_top@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox {
-    background-image: url("images/index/bj_top@3x.png");
+    background-image: url("../images/index/bj_top@3x.png");
   }
 }
 
@@ -39,50 +39,50 @@
 }
 
 .indexWrap main .topBox .tab .weather .morning {
-  background-image: url("images/index/morning@2x.png");
+  background-image: url("../images/index/morning@2x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .indexWrap main .topBox .tab .weather .morning {
-    background-image: url("images/index/morning@2x.png");
+  .indexWrap main .topBox .tab .weather .morning 
+    background-image: url("../images/index/morning@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox .tab .weather .morning {
-    background-image: url("images/index/morning@3x.png");
+    background-image: url("../images/index/morning@3x.png");
   }
 }
 
 .indexWrap main .topBox .tab .weather .afternoon {
-  background-image: url("images/index/afternoon@2x.png");
+  background-image: url("../images/index/afternoon@2x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap main .topBox .tab .weather .afternoon {
-    background-image: url("images/index/afternoon@2x.png");
+    background-image: url("../images/index/afternoon@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox .tab .weather .afternoon {
-    background-image: url("images/index/afternoon@3x.png");
+    background-image: url("../images/index/afternoon@3x.png");
   }
 }
 
 .indexWrap main .topBox .tab .weather .evening {
-  background-image: url("images/index/evening@2x.png");
+  background-image: url("../images/index/evening@2x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap main .topBox .tab .weather .evening {
-    background-image: url("images/index/evening@2x.png");
+    background-image: url("../images/index/evening@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox .tab .weather .evening {
-    background-image: url("images/index/evening@3x.png");
+    background-image: url("../images/index/evening@3x.png");
   }
 }
 
@@ -114,20 +114,20 @@
   border-radius: 50%;
   margin: 0.24rem 0.3rem;
   float: left;
-  background-image: url("images/index/tube_class@2x.png");
+  background-image: url("../images/index/tube_class@2x.png");
   background-size: 0.72rem;
   background-repeat: no-repeat;
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap main .topBox .head .userImg {
-    background-image: url("images/index/tube_class@2x.png");
+    background-image: url("../images/index/tube_class@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox .head .userImg {
-    background-image: url("images/index/tube_class@3x.png");
+    background-image: url("../images/index/tube_class@3x.png");
   }
 }
 
@@ -150,66 +150,66 @@
 }
 
 .indexWrap main .topBox .tabList .class {
-  background-image: url("images/index/tube_class@2x.png");
+  background-image: url("../images/index/tube_class@2x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap main .topBox .tabList .class {
-    background-image: url("images/index/tube_class@2x.png");
+    background-image: url("../images/index/tube_class@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox .tabList .class {
-    background-image: url("images/index/tube_class@3x.png");
+    background-image: url("../images/index/tube_class@3x.png");
   }
 }
 
 .indexWrap main .topBox .tabList .timeTable {
-  background-image: url("images/index/time_table@2x.png");
+  background-image: url("../images/index/time_table@2x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap main .topBox .tabList .timeTable {
-    background-image: url("images/index/time_table@2x.png");
+    background-image: url("../images/index/time_table@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox .tabList .timeTable {
-    background-image: url("images/index/time_table@3x.png");
+    background-image: url("../images/index/time_table@3x.png");
   }
 }
 
 .indexWrap main .topBox .tabList .notice {
-  background-image: url("images/index/notice@2x.png");
+  background-image: url("../images/index/notice@2x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap main .topBox .tabList .notice {
-    background-image: url("images/index/notice@2x.png");
+    background-image: url("../images/index/notice@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox .tabList .notice {
-    background-image: url("images/index/notice@3x.png");
+    background-image: url("../images/index/notice@3x.png");
   }
 }
 
 .indexWrap main .topBox .tabList .follow {
-  background-image: url("images/index/add_attention@2x.png");
+  background-image: url("../images/index/add_attention@2x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap main .topBox .tabList .follow {
-    background-image: url("images/index/add_attention@2x.png");
+    background-image: url("../images/index/add_attention@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox .tabList .follow {
-    background-image: url("images/index/add_attention@3x.png");
+    background-image: url("../images/index/add_attention@3x.png");
   }
 }
 
@@ -417,20 +417,20 @@
   height: 1.04rem;
   border-radius: 50%;
   margin-top: 0.54rem;
-  background-image: url("images/index/tube_class@2x.png");
+  background-image: url("../images/index/tube_class@2x.png");
   background-repeat: no-repeat;
   background-size: 100%;
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap .leftMenu .menuContent .menuTop dl .userImg {
-    background-image: url("images/index/tube_class@2x.png");
+    background-image: url("../images/index/tube_class@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap .leftMenu .menuContent .menuTop dl .userImg {
-    background-image: url("images/index/tube_class@3x.png");
+    background-image: url("../images/index/tube_class@3x.png");
   }
 }
 
@@ -459,18 +459,18 @@
 }
 
 .indexWrap .leftMenu .menuContent .menuList a:nth-child(1) .navImg {
-  background-image: url("images/mipmap-xxhdpi-v4/ic_my_collect.png");
+  background-image: url("../images/reset/ic_my_collect.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap .leftMenu .menuContent .menuList a:nth-child(1) .navImg {
-    background-image: url("images/mipmap-xxhdpi-v4/ic_my_collect.png");
+    background-image: url("../images/reset/ic_my_collect.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap .leftMenu .menuContent .menuList a:nth-child(1) .navImg {
-    background-image: url("images/mipmap-xxhdpi-v4/ic_my_collect.png");
+    background-image: url("../images/reset/ic_my_collect.png");
   }
 }
 
@@ -1649,18 +1649,18 @@
   height: 3.93rem;
   background-repeat: no-repeat;
   background-size: 100%;
-  background-image: url("images/index/work@2x.png");
+  background-image: url("../images/index/work@2x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .courseDetails .classImg {
-    background-image: url("images/index/work@2x.png");
+    background-image: url("../images/index/work@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .courseDetails .classImg {
-    background-image: url("images/index/work@3x.png");
+    background-image: url("../images/index/work@3x.png");
   }
 }
 

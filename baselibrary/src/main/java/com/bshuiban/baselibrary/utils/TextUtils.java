@@ -87,4 +87,10 @@ public class TextUtils {
     public static String getUserIdListIndexJson(String userId,int start,int limit){
         return "{\"userId\":\""+userId+"\",\"index\":"+start+",\"limit\":"+limit+"}";
     }
+    public static String cleanNull(String s){
+        if(null==s){
+            return "";
+        }
+        return s;
+    }
 }

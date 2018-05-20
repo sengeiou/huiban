@@ -81,7 +81,7 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
 
     @Override
     public void loadScreeningData(String json) {
-
+        //loadJavascriptMethod("",json);
     }
 
     class HuiFuDaoHtml extends MessageList{
@@ -92,6 +92,14 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
         @JavascriptInterface
         public void getGuessWhatYouThink(String subjectId){
             tPresent.guessWhatYouThink(subjectId);
+        }
+        @JavascriptInterface
+        public void dealWithJson(String key,String json){
+            if("getHBCourseList".equals(key)){
+                tPresent.screeningLesson("getHBCourseList",json);
+            }else{//获取筛选条件
+                tPresent.getScreeningData(json);
+            }
         }
     }
 }

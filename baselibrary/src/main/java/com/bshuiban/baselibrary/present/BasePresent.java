@@ -1,5 +1,6 @@
 package com.bshuiban.baselibrary.present;
 
+import com.bshuiban.baselibrary.contract.BaseView;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 
 import okhttp3.ResponseBody;
@@ -8,7 +9,7 @@ import okhttp3.ResponseBody;
  * Created by xinheng on 2018/4/25.<br/>
  * describe：基本设置
  */
-public class BasePresent<T> {
+public class BasePresent<T extends BaseView> {
     protected T view;
     protected RetrofitService.CallHTML callHTML;
     protected retrofit2.Call<ResponseBody> call;

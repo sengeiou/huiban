@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.customer.BottomBar;
 import com.bshuiban.baselibrary.view.fragment.InteractionBaseFragment;
@@ -20,7 +21,7 @@ import com.bshuiban.baselibrary.view.interfaces.OnFragmentInteractionListener;
 /**
  * 首页
  */
-public abstract class HomePageActivity<T extends Fragment> extends BaseFragmentActivity<T>
+public abstract class HomePageActivity<T extends Fragment,P extends BasePresent> extends BaseFragmentActivity<T,P>
         implements NavigationView.OnNavigationItemSelectedListener {
     protected int mNowPosition =-1;
     @Override

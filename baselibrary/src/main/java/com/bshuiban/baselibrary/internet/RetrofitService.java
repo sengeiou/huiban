@@ -76,11 +76,11 @@ public class RetrofitService {
         String encrypt = null;
         if (!android.text.TextUtils.isEmpty(data)) {
             Log.e(TAG, "getServiceResult: " + modu + ", " + data);
-            Log.e(TAG, "getServiceResult: " + encrypt);
         } else {
             data = "{\"xxx\":\"xxx\"}";
         }
         encrypt = AESUtils.encrypt(data);
+        Log.e(TAG, "getServiceResult: " + encrypt);
         retrofit2.Call<ResponseBody> cipherText = getResponseBodyCall().getCipherText(modu, encrypt);
         cipherText.enqueue(callback);
         return cipherText;

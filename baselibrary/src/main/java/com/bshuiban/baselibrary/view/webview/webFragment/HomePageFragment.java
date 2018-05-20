@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.bshuiban.baselibrary.contract.HomePageContract;
+import com.bshuiban.baselibrary.model.MessageBean;
 import com.bshuiban.baselibrary.present.HomePageParent;
+import com.bshuiban.baselibrary.view.dialog.ReplyDialog;
 
 /**
  * Created by xinheng on 2018/5/14.<br/>
@@ -63,5 +65,11 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
     @Override
     public void updateMessageList(String json) {
         loadJavascriptMethod("message",json);
+    }
+    @Override
+    public void startReplyDialog(MessageBean.DataBean dataBean){
+        ReplyDialog replyDialog=new ReplyDialog(getActivity());
+        replyDialog.setViewData(dataBean);
+        replyDialog.show();
     }
 }

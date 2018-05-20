@@ -1,8 +1,17 @@
 package com.bshuiban.baselibrary.utils;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.view.dialog.MoveDialog;
 
 /**
  * Created by xinheng on 2018/5/7.<br/>

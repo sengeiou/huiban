@@ -1,5 +1,7 @@
 package com.bshuiban.baselibrary.contract;
 
+import com.bshuiban.baselibrary.model.MessageBean;
+
 /**
  * Created by xinheng on 2018/5/14.<br/>
  * describe：
@@ -23,6 +25,7 @@ public interface HomePageContract {
          * @param json
          */
         void updateMessageList(String json);
+        void startReplyDialog(MessageBean.DataBean dataBean);
     }
     interface Parent{
         /**
@@ -35,5 +38,11 @@ public interface HomePageContract {
         void delete(String messageId,String pid);
         /**回复留言*/
         void addRecevier(String json);
+
+        /**
+         * 获取回复内容数据
+         * @param index
+         */
+        void getReplyMessage(int index);
     }
 }

@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>慧班</title>
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="index1.css">
-    <link rel="stylesheet" href="index2.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/index1.css">
+    <link rel="stylesheet" href="./css/index2.css">
 </head>
-<script src="rem.js"></script>
-<script src="jquery-1.11.2.js"></script>
+<script src="./js/rem.js"></script>
+<script src="./js/jquery.min.js"></script>
 
 <body>
     <div class="wrap indexWrap">
@@ -42,25 +42,25 @@
                     </div>
                 </div>
                 <div class="tabList">
-                    <a href="./html/class/class.html">
+                    <a href="javascript:void(0)">
                         <span class="listImg class"></span>
                         <span>
                             班级
                         </span>
                     </a>
-                    <a href="./html/class/classTab.html">
+                    <a href="javascript:void(0)">
                         <span class="listImg timeTable"></span>
                         <span>
                             课表
                         </span>
                     </a>
-                    <a href="./html/class/notic.html">
+                    <a href="javascript:void(0)">
                         <span class="listImg notice"></span>
                         <span>
                             通知
                         </span>
                     </a>
-                    <a href="./html/leaveMsg/goMsg.html">
+                    <a href="javascript:void(0)">
                         <span class="listImg follow"></span>
                         <span>
                             关注
@@ -73,20 +73,20 @@
                 <h3 class="title">慧辅导</h3>
                 <div class="list">
                     <div class="course">
-                        <img src="./images/mipmap2/class_overview_pic.png" alt="">
+                        <img src="./images/reset/class_overview_pic.png" alt="">
                     </div>
                     <div class="course">
-                        <img src="./images/mipmap2/class_overview_pic.png" alt="">
+                        <img src="./images/reset/class_overview_pic.png" alt="">
                     </div>
                 </div>
                 <p class="lookAll">
-                    <a href="./html/coach/coach.html">查看全部</a>
+                    <a href="javascript:void(0)">查看全部</a>
                 </p>
                 <h3 class="resources">
-                    <a href="./html/class/course.html">
+                    <a href="javascript:void(0)">
                         学习资源
                         <p>老师推荐精品课程，快去看看吧！</p>
-                        <img src="./images/mipmap2/arrow_right.png">
+                        <img src="./images/reset/arrow_right.png">
                     </a>
                 </h3>
             </div>
@@ -95,9 +95,9 @@
                 <h3>
                     <span>最新留言</span>
                     <span>
-                        <a href="./html/leaveMsg/leave.html">
+                        <a class="messa" href="javascript:void(0)">
                             去留言
-                            <img src="./images/mipmap2/arrow_right.png">
+                            <img src="./images/reset/arrow_right.png">
                         </a>
                     </span>
                 </h3>
@@ -106,7 +106,7 @@
                         <div class="left">
                             <dl>
                                 <dt>
-                                    <img src="./images/mipmap2/ic_home_class.png" alt="">
+                                    <img src="./images/reset/ic_home_class.png" alt="">
                                 </dt>
                                 <dd>
                                     <p class="name">杜鹃
@@ -126,7 +126,7 @@
                         <div class="left">
                             <dl>
                                 <dt>
-                                    <img src="./images/mipmap2/ic_home_class.png" alt="">
+                                    <img src="./images/reset/ic_home_class.png" alt="">
                                 </dt>
                                 <dd>
                                     <p class="name">杜鹃
@@ -146,7 +146,7 @@
                         <div class="left">
                             <dl>
                                 <dt>
-                                    <img src="./images/mipmap2/ic_home_class.png" alt="">
+                                    <img src="./images/reset/ic_home_class.png" alt="">
                                 </dt>
                                 <dd>
                                     <p class="name">杜鹃
@@ -321,7 +321,7 @@
 </body>
 
 <script>
-    let leftMenu = $('.leftMenu'),
+    var leftMenu = $('.leftMenu'),
         nowTime = $('.nowDate'),
         nowWeek = $('.week'),
         weather = $('.weatherImg'),
@@ -360,9 +360,21 @@
     getNowTime();
     var list = '[{"id":3004049,"classId":3000153,"semesterId":3000120,"week":2,"num":1,"subjectId":2,"teacherId":2030213,"beginTime":"08:20:00","endTime":"09:00:00","subjectName":"\u6570\u5b66","teacherName":"\u6768\u6cfd\u6668"},{"id":3004056,"classId":3000153,"semesterId":3000120,"week":2,"num":2,"subjectId":4,"teacherId":2030219,"beginTime":"09:10:00","endTime":"09:50:00","subjectName":"\u7269\u7406","teacherName":"\u694a\u694a"},{"id":3004063,"classId":3000153,"semesterId":3000120,"week":2,"num":3,"subjectId":1,"teacherId":2029920,"beginTime":"10:20:00","endTime":"10:55:00","subjectName":"\u8bed\u6587","teacherName":"\u8d75\u5efa\u5ddd"},{"id":3004077,"classId":3000153,"semesterId":3000120,"week":2,"num":5,"subjectId":3,"teacherId":2030216,"beginTime":"14:30:00","endTime":"15:10:00","subjectName":"\u82f1\u8bed","teacherName":"\u6c88\u9633Y"},{"id":3004084,"classId":3000153,"semesterId":3000120,"week":2,"num":6,"subjectId":0,"teacherId":0,"beginTime":"15:20:00","endTime":"16:00:00","subjectName":"","teacherName":""},{"id":3004091,"classId":3000153,"semesterId":3000120,"week":2,"num":7,"subjectId":4,"teacherId":2030219,"beginTime":"16:25:00","endTime":"17:05:00","subjectName":"\u7269\u7406","teacherName":"\u694a\u694a"},{"id":3004098,"classId":3000153,"semesterId":3000120,"week":2,"num":8,"subjectId":0,"teacherId":0,"beginTime":"17:15:00","endTime":"17:45:00","subjectName":"","teacherName":""},{"id":3004105,"classId":3000153,"semesterId":3000120,"week":2,"num":9,"subjectId":0,"teacherId":0,"beginTime":"18:50:00","endTime":"19:30:00","subjectName":"","teacherName":""},{"id":3004112,"classId":3000153,"semesterId":3000120,"week":2,"num":10,"subjectId":0,"teacherId":0,"beginTime":"19:40:00","endTime":"20:20:00","subjectName":"","teacherName":""},{"id":0,"classId":0,"week":"2","num":4,"subjectName":"","teacherName":""}]'
 
+     // 班级页
+     var classes = document.getElementsByClassName('class')[0];
+    //  课表页 
+    var timetable = document.getElementsByClassName('timeTable')[0];
+    // 通知页 
+    var notice = document.getElementsByClassName('notice')[0];
+    // 关注页 
+    var follow = document.getElementsByClassName('follow')[0];
+    // 慧辅导页 
+    var homepage = document.getElementsByClassName('lookAll')[0];
+    // 留言页
+    var messa = document.getElementsByClassName('messa')[0];
     //切换课表
     function switchs(list) {
-        var data =JSON.parse(list);
+        var data = JSON.parse(list);
         var tab = document.getElementsByClassName("tab")[0];
         var str1 = "";
         var str2 = "";
@@ -408,7 +420,7 @@
     curriculum.eq(0).show();
     weather.bind('click', function () {
         console.log($(this))
-        let ind = $(this).index();
+        var ind = $(this).index();
         console.log(ind)
         $(this).parent().siblings().eq(ind).show().siblings().hide();
         $(this).parent().show();
@@ -441,9 +453,9 @@
         for (var pro of data) {
             console.log(pro.imgUrl)
             // if(pro.imgUrl == "") {
-            //     pro.imgUrl = "./images/mipmap2/ic_home_class.png";
+            //     pro.imgUrl = "./images/reset/ic_home_class.png";
             // }
-            // onerror="this.src='./images/mipmap2/ic_home_class.png'"
+            // onerror="this.src='./images/reset/ic_home_class.png'"
             attr += `
             <div class="leaveWord">
                         <div class="left">
@@ -479,7 +491,7 @@
         var huifu = document.getElementsByClassName("huifu")[0];
         var num = document.getElementsByClassName("num")[0];
         var index;
-      
+
         // 点击加载更多
         mores.onclick = function () {
             // var key1 = 'getUserLeaveList';
@@ -487,11 +499,11 @@
             // $.get('http://192.168.0.244:8080/closeBroadcast?key=' + key1 + '&param=' + param, function (data) {
             //     messages = JSON.parse(data).data
             //     console.log(messages);
-                message(messages)
+            window.android.getMoreData(false)
             // });
         }
         // 点击回复
-        for (let i = 0; i < rep.length; i++) {
+        for (var i = 0; i < rep.length; i++) {
             var conten1 = "";
             var conten2 = "";
             rep[i].onclick = function () {
@@ -504,14 +516,14 @@
                     var bottom = parseInt(sty.bottom);
                     bottom = bottom + 12.5;
                     div.style.bottom = bottom + 'px';
-                    if (bottom >-1) {
+                    if (bottom > -1) {
                         clearInterval(time)
                     }
                 }
                 if (data[i].slist) {
                     for (var pro of data[i].slist) {
                         console.log(pro)
-                        
+
                         conten1 += `
                     <ul>
                         <li><span class="img"></span>${pro.sendName}</li>
@@ -523,28 +535,28 @@
                     }
                     num.innerHTML = data[i].slist.length;
                     huifu.innerHTML = conten1;
-                    conten1="";
+                    conten1 = "";
                 } else {
-                    conten2="";
+                    conten2 = "";
                     conten2 += `
                     <ul>
                         <li class="empt">回复内容为空</li>
                     </ul>
                 `;
-                num.innerHTML = 0;
-                huifu.innerHTML = conten2;
-                
+                    num.innerHTML = 0;
+                    huifu.innerHTML = conten2;
+
                 }
-               
+
                 // 删除回复留言
                 var dele2 = document.getElementsByClassName("dele2");
-                for (let j = 0; j < dele2.length; j++) {
+                for (var j = 0; j < dele2.length; j++) {
                     dele2[j].onclick = function () {
-                        var msg1 = data[i].slist[j].id; 
+                        var msg1 = data[i].slist[j].id;
                         var msg2 = data[i].id;
                         console.log(msg1);
                         console.log(msg2);
-                        window.android.deleteMessageItem(msg1, msg2) 
+                        window.android.deleteMessageItem(msg1, msg2)
 
                     }
                 }
@@ -554,12 +566,12 @@
             div.style.bottom = "-12rem"
         }
         // 删除留言
-        for (let i = 0; i < dele.length; i++) {
+        for (var i = 0; i < dele.length; i++) {
             dele[i].onclick = function () {
                 console.log("删除");
                 var msgid = data[i].id;
                 console.log(msgid)
-                window.android.deleteMessageItem(msgid, null) 
+                window.android.deleteMessageItem(msgid, null)
 
             }
         }
@@ -573,22 +585,51 @@
                 console.log(messid)
                 var rece = data[index].send;
                 console.log(rece)
-                console.log(text.value); 
+                console.log(text.value);
                 var jsons = JSON.stringify({
-                    recevieId:rece,
-                    messageId:messid,
-                    content:conten
+                    recevieId: rece,
+                    messageId: messid,
+                    content: conten
                 });
                 console.log(typeof jsons)
-                // window.android.replayMessage(jsons)
+                window.android.replayMessage(jsons)
                 text.value = "";
             }
         }
+       // 班级页
+        classes.onclick = function() {
+            window.android.toNextActivity(0)
+        }
+        //  课表页 
+            timetable.onclick = function() {
+                 window.android.toNextActivity(1)
+                }
+        // 通知页 
+    
+        notice.onclick = function() {
+            window.android.toNextActivity(2)
+                }
+        // 关注页 
+        follow.onclick = function() {      
+            window.android.toNextActivity(3)
+                }
+        // 慧辅导页 
+        homepage.onclick = function() {
+            window.android.toNextActivity(4)
+                }
+        //学习资源
+        
+        // 留言页
+        messa.onclick = function() {
+            window.android.toNextActivity(6)
+                }
+
+
     }
-    var imgs='[{"AddTime":1526356573,"ChapBranId":10759,"CheckStatus":3,"FasciculeId":19,"IsPublic":1,"Name":"CaCwReHX45yW1522384500.mp4","RealName":"\u694a\u694a","SchoolId":"45","SeriBranId":130884,"SiteName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","SpeakerId":2030219,"StageId":"2","SubjectId":"4","UploaderId":2030219,"VersionId":12,"VideoId":"4565","VideoType":2,"WatchCnt":0,"id":"4565","_version_":1600500870338838528,"name":"CaCwReHX45yW1522384500.mp4","flv_url":null,"speakerId":2030219,"videoId":"4565","checkStatus":3,"isTrans":0,"totalLength":0,"addTime":"2018-05-15","schoolName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","stageName":"\u521d\u4e2d","subjectName":"\u7269\u7406","knowName":"\u6838\u80fd","speakerName":"\u694a\u694a","uploadName":"\u694a\u694a","totalTime":0,"viewCount":"0","dzCount":"0","studyCount":"0","imgUrl":"http:\/\/192.168.0.3:8091\/group2\/M00\/00\/29\/wKgAA1r6Wk2AZSgGAAXmdArc_4M614.png","ShareSites":[],"statusName":"\u4e0a\u67b6","frontStatus":"\u8f6c\u7801\u4e2d\u2026"},{"AddTime":1518076971,"ChapBranId":30122,"CheckStatus":3,"FasciculeId":19,"IsPublic":1,"Name":"\u529b.mp4","RealName":"\u694a\u694a","SchoolId":"45","SeriBranId":3559,"SiteName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","SpeakerId":2030219,"StageId":"2","SubjectId":"4","UploaderId":2030219,"VersionId":12,"VideoId":"2107","VideoType":1,"WatchCnt":3,"id":"2107","_version_":1600497397399552000,"name":"\u529b.mp4","flv_url":"http:\/\/playvideo.oss-cn-shanghai.aliyuncs.com\/2018\/2107\/A93D62ED9C0046A285FEFFAC04BE2F1C.m3u8","speakerId":2030219,"videoId":"2107","checkStatus":3,"isTrans":1,"totalLength":222,"addTime":"2018-02-08","schoolName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","stageName":"\u521d\u4e2d","subjectName":"\u7269\u7406","knowName":"\u529b\u5b66","speakerName":"\u694a\u694a","uploadName":"\u694a\u694a","totalTime":222,"viewCount":"3","dzCount":"0","studyCount":"2","imgUrl":"http:\/\/192.168.0.3:8091\/group2\/M00\/03\/C3\/ag4bNlp8BCmATe31AADU-qMcUQg720.png","ShareSites":[],"statusName":"\u4e0a\u67b6","frontStatus":""}]'
-    var messages ='[{"id":"5afb9099f5ddaf069d972095","imgUrl":"","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","content":"DFGDFG","addTime":"\u6628\u5929","count":0},{"id":"5afb9097f5ddaf069d972093","imgUrl":"","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","content":"GFDGDFGDFG","addTime":"\u6628\u5929","slist":[{"id":"5afb9160f5ddaf069d9720b6","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"321312312","addTime":"\u6628\u5929"},{"id":"5afb915ef5ddaf069d9720b4","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"321312312","addTime":"\u6628\u5929"},{"id":"5afb915bf5ddaf069d9720b2","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"4124124124","addTime":"\u6628\u5929"},{"id":"5afb9159f5ddaf069d9720b0","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"3123123123","addTime":"\u6628\u5929"},{"id":"5afb9156f5ddaf069d9720ae","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"42414214","addTime":"\u6628\u5929"},{"id":"5afb9153f5ddaf069d9720ac","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"131231231","addTime":"\u6628\u5929"}],"count":6},{"id":"5afb9095f5ddaf069d972090","imgUrl":"","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","content":"DASDASFDSAFASF","addTime":"\u6628\u5929","count":0}]';
-     message(messages);
-     imag(imgs);
+    var imgs = '[{"AddTime":1526356573,"ChapBranId":10759,"CheckStatus":3,"FasciculeId":19,"IsPublic":1,"Name":"CaCwReHX45yW1522384500.mp4","RealName":"\u694a\u694a","SchoolId":"45","SeriBranId":130884,"SiteName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","SpeakerId":2030219,"StageId":"2","SubjectId":"4","UploaderId":2030219,"VersionId":12,"VideoId":"4565","VideoType":2,"WatchCnt":0,"id":"4565","_version_":1600500870338838528,"name":"CaCwReHX45yW1522384500.mp4","flv_url":null,"speakerId":2030219,"videoId":"4565","checkStatus":3,"isTrans":0,"totalLength":0,"addTime":"2018-05-15","schoolName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","stageName":"\u521d\u4e2d","subjectName":"\u7269\u7406","knowName":"\u6838\u80fd","speakerName":"\u694a\u694a","uploadName":"\u694a\u694a","totalTime":0,"viewCount":"0","dzCount":"0","studyCount":"0","imgUrl":"http:\/\/192.168.0.3:8091\/group2\/M00\/00\/29\/wKgAA1r6Wk2AZSgGAAXmdArc_4M614.png","ShareSites":[],"statusName":"\u4e0a\u67b6","frontStatus":"\u8f6c\u7801\u4e2d\u2026"},{"AddTime":1518076971,"ChapBranId":30122,"CheckStatus":3,"FasciculeId":19,"IsPublic":1,"Name":"\u529b.mp4","RealName":"\u694a\u694a","SchoolId":"45","SeriBranId":3559,"SiteName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","SpeakerId":2030219,"StageId":"2","SubjectId":"4","UploaderId":2030219,"VersionId":12,"VideoId":"2107","VideoType":1,"WatchCnt":3,"id":"2107","_version_":1600497397399552000,"name":"\u529b.mp4","flv_url":"http:\/\/playvideo.oss-cn-shanghai.aliyuncs.com\/2018\/2107\/A93D62ED9C0046A285FEFFAC04BE2F1C.m3u8","speakerId":2030219,"videoId":"2107","checkStatus":3,"isTrans":1,"totalLength":222,"addTime":"2018-02-08","schoolName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","stageName":"\u521d\u4e2d","subjectName":"\u7269\u7406","knowName":"\u529b\u5b66","speakerName":"\u694a\u694a","uploadName":"\u694a\u694a","totalTime":222,"viewCount":"3","dzCount":"0","studyCount":"2","imgUrl":"http:\/\/192.168.0.3:8091\/group2\/M00\/03\/C3\/ag4bNlp8BCmATe31AADU-qMcUQg720.png","ShareSites":[],"statusName":"\u4e0a\u67b6","frontStatus":""}]'
+    var messages = '[{"id":"5afb9099f5ddaf069d972095","imgUrl":"","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","content":"DFGDFG","addTime":"\u6628\u5929","count":0},{"id":"5afb9097f5ddaf069d972093","imgUrl":"","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","content":"GFDGDFGDFG","addTime":"\u6628\u5929","slist":[{"id":"5afb9160f5ddaf069d9720b6","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"321312312","addTime":"\u6628\u5929"},{"id":"5afb915ef5ddaf069d9720b4","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"321312312","addTime":"\u6628\u5929"},{"id":"5afb915bf5ddaf069d9720b2","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"4124124124","addTime":"\u6628\u5929"},{"id":"5afb9159f5ddaf069d9720b0","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"3123123123","addTime":"\u6628\u5929"},{"id":"5afb9156f5ddaf069d9720ae","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"42414214","addTime":"\u6628\u5929"},{"id":"5afb9153f5ddaf069d9720ac","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"131231231","addTime":"\u6628\u5929"}],"count":6},{"id":"5afb9095f5ddaf069d972090","imgUrl":"","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","content":"DASDASFDSAFASF","addTime":"\u6628\u5929","count":0}]';
+    message(messages);
+    imag(imgs);
     // var key2 = 'getTeacherCourseList';
     // var param = '{"userId":"2030219","start":"0","limit":"3"}'
     // $.get('http://192.168.0.244:8080/closeBroadcast?key=' + key2 + '&param=' + param, function (data) {
@@ -597,7 +638,7 @@
     //     imag(imgs)
     // });
 
-
+   
 </script>
 <!-- <script src="./js/index.js"></script> -->
 
