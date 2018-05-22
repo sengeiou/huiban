@@ -2,6 +2,7 @@ package com.bshuiban.baselibrary.present;
 
 import com.bshuiban.baselibrary.contract.HuiFuDaoListContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
+import com.bshuiban.baselibrary.model.SubjectBean;
 import com.bshuiban.baselibrary.model.User;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -10,12 +11,19 @@ import com.google.gson.JsonParser;
 
 /**
  * Created by xinheng on 2018/5/18.<br/>
- * describe：
+ * describe：慧辅导
  */
 public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> implements HuiFuDaoListContract.Present {
+    private AllSubjectPresent allSubjectPresent;
     private String key,json;
     public HuiFuDaoListPresent(HuiFuDaoListContract.View view) {
         super(view);
+        allSubjectPresent=new AllSubjectPresent<HuiFuDaoListContract.View>(view){
+            @Override
+            protected void loadAllSubject(SubjectBean dataBean) {
+                HuiFuDaoListPresent.this.loadAllSubject(dataBean);
+            }
+        };
     }
     public void reSetStart(){
         start=0;
@@ -39,21 +47,13 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
 
     @Override
     public void getAllSubject() {
-        RetrofitService.getInstance().getServiceResult("getVipCourseSubjectList", null, new RetrofitService.CallHTMLJsonArray() {
-            @Override
-            protected void success(JsonArray msg) {
-                if(isEffective()){
-                    view.loadAllSubject(gson.toJson(msg));
-                }
-            }
+        allSubjectPresent.getAllSubject();
+    }
 
-            @Override
-            protected void fail(String error) {
-                if(isEffective()){
-                    view.fail(error);
-                }
-            }
-        });
+    private void loadAllSubject(SubjectBean subjectBean) {
+        if(isEffective()&&null!=subjectBean.getData()){
+            view.loadAllSubject(gson.toJson(subjectBean.getData()));
+        }
     }
 
     @Override

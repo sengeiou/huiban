@@ -6,6 +6,7 @@ package com.bshuiban.baselibrary.model;
  */
 public class User {
 
+    private SubjectBean subjectBean;
     private LoginResultBean.Data data;
     private static User user;
     public static User getInstance() {
@@ -33,4 +34,12 @@ public class User {
     }
     public String getGradeId() { return data.getGradeId();}
     public String getSchoolId() { return data.getSchoolId();}
+
+    public SubjectBean getSubjectBean() {
+        return subjectBean;
+    }
+
+    public void setSubjectBean(SubjectBean subjectBean) {
+        this.subjectBean = subjectBean;
+    }
 }

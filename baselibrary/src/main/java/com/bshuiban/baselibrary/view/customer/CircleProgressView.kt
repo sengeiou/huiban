@@ -20,7 +20,7 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
     private val paint1: Paint
     private val paint2: Paint
     private val rect: RectF = RectF()
-    private var progressValue: Int =80
+    private var progressValue: Float =80f
     private val mColors = intArrayOf(Color.GREEN, Color.RED)
 
     init {
@@ -45,11 +45,24 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
         paint1.strokeWidth = widthPaint
         paint2.strokeWidth = widthPaint
 
-        val left = paddingLeft + widthPaint
-        val top = paddingTop + widthPaint
-        rect.set(left, top, mWidth - left, mHeight - top)
+        var left = paddingLeft + widthPaint
+        var top = paddingTop + widthPaint
+        var right:Float
+        var bottom:Float
+        var side:Float
+        if(mWidth<measuredWidth){
+            side = (measuredWidth - mWidth)/2f
+            left= side+paddingLeft
+            right=left+mWidth
+        }else{
+            side = (measuredHeight-mWidth)/2f
+            right=left+mWidth
+            top=side+paddingLeft
+        }
+        bottom=top+mWidth
+        rect.set(left, top, right, bottom)
         canvas.drawArc(rect, 0f, 360f, false, mPaint)
-        val section = progressValue.toFloat() / 100
+        val section = progressValue / 100
         //        int count = mColors.length;
         //        int[] colors = new int[count];
         //        System.arraycopy(mColors, 0, colors, 0, count);
@@ -71,6 +84,18 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
             mPaint.strokeCap = Paint.Cap.ROUND
             val v = section_ / 2
             canvas.drawArc(rect, 45 - v, 45 + v, false, mPaint)
+        }
+    }
+    fun setProgressValue(progress:String){
+        var rateFloat=0f
+        try {
+            rateFloat = java.lang.Float.parseFloat(progress)
+        } catch (e: NumberFormatException) {
+            e.printStackTrace()
+        }
+        if(rateFloat!= progressValue){
+            progressValue= rateFloat
+            invalidate()
         }
     }
 }

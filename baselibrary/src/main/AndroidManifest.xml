@@ -16,7 +16,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.activity.ClassActivity" />
-        <activity android:name=".view.webview.webActivity.GuanZhuListActivity"></activity>
+        <activity android:name=".view.webview.webActivity.GuanZhuListActivity" />
+        <activity android:name=".view.activity.StatisticalChartActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

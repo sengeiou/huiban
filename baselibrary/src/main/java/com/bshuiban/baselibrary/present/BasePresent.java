@@ -4,6 +4,7 @@ import com.bshuiban.baselibrary.contract.BaseView;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 
 import okhttp3.ResponseBody;
+import retrofit2.Callback;
 
 /**
  * Created by xinheng on 2018/4/25.<br/>
@@ -11,7 +12,6 @@ import okhttp3.ResponseBody;
  */
 public class BasePresent<T extends BaseView> {
     protected T view;
-    protected RetrofitService.CallHTML callHTML;
     protected retrofit2.Call<ResponseBody> call;
 
     public BasePresent(T t) {
@@ -39,11 +39,8 @@ public class BasePresent<T extends BaseView> {
      * @param key 方法名
      * @param json json串
      */
-    public void askInternet(String key,String json){
-        call=RetrofitService.getInstance().getServiceResult(key,json,callHTML);
-    }
-    public void askInternet(String key,String json,RetrofitService.CallHTML callHTML){
-        call=RetrofitService.getInstance().getServiceResult(key,json,callHTML);
+    public void askInternet(String key, String json, Callback<ResponseBody> callback){
+        call=RetrofitService.getInstance().getServiceResult(key,json,callback);
     }
 
 }

@@ -115,12 +115,17 @@ public class LoginResultBean extends ResultBean {
 
         public void setClassId(List<String> classId) {
             this.classId = classId;
-            if(null!=classId&&classId.size()==0){
+            if(null!=classId&&classId.size()>0){
                 classId1=classId.get(0);
             }
         }
 
         public String getClassId1() {
+            if(null==classId1){
+                if(null!=classId&&classId.size()>0){
+                    classId1=classId.get(0);
+                }
+            }
             return classId1;
         }
 

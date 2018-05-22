@@ -2,17 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_weight="1">
 
             <ImageView
@@ -25,94 +27,109 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="19dp"
-                android:text="TextView"
-                android:layout_alignTop="@+id/imageView0"/>
+                android:text="学习视频"
+                android:layout_alignTop="@+id/imageView0"
+                android:layout_toRightOf="@id/imageView0"/>
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:layout_toRightOf="@id/imageView0"
+                android:layout_alignBottom="@id/imageView0"
                 android:text="TextView" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="1dp" />
+                android:src="@drawable/app_logo"/>
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:text="TextView"
-                tools:layout_editor_absoluteY="1dp" />
+                android:layout_height="wrap_content"
+                android:text="学习时长"
+                android:layout_alignTop="@+id/imageView1"
+                android:layout_toRightOf="@id/imageView1"/>
 
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_alignBottom="@id/imageView1"
+                android:layout_toRightOf="@id/imageView1"
                 android:text="TextView" />
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@drawable/app_logo"/>
 
             <TextView
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:text="TextView" />
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView2"
+                android:layout_toRightOf="@id/imageView2"
+                android:text="参与问答数" />
 
             <TextView
                 android:id="@+id/textView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/imageView2"
+                android:layout_toRightOf="@id/imageView2"
                 android:text="TextView" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@drawable/app_logo"/>
 
             <TextView
                 android:id="@+id/textView31"
                 android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:text="TextView"/>
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView3"
+                android:layout_toRightOf="@id/imageView3"
+                android:text="完成测试"/>
 
             <TextView
                 android:id="@+id/textView32"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:layout_alignBottom="@id/imageView3"
+                android:layout_toRightOf="@id/imageView3"
                 android:text="TextView" />
         </RelativeLayout>
     </LinearLayout>

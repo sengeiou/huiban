@@ -158,7 +158,7 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
                 toast("json数据错误");
                 return;
             }
-            tPresent.askInternet(key,json);
+            //tPresent.askInternet(key,json);
         }
     }
 }

@@ -51,7 +51,7 @@ public class LoginPresentTest {
         loginPresent.login("2030246","111111");
         //loginPresent.askInternet("","{\"userId\":\"2030246\",\"userPwd\":\"111111\"}");
         try {
-            Thread.sleep(10000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

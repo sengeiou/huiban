@@ -5,6 +5,7 @@ import android.util.Log;
 import com.bshuiban.baselibrary.contract.LoginContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 import com.bshuiban.baselibrary.model.LoginResultBean;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.utils.aes.AESUtils;
 import com.google.gson.Gson;
 
@@ -62,7 +63,6 @@ public class LoginPresent extends BasePresent<LoginContract.View> implements Log
         return map;
     }
 
-    @Override
     public void askInternet(String key, String json) {
         call = RetrofitService.getInstance().getServiceResult("logInByUidAndPwd", json, new RetrofitService.CallResult<LoginResultBean>(LoginResultBean.class) {
             @Override

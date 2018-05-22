@@ -8,13 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.baselibrary.view.interfaces.OnFragmentInteractionListener;
 
 /**
  * Created by xinheng on 2018/4/25.<br/>
  * describe：fragment是否重新加载、更新、
  */
-public abstract class InteractionBaseFragment extends BaseFragment {
+public abstract class InteractionBaseFragment<T extends BasePresent> extends BaseFragment<T> {
     protected boolean needUpdateData;
     protected OnFragmentInteractionListener mListener;
 

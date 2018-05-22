@@ -3,8 +3,13 @@ package com.bshuiban.baselibrary.utils;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.present.StudyBottomBean;
 
 /**
  * Created by xinheng on 2018/4/26.<br/>
@@ -27,4 +32,26 @@ public class ViewUtils {
         frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return frameLayout;
     }
+
+    /**
+     * 设置底部学习页面
+     * @param view
+     * @param data
+     */
+    public static void setViewData(View view, StudyBottomBean.DataBean data){
+        TextView tv_video=view.findViewById(R.id.textView2);
+        TextView tv_time=view.findViewById(R.id.textView12);
+        TextView tv_count=view.findViewById(R.id.textView22);
+        TextView tv_complete=view.findViewById(R.id.textView32);
+
+        setText(tv_video,data.getVideoCnt());
+        setText(tv_time,data.getLength());
+        setText(tv_count,data.getAnswerCnt());
+        setText(tv_complete,data.getExamCnt());
+
+    }
+    public static void setText(TextView tv,String s){
+        tv.setText(TextUtils.cleanNull(s));
+    }
+
 }
