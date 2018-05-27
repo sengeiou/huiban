@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.bshuiban.baselibrary.view.customer.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        app:title_size="@dimen/dp_20"
+        app:title_color="@android:color/white"
+        app:title_text="XXX"
+        app:src_left="@mipmap/iv_back"
+        android:background="#4A4A4A"
+        app:right_size="@dimen/dp_20"
+        app:right_text="完成"
+        app:right_color="@android:color/white"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

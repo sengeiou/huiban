@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <SurfaceView
+        android:id="@+id/surface_camera"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+    <ImageView
+        android:id="@+id/imageview_camera_show"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_width="@dimen/dp_67"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@android:color/black">
+
+        <Button
+            android:id="@+id/button_takephoto"
+            android:layout_width="@dimen/dp_43"
+            android:layout_height="@dimen/dp_43"
+            android:background="@drawable/camera_take"
+            android:text="" />
+
+        <Button
+            android:id="@+id/button_enter"
+            android:layout_width="@dimen/dp_43"
+            android:layout_height="@dimen/dp_43"
+            android:visibility="gone"
+            android:background="@drawable/camera_yes"
+            android:text="" />
+
+        <Button
+            android:id="@+id/button_cancle"
+            android:layout_width="@dimen/dp_43"
+            android:layout_height="@dimen/dp_43"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/dp_48"
+            android:background="@drawable/camera_no" />
+    </LinearLayout>
+</LinearLayout>

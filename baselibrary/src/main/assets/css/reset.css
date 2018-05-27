@@ -241,7 +241,7 @@ html, body, .wrap {
   z-index: 100;
 }
 
-.wrap header span:nth-child(1) i {
+.wrap header span:nth-child(1) i, .wrap header span:nth-child(1) a{
   display: block;
   width: 0.22rem;
   height: 0.36rem;

@@ -11,8 +11,8 @@ import com.bshuiban.baselibrary.view.dialog.ReplyDialog;
 /**
  * Created by xinheng on 2018/5/14.<br/>
  * describe：首页
- * 1.获取今日学生课表  classList
- * 2.慧辅导两条数据 train
+ * 1.获取今日学生课表  switchs
+ * 2.慧辅导两条数据 imag
  * 3.留言列表 message
  */
 public class HomePageFragment extends InteractionBaseWebViewFragment<HomePageParent> implements HomePageContract.View {
@@ -54,12 +54,12 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
 
     @Override
     public void updateTodayClassSchedule(String json) {
-        loadJavascriptMethod("classList",json);
+        loadJavascriptMethod("switchs",json);
     }
 
     @Override
     public void updateHuiFuDao(String json) {
-        loadJavascriptMethod("train",json);
+        loadJavascriptMethod("imag",json);
     }
 
     @Override

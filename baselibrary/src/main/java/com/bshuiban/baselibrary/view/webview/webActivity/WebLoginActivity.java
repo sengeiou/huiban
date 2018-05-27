@@ -27,10 +27,7 @@ public class WebLoginActivity extends BaseWebActivity<LoginPresent> implements L
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FrameLayout frameLayout = ViewUtils.getFrameLayout(this);
-        mWebView = getWebView(getApplicationContext());
-        frameLayout.addView(mWebView);
-        setContentView(frameLayout);
+
         //mWebView.loadData(null, "text/html", "utf-8");
         tPresent = new LoginPresent(this);
         init();
@@ -94,6 +91,7 @@ public class WebLoginActivity extends BaseWebActivity<LoginPresent> implements L
 
     private void saveUserData(LoginResultBean.Data loginData) {
         User.getInstance().setData(loginData);
+        Log.e(TAG, "saveUserData: "+User.getInstance().getUserData().toString());
         //UserSharedPreferencesUtils.saveUserData(getApplicationContext(),AESUtils.encrypt(new Gson().toJson(loginData)));
         UserSharedPreferencesUtils.saveUserData(getApplicationContext(),new Gson().toJson(loginData));
     }

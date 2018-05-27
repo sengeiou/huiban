@@ -3,16 +3,23 @@ package com.bshuiban.baselibrary.view.webview.webFragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 
 import com.bshuiban.baselibrary.present.BasePresent;
+import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.fragment.BaseFragment;
 /**
  * Created by xinheng on 2018/5/11.<br/>
@@ -36,6 +43,16 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
         settings.setLoadWithOverviewMode(true);
         return settings;
     }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mWebView = getWebView(getActivity().getApplicationContext());
+        FrameLayout frameLayout = ViewUtils.getFrameLayout(getActivity());
+        frameLayout.addView(mWebView);
+        return frameLayout;
+    }
+
     /**
      * 加载本地网页
      * @param name
@@ -80,7 +97,12 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
         mWebView.addJavascriptInterface(object, "android");
     }
     protected void loadJavascriptMethod(String methodName,String json){
-        mWebView.loadUrl("javascript:" + methodName + "('" + json + "' ");
+        if(null==json){
+            json="";
+        }
+        String url = "javascript:" + methodName + "('" + json + "')";
+        Log.e(TAG, "loadJavascriptMethod: "+url );
+        mWebView.loadUrl(url);
     }
     @Override
     public void onDestroyView() {

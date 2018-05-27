@@ -1,1 +1,1 @@
-include ':baselibrary', ':student', ':huiban', ':teacher',':nanohttpd-test',':magicindicator'
+include ':baselibrary', ':student', ':huiban', ':teacher',':nanohttpd-test',':magicindicator',':Vitamio'

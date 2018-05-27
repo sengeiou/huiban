@@ -140,10 +140,8 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
 
     @Override
     public void getReplyMessage(int index) {
-        if(null!=dataBeans&&dataBeans.size()>index){
-            if(isEffective()){
-                view.startReplyDialog(dataBeans.get(index));
-            }
+        if(isEffective()&&null!=dataBeans&&dataBeans.size()>index){
+            view.startReplyDialog(dataBeans.get(index));
         }
     }
 

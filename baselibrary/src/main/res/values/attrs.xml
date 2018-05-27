@@ -13,4 +13,17 @@
         <attr name="lineColor" format="color"/>
         <attr name="lineWidth" format="dimension"/>
     </declare-styleable>
+    <declare-styleable name="TitleView">
+        <attr name="title_text" format="string"/>
+        <attr name="title_size" format="dimension"/>
+        <attr name="title_color" format="color"/>
+        <attr name="right_text" format="string"/>
+        <attr name="right_size" format="dimension"/>
+        <attr name="right_color" format="color"/>
+        <attr name="src_left" format="reference"/>
+        <attr name="src_center" format="reference"/>
+        <attr name="src_right" format="reference"/>
+        <attr name="have_line" format="boolean"/>
+        <attr name="line_color" />
+    </declare-styleable>
 </resources>

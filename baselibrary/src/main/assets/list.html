@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/question.css">
+    <!-- <link rel="stylesheet" href="./css/work.css"> -->
+</head>
+<script src="./js/rem.js"></script>
+<script src="./js/jquery.min.js"></script>
+
+<body>
+    <div class="wrap workIndex">
+        <header>
+            <span>
+                <a href="workMsg.html">
+
+                </a>
+            </span>
+            <span>习题列表</span>
+        </header>
+        <p class="time">3分18秒</p>
+        <p class="titles">
+            <span class="total">第六单元 化学方程式</span>
+            共
+            <span class="totals">12</span>道
+        </p>
+        <ul class="answerList">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+            <li>11</li>
+            <li>12</li>
+        </ul>
+        <div class="button">
+        </div>
+    </body>
+        <script>
+
+            var data = '{"title":"第三单元测试","time":"15:23","homework":[{"complete":false,"result":0},{"complete":false,"result":0},{"complete":true,"result":1},{"complete":true,"result":0},{"complete":true,"result":1},{"complete":false,"result":0},{"complete":true,"result":1},{"complete":false,"result":0},{"complete":false,"result":0},{"complete":true,"result":2},{"complete":false,"result":0},{"complete":true,"result":0}]}';
+
+            // var date = JSON.stringify(data)
+            var time = document.getElementsByClassName('time')[0];
+            var title = document.getElementsByClassName('total')[0];
+            var totals = document.getElementsByClassName('totals')[0];
+            var ul = document.getElementsByClassName('answerList')[0];
+            var num = document.getElementsByClassName('num')[0];
+            var but = document.getElementsByClassName("button")[0];
+            var totalcount = 0;
+            var count = 0;
+            function answer(data) {
+                var list = JSON.parse(data);
+                time.innerHTML = list.time;
+                title.innerHTML = list.title;
+                totalcount = list.homework.length;
+                totals.innerHTML = totalcount;
+                var str = "";
+
+                for (let i = 0; i < list.homework.length; i++) {
+                    if (list.homework[i].complete == true) {
+                        str += `<li class="li" style="background:#eee">${i + 1}</li>`
+                    } else {
+                        str += `<li class="li">${i + 1}</li>`
+                        count++;
+                        console.log(count)
+                    }
+                }
+                ul.innerHTML = str;
+                    var str = "";
+                    for (let i = 0; i < list.homework.length; i++) {
+                        if (list.homework[i].result == '1') {
+                            str += `<li class="wrongs" ><span class="wrongss" style="background:#d8d8d8">${i + 1}</span></li>`
+                        }
+                        if (list.homework[i].result == '0') {
+                            str += `<li class="trues"><span class="truess">${i + 1}</span></li>`
+                        }
+                        if (list.homework[i].result == '2') {
+                            str += `<li><span>${i + 1}</span></li>`
+                        }
+                    }
+                    ul.innerHTML = str;
+                    but.innerHTML = `<p class="backhomelist">返回作业力列表</p>`;
+                    var backlist = document.getElementsByClassName('backhomelist')[0];
+                    // 返回作业列表
+                    backlist.onclick = function () {
+                        window.android.backHomeworkInf();
+                    }
+                }
+            answer(data)
+        </script>
+</html>

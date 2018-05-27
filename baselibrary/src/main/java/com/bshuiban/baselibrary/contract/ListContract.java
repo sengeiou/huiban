@@ -17,5 +17,6 @@ public interface ListContract {
         void refresh();
         void getInterNetData();
         void updateView(String json);
+        void clearArray();
     }
 }

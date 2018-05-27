@@ -1,8 +1,11 @@
 package com.bshuiban.baselibrary.view.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +18,11 @@ import com.bshuiban.baselibrary.contract.GeneralSituationContract;
 import com.bshuiban.baselibrary.model.GeneralBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.GeneralSituationPresent;
+import com.bshuiban.baselibrary.view.adapter.GeneralSituationAdapter;
+import com.bshuiban.baselibrary.view.customer.LineTextView;
 import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 /**
  * Created by xinheng on 2018/5/4.<br/>
@@ -23,9 +30,10 @@ import com.bumptech.glide.Glide;
  */
 public class GeneralSituationFragment extends BaseFragment<GeneralSituationPresent> implements GeneralSituationContract.View{
 
-    private TextView tv_text;
-    private TextView tv_show;
+    private TextView tv_text,tv_show;
+    private LineTextView tv_teacher,tv_student;
     private ImageView iv;
+    private RecyclerView recycle;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,28 +49,34 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
         tPresent.askInterNetForData();
         return view;
     }
-
+    private int color;
+    private int color1;
     private void init(View view) {
         iv = view.findViewById(R.id.iv);
         tv_text = view.findViewById(R.id.tv_text);
         tv_show = view.findViewById(R.id.tv_show);
-
+        tv_teacher = view.findViewById(R.id.tv_teacher);
+        tv_student = view.findViewById(R.id.tv_student);
+        recycle = view.findViewById(R.id.recycle);
+        recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
+        teaInfoBeanGeneralSituationAdapter.setContext(getActivity());
+        stuInfoBeanGeneralSituationAdapter.setContext(getActivity());
+        recycle.setAdapter(teaInfoBeanGeneralSituationAdapter);
+        color=getResources().getColor(R.color.guide_start_btn);
+        color1=getResources().getColor(R.color.tab_unselect);
+        tv_teacher.setOnClickListener(onClickListener);
+        tv_student.setOnClickListener(onClickListener);
+        onClickListener.onClick(tv_teacher);
     }
+    private View.OnClickListener onClickListener= this::onClick;
+
     private void updateTextSet(){
         if(tv_text.getLineCount()>3){
             tv_text.setMaxLines(3);
             tv_text.setEllipsize(TextUtils.TruncateAt.END);
-            tv_show.setOnClickListener(v -> {
-                TextView tv=(TextView)v;
-                int lineCount = tv_text.getLineCount();
-                if(lineCount<=3){
-                    tv_text.setMaxLines(20);
-                    tv.setText("收起");
-                }else{
-                    tv_text.setMaxLines(3);
-                    tv.setText("展开");
-                }
-            });
+            tv_show.setOnClickListener(onClickListener);
+        }else{
+            tv_show.setVisibility(View.GONE);
         }
     }
     @Override
@@ -75,6 +89,10 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
         }
         tv_text.setText(data.getSummary());
         updateTextSet();
+        List<GeneralBean.DataBean.TeaInfoBean> teaInfo = data.getTeaInfo();
+        List<GeneralBean.DataBean.StuInfoBean> stuInfo = data.getStuInfo();
+        teaInfoBeanGeneralSituationAdapter.setList(teaInfo);
+        stuInfoBeanGeneralSituationAdapter.setList(stuInfo);
     }
 
     @Override
@@ -101,5 +119,80 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
     @Override
     public void dismissDialog() {
 
+    }
+    private GeneralSituationAdapter<GeneralBean.DataBean.TeaInfoBean> teaInfoBeanGeneralSituationAdapter=new GeneralSituationAdapter<GeneralBean.DataBean.TeaInfoBean>() {
+        @Override
+        protected String getImagePath(int position) {
+            return mList.get(position).getImgUrl();
+        }
+
+        @Override
+        protected String getName(int position) {
+            return mList.get(position).getName();
+        }
+
+        @Override
+        protected String getSubjectName(int position) {
+            return com.bshuiban.baselibrary.utils.TextUtils.cleanNull(mList.get(position).getSubjectName())+"老师";
+        }
+
+        @Override
+        protected void toNextPageGuanZhu(int position) {
+
+        }
+
+        @Override
+        protected void toNextPageLiuYan(int position) {
+
+        }
+    };
+    private GeneralSituationAdapter<GeneralBean.DataBean.StuInfoBean> stuInfoBeanGeneralSituationAdapter=new GeneralSituationAdapter<GeneralBean.DataBean.StuInfoBean>() {
+        @Override
+        protected String getImagePath(int position) {
+            return mList.get(position).getImgUrl();
+        }
+
+        @Override
+        protected String getName(int position) {
+            return mList.get(position).getName();
+        }
+
+        @Override
+        protected String getSubjectName(int position) {
+            return com.bshuiban.baselibrary.utils.TextUtils.cleanNull(mList.get(position).getStuSubStrAll());
+        }
+
+        @Override
+        protected void toNextPageGuanZhu(int position) {
+
+        }
+
+        @Override
+        protected void toNextPageLiuYan(int position) {
+
+        }
+
+    };
+
+    private void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.tv_teacher) {
+            tv_teacher.setSelectColor(Color.BLACK, color);
+            tv_student.setSelectColor(color1, -1);
+            recycle.setAdapter(teaInfoBeanGeneralSituationAdapter);
+        } else if (i == R.id.tv_student) {
+            tv_student.setSelectColor(Color.BLACK, color);
+            tv_teacher.setSelectColor(color1, -1);
+            recycle.setAdapter(stuInfoBeanGeneralSituationAdapter);
+        } else if (i == R.id.tv_show) {
+            int lineCount = tv_text.getLineCount();
+            if (lineCount <= 3) {
+                tv_text.setMaxLines(20);
+                tv_show.setText("收起");
+            } else {
+                tv_text.setMaxLines(3);
+                tv_show.setText("展开");
+            }
+        }
     }
 }

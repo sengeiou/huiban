@@ -9,7 +9,7 @@ public class UrlManage {
 
     private static UrlManage manage;
 
-    private static final int type=NEI_WANG;
+    private static final int type=WAI_WANG;
     public static UrlManage getInstance() {
         if(manage==null){
             synchronized (UrlManage.class){

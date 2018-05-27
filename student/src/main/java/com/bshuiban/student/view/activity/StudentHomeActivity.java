@@ -3,17 +3,26 @@ package com.bshuiban.student.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bshuiban.baselibrary.model.LoginResultBean;
 import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.view.activity.AboutSelfActivity;
+import com.bshuiban.baselibrary.view.activity.CleanCacheActivity;
 import com.bshuiban.baselibrary.view.activity.HomePageActivity;
 import com.bshuiban.baselibrary.view.customer.BottomBar;
 import com.bshuiban.baselibrary.view.customer.BottomBarTab;
+import com.bshuiban.baselibrary.view.fragment.HomeworkFragment;
+import com.bshuiban.baselibrary.view.fragment.ReportFragment;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
+import com.bshuiban.baselibrary.view.webview.webActivity.CollectionListActivity;
+import com.bshuiban.baselibrary.view.webview.webFragment.ErrorHomeworkWebFragment;
 import com.bshuiban.baselibrary.view.webview.webFragment.InteractionBaseWebViewFragment;
 import com.bshuiban.student.R;
 import com.bshuiban.student.contract.StudentHomeContract;
@@ -40,19 +49,19 @@ public class StudentHomeActivity extends HomePageActivity<InteractionBaseWebView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tPresent = new StudentHomePresent(this);
-        tPresent.getUserDataForInernet();
+        tPresent.getUserDataForInternet();
     }
 
     @Override
     protected void initNavigationView(NavigationView navigationView) {
-        navigationView.inflateHeaderView(R.layout.nav_student_header_home_page);
+        View view = navigationView.inflateHeaderView(R.layout.nav_student_header_home_page);
         navigationView.inflateMenu(R.menu.activity_home_page_student_drawer);
         //头像
-        iv_head = (ImageView) navigationView.findViewById(R.id.iv_head);
+        iv_head = (ImageView) view.findViewById(R.id.iv_head);
         //简介
-        tv_text = (TextView) navigationView.findViewById(R.id.tv_text);
+        tv_text = (TextView) view.findViewById(R.id.tv_text);
         //名字
-        tv_name = (TextView) navigationView.findViewById(R.id.tv_name);
+        tv_name = (TextView) view.findViewById(R.id.tv_name);
     }
 
     @Override
@@ -74,13 +83,13 @@ public class StudentHomeActivity extends HomePageActivity<InteractionBaseWebView
                         startFragment(BOTTOM1, null);
                         break;
                     case 1://作业
-                        //startFragment(BOTTOM2, null);
+                        startFragment(BOTTOM2, null);
                         break;
                     case 2://报告
-                        //startFragment(BOTTOM3, null);
+                        startFragment(BOTTOM3, null);
                         break;
                     case 3://错题
-                        //startFragment(BOTTOM4, null);
+                        startFragment(BOTTOM4, null);
                         break;
                     default:
                 }
@@ -103,16 +112,18 @@ public class StudentHomeActivity extends HomePageActivity<InteractionBaseWebView
 
     @Override
     protected void itemSelectedId(int id) {
-        if (id == R.id.nav_my_space) {
-
-        } else if (id == R.id.nav_gallery) {
-
+        Class<?> cls;
+        if (id == R.id.nav_gallery) {
+            cls= CollectionListActivity.class;
         } else if (id == R.id.nav_about_self) {
-
+            cls= AboutSelfActivity.class;
         } else if (id == R.id.nav_opinion) {
-
-        } else {
-
+            cls=AboutSelfActivity.class;
+        } else {//nav_clear_cache
+            cls= CleanCacheActivity.class;
+        }
+        if(null!=cls) {
+            startActivity(new Intent(this, cls));
         }
     }
 
@@ -124,10 +135,13 @@ public class StudentHomeActivity extends HomePageActivity<InteractionBaseWebView
                 fragment = new StudentHomePageFragment();
                 break;
             case BOTTOM2:
+                fragment = new HomeworkFragment();
                 break;
             case BOTTOM3:
+                fragment = new ReportFragment();
                 break;
             case BOTTOM4:
+                fragment = new ErrorHomeworkWebFragment();
                 break;
             default:
                 fragment = null;
@@ -174,5 +188,17 @@ public class StudentHomeActivity extends HomePageActivity<InteractionBaseWebView
     @Override
     public void fail(String error) {
 
+    }
+
+    @Override
+    public void transportData(String tag) {
+        if("toggleSlide".equals(tag)){
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            }else{
+                drawer.openDrawer(GravityCompat.START);
+            }
+        }
     }
 }

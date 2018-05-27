@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作业单元列表</title>
+    <style>
+        .noComplate,
+        .complate {
+            padding-bottom: 1.2rem;
+        }
+        #filte{
+            position: fixed;
+            z-index: 2;
+            width:100%;
+            background:#07cab9;
+            right:0;
+            top:.9rem;
+            color:#eee;
+            line-height: .4rem;
+            text-align:center;
+            padding-top:.2rem;
+            padding-bottom: .2rem;
+        }
+        #filte .li{
+            width:3.2rem;
+            height:1rem;
+            line-height: 1rem;
+            font-size: .28rem;
+            border:1px solid #eee;
+            float:left;
+            margin-left: .27rem;
+            margin-right: .27rem;
+            margin-bottom:.2rem;
+        }
+    </style>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/work.css">
+</head>
+<script src="./js/rem.js"></script>
+<script src="./js/jquery.min.js"></script>
+<body>
+    <ul id="filte"></ul>
+    <div class="wrap workIndex">
+        <header>
+            <span>
+                <a class="back" href="work.html">
+                </a>
+            </span>
+            <span>作业</span>
+            <b class="details"></b>
+        </header>
+        <main>
+            <nav>
+                <span class="navs">
+                    <i class="active">待完成</i>
+                </span>
+                <span class="navs">
+                    <i class="active2">已完成</i>
+                </span>
+            </nav>
+            <div class="list noComplate">
+                <div class="nodone">
+                    <div class="listMsg">
+                        <dl>
+                            <dt>
+                                <h3>第六单元 化学方程式</h3>
+                                <p>化学/八年级/第六单元 化学方程式</p>
+                            </dt>
+                            <dd>
+                                <a href="./workMsg.html"></a>
+                            </dd>
+                        </dl>
+                        <p class="time">2017.05.01 19:40 - 2017.05.03 23:59</p>
+                    </div>
+                </div>
+                <div class="done">
+                       
+                    </div>
+            </div>
+        </main>
+    </div>
+</body>
+<script src="./js/workLimit.js"></script>
+
+</html>

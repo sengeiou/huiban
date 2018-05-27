@@ -8,4 +8,5 @@ import android.os.Bundle;
  */
 public interface OnFragmentInteractionListener {
     void onFragmentInteraction(String tag, Bundle bundle);
+    void transportData(String tag);
 }

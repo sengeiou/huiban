@@ -22,11 +22,22 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import com.bshuiban.baselibrary.present.BasePresent;
+import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.activity.BaseActivity;
 
 public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
     protected WebView mWebView;
     protected String TAG="HTML5";
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FrameLayout frameLayout = ViewUtils.getFrameLayout(this);
+        mWebView=getWebView(getApplicationContext());
+        frameLayout.addView(mWebView);
+        setContentView(frameLayout);
+    }
+
     protected void setTAG(String tag){
         TAG=tag;
     }
@@ -45,6 +56,11 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 webViewLoadFinished();
+            }
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.e(TAG, "shouldOverrideUrlLoading: "+url );
+                return true;
             }
         });
         setWebViewSetting(mWebView);

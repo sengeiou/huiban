@@ -39,7 +39,7 @@ import java.util.List;
  * Created by xinheng on 2018/5/21.<br/>
  * describe：报告
  */
-public class ReportFragment extends BaseFragment<ReportPresent> implements ReportContract.View {
+public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent> implements ReportContract.View {
     private List<SubjectBean.DataBean> arrayList;
     private ReportViewPagerAdapter classViewPagerAdapter;
     private MagicIndicator magicIndicator;
@@ -51,6 +51,11 @@ public class ReportFragment extends BaseFragment<ReportPresent> implements Repor
         super.onCreate(savedInstanceState);
         tPresent=new ReportPresent(this);
         arrayList=new ArrayList<>();
+    }
+
+    @Override
+    public void update(Bundle bundle) {
+
     }
 
     @Nullable

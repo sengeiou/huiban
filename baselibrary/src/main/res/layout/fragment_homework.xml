@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragment.HomeworkFragment">
+    <com.bshuiban.baselibrary.view.customer.TitleView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        app:title_text="我的作业"
+        app:title_size="@dimen/dp_20"
+        app:src_left="@mipmap/iv_back"
+        android:background="@color/guide_start_btn"
+        app:title_color="@android:color/white"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipChildren="false"
+        >
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_student_homework"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginRight="@dimen/dp_40"
+            android:layout_marginLeft="@dimen/dp_40"
+            />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_30"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll_guide_gray_dots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dot_gray" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/dot_gray" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dot_gray" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_guide_red_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dot_red" />
+    </FrameLayout>
+
+</LinearLayout>

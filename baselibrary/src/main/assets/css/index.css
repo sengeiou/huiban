@@ -1378,7 +1378,7 @@
   border-bottom: solid 0.04rem #fff;
 }
 
-.coachBox main nav .active {
+.coachBox main .active {
   border-bottom: solid 0.04rem #32C5B9;
 }
 
@@ -1467,11 +1467,14 @@
 }
 
 .coachBox main .courseList .list dl .classImg {
-  width: 2.92rem;
-  height: 1.84rem;
-  background: oldlace;
+  width: 4rem;
   border-radius: 0.1rem;
   margin: 0.16rem;
+}
+
+.coachBox main .courseList .list dl .classImg img {
+  width: 3rem;
+  height: auto;
 }
 
 .coachBox main .courseList .list dl dd {
@@ -1479,24 +1482,28 @@
 }
 
 .coachBox main .courseList .list dl dd h3 {
-  line-height: 0.58rem;
-  font-size: 0.32rem;
+  width: 4rem;
+  line-height: 0.4rem;
+  font-size: 0.3rem;
   font-weight: bold;
-  margin-bottom: 0.43rem;
+  margin-bottom: 0.2rem;
   font-weight: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .coachBox main .courseList .list dl dd p {
-  font-size: 0.22rem;
+  font-size: 0.28rem;
   color: #9A9A9A;
   line-height: 0.4rem;
 }
 
 .coachBox main .courseList .mask {
   width: 100%;
-  height: 93%;
-  position: absolute;
-  top: 8%;
+  height: 10.75rem;
+  position: fixed;
+  top: 2.6rem;
   left: 0;
   background: #fff;
   opacity: 0.9;
@@ -1519,6 +1526,7 @@
   padding-top: 0.41rem;
   padding-left: 0.43rem;
   line-height: 0.3rem;
+  clear: both;
 }
 
 .coachBox main .courseList .mask .main .changeBox .kind {
@@ -1534,7 +1542,11 @@
   font-size: 0.2rem;
   margin-right: 0.2rem;
 }
-
+.coachBox .swiper-slide {
+  width: 1.6rem!important;
+  height: 0.8rem!important;
+  line-height: 0.8rem!important;
+}
 .coachBox main .courseList .mask .main .changeBox span {
   width: 1.4rem;
   display: inline-block;
@@ -1569,23 +1581,31 @@
 .coachBox main .subject .title {
   text-indent: 0.16rem;
   color: #000;
+  font-size: 0.32rem;
+  padding-top: 0.1rem;
+  height: 1rem;
 }
-
+.coachBox main .subject .title p:nth-child(1) i{
+  float: left;
+}
 .coachBox main .subject .title p:nth-child(1) span {
   display: inline-block;
-  width: 1.4rem;
+  width: 1.3rem;
   height: 0.5rem;
   line-height: 0.5rem;
   border-radius: 0.2rem;
   background: #eee;
   font-size: 0.2rem;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 
 .coachBox main .subject .title p:nth-child(2) {
   width: 1.4rem;
   border-left: solid 0.02rem #eee;
   color: #9A9A9A;
-  font-size: 0.36rem;
+  font-size: 0.32rem;
 }
 
 .coachBox main .subject .title p:nth-child(2) span {
@@ -1666,26 +1686,26 @@
 .coachBox main .subject .list dl dd h4 i {
   font-style: normal;
   color: #9b9b9b;
+  font-size: 0.24rem;
+  margin-right: 0.2rem;
+}
+
+.coachBox main .mask .all {
+  display: inline-block;
+  width: 4.2rem;
+  float: right;
+  margin-right: 0.3rem;
 }
 
 .courseDetails .classImg {
   width: 100%;
   height: 3.93rem;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-image: url("../images/index/work@2x.png");
+  border-bottom: solid 1px #eee;
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .courseDetails .classImg {
-    background-image: url("../images/index/work@2x.png");
-  }
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 3) {
-  .courseDetails .classImg {
-    background-image: url("../images/index/work@3x.png");
-  }
+.courseDetails .classImg img {
+  width: 100%;
+  height: 100%;
 }
 
 .courseDetails .synopsis {
@@ -1703,6 +1723,13 @@
   width: 100%;
   height: 0.8rem;
   display: flex;
+}
+
+.courseDetails .classTab .catalog p {
+  padding: 0 0.2rem;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 
 .courseDetails .classTab .navs span {
@@ -2001,7 +2028,7 @@
   height: 2rem;
   display: flex;
   justify-content: space-between;
-  font-size: 0.28rem;
+  font-size: 0.24rem;
   border-bottom: solid 1px #eee;
 }
 .follow main .content dl {

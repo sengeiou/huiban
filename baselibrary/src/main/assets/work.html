@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作业</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/work.css">
+    <link rel="stylesheet" href="./css/swiper.min.css">
+</head>
+<script src="./js/rem.js"></script>
+<script src="./js/jquery.min.js"></script>
+<script src="./js/swiper.min.js"></script>
+<body>
+    <div class="wrap work">
+        <header>
+            <span>
+                <a href="../../index.html">
+                  
+                </a>
+            </span>	
+            <span></span>
+        </header>
+        <main>
+            <div class="swiper-container" id="swiper-container">
+                <div class="swiper-wrapper">
+                    <a href="./workIndex.html" class="swiper-slide">
+                        <span>课前预习</span>
+                    </a>
+                    <a  href="classrecords.html"class="swiper-slide">
+                        <span>课堂记录</span>
+                    </a>
+                    <a href="afterworkIndex.html" class="swiper-slide">
+                        <span>课后作业</span>
+                    </a>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+     var swiper = document.getElementsByClassName("swiper-slide");
+    // 点击跳转到workIndex.html
+     swiper[0].onclick = function() {
+        console.log("111")
+     }
+     // 点击跳转到classrecords.html
+     swiper[1].onclick = function() {
+        console.log("111")
+     }
+     // 点击跳转到afterworkIndex.html
+     swiper[2].onclick = function() {
+        console.log("111")
+     }
+</script>
+<script src="../../js/work/work.js"></script>
+
+</html>

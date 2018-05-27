@@ -3,6 +3,8 @@ package com.bshuiban.baselibrary.present;
 import com.bshuiban.baselibrary.contract.BaseView;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 
+import java.util.Map;
+
 import okhttp3.ResponseBody;
 import retrofit2.Callback;
 
@@ -42,5 +44,7 @@ public class BasePresent<T extends BaseView> {
     public void askInternet(String key, String json, Callback<ResponseBody> callback){
         call=RetrofitService.getInstance().getServiceResult(key,json,callback);
     }
-
+    public void askInternet(String key, Map<String,Object> json, Callback<ResponseBody> callback){
+        call=RetrofitService.getInstance().getServiceMapResult(key,json,callback);
+    }
 }

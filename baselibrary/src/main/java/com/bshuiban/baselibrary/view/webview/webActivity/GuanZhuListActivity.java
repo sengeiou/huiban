@@ -11,18 +11,14 @@ import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 
 /**
- * 留言列表
- * 已关注列表
+ * 关注列表
  */
 public class GuanZhuListActivity extends BaseWebActivity<GuanZhuListPresent> implements GuanZhuListContract.View{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FrameLayout frameLayout = ViewUtils.getFrameLayout(this);
-        mWebView=getWebView(getApplicationContext());
-        frameLayout.addView(mWebView);
-        setContentView(frameLayout);
+
         tPresent=new GuanZhuListPresent(this);
         loadFileHtml("follow");
         GuanZhuList object = new GuanZhuList();

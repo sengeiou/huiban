@@ -12,13 +12,13 @@ public class SubjectChildPresentTest {
 
     @Test
     public void loadStudyBottom() throws InterruptedException {
-        new SubjectChildPresent(null).loadStudyBottom(2);
+        new SubjectChildPresent(null).loadStudyBottom(2,"");
         Thread.sleep(2000);
     }
 
     @Test
     public void loadStudyReportData() throws InterruptedException {
-        new SubjectChildPresent(null).loadStudyReportData();
+        new SubjectChildPresent(null).loadStudyReportData(2,"");
         Thread.sleep(2000);
 
     }

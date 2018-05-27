@@ -77,6 +77,7 @@ public abstract class HomePageActivity<T extends Fragment,P extends BasePresent>
 
         }*/
         itemSelectedId(id);
+        item.setCheckable(false);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

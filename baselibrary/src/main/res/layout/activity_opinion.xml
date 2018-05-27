@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.activity.OpinionActivity">
+    <include layout="@layout/base_title_bar_with_back_more_image"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_margin="10dp"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        >
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:hint="请输入您的问题和意见，如能提供详细描述，操作步骤及网络环境，将帮助我们更快找出问题，万分感谢！"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:background="@android:color/transparent"
+            android:layout_margin="6dp"
+            android:imeOptions="flagNoExtractUi"
+            android:maxLength="500"
+            android:textColorHint="@color/tab_unselect"
+            android:textSize="14sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/200"
+            android:layout_gravity="right"
+            android:layout_margin="5dp"
+            />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_margin="10dp"
+        android:id="@+id/rv_select_picture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:divider="@null"
+        android:fadingEdge="none"
+        android:listSelector="@android:color/transparent"
+        android:scrollbarStyle="outsideOverlay"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:spanCount="3"
+        tools:listitem="@layout/item_add_image"/>
+</LinearLayout>

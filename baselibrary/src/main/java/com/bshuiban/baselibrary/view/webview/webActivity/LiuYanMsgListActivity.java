@@ -31,6 +31,7 @@ public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> 
         tPresent=new LiuYanMsgListParent(this,messageUserId);
         loadFileHtml("leave");
         MessageList messageList=new MessageList();
+        registerWebViewH5Interface(messageList);
         messageList.setOnListener(new MessageList.MessageListListener() {
             @Override
             public void deleteMessageItem(String messageId, String pid) {

@@ -15,14 +15,20 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.view.activity.ClassActivity;
+import com.bshuiban.baselibrary.view.activity.ClassScheduleActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
+import com.bshuiban.baselibrary.view.webview.webActivity.GuanZhuListActivity;
+import com.bshuiban.baselibrary.view.webview.webActivity.HuiFuDaoListActivity;
+import com.bshuiban.baselibrary.view.webview.webActivity.LiuYanMsgListActivity;
+import com.bshuiban.baselibrary.view.webview.webActivity.NoticeActivity;
 import com.bshuiban.baselibrary.view.webview.webFragment.HomePageFragment;
 
 /**
  * Created by xinheng on 2018/5/15.<br/>
  * describe：学生首页
- * 1.获取今日学生课表  classList
- * 2.慧辅导两条数据 train
+ * 1.获取今日学生课表
+ * 2.慧辅导两条数据
  * 3.留言列表 message
  *
  *
@@ -32,12 +38,6 @@ import com.bshuiban.baselibrary.view.webview.webFragment.HomePageFragment;
  * 加载更多--
  */
 public class StudentHomePageFragment extends HomePageFragment {
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //String userId = User.getInstance().getUserId();
-
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,40 +76,39 @@ public class StudentHomePageFragment extends HomePageFragment {
         tPresent.getTodaySchedule(userId);//今日课表
         tPresent.getHuiFuDaoTwoData();//慧辅导两条数据
         tPresent.getMessageList(userId);//留言列表
+        //loadJavascriptMethod("picture",User.getInstance().getUserData().getIcoPath());
     }
 
-    @Override
-    protected void delete(String messageId, String pid) {
-        super.delete(messageId, pid);
-    }
-
-    @Override
-    protected void addRecevier(String json) {
-        super.addRecevier(json);
-    }
     private void toNextActivity(int type) {
         Log.e(TAG, "toNextActivity: type="+type );
         Class<?> cls;
         switch (type) {
+            // 0 班级，1 课表，2 通知，3 关注，4 慧辅导，5 学习资源，6 去留言
             case 0://班级
-
+                cls= ClassActivity.class;
                 break;
             case 1://课表
-
+                cls=ClassScheduleActivity.class;
                 break;
             case 2://通知
-
+                cls= NoticeActivity.class;
                 break;
             case 3://关注
+                cls= GuanZhuListActivity.class;
                 break;
             case 4: //慧辅导
-                tPresent.getReplyMessage(1);
+                cls= HuiFuDaoListActivity.class;
+                break;
+            case 6:// 去留言
+                cls=LiuYanMsgListActivity.class;
                 break;
             default:
                 //学习资源
-
+                cls=null;
         }
-        //startActivity(new Intent(this, cls));
+        if(null!=cls) {
+            startActivity(new Intent(getActivity(), cls));
+        }
     }
 
     class StuHomePageHtml extends MessageList {
@@ -124,8 +123,16 @@ public class StudentHomePageFragment extends HomePageFragment {
             });
         }
         @JavascriptInterface
+        public void toggleSlide(){
+            getActivity().runOnUiThread(()->{
+                mListener.transportData("toggleSlide");
+            });
+        }
+        @JavascriptInterface
         public void reply(int index){
-
+            getActivity().runOnUiThread(()->{
+                tPresent.getReplyMessage(index);
+            });
         }
     }
 }

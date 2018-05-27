@@ -12,6 +12,6 @@ public interface StudentHomeContract {
         void updateSlideView(StudentUser.DataBean data);
     }
     interface Present{
-        void getUserDataForInernet();
+        void getUserDataForInternet();
     }
 }

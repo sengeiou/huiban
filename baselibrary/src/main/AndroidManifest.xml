@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bshuiban.baselibrary">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application>
         <activity
             android:name=".view.activity.SplashActivity"
@@ -15,10 +19,72 @@
             android:name=".view.webview.webActivity.CollectionListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.activity.ClassActivity" />
-        <activity android:name=".view.webview.webActivity.GuanZhuListActivity" />
-        <activity android:name=".view.activity.StatisticalChartActivity"
-            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".view.activity.ClassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.GuanZhuListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.StatisticalChartActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".view.activity.ClassScheduleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.AboutSelfActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.OpinionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CleanCacheActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.NoticeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.HuiFuDaoListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.LiuYanMsgListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.HomeworkReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.HomeworkDescribeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.HomeworkCompleteInfActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.HomeworkPendingInfActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.ConsolidationWebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.TextActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.ErrorHomeworkAnalysisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.HomeworkListWebActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.HomeworkResultWebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CameraActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SelectImgActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.webview.webActivity.ErrorFilterActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

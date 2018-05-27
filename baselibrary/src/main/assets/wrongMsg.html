@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>错题详情</title>
+	<link rel="stylesheet" href="./css/reset.css">
+	<link rel="stylesheet" href="./css/wrong.css">
+	<script src="./js/rem.js"></script>
+	<script src="./js/jquery.min.js"></script>
+</head>
+<body>
+	<div class="wrap wrongMsg">
+		<header>
+			<span>
+				<a href="./index.html">
+					
+				</a>
+			</span>	
+			<span></span>
+		</header>
+		<main>
+			<div class="wrongBox">
+				
+			</div>
+		</main>
+		<div class="footer">
+			<span class="repeatVideo">重看视频</span>
+			<span class="practiveWork">巩固练习</span>
+			<span class="clearWrong">清除错题</span>
+		</div>
+		<div class="clearMark hide">
+			<h3>提示</h3>
+			<p class="msg">确定消除?</p>
+			<p class="btn">
+				<span class="sure">确定</span>
+				<span class="no">取消</span>
+			</p>
+		</div>
+	</div>
+</body>
+<script>
+	function getContent (data) {
+		var data = JSON.parse(data);
+		var nowMsg = $(".wrongBox").html();
+		$(".wrongBox").html(nowMsg + `
+			<div class="question">
+				${data.content}
+			</div>
+			<div class="yourAnswer">
+				你的答案：
+				<b>${data.myAnswer}</b>
+			</div>
+			<div class="trueAnswer">
+				正确答案：
+				<b>${data.rightAnswer}</b>
+			</div>
+			<div class="answerMsg">
+				答案解析：
+				${data.analysis}
+			</div>
+		`);
+		var flag = true;
+		$('.clearWrong').bind('click', function () {
+			if (flag) {
+				$('.clearMark').show();
+				flag = false;
+			}else {
+				$('.clearMark').hide();
+				flag = true;
+			}
+		});
+		//重放视频
+		$('.repeatVideo').bind('click', function () {
+			var msg = JSON.stringify({"id": data.quesId});
+			window.android.playVideo(msg);
+		});
+		//进入巩固练习
+		$('.practiveWork').bind('click', function () {
+			var msg = JSON.stringify({"id": data.quesId});
+			window.android.consolidation(msg);
+		})
+		//确定删除错题
+		$('.sure').bind('click', function () {
+			$('.clearMark').hide();
+			var msg = JSON.stringify({"id": data.quesId});
+			window.android.deleteErrorHomework(msg);
+		})
+		$('.no').bind('click', function () {
+			$('.clearMark').hide();
+		})
+	};
+	getContent(data);
+</script>
+</html>

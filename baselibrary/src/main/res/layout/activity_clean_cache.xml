@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".view.activity.CleanCacheActivity">
+
+    <include layout="@layout/base_title_bar_noimage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="已用空间"
+        android:textColor="@color/tab_unselect"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_use_space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/tab_unselect"
+        android:textSize="50sp" />
+
+    <TextView
+        android:id="@+id/tv_persent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="占据手机0.0%储存空间"
+        android:textColor="@color/tab_unselect"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btn_cache"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@color/guide_start_btn"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:text="清除慧班缓存"
+        android:textColor="@android:color/white" />
+</LinearLayout>

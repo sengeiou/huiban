@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/iv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_140"
         android:scaleType="fitXY" />
 
     <TextView
@@ -41,12 +41,13 @@
             android:layout_weight="1">
 
             <com.bshuiban.baselibrary.view.customer.LineTextView
-                android:id="@+id/iv_teacher"
+                android:id="@+id/tv_teacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="老师"
                 app:lineType="bottom"
-                app:lineWidth="5dp" />
+                app:lineWidth="5dp"
+                android:layout_gravity="center"/>
         </FrameLayout>
 
         <FrameLayout
@@ -60,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:text="学生"
                 app:lineType="bottom"
-                app:lineWidth="5dp" />
+                app:lineWidth="5dp"
+                android:layout_gravity="center"/>
         </FrameLayout>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView

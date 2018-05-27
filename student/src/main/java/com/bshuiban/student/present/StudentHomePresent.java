@@ -1,6 +1,9 @@
 package com.bshuiban.student.present;
 
+import android.util.Log;
+
 import com.bshuiban.baselibrary.internet.RetrofitService;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.student.contract.StudentHomeContract;
 import com.bshuiban.student.model.StudentUser;
@@ -15,9 +18,13 @@ public class StudentHomePresent extends BasePresent<StudentHomeContract.View> im
     }
 
     @Override
-    public void getUserDataForInernet() {
-        //String userId = User.getInstance().getUserId();
-        String userId = "2030246";
+    public void getUserDataForInternet() {
+        User instance = User.getInstance();
+        if(null==instance){
+            Log.e("TAG", "getUserDataForInternet: 错误");
+            return;
+        }
+        String userId = instance.getUserId();
         call=RetrofitService.getInstance().getServiceResult("getUserInfo","{\"userId\":\""+ userId +"\"}", new RetrofitService.CallResult<StudentUser>(StudentUser.class) {
             @Override
             protected void success(StudentUser studentUser) {

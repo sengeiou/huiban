@@ -2,6 +2,8 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 
@@ -14,23 +16,31 @@ import com.bshuiban.baselibrary.utils.ViewUtils;
  * describe：
  */
 public class LessonInfActivity extends BaseWebActivity<LessonInfPresent> implements LessonInfContract.View{
-    private final String HTML_FILE_NAME="";
+    private final String HTML_FILE_NAME="courseDetails";
+    private String courseId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FrameLayout frameLayout = ViewUtils.getFrameLayout(this);
-        mWebView=getWebView(getApplicationContext());
-        frameLayout.addView(mWebView);
-        setContentView(frameLayout);
+
+        courseId = getIntent().getStringExtra("courseId");
         tPresent=new LessonInfPresent(this);
         loadFileHtml(HTML_FILE_NAME);
         registerWebViewH5Interface(new LessonInfHtml());
     }
 
     @Override
-    public void updateView(String json) {
+    protected void webViewLoadFinished() {
+        if(!TextUtils.isEmpty(courseId))
+            tPresent.getLessonInf(courseId);
+        else {
+            toast("标识-id，无效");
+        }
+    }
 
+    @Override
+    public void updateView(String json) {
+        loadJavascriptMethod("getContent",json);
     }
 
     @Override
@@ -56,6 +66,7 @@ public class LessonInfActivity extends BaseWebActivity<LessonInfPresent> impleme
         public void playLesson(String playUrl){
             runOnUiThread(()->{
                 //播放视频
+                Log.e(TAG, "playLesson: "+playUrl );
             });
         }
     }

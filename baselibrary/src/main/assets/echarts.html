@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作业报告</title>
+    <link rel="stylesheet" href="./css/reset.css">
+
+    <!-- <link rel="stylesheet" href="./css/homework.css"> -->
+    <style>
+        * {
+            margin: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        ;
+        header {
+            position: relative;
+        }
+
+        .detail {
+            position: absolute;
+            display: block;
+            bottom: .22rem;
+            right: .34rem;
+            width: .42rem;
+            height: .4rem;
+            background-image: url("../../images/work/details@2x.png");
+            background-size: 100%;
+
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio:2) {
+            .detail {
+                background-image: url("../../images/work/details@2x.png");
+            }
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio:3) {
+            .detail {
+                background-image: url("../../images/work/details@3x.png");
+            }
+        }
+
+        .title {
+            width: 100%;
+            height: 1.3rem;
+        }
+
+        .title p {
+            font-family: PingFangSC-Regular;
+            font-size: .28rem;
+            width: 100%;
+            height: .4rem;
+            line-height: .4rem;
+            font-size: .28rem;
+            letter-spacing: -0.34px;
+            text-align: center;
+        }
+
+        .title p:nth-of-type(1) {
+            color: #747474;
+            margin-top: .14rem;
+        }
+
+        .title p:nth-of-type(2) {
+            color: #bebebe;
+            margin-bottom: .3rem;
+        }
+
+        .title p:nth-of-type(2) span {
+            color: #747474;
+        }
+
+        #box {
+            width: 100%;
+            overflow-y: scroll;
+            position: relative;
+        }
+
+        #box h4 {
+            font-family: PingFangSC-Regular;
+            font-size: .28rem;
+            height: .4rem;
+            line-height: .4rem;
+            color: #747474;
+            letter-spacing: 0;
+            text-align: center;
+            margin-top: .28rem;
+            margin-bottom: .3rem;
+        }
+
+        hr {
+            height: .2rem;
+            background: #eee;
+        }
+
+        .pie {
+            font-family: PingFangSC-Regular;
+            font-size: .28rem;
+            color: #606063;
+            letter-spacing: 0;
+            text-align: left;
+        }
+
+        .pie li {
+            float: left;
+            height: .4rem;
+            margin-bottom: .34rem;
+        }
+
+        .pie li:nth-of-type(odd) {
+            width: 2.5rem;
+            padding-left: .5rem;
+            margin-right: .4rem;
+        }
+        .pie li:nth-of-type(2),
+        .pie li:nth-of-type(4) {
+            width: 4.6rem;
+            padding-left: .9rem;
+        }
+
+        #main {
+            width: 7.5rem;
+            height: 7.5rem;
+            position: absolute;
+            top: 2.3rem;
+        }
+
+        #deta {
+            position: absolute;
+            top: 8.7rem;
+            font-family: PingFangSC-Regular;
+            font-size: .32rem;
+            color: #00c7b5;
+            letter-spacing: -0.39px;
+            text-align: center;
+            height: .8rem;
+            line-height: .8rem;
+            width: 100%;
+            margin-top: 1.2rem;
+            text-align: center;
+            text-indent: 15px;
+            background-image: url("../../images/work/see@2x.png");
+            background-repeat: no-repeat;
+            background-size: .32rem .32rem;
+            background-position: 5rem center;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio:2) {
+            #deta {
+                background-image: url("../../images/work/see@2x.png");
+            }
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio:3) {
+            #deta {
+                background-image: url("../../images/work/see@2x.png");
+            }
+        }
+
+        #column {
+            width: 7.18rem;
+            margin-bottom: .3rem;
+            margin-left: .16rem;
+            margin-top: 10.2rem;
+        }
+        table{
+            font-family:PingFangSC-Regular;
+            color:#747474;
+            letter-spacing:-0.29px;
+            width:100%;
+        }
+        table caption{
+            font-size: .28rem;
+            text-align:center;
+            width: 100%;
+            height: .56rem;
+            line-height: .56rem;
+        }
+        table tr td{
+            height:.84rem;
+        }
+        table tr td:first-of-type{
+            width:1.2rem;
+            font-size:.24rem;
+        }
+        table tr td:nth-of-type(2) p{
+            width:3.76rem;
+            height: .4rem;
+            background: #00c7b5;
+            margin-left: .22rem;
+        }
+        table tr td:last-of-type{
+            width:1.54rem;
+            font-size:.24rem;
+        }
+    </style>
+</head>
+<script src="./js/rem.js"></script>
+<script src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/echarts.common.min.js"></script>
+
+<body>
+    <div class="wrap workIndex">
+        <header>
+            <span>
+                <a href="workIndex.html">
+
+                </a>
+            </span>
+            <span>作业报告</span>
+            <a href="details.html" class="detail"> </a>
+        </header>
+        <div class="title">
+            <p>第六单元 化学方程式</p>
+            <p>
+                <span>2017.05.03</span> 9:39 -
+                <span>2017.05.03</span> 10:00</p>
+        </div>
+        <hr>
+        <div id="box">
+            <h4>本次作业题共<span class="num">14</span>题</h4>
+            <ul class="pie">
+                <li>提交名次：3</li>
+                <li>本次作业所用时间：00分22秒</li>
+                <li>正确率：11%</li>
+                <li>班级平均正确率：11%</li>
+            </ul>
+            <div id="main"></div>
+            <div id="deta">查看题目详情</div>
+            <div id="column">
+                <table class="table">
+                    <caption>知识掌握详情</caption>
+                    <tr>
+                        <td>物质的分类及作业</td>
+                        <td>
+                            <p></p>
+                        </td>
+                        <td>
+                            <p>完成1题</p>
+                            <p>正确率100%</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>物质的分类及作业</td>
+                        <td>
+                            <p></p>
+                        </td>
+                        <td>
+                            <p>完成1题</p>
+                            <p>正确率100%</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>物质的分类及作业</td>
+                        <td>
+                            <p></p>
+                        </td>
+                        <td>
+                            <p>完成1题</p>
+                            <p>正确率100%</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>物质的分类及作业</td>
+                        <td>
+                            <p></p>
+                        </td>
+                        <td>
+                            <p>完成1题</p>
+                            <p>正确率100%</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>物质的分类及作业</td>
+                        <td>
+                            <p></p>
+                        </td>
+                        <td>
+                            <p>完成1题</p>
+                            <p>正确率100%</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>物质的分类及作业</td>
+                        <td>
+                            <p></p>
+                        </td>
+                        <td>
+                            <p>完成1题</p>
+                            <p>正确率100%</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>物质的分类及作业</td>
+                        <td>
+                            <p></p>
+                        </td>
+                        <td>
+                            <p>完成1题</p>
+                            <p>正确率100%</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./js/work/echart.js"></script>
+</html>

@@ -55,6 +55,12 @@ public class LineTextView extends TextView {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(getMeasuredWidth(),getMeasuredHeight()+lineWidth);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if(lineColor>0) {

@@ -17,14 +17,14 @@ import com.google.gson.JsonObject;
  * describe：慧辅导列表
  */
 public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> implements HuiFuDaoListContract.View {
-    private final String HTML_FILE_NAME="";
+    /**
+     * 本地html的名字
+     */
+    private final String HTML_FILE_NAME="coach";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FrameLayout frameLayout = ViewUtils.getFrameLayout(this);
-        mWebView=getWebView(getApplicationContext());
-        frameLayout.addView(mWebView);
-        setContentView(frameLayout);
+
         tPresent=new HuiFuDaoListPresent(this);
         loadFileHtml(HTML_FILE_NAME);
         HuiFuDaoHtml messageList = new HuiFuDaoHtml();
@@ -71,17 +71,17 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
 
     @Override
     public void loadAllSubject(String json) {
-        //loadJavascriptMethod("",json);
+        loadJavascriptMethod("getListNav",json);
     }
 
     @Override
     public void loadGuessWhatYouThink(String json) {
-        //loadJavascriptMethod("",json);
+        loadJavascriptMethod("xr",json);
     }
 
     @Override
     public void loadScreeningData(String json) {
-        //loadJavascriptMethod("",json);
+        loadJavascriptMethod("sxContent",json);
     }
 
     class HuiFuDaoHtml extends MessageList{

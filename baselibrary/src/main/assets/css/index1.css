@@ -31,61 +31,112 @@
 
 .indexWrap main .topBox .tab .weather .weatherImg {
   display: inline-block;
-  width: 0.7rem;
-  height: 0.7rem;
-  margin-left: 0.3rem;
+  width:0.7rem;
+  height:0.7rem;
+  position: absolute;
+  top:50%;
   background-size: 0.7rem;
   background-repeat: no-repeat;
 }
-
+.indexWrap main .topBox .tab .weather .weatherImg:nth-of-type(1) {
+  left: 22%
+}
+.indexWrap main .topBox .tab .weather .weatherImg:nth-of-type(2) {
+  left: 45%
+}
+.indexWrap main .topBox .tab .weather .weatherImg:nth-of-type(3) {
+  left: 68%
+}
 .indexWrap main .topBox .tab .weather .morning {
-  background-image: url("../images/index/morning@2x.png");
+  background-image: url("../images/reset/1@2x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .indexWrap main .topBox .tab .weather .morning 
-    background-image: url("../images/index/morning@2x.png");
+  .indexWrap main .topBox .tab .weather .morning {
+    background-image: url("../images/reset/1@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox .tab .weather .morning {
-    background-image: url("../images/index/morning@3x.png");
+    background-image: url("../images/reset/1@3x.png");
+  }
+}
+.indexWrap main .topBox .tab .weather .mornings {
+  background-image: url("../images/reset/2@2x.png");
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .indexWrap main .topBox .tab .weather .mornings {
+    background-image: url("../images/reset/2@2x.png");
   }
 }
 
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+  .indexWrap main .topBox .tab .weather .mornings {
+    background-image: url("../images/reset/2@3x.png");
+  }
+}
 .indexWrap main .topBox .tab .weather .afternoon {
-  background-image: url("../images/index/afternoon@2x.png");
+  background-image:  url("../images/reset/211@2x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap main .topBox .tab .weather .afternoon {
-    background-image: url("../images/index/afternoon@2x.png");
+    background-image:  url("../images/reset/211@2x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox .tab .weather .afternoon {
-    background-image: url("../images/index/afternoon@3x.png");
+    background-image:  url("../images/reset/3121@3x.png");
+  }
+}
+.indexWrap main .topBox .tab .weather .afternoons {
+  background-image:  url("../images/reset/312@2x.png");
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .indexWrap main .topBox .tab .weather .afternoons {
+    background-image:  url("../images/reset/312@2x.png");
   }
 }
 
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+  .indexWrap main .topBox .tab .weather .afternoons {
+    background-image:  url("../images/reset/3122@3x.png");
+  }
+}
 .indexWrap main .topBox .tab .weather .evening {
-  background-image: url("../images/index/evening@2x.png");
+  background-image:  url("../images/reset/11@3x.png");
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .indexWrap main .topBox .tab .weather .evening {
-    background-image: url("../images/index/evening@2x.png");
+    background-image: url("../images/reset/11@3x.png");
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .indexWrap main .topBox .tab .weather .evening {
-    background-image: url("../images/index/evening@3x.png");
+    background-image:  url("../images/reset/2131@2x.png");
+  }
+}
+.indexWrap main .topBox .tab .weather .evenings {
+  background-image:  url("../images/reset/122@2x.png");
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .indexWrap main .topBox .tab .weather .evenings {
+    background-image: url("../images/reset/122@2x.png");
   }
 }
 
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+  .indexWrap main .topBox .tab .weather .evenings {
+    background-image:  url("../images/reset/232@3x.png");
+  }
+}
 .indexWrap main .topBox .tab .content {
   color: #fff;
   width:90%;
@@ -222,31 +273,30 @@
 }
 
 .indexWrap main .topBox .tabList a:nth-child(1) {
-  top: 4.05rem;
-  left: 0.28rem;
+  top: 65%;
+  left:6%;
 }
 
 .indexWrap main .topBox .tabList a:nth-child(2) {
-  top: 4.35rem;
-  left: 2.33rem;
+  top: 72%;
+  left:30%;
 }
 
 .indexWrap main .topBox .tabList a:nth-child(3) {
-  top: 4.35rem;
-  left: 4.3rem;
+  top: 72%;
+  left:60%;
 }
 
 .indexWrap main .topBox .tabList a:nth-child(4) {
-  top: 4.05rem;
-  left: 6.2rem;
+  top: 65%;
+  left:82%;
 }
-
 .indexWrap main .topBox .tabList a span {
   display: block;
 }
 
 .indexWrap main .coach {
-  border-top: 0.06rem solid #eee;
+  border-top: 8px solid #eee;
   padding-top:0.1px;
 }
 
@@ -256,8 +306,9 @@
 
 .indexWrap main .coach .title, .indexWrap main .coach .lookAll {
   width: 100%;
-  height: 0.6rem;
-  line-height: 0.6rem;
+  height: 1rem;
+  color:black;
+  line-height: 1rem;
   text-align: center;
 }
 
@@ -286,44 +337,63 @@
 
 .indexWrap main .coach .lookAll a {
   color: green;
-  margin-top: 0.2rem;
 }
 
-.indexWrap main .coach .resources {
+.indexWrap main .coach .resources{
   height: 1rem;
-  line-height: 1rem;
   border-top: solid 0.06rem #eee;
   border-bottom: solid 0.06rem #eee;
-  display: flex;
-  justify-content: space-between;
   text-indent: 0.2rem;
   font-weight: normal;
-  font-size: 0.32rem;
-  color: #000;
+}
+.indexWrap main .coach .resources span{
+  float: left;
+  height:100%;
+}
+.indexWrap main .coach .resources span:nth-of-type(1) {
+  margin-top:4%;
+  margin-left:2%;
+  width:.35rem;
+  height:.3rem;
+  background-image: url("../images/reset/731316831379139167.png");
+  background-repeat: no-repeat;
+  background-size:.35rem .3rem;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .indexWrap main .coach .resources span:nth-of-type(1){
+    background-image: url("../images/reset/731316831379139167.png");
+  }
 }
 
-.indexWrap main .coach .resources p {
-  display: inline-block;
-  font-size: 0.24rem;
-  text-indent: 0.24rem;
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+  .indexWrap main .coach .resources span:nth-of-type(1) {
+    background-image: url("../images/reset/531189735981496427.png");
+  }
 }
-
-.indexWrap main .coach .resources img {
-  width: 0.18rem;
-  margin-top: 0.37rem;
-  height: 0.27rem;
-  margin-left: 1rem;
+.indexWrap main .coach .resources span:nth-of-type(2) {
+  width:1.6rem;
+  line-height: .9rem;
+  font-size: .32rem;
 }
-
-.indexWrap main .coach .resources span {
-  float: right;
-  margin-right: 0.8rem;
+.indexWrap main .coach .resources span:nth-of-type(3) {
+  width:4.6rem;
+  line-height: .9rem;
+  font-size: .28rem;
+  color:#666;
 }
-
+.indexWrap main .coach .resources span:nth-of-type(4) {
+  width:.5rem;
+  padding-top:3%;
+  margin-left: 2%;
+}
+.indexWrap main .coach .resources span:nth-of-type(4) img {
+  width: .18rem;
+  height: .3rem;
+}
 .indexWrap main .leave h3 {
   width: 100%;
-  height: 0.7rem;
-  line-height: 0.7rem;
+  height: 1rem;
+  line-height:1.2rem;
   display: flex;
   justify-content: space-between;
   font-weight: normal;
@@ -334,11 +404,20 @@
 .indexWrap main .leave h3 span:nth-child(2) {
   font-size: 0.28rem;
 }
-
+.indexWrap main .leave h3 span:nth-child(2) a{
+  width:100%;
+  height: 100%;
+  display: block;
+  margin-right:.6rem;
+  position: relative;
+}
 .indexWrap main .leave h3 span:nth-child(2) img {
+  position: absolute;
   width: 0.18rem;
-  height: auto;
-  margin: 0.2rem 0.2rem 0 0.2rem;
+  height: .3rem;
+  top:45%;
+  right:15%;
+
 }
 
 .indexWrap main .leaveWord {
@@ -355,18 +434,17 @@
   height: 0.7rem;
   margin: 0.2rem;
 }
-
 .indexWrap main .leaveWord .left dl dd {
   line-height: 0.6rem;
 }
-
 .indexWrap main .leaveWord .left dl dd .name {
   color: #1ED2BC;
+  line-height: 0.6rem;
 }
-
 .indexWrap main .leaveWord .left dl dd .time {
   font-size: 0.24rem;
   color: #aaa;
+  line-height: 0.2rem;
 }
 
 .indexWrap main .leaveWord .rightBox {

@@ -66,4 +66,11 @@ public class ListPresent<T extends BaseView> extends BasePresent<T> implements L
     public void updateView(String json) {
 
     }
+
+    @Override
+    public void clearArray() {
+        if(null!=jsonArray){
+            jsonArray=null;
+        }
+    }
 }
