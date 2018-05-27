@@ -16,6 +16,7 @@ import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.activity.AboutSelfActivity;
 import com.bshuiban.baselibrary.view.activity.CleanCacheActivity;
 import com.bshuiban.baselibrary.view.activity.HomePageActivity;
+import com.bshuiban.baselibrary.view.activity.OpinionActivity;
 import com.bshuiban.baselibrary.view.customer.BottomBar;
 import com.bshuiban.baselibrary.view.customer.BottomBarTab;
 import com.bshuiban.baselibrary.view.fragment.HomeworkFragment;
@@ -118,7 +119,7 @@ public class StudentHomeActivity extends HomePageActivity<InteractionBaseWebView
         } else if (id == R.id.nav_about_self) {
             cls= AboutSelfActivity.class;
         } else if (id == R.id.nav_opinion) {
-            cls=AboutSelfActivity.class;
+            cls=OpinionActivity.class;
         } else {//nav_clear_cache
             cls= CleanCacheActivity.class;
         }

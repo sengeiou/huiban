@@ -5,5 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="guide_start_btn">#00C7B5</color>
     <color name="tab_unselect">#a3a3a3</color>
+    <color name="line_bord">#d2d2d2</color>
+    <color name="gray_dia">#7a7e84</color>
 
 </resources>

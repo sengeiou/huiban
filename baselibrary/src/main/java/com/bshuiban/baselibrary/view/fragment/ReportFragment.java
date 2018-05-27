@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.ReportContract;
+import com.bshuiban.baselibrary.model.StuLearnReportBean;
 import com.bshuiban.baselibrary.model.SubjectBean;
 import com.bshuiban.baselibrary.present.ReportPresent;
 import com.bshuiban.baselibrary.view.activity.BaseFragmentActivity;
@@ -40,7 +41,7 @@ import java.util.List;
  * describe：报告
  */
 public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent> implements ReportContract.View {
-    private List<SubjectBean.DataBean> arrayList;
+    private List<StuLearnReportBean.DataBean.ContrastBean> arrayList;
     private ReportViewPagerAdapter classViewPagerAdapter;
     private MagicIndicator magicIndicator;
     private ViewPager viewPager;
@@ -65,23 +66,29 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
         magicIndicator=view.findViewById(R.id.magic);
         viewPager=view.findViewById(R.id.viewPager);
         updateTitleData();
-        tPresent.getTitleBarData();
+        //tPresent.getTitleBarData();
         return view;
     }
 
-    @Override
-    public void updateTitleBar(List<SubjectBean.DataBean> data) {
-        if(null!=data&&data.size()>0) {
-            arrayList.addAll(data);
+    public void updateTitleBar1(List<StuLearnReportBean.DataBean.ContrastBean> contrastBeans) {
+        if(null!=contrastBeans&&contrastBeans.size()>0) {
+            arrayList.addAll(contrastBeans);
             commonNavigatorAdapter.notifyDataSetChanged();
             classViewPagerAdapter.notifyDataSetChanged();
         }
     }
+    public void updateTitleBar(List<SubjectBean.DataBean> data) {
+//        if(null!=data&&data.size()>0) {
+//            arrayList.addAll(data);
+//            commonNavigatorAdapter.notifyDataSetChanged();
+//            classViewPagerAdapter.notifyDataSetChanged();
+//        }
+    }
 
     private void updateTitleData() {
-        SubjectBean.DataBean e = new SubjectBean.DataBean();
+        StuLearnReportBean.DataBean.ContrastBean e = new StuLearnReportBean.DataBean.ContrastBean();
         e.setSubjectName("总览");
-        e.setId(-1);
+        //e.setId(-1);
         arrayList.add(e);
         classViewPagerAdapter=new ReportViewPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(classViewPagerAdapter);
@@ -148,7 +155,24 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
 
         @Override
         public Fragment getItem(int position) {
-            return position==0?new SubjectAllFragment():new SubjectChildFragment();
+            if(position==0) {
+                SubjectAllFragment subjectAllFragment = new SubjectAllFragment();
+                subjectAllFragment.setOnContrastData(new SubjectAllFragment.OnContrastData() {
+                    @Override
+                    public void setContrasts(List<StuLearnReportBean.DataBean.ContrastBean> contrastBeans) {
+                        //List<StuLearnReportBean.DataBean.ContrastBean> contrastBeans;
+                        updateTitleBar1(contrastBeans);
+                    }
+                });
+                return subjectAllFragment;
+            }else {
+                Bundle bundle = new Bundle();
+                bundle.putInt("subjectId", arrayList.get(position).getSubjectId());
+                SubjectChildFragment subjectChildFragment = new SubjectChildFragment();
+                subjectChildFragment.update(bundle);
+                return subjectChildFragment;
+            }
+            //return position==0? subjectAllFragment : subjectChildFragment;
         }
 
         @Override
@@ -157,4 +181,5 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
 
         }
     }
+
 }

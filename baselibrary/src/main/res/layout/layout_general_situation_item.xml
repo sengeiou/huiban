@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_menu_manage"/>
+        android:src="@mipmap/guanzhu"/>
 
     <ImageView
         android:id="@+id/iv_liu_yan"
@@ -53,5 +53,5 @@
         android:layout_toLeftOf="@+id/iv_guan_zhu"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dp_24"
-        android:src="@drawable/ic_menu_camera" />
+        android:src="@mipmap/liuyan" />
 </RelativeLayout>

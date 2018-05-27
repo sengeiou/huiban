@@ -18,8 +18,7 @@ public class ClassSchedulePresent extends BasePresent<ClassScheduleContract.View
 
     @Override
     public void askInternetForScheduleData(String classId) {
-        RetrofitService.getInstance().getServiceResult("getCourseListByCid","{\"classId\":\""+classId+"\"}",new RetrofitService.CallTest());
-        /*call = RetrofitService.getInstance().getServiceResult("getCourseListByCid","{\"classId\":\""+classId+"\"}", new RetrofitService.CallResult<ClassScheduleBean>(ClassScheduleBean.class) {
+        call = RetrofitService.getInstance().getServiceResult("getCourseListByCid","{\"classId\":\""+classId+"\"}", new RetrofitService.CallResult<ClassScheduleBean>(ClassScheduleBean.class) {
             @Override
             protected void success(ClassScheduleBean classScheduleBean) {
                 if(isEffective()){
@@ -31,7 +30,7 @@ public class ClassSchedulePresent extends BasePresent<ClassScheduleContract.View
             protected void error(String error) {
                 view.fail(error);
             }
-        });*/
+        });
 
     }
 }

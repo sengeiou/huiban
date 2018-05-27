@@ -17,6 +17,12 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
+    @Test
+    public void testInterface() throws InterruptedException {//{"userId":"2030246","time":"201805"}
+        RetrofitService.getInstance().getServiceResult("getStuLearnBottom","{\"userId\":\"2030246\",\"time\":\"201805\"}",new RetrofitService.CallTest());
+        Thread.sleep(2000);
+    }
     @Test
     public void addition_isCorrect() {
         String time1 = "2分01秒";// 11时2分1秒

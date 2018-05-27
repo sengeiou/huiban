@@ -93,4 +93,18 @@ public class TextUtils {
         }
         return s;
     }
+    public static String getMaxLengthS(String... values){
+        int max=0;
+        String sTag="";
+        if(values==null){
+            return "";
+        }
+        for (String s:values){
+            if(s.length()>max){
+                max=s.length();
+                sTag=s;
+            }
+        }
+        return sTag;
+    }
 }

@@ -10,6 +10,7 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import com.bshuiban.baselibrary.R
 
 /**
  * Created by xinheng on 2018/5/3.<br></br>
@@ -20,13 +21,13 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
     private val paint1: Paint
     private val paint2: Paint
     private val rect: RectF = RectF()
-    private var progressValue: Float =80f
-    private val mColors = intArrayOf(Color.GREEN, Color.RED)
+    private var progressValue: Float =0f
+    private val mColors = intArrayOf(resources.getColor(R.color.guide_start_btn), Color.RED)
 
     init {
         mPaint.isAntiAlias = true
         mPaint.style = Paint.Style.STROKE
-        mPaint.color = Color.YELLOW
+        mPaint.color = Color.parseColor("#DDCAF5")
         paint1 = Paint(mPaint)
         paint2 = Paint(mPaint)
         paint1.strokeCap = Paint.Cap.ROUND
@@ -36,31 +37,15 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
     }
 
     override fun onDraw(canvas: Canvas) {
-        var mWidth = measuredWidth
-        var mHeight = measuredHeight
+        var mWidth = measuredWidth-paddingLeft-paddingRight
+        var mHeight = measuredHeight-paddingTop-paddingBottom
         mWidth = Math.min(mWidth, mHeight)
         mHeight = mWidth
         val widthPaint = mWidth / 10f
         mPaint.strokeWidth = widthPaint
         paint1.strokeWidth = widthPaint
         paint2.strokeWidth = widthPaint
-
-        var left = paddingLeft + widthPaint
-        var top = paddingTop + widthPaint
-        var right:Float
-        var bottom:Float
-        var side:Float
-        if(mWidth<measuredWidth){
-            side = (measuredWidth - mWidth)/2f
-            left= side+paddingLeft
-            right=left+mWidth
-        }else{
-            side = (measuredHeight-mWidth)/2f
-            right=left+mWidth
-            top=side+paddingLeft
-        }
-        bottom=top+mWidth
-        rect.set(left, top, right, bottom)
+        rect.set(paddingLeft.toFloat(), paddingTop.toFloat(), paddingLeft+mWidth-widthPaint, paddingTop+mWidth-widthPaint)
         canvas.drawArc(rect, 0f, 360f, false, mPaint)
         val section = progressValue / 100
         //        int count = mColors.length;
@@ -72,6 +57,9 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
         mPaint.shader = shader
         val section_ = section * 360
         val ANGLE =170f
+        if(section==0f){
+            return
+        }
         if (section_ > ANGLE) {
             val v = section_ - ANGLE
             val v1 = v / 2
@@ -95,6 +83,7 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
         }
         if(rateFloat!= progressValue){
             progressValue= rateFloat
+            Log.e("TAG","进度-"+progressValue)
             invalidate()
         }
     }

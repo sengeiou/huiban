@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.bshuiban.baselibrary.contract.ClassScheduleContract;
 import com.bshuiban.baselibrary.model.ClassScheduleBean;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.ClassSchedulePresent;
 import com.bshuiban.baselibrary.view.customer.ClassSchedule;
 
@@ -32,7 +33,7 @@ public class ClassScheduleFragment extends BaseFragment<ClassSchedulePresent> im
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         classSchedule=new ClassSchedule(getActivity());
         classSchedule.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        tPresent.askInternetForScheduleData("");
+        tPresent.askInternetForScheduleData(User.getInstance().getClassId());
         return classSchedule;
     }
 

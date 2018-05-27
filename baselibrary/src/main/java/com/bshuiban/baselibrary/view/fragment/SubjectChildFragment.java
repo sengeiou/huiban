@@ -2,6 +2,7 @@ package com.bshuiban.baselibrary.view.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.bshuiban.baselibrary.utils.TextUtils;
 import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.customer.CircleProgressView;
 
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * 子科目 如：语文
@@ -29,15 +32,20 @@ public class SubjectChildFragment extends InteractionBaseFragment<SubjectChildPr
     private CircleProgressView circleProgressView;
     private View tv_look_statistical_inf;
     private View include;
+    private TextView tv_rate;
+    private int subjectId;
 
-    public SubjectChildFragment() {
-        // Required empty public constructor
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        tPresent=new SubjectChildPresent(this);
     }
-
 
     @Override
     public void update(Bundle bundle) {
-
+        if(null!=bundle){
+            subjectId = bundle.getInt("subjectId");
+        }
     }
 
     @Override
@@ -51,6 +59,9 @@ public class SubjectChildFragment extends InteractionBaseFragment<SubjectChildPr
         tv_gradle_ranking = view.findViewById(R.id.tv_gradle_ranking);
         tv_look_statistical_inf = view.findViewById(R.id.tv_look_statistical_inf);
         include = view.findViewById(R.id.include);
+        tv_rate = view.findViewById(R.id.tv_rate);
+        tPresent.loadStudyBottom(subjectId,"201805");
+        tPresent.loadStudyReportData(subjectId,"201805");
         return view;
     }
 
@@ -59,10 +70,21 @@ public class SubjectChildFragment extends InteractionBaseFragment<SubjectChildPr
         if(null!=data){
             StudyReportBean.DataBean.MineBean mine = data.getMine();
             if(null!=mine){
+                String ss;
                 String rate = mine.getRate();//我的正确率
+                if("-1".equals(rate)){
+                    rate="0";
+                    ss="- -";
+                }else{
+                    ss=rate+"%";
+                }
                 circleProgressView.setProgressValue(rate);
+                tv_rate.setText(ss);
                 tv_class_ranking.setText(TextUtils.cleanNull(mine.getCrank()));
+                tv_class_progress.setText(TextUtils.cleanNull(mine.getProgress()+""));
+                tv_gradle_ranking.setText(TextUtils.cleanNull(mine.getGrank()));
             }
+
         }
     }
 

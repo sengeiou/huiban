@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_8"
+        android:background="@color/line_bord"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +30,7 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="19dp"
-                android:text="学习视频"
+                android:text="学习视频   "
                 android:layout_alignTop="@+id/imageView0"
                 android:layout_toRightOf="@id/imageView0"/>
 
@@ -107,14 +110,14 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/app_logo"/>
+                android:src="@drawable/app_logo" />
 
             <TextView
                 android:id="@+id/textView31"
@@ -122,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/imageView3"
                 android:layout_toRightOf="@id/imageView3"
-                android:text="完成测试"/>
+                android:text="完成测试" />
 
             <TextView
                 android:id="@+id/textView32"
@@ -133,4 +136,8 @@
                 android:text="TextView" />
         </RelativeLayout>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_8"
+        android:background="@color/line_bord"/>
 </LinearLayout>

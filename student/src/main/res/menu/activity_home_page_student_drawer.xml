@@ -6,19 +6,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/my_shoucang"
             android:title="我的收藏" />
         <item
             android:id="@+id/nav_about_self"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@mipmap/about_huiban"
             android:title="关于慧班" />
         <item
             android:id="@+id/nav_opinion"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@mipmap/yijianfankui"
             android:title="意见反馈" />
         <item
             android:id="@+id/nav_clear_cache"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@mipmap/cleancouche"
             android:title="清除缓存" />
     </group>
 </menu>

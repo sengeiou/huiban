@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="title_size" format="dimension" />
+    <attr name="title" format="string" />
+    <attr name="title_color" format="color" />
+    <attr name="right_size" format="dimension"/>
+    <attr name="right_color" format="color"/>
     <declare-styleable name="RefreshView">
         <attr name="type" format="enum">
             <enum name="sun" value="0" />
@@ -15,15 +20,46 @@
     </declare-styleable>
     <declare-styleable name="TitleView">
         <attr name="title_text" format="string"/>
-        <attr name="title_size" format="dimension"/>
-        <attr name="title_color" format="color"/>
+        <attr name="title_size" />
+        <attr name="title_color" />
         <attr name="right_text" format="string"/>
-        <attr name="right_size" format="dimension"/>
-        <attr name="right_color" format="color"/>
+        <attr name="right_size" />
+        <attr name="right_color"/>
         <attr name="src_left" format="reference"/>
         <attr name="src_center" format="reference"/>
         <attr name="src_right" format="reference"/>
         <attr name="have_line" format="boolean"/>
         <attr name="line_color" />
+    </declare-styleable>
+    <declare-styleable name="BarsCharView">
+        <attr name="title" />
+        <attr name="bord" format="boolean" />
+        <attr name="title_left" format="string" />
+        <attr name="h_w" format="float" />
+        <attr name="title_size"/>
+        <attr name="y_text_size" format="dimension"/>
+        <attr name="x_text_size" format="dimension"/>
+        <attr name="top_inf_size" format="dimension"/>
+        <attr name="y_text_color" format="color"/>
+        <attr name="x_text_color" format="color"/>
+        <attr name="top_inf_color" format="color"/>
+        <attr name="min_size" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="WordGridView">
+        <attr name="nav_color" format="color" />
+        <attr name="nav_size" format="dimension" />
+        <attr name="child_color" format="color" />
+        <attr name="child_size" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="RectRankingInf">
+        <attr name="rAll" format="boolean" />
+        <attr name="rBackGround" format="color" />
+        <attr name="rWeight" format="float" />
+        <attr name="rMiddlePadding" format="float" />
+        <attr name="left_first_size" format="dimension" />
+        <attr name="left_second_size" format="dimension" />
+        <attr name="right_size" />
+        <attr name="middle_color" format="color" />
+        <attr name="right_color" />
     </declare-styleable>
 </resources>

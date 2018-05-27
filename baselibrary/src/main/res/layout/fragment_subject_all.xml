@@ -1,27 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.SubjectAllFragment"
-    android:orientation="vertical">
+    tools:context=".view.fragment.SubjectAllFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:gravity="center">
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </RelativeLayout>
-    <!--子学科表格-->
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <!--柱状图-->
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_39"
+            android:gravity="center"
+            android:text="2017年5月"
+            android:textSize="@dimen/dp_13" />
 
-    <!--底部学习统计-->
-    <include
-        android:id="@+id/include"
-        layout="@layout/layout_statistical_study_bottom"/>
-</LinearLayout>
+        <RelativeLayout
+            android:id="@+id/classHonor"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_187"
+            android:clipChildren="false"
+            android:gravity="center"
+            android:background="@color/line_bord"
+            android:paddingBottom="@dimen/dp_34"
+            android:paddingTop="@dimen/dp_25">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+        <!--子学科表格-->
+        <com.bshuiban.baselibrary.view.customer.WordGridView
+            android:id="@+id/wordGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_8"
+            android:background="@color/line_bord"/>
+        <!--柱状图-->
+        <com.bshuiban.baselibrary.view.customer.BarsCharView
+            android:id="@+id/barsChar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!--底部学习统计-->
+        <include
+            android:id="@+id/include"
+            layout="@layout/layout_statistical_study_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>

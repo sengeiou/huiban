@@ -210,5 +210,6 @@ public class ClassSchedule extends View {
 
     public void setData(List<List<ClassScheduleBean.DataBean>> data) {
         this.data = data;
+        invalidate();
     }
 }

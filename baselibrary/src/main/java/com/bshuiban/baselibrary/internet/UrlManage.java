@@ -6,10 +6,10 @@ public class UrlManage {
     public final String BASE_URL;
     public static final int NEI_WANG = 0;
     public static final int WAI_WANG = 1;
+    private static final int type=WAI_WANG;
 
     private static UrlManage manage;
 
-    private static final int type=WAI_WANG;
     public static UrlManage getInstance() {
         if(manage==null){
             synchronized (UrlManage.class){

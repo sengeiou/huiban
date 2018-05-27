@@ -15,8 +15,8 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class AESUtils {
 
-    private static final String key = "mm:rYRnadsr1r1o";
-    private static final String iv = "mm:rYRnadsr1r1o";
+    private static final String key = "7mm:rYRnadsr1r1o";
+    private static final String iv = "7mm:rYRnadsr1r1o";
     /** 算法/模式/填充 **/
     private static final String CipherMode = "AES/CBC/PKCS5Padding";
     public static String encrypt(String data) {

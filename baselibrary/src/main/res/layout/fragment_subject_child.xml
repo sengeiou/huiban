@@ -5,90 +5,127 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".view.fragment.SubjectChildFragment">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@android:color/darker_gray"/>
-    <com.bshuiban.baselibrary.view.customer.CircleProgressView
-        android:id="@+id/circleProgressView"
+        android:background="@android:color/darker_gray" />
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="@dimen/dp_213"
+        >
+        <com.bshuiban.baselibrary.view.customer.CircleProgressView
+            android:id="@+id/circleProgressView"
+            android:layout_width="@dimen/dp_213"
+            android:layout_height="@dimen/dp_213"
+            android:padding="@dimen/dp_30"
+            android:layout_gravity="center"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:paddingRight="@dimen/dp_21">
+            <TextView
+                android:id="@+id/tv_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XX"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/dp_30"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的掌握度"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textSize="@dimen/dp_15"/>
+        </LinearLayout>
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="班级排名"
-                />
+                android:text="班级排名" />
 
             <TextView
                 android:id="@+id/tv_class_ranking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="加载中"/>
+                android:text="加载中" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="班级进步"
-                />
+                android:text="班级进步" />
 
             <TextView
                 android:id="@+id/tv_class_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="加载中"/>
+                android:text="加载中" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="班级排名"
-                />
+                android:text="班级排名" />
 
             <TextView
                 android:id="@+id/tv_gradle_ranking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="加载中"/>
+                android:text="加载中" />
         </LinearLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
+
     <TextView
         android:id="@+id/tv_look_statistical_inf"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_43"
+        android:gravity="center"
         android:text="查看统计详情"
-        android:gravity="center_horizontal"
-        android:textSize="18sp"
-        android:textColor="@color/guide_start_btn"/>
+        android:textColor="@color/guide_start_btn"
+        android:textSize="@dimen/dp_20" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
+
     <include
         android:id="@+id/include"
-        layout="@layout/layout_statistical_study_bottom"/>
+        layout="@layout/layout_statistical_study_bottom" />
 </LinearLayout>

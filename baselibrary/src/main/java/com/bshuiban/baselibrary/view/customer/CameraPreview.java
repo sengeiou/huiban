@@ -113,27 +113,6 @@ public class CameraPreview extends FrameLayout implements SurfaceHolder.Callback
         button_cancle.setVisibility(VISIBLE);
         button_enter.setVisibility(VISIBLE);
         button_takephoto.setVisibility(GONE);
-//        // 创建并保存图片文件
-//        File mFile = new File(PHOTO_PATH);
-//        if (!mFile.exists()) {
-//            mFile.mkdirs();
-//        }
-//        File pictureFile = new File(PHOTO_PATH, getPhotoFileName());
-//        try {
-//            FileOutputStream fos = new FileOutputStream(pictureFile);
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-//            bitmap.recycle();
-//            fos.close();
-//            Log.i(TAG, "拍摄成功！");
-//        } catch (Exception error) {
-//            Log.e(TAG, "拍摄失败");
-//            error.printStackTrace();
-//        } finally {
-//            mCamera.stopPreview();
-//            mCamera.release();
-//            mCamera = null;
-//        }
-//    }
     }
 
     @Override
