@@ -55,7 +55,10 @@ public class ErrorHomeworkWebFragment extends InteractionBaseWebViewFragment<Err
 
     @Override
     public void updateList(String json) {
+        //TODO 勿删，‘\\’js自动转‘\’
+        json = json.replace("\\", "\\\\");//没办法
         loadJavascriptMethod("getMsg",json);
+        //loadJavascriptMethod("getMsg","[]");
     }
 
     @Override

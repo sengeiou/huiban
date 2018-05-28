@@ -28,20 +28,23 @@ import static com.bshuiban.baselibrary.view.webview.webActivity.HomeworkListWebA
  * Created by xinheng on 2018/5/24.<br/>
  * describe：作业结果
  */
-public class HomeworkResultWebActivity extends BaseWebActivity<HomeworkResultPresent>implements HomeworkResultContract.View {
-    private Gson gson=new Gson();
-    private int workId,prepareId;
+public class HomeworkResultWebActivity extends BaseWebActivity<HomeworkResultPresent> implements HomeworkResultContract.View {
+    private Gson gson = new Gson();
+    private int workId, prepareId;
+    private boolean complete;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         workId = intent.getIntExtra(HomeworkListWebActivity.HOME_Work_Id, -1);
         prepareId = intent.getIntExtra(HOME_PREPARE, -1);
-        tPresent=new HomeworkResultPresent(this);
+        complete = intent.getBooleanExtra("complete", true);
+        tPresent = new HomeworkResultPresent(this);
         boolean complete = intent.getBooleanExtra("complete", true);
-        if(complete){
+        if (complete) {
             loadFileHtml("list");
-        }else {
+        } else {
             loadFileHtml("submit");
         }
         registerWebViewH5Interface(new HomeworkResultHtml());
@@ -51,7 +54,7 @@ public class HomeworkResultWebActivity extends BaseWebActivity<HomeworkResultPre
     protected void webViewLoadFinished() {
         Homework homework = User.getInstance().getHomework();
         String json = gson.toJson(homework);
-        loadJavascriptMethod("answer",json);
+        loadJavascriptMethod("answer", json);
     }
 
     @Override
@@ -74,17 +77,18 @@ public class HomeworkResultWebActivity extends BaseWebActivity<HomeworkResultPre
         loadJavascriptMethod("judge");
     }
 
-    class HomeworkResultHtml{
+    class HomeworkResultHtml {
         /**
          * 提交、保存作业
+         *
          * @param tag true 提交，false 保存
          */
         @JavascriptInterface
-        public void commitHomework(boolean tag){
-            if(tag){
-                tPresent.commitService(prepareId,workId);
-            }else{
-                tPresent.saveHomework(prepareId,workId);
+        public void commitHomework(boolean tag) {
+            if (tag) {
+                tPresent.commitService(prepareId, workId);
+            } else {
+                tPresent.saveHomework(prepareId, workId);
             }
         }
 
@@ -92,8 +96,8 @@ public class HomeworkResultWebActivity extends BaseWebActivity<HomeworkResultPre
          * 返回作业列表
          */
         @JavascriptInterface
-        public void backHomeworkInf(){
-            startActivity(new Intent(getApplicationContext(),HomeworkListWebActivity.class).putExtra("refresh",true));
+        public void backHomeworkInf() {
+            startActivity(new Intent(getApplicationContext(), HomeworkListWebActivity.class).putExtra("refresh", true));
         }
     }
 

@@ -1,5 +1,6 @@
 package com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass;
 
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.model.HomeworkListData;
@@ -18,6 +19,7 @@ public class HomeworkInfHtml {
     @JavascriptInterface
     public String loadData(int index, String type) {
         String json = HomeworkListData.getHomeworkInfJson(type,index);
+        Log.e("TAG", "loadData: json="+json);
         return json;
     }
 }

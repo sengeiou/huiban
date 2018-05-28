@@ -13,11 +13,13 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.HomeworkPendingInfContract;
+import com.bshuiban.baselibrary.model.HomeWorkCommitBean;
 import com.bshuiban.baselibrary.model.Homework;
 import com.bshuiban.baselibrary.model.HomeworkInfBean;
 import com.bshuiban.baselibrary.model.HomeworkListData;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.HomeworkPendingInfPresent;
+import com.bshuiban.baselibrary.present.HomeworkResultPresent;
 import com.bshuiban.baselibrary.utils.BitMapUtils;
 import com.bshuiban.baselibrary.utils.FileUtils;
 import com.bshuiban.baselibrary.view.activity.CameraActivity;
@@ -190,6 +192,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
         }
         @JavascriptInterface
         public void setStuAnswer(String type, int index, String data) {
+            Log.e(TAG, "setStuAnswer: "+data);
             JsonElement parse = new JsonParser().parse(data);
             List<Homework.Data> list = new ArrayList<>();
             if (parse.isJsonArray()) {
@@ -229,7 +232,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
                                                 String asString = stuAnswer.getAsString();
                                                 nextBean.setStuAnswer(asString);
                                                 dataHome.setComplete(!TextUtils.isEmpty(asString));
-                                                if (dataHome.isComplete()&&"radio".equals(nextBean.getOptionName()) || "check".equals(nextBean.getOptionName())) {
+                                                if (dataHome.isComplete()&&("radio".equals(nextBean.getOptionName()) || "check".equals(nextBean.getOptionName()))) {
                                                     if (asString.equals(nextBean.getAnswer())) {
                                                         dataHome.setResult(1);
                                                     }else{
@@ -238,6 +241,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
                                                 }
                                             }
                                             list.add(dataHome);
+                                            break;
                                         }
                                     }
                                 }
@@ -325,6 +329,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
                 }
                 homework.setHomework(list);
             }
+           HomeworkResultPresent.getHomeworkCommitJson();
         }
 
         @JavascriptInterface

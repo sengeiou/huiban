@@ -65,6 +65,7 @@ public class WebLoginActivity extends BaseWebActivity<LoginPresent> implements L
             if (null != data) {
                 String userId = data.getUserId();
                 String passWord = data.getPassWord();
+                //tPresent.login("2030076", "111111");
                 tPresent.login(userId, passWord);
                 loadJavascriptMethod("setLoginData", userId, passWord);
             }

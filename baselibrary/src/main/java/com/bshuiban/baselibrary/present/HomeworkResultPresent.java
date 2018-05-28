@@ -74,7 +74,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
             }
         });
     }
-    private int toInt(String s){
+    private static int toInt(String s){
         try {
             int hour = Integer.parseInt(s);
             return hour;
@@ -83,7 +83,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
             return 0;
         }
     }
-    private String getTime(float time){
+    private static String getTime(float time){
         int h= (int) (time/3600);
         int m=(int)(time-h*3600)/60;
         int s=(int)(time-h*3600-m*60);
@@ -98,7 +98,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
         }
         return hour+min+s+"秒";
     }
-    private HomeWorkCommitBean getHomeworkCommitJson(){
+    public static HomeWorkCommitBean getHomeworkCommitJson(){
         HomeworkInfBean.DataBean homeworkInfBean = User.getInstance().getHomeworkInfBean();
         int time;
         Homework homework = User.getInstance().getHomework();
@@ -246,7 +246,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
 //        return new Gson().toJson(homeWorkCommitBean);
         return homeWorkCommitBean;
     }
-    private boolean isEmpty(Object o){
+    private static boolean isEmpty(Object o){
         if(null==o){
             return true;
         }
@@ -258,7 +258,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
             return true;
         }
     }
-    private boolean isSelect(String type) {
+    private static boolean isSelect(String type) {
         if ("radio".equals(type) || "check".equals(type)) {
             return true;
         }

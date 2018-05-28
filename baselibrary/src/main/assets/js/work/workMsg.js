@@ -9,7 +9,7 @@ var fl = true;
 var trans,answer,pen,answerimg,text;
 var index1=0;
 var index2=0;
-
+var  indexs = [];
 circle.onclick = function () {
     if (fl) {
         ul.style.display = "block";
@@ -29,6 +29,7 @@ var room = [];
 room[0] = [];
 var res3 = [0];
 var types = [];
+var date2;
 var indexnum, swiper, lengths;
 // 渲染标题
 function item(data) {
@@ -37,14 +38,18 @@ function item(data) {
     res2.length = res4.length;
     lengths = res4.length;
     types.length = res.length;
+    indexs.length = res4.length;
     room.length = res4.length;
     types[0] = res4[0].type;
+    indexs[0] = res4[0].index;
     for (var i = 0; i < res.length; i++) {
         res[i] = [];
         res2[i] = i;
 
     }
-    firstone(window.android.loadData(0,res4[0].type))
+    if(res[0].length == 0) {
+    firstone(window.android.loadData(res4[0].index,res4[0].type))
+    }
     var ul = document.getElementsByClassName("ul")[0];
     var str1 = "";
     title.innerHTML = res4[0].title;
@@ -52,9 +57,7 @@ function item(data) {
         str1 += `<li class="titles">${pro.title}</li>`;
     }
     ul.innerHTML = str1;
-    $('.titles').click(function () {
-        swiper.slideTo(0, 1000, false);//切换到第一个slide，速度为1秒
-    })
+
     var titles = document.getElementsByClassName("titles");
     for (var i = 0; i < titles.length; i++) {
         (function (i) {
@@ -62,37 +65,50 @@ function item(data) {
                 indexnum = i;
                 index1 = i;
                 types[indexnum] = res4[indexnum].type;
+                 indexs[indexnum] = res4[indexnum].index;
                 title.innerHTML = this.innerHTML;
                 ul.style.display = 'none';
                 circle.src = "../../images/work/28046656282239871.png";
-                // 传入type 获取后台数据data
-                //   window.android.loadData(indexnum,res4[indexnum].type) 
                 if (res3.indexOf(indexnum) == -1) {
-                    add(indexnum, window.android.loadData(indexnum,res4[indexnum].type))
+                    var examContent=window.android.loadData(res4[indexnum].index,res4[indexnum].type);
+                    console.log(examContent);
+                    add(indexnum,examContent)
                     rende2(res[indexnum]);
                     room[i] = [];
                     res3.push(indexnum)
                 } else {
-                    
+                      console.log("1111")
+                      add(indexnum,res[indexnum])
+                      rende2(res[indexnum]);
+                       room[i] = [];
                 }
             }
         })(i)
     }
 }
 
-function add(indexnum, date) {
-    var date;
-    if(typeof date == "string") {
-         date = JSON.parse(date)
-    }
-    if (res[indexnum] == "") {
-        for (var k = 0; k < date.length; k++) {
-            for (var j = 0; j < date[k].next.length; j++) {
-                res[indexnum].push(date[k].next[j])
-            }
-        }
-    }
-    homeWork(res[indexnum])
+function add(indexnum,date) {
+if(typeof date ==  "string"){
+       date2 = JSON.parse(date)
+ } else {
+ date2 = date;
+ }
+if (res[indexnum].length == 0) {
+if(date2.constructor == Array) {
+for (var k = 0; k < date2.length; k++) {
+for (var j = 0; j < date2[k].next.length; j++) {
+res[indexnum].push(date2[k].next[j])
+}
+}
+} else {
+for (var k = 0; k < date2.exam.length; k++) {
+for (var j = 0; j < date2.exam[k].next.length; j++) {
+res[indexnum].push(date2.exam[k].next[j])
+}
+}
+}
+}
+homeWork(res[indexnum])
 }
 // 作业列表
 function homeWork(data) {
@@ -149,6 +165,7 @@ function homeWork(data) {
     }
 }
 function rende2(data) {
+      console.log(data);
     if (data[0].optionName == "subjective") {
         typee.innerHTML = `${data[0].content} 
         <ul class="Trans">
@@ -300,22 +317,30 @@ function rende2(data) {
     }
     // 是多选题的调件
     if (data[0].optionName == "check") {
-        var button = document.getElementsByClassName('span');
-        for (var i = 0; i < button.length; i++) {
-            for (var j = 0; j < data[0].stuAnswer.length; j++) {
-                if (data[0].stuAnswer[j] == button[i].innerHTML) {
-                    button[i].style.background = '#07cab9';
-                    button[i].style.color = "white";
-                }
-            }
-        }
+       var flag = [true, true, true, true];
+       var button = document.getElementsByClassName('span');
+       var strs;
+       for (var i = 0; i < button.length; i++) {
+       if( data[0].stuAnswer != "") {
+       strs = data[0].stuAnswer;
+       for (var j = 0; j < data[0].stuAnswer.length; j++) {
+       if (data[0].stuAnswer[j] == button[i].innerHTML) {
+       console.log(flag[i])
+       flag[i] = false;
+       button[i].style.background = '#07cab9';
+       button[i].style.color = "white";
+       }
+       }
+       } else {
+       var strs = "";
+       }
+       }
         typee.innerHTML = `<ul class="list">${data[0].content}</ul> <div id="xuan"> 
         <span class="span">A</span>
         <span class="span">B</span>
         <span class="span">C</span>
         <span class="span">D</span>
     </div>`;
-        var flag = [true, true, true, true];
         var button = document.getElementsByClassName('span');
         var imgtype = document.querySelectorAll('[img-type="tex"]')
         var strs = "";
@@ -505,15 +530,24 @@ function rende(data, index) {
     }
     // 是多选题的调件
     if (data[index].optionName == "check") {
-        var button = document.getElementsByClassName('span');
-        for (var i = 0; i < button.length; i++) {
-            for (var j = 0; j < data[index].stuAnswer.length; j++) {
-                if (data[index].stuAnswer[j] == button[i].innerHTML) {
-                    button[i].style.background = '#07cab9';
-                    button[i].style.color = "white";
-                }
-            }
-        }
+       var flag = [true, true, true, true];
+       var button = document.getElementsByClassName('span');
+       var strs;
+       for (var i = 0; i < button.length; i++) {
+       if( data[index].stuAnswer != "") {
+       strs = data[index].stuAnswer;
+       for (var j = 0; j < data[index].stuAnswer.length; j++) {
+       if (data[index].stuAnswer[j] == button[i].innerHTML) {
+       console.log(flag[i])
+       flag[i] = false;
+       button[i].style.background = '#07cab9';
+       button[i].style.color = "white";
+       }
+       }
+       } else {
+       var strs = "";
+       }
+       }
         typee.innerHTML = `<ul class="list">${data[index].content}</ul> <div id="xuan"> 
     <span class="span">A</span>
     <span class="span">B</span>
@@ -575,11 +609,19 @@ function firstone(data) {
 }
 
 function rendes() {
-    for (var k = 0; k < date.length; k++) {
-        for (var j = 0; j < date[k].next.length; j++) {
-            res[0].push(date[k].next[j])
-        }
-    }
+  if(date.constructor == Array) {
+  for (var k = 0; k < date.length; k++) {
+  for (var j = 0; j < date[k].next.length; j++) {
+  res[0].push(date[k].next[j])
+  }
+  }
+  } else {
+  for (var k = 0; k < date.exam.length; k++) {
+  for (var j = 0; j < date.exam[k].next.length; j++) {
+  res[0].push(date.exam[k].next[j])
+  }
+  }
+  }
     // window初始化页面先加载第一套第一题
     //  通过0下标 获取到第一套试卷 
     homeWork(res[0])
@@ -621,7 +663,7 @@ answerlist.onclick = function () {
     for (var i = 0; i < room.length; i++) {
         if (room[i] != undefined) {
             console.log(JSON.stringify(room[i]));
-            window.android.setStuAnswer(types[i],i,JSON.stringify(room[i]))
+            window.android.setStuAnswer(types[i],indexs[i],JSON.stringify(room[i]))
         }
     }
 

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".view.activity.StatisticalChartActivity">
     <FrameLayout
+        android:id="@+id/fl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="25dp"
@@ -50,4 +51,10 @@
                 android:paddingRight="10dp"/>
         </LinearLayout>
     </FrameLayout>
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/fl"
+        android:layout_margin="@dimen/dp_10"/>
 </RelativeLayout>

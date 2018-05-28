@@ -45,7 +45,6 @@ public class HomeworkReportActivity extends BaseWebActivity<HomeworkReportPresen
 
     @Override
     protected void webViewLoadFinished() {
-
         tPresent.loadHomeworkInf(workId, home_type);
     }
 

@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.yanzhenjie:permission:1.0.6'
     implementation project(':magicindicator')
     implementation project(':Vitamio')
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 }
 repositories {
     mavenCentral()

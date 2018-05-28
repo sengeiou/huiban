@@ -818,7 +818,6 @@ public class HomeworkInfBean extends ResultBean {
                     private int ansType;
                     private String answer;
                     private String analysis;
-                    private int difficult;
                     private int roleId;
                     private int uploaderId;
                     private String resourceName;
@@ -1033,14 +1032,6 @@ public class HomeworkInfBean extends ResultBean {
 
                     public void setAnalysis(String analysis) {
                         this.analysis = analysis;
-                    }
-
-                    public int getDifficult() {
-                        return difficult;
-                    }
-
-                    public void setDifficult(int difficult) {
-                        this.difficult = difficult;
                     }
 
                     public int getRoleId() {

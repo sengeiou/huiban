@@ -41,7 +41,9 @@
 <script>
 	function getContent (data) {
 		var data = JSON.parse(data);
+		console.log(data);
 		var nowMsg = $(".wrongBox").html();
+		console.log($(".wrongBox"));
 		$(".wrongBox").html(nowMsg + `
 			<div class="question">
 				${data.content}
@@ -89,6 +91,6 @@
 			$('.clearMark').hide();
 		})
 	};
-	getContent(data);
+	//getContent(data);
 </script>
 </html>

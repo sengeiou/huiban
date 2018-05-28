@@ -59,15 +59,23 @@ function item(data) {
     }
 }
 function add(indexnum,date) {
-    var date = JSON.parse(date)
-    if(res[indexnum] == "") {
-    for (var k = 0; k < date.length; k++) {
-        for (var j = 0; j < date[k].next.length; j++) {
-            res[indexnum].push(date[k].next[j])
-        }
-    }
- } 
- homeWork(res[indexnum])
+date2 = JSON.parse(date)
+if (res[indexnum].length == 0) {
+if(date2.constructor == Array) {
+for (var k = 0; k < date2.length; k++) {
+for (var j = 0; j < date2[k].next.length; j++) {
+res[indexnum].push(date2[k].next[j])
+}
+}
+} else {
+for (var k = 0; k < date2.exam.length; k++) {
+for (var j = 0; j < date2.exam[k].next.length; j++) {
+res[indexnum].push(date2.exam[k].next[j])
+}
+}
+}
+}
+homeWork(res[indexnum])
 }
  // 页面跳转
  var totalanswer = document.getElementsByClassName("answer")[0];
@@ -368,16 +376,23 @@ function firstone (data) {
 
 // 页面加载时
 function rendes() {
-    for (var k = 0; date!=undefined && k < date.length; k++) {
-        for (var j = 0; j < date[k].next.length; j++) {
-            res[0].push(date[k].next[j])
-        }
-    }
+  if(date.constructor == Array) {
+  for (var k = 0; k < date.length; k++) {
+  for (var j = 0; j < date[k].next.length; j++) {
+  res[0].push(date[k].next[j])
+  }
+  }
+  } else {
+  for (var k = 0; k < date.exam.length; k++) {
+  for (var j = 0; j < date.exam[k].next.length; j++) {
+  res[0].push(date.exam[k].next[j])
+  }
+  }
+  }
     homeWork(res[0])
     rende2(res[0])
  }
 window.onload = function () {
-
     for (var i = 0; i < ques.length; i++) {
         ques[i].style.width = "0.5rem";
         ques[i].style.height = "0.5rem";

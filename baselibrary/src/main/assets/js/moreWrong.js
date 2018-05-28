@@ -14,12 +14,15 @@ function subject (data) {
         $('.typeList').eq(3).html('');
         console.log("aaa--"+data.length);
         for (var i=0;i<data.length;i++) {
+            console.log("name--"+data[i].name);
             var nowSub = $('.typeList').eq(1).html();
+            console.log(nowSub);
+            console.log($('.typeList'));
             $('.typeList').eq(1).html(nowSub+`
                 <span>${data[i].name}</span>
             `);
             $('.typeList:eq(1) span').bind('click', function () {
-                console.log("aaa--"+data.length);
+                console.log("aaa1--"+data.length);
                 for (var j=0; j<data.length; j++) {
                     if(data[j].name === $(this).text()){
                         if (data[j].subjectId == undefined) {
@@ -30,6 +33,7 @@ function subject (data) {
                     }
                 }
                 sId = subjectId;
+                console.log("subjectId = "+subjectId);
                 var msg = JSON.stringify(subjectId);
                 window.android.dealWithJson("getFilterVersionL",msg);     
             });
@@ -54,7 +58,7 @@ function subject (data) {
                     }
                 }
                 vId = versionId;
-                var msg = Json.stringify({"subjectId": subjectId,"versionId": versionId})
+                var msg = JSON.stringify({"subjectId": subjectId,"versionId": versionId})
                 window.android.dealWithJson("getFilterFasL",msg);     
             });
         }
@@ -77,7 +81,7 @@ function subject (data) {
                     }
                 }
                 fId = fasId;
-                var msg = Json.stringify({"subjectId": subjectId,"versionId": versionId,"fasId":fasId});
+                var msg = JSON.stringify({"subjectId": subjectId,"versionId": versionId,"fasId":fasId});
                 window.android.dealWithJson("getFilterChapterL",msg);     
             });
         }
