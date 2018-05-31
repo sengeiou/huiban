@@ -18,7 +18,7 @@
 		    	<i class="back"></i>
 		</span>	
 		<span>
-			<input type="text">
+			<input id="textMsg" type="text">
 			<i class="search"><img src="./images/reset/ic_search.png" alt=""></i>
 		</span>
 		<b class="details"></b>
@@ -29,8 +29,7 @@
     </div>
 </body>
 <script>
-    var data = '[{"id":2,"userId":2030219,"roleId":2,"attUserId":2030219,"addTime":1521023086,"name":"\u694a\u694a","ico":"","subjectName":"\u7269\u7406","isAttention":1},{"id":1,"userId":2030219,"roleId":2,"attUserId":2029881,"addTime":1521023080,"name":"\u4f0a\u67ad","ico":"","subjectName":"\u7269\u7406","isAttention":1}]';
-    function getContent (data) {
+   function getContent (data) {
         var data = JSON.parse(data);   
         for (var i=0; i<data.length; i++) {
             var nowMsg = $('main').html();
@@ -48,13 +47,21 @@
                             <img src="./images/reset/ic_message.png">
                             <i class="lMsg">留言</i>
                         </aside>
-                        <aside>
-                            <img src="./images/reset/ic_has_concerned.png">
-                            <span class="removeFollow">取消关注</span>
-                        </aside>
+                        <aside class="flag"></aside>
                     </div>
                 </div>
             `);
+            if (data[i].isAttention == 1) {
+                $('.flag').eq(i).html(`
+                    <img class="addImg" src="./images/reset/ic_has_concerned.png">
+                    <span class="removeFollow remove">取消关注</span>
+                `);                
+            }else {
+                $('.flag').eq(i).html(`
+                    <img class="removeImg" src="./images/classMsg/add_attention@2x.png" style="width: 0.6rem;">                         
+                    <span class="removeFollow add">加关注</span>
+                `);   
+            }
             if (data[i].ico == '') {
                 $('.content:eq('+i+') dl dt').html(`<img src="./images/index/tube_class@2x.png" alt="" />`);
             }else {
@@ -63,13 +70,19 @@
         }
         
     }
-    getContent(data);
     //取消关注
-    $('.removeFollow').bind('click', function () {
+    $('.remove').bind('click', function () {
         var ind = $(this).parents('.content').index();
         var attUserId = JSON.parse(data)[ind].attUserId;
         var msg = JSON.stringify({"attUserId": attUserId});
         window.android.dealWithJson("deleteUserAttention",msg);
+    });
+    //加关注
+    $('.add').bind('click', function () {
+        var ind = $(this).parents('.content').index();
+        var attUserId = JSON.parse(data)[ind].attUserId;
+        var msg = JSON.stringify({"attUserId": attUserId});
+        window.android.dealWithJson("addUserAttention",msg);
     });
     //返回上级页面
     $('.back').bind('click', function () {
@@ -77,7 +90,18 @@
     });
     //点击跳转到去留言
     $('.lMsg').bind('click', function () {
-        //console.log('去留言');
+        var ind = $(this).parents('.content').index();
+        var name = JSON.parse(data)[ind].name;
+        var userId = JSON.parse(data)[ind].userId;
+        console.log('去留言'+name+", "+userId);
+        window.android.goLiuYan(name,userId);
     });
+    //点击查找
+    $('.search').bind('click', function () {
+        var msg = $('#textMsg').val();
+        if(msg.length>0){
+            window.android.search();
+        }
+    })
 </script>
 </html>

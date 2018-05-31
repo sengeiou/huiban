@@ -6,6 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>慧班</title>
+    <style>
+        html,
+        body,
+        .wrap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .wrap {
+            position: relative;
+        }
+
+        main {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow-y: scroll;
+        }
+
+        main .listoo {
+            position: relative;
+        }
+
+        main .listoo:before,
+        .listoo:after {
+            width: 100%;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            z-index: 9;
+            position: absolute;
+            display: block;
+            left: 0;
+        }
+
+        main .listoo:before {
+            content: attr(uptext);
+            top: -40px;
+        }
+
+        main .listoo:after {
+            content: attr(downtext);
+            bottom: -40px;
+        }
+    </style>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/index1.css">
     <link rel="stylesheet" href="./css/index2.css">
@@ -15,7 +61,8 @@
 
 <body>
     <div class="wrap indexWrap">
-        <main>
+         <main id="wrap">
+            <div class="listoo" text="下拉刷新">
             <div class="topBox">
                 <div class="head">
                     <img src="" class="userImg" onerror="this.src='./images/index/tube_class@2x.png'">
@@ -168,7 +215,7 @@
                     </div>
                 </div>
                 <h2 class="more">查看全部</h2>
-
+            </div>
         </main>
         <!-- 侧边栏 -->
         <div class="leftMenu">
@@ -219,7 +266,7 @@
         </div>
         </div>
 </body>
-
+<script src="./js/iscroll-probe.js"></script>
 <script>
     var leftMenu = $('.leftMenu'),
         nowTime = $('.nowDate'),
@@ -459,12 +506,29 @@
             })(i)
         }
     }
-    //var list = '[{"id":3004049,"classId":3000153,"semesterId":3000120,"week":2,"num":1,"subjectId":2,"teacherId":2030213,"beginTime":"08:20:00","endTime":"09:00:00","subjectName":"\u6570\u5b66","teacherName":"\u6768\u6cfd\u6668"},{"id":3004056,"classId":3000153,"semesterId":3000120,"week":2,"num":2,"subjectId":4,"teacherId":2030219,"beginTime":"09:10:00","endTime":"09:50:00","subjectName":"\u7269\u7406","teacherName":"\u694a\u694a"},{"id":3004063,"classId":3000153,"semesterId":3000120,"week":2,"num":3,"subjectId":1,"teacherId":2029920,"beginTime":"10:20:00","endTime":"10:55:00","subjectName":"\u8bed\u6587","teacherName":"\u8d75\u5efa\u5ddd"},{"id":3004077,"classId":3000153,"semesterId":3000120,"week":2,"num":5,"subjectId":3,"teacherId":2030216,"beginTime":"14:30:00","endTime":"15:10:00","subjectName":"\u82f1\u8bed","teacherName":"\u6c88\u9633Y"},{"id":3004084,"classId":3000153,"semesterId":3000120,"week":2,"num":6,"subjectId":0,"teacherId":0,"beginTime":"15:20:00","endTime":"16:00:00","subjectName":"","teacherName":""},{"id":3004091,"classId":3000153,"semesterId":3000120,"week":2,"num":7,"subjectId":4,"teacherId":2030219,"beginTime":"16:25:00","endTime":"17:05:00","subjectName":"\u7269\u7406","teacherName":"\u694a\u694a"},{"id":3004098,"classId":3000153,"semesterId":3000120,"week":2,"num":8,"subjectId":0,"teacherId":0,"beginTime":"17:15:00","endTime":"17:45:00","subjectName":"","teacherName":""},{"id":3004105,"classId":3000153,"semesterId":3000120,"week":2,"num":9,"subjectId":0,"teacherId":0,"beginTime":"18:50:00","endTime":"19:30:00","subjectName":"","teacherName":""},{"id":3004112,"classId":3000153,"semesterId":3000120,"week":2,"num":10,"subjectId":0,"teacherId":0,"beginTime":"19:40:00","endTime":"20:20:00","subjectName":"","teacherName":""},{"id":0,"classId":0,"week":"2","num":4,"subjectName":"","teacherName":""}]'
-    //var imgs = '[{"AddTime":1526356573,"ChapBranId":10759,"CheckStatus":3,"FasciculeId":19,"IsPublic":1,"Name":"CaCwReHX45yW1522384500.mp4","RealName":"\u694a\u694a","SchoolId":"45","SeriBranId":130884,"SiteName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","SpeakerId":2030219,"StageId":"2","SubjectId":"4","UploaderId":2030219,"VersionId":12,"VideoId":"4565","VideoType":2,"WatchCnt":0,"id":"4565","_version_":1600500870338838528,"name":"CaCwReHX45yW1522384500.mp4","flv_url":null,"speakerId":2030219,"videoId":"4565","checkStatus":3,"isTrans":0,"totalLength":0,"addTime":"2018-05-15","schoolName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","stageName":"\u521d\u4e2d","subjectName":"\u7269\u7406","knowName":"\u6838\u80fd","speakerName":"\u694a\u694a","uploadName":"\u694a\u694a","totalTime":0,"viewCount":"0","dzCount":"0","studyCount":"0","imgUrl":"http:\/\/192.168.0.3:8091\/group2\/M00\/00\/29\/wKgAA1r6Wk2AZSgGAAXmdArc_4M614.png","ShareSites":[],"statusName":"\u4e0a\u67b6","frontStatus":"\u8f6c\u7801\u4e2d\u2026"},{"AddTime":1518076971,"ChapBranId":30122,"CheckStatus":3,"FasciculeId":19,"IsPublic":1,"Name":"\u529b.mp4","RealName":"\u694a\u694a","SchoolId":"45","SeriBranId":3559,"SiteName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","SpeakerId":2030219,"StageId":"2","SubjectId":"4","UploaderId":2030219,"VersionId":12,"VideoId":"2107","VideoType":1,"WatchCnt":3,"id":"2107","_version_":1600497397399552000,"name":"\u529b.mp4","flv_url":"http:\/\/playvideo.oss-cn-shanghai.aliyuncs.com\/2018\/2107\/A93D62ED9C0046A285FEFFAC04BE2F1C.m3u8","speakerId":2030219,"videoId":"2107","checkStatus":3,"isTrans":1,"totalLength":222,"addTime":"2018-02-08","schoolName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","stageName":"\u521d\u4e2d","subjectName":"\u7269\u7406","knowName":"\u529b\u5b66","speakerName":"\u694a\u694a","uploadName":"\u694a\u694a","totalTime":222,"viewCount":"3","dzCount":"0","studyCount":"2","imgUrl":"http:\/\/192.168.0.3:8091\/group2\/M00\/03\/C3\/ag4bNlp8BCmATe31AADU-qMcUQg720.png","ShareSites":[],"statusName":"\u4e0a\u67b6","frontStatus":""}]'
-    //var messages = '[{"id":"5afb9099f5ddaf069d972095","imgUrl":"","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","content":"DFGDFG","addTime":"\u6628\u5929","count":0},{"id":"5afb9097f5ddaf069d972093","imgUrl":"","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","content":"GFDGDFGDFG","addTime":"\u6628\u5929","slist":[{"id":"5afb9160f5ddaf069d9720b6","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"321312312","addTime":"\u6628\u5929"},{"id":"5afb915ef5ddaf069d9720b4","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"321312312","addTime":"\u6628\u5929"},{"id":"5afb915bf5ddaf069d9720b2","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"4124124124","addTime":"\u6628\u5929"},{"id":"5afb9159f5ddaf069d9720b0","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"3123123123","addTime":"\u6628\u5929"},{"id":"5afb9156f5ddaf069d9720ae","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"42414214","addTime":"\u6628\u5929"},{"id":"5afb9153f5ddaf069d9720ac","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","receive":"2030246","receiveName":"\u6234\u5e05\u5e05","content":"131231231","addTime":"\u6628\u5929"}],"count":6},{"id":"5afb9095f5ddaf069d972090","imgUrl":"","send":"2030246","sendRoleId":1,"sendName":"\u6234\u5e05\u5e05","content":"DASDASFDSAFASF","addTime":"\u6628\u5929","count":0}]';
-    //message();
-    //imag();
-    //switchs()
+    <!--var list = document.querySelector('.list');-->
+    <!--var myIscroll = new IScroll('#wrap', {-->
+        <!--scrollbars: true,-->
+        <!--probeType: 3-->
+    <!--});-->
+    <!--var flag = true;-->
+    <!--myIscroll.on('scroll', function () {-->
+        <!--if (this.y > 40) {-->
+            <!--list.setAttribute('uptext', '释放刷新');-->
+        <!--} else if (this.y < 40 && this.y > 0) {-->
+            <!--list.setAttribute('uptext', '下拉刷新');-->
+        <!--} else if (this.y < this.maxScrollY - 40) {-->
+            <!--flag = true;-->
+        <!--}-->
+    <!--})-->
+    <!--myIscroll.on('scrollEnd', function () {-->
+        <!--list.setAttribute('text', '下拉刷新');-->
+        <!--if (this.y === this.maxScrollY) {-->
+            <!--console.log("上拉");-->
+        <!--} else if (this.y === 0) {-->
+            <!--console.log("下拉");-->
+        <!--}-->
+    <!--})-->
 
 
 </script>

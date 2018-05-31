@@ -38,7 +38,7 @@ public class Homework {
 
     public static class Data{
         private boolean complete;
-        private int result=2;//0 错误 1 正确 2未知
+        private int result=2;//0 错误 1 正确 2 未知 3 半对
 
         public boolean isComplete() {
             return complete;

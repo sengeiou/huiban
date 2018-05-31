@@ -85,7 +85,7 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
         if(TextUtils.isEmpty(ipImgUrl)){
             iv.setImageResource(R.drawable.ic_menu_camera);
         }else{
-            Glide.with(this).load(ipImgUrl).into(iv);
+            Glide.with(getActivity()).load(ipImgUrl).into(iv);
         }
         tv_text.setText(data.getSummary());
         updateTextSet();

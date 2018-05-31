@@ -76,4 +76,8 @@ public class LiuYanMsgListParent extends ListPresent<LiuYanMsgListContract.View>
             });
         }
     }
+    @Override
+    public void getReplyMessage(int index) {
+
+    }
 }

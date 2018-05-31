@@ -207,9 +207,9 @@ public class HomeworkInfBean extends ResultBean {
             private int rateSeo;
             private int timeSeo;
             private int commitSeo;
-            private int rateExceed;
-            private int timeExceed;
-            private int commitExceed;
+            private float rateExceed;
+            private float timeExceed;
+            private float commitExceed;
 
             public int getRateSeo() {
                 return rateSeo;
@@ -235,27 +235,27 @@ public class HomeworkInfBean extends ResultBean {
                 this.commitSeo = commitSeo;
             }
 
-            public int getRateExceed() {
+            public float getRateExceed() {
                 return rateExceed;
             }
 
-            public void setRateExceed(int rateExceed) {
+            public void setRateExceed(float rateExceed) {
                 this.rateExceed = rateExceed;
             }
 
-            public int getTimeExceed() {
+            public float getTimeExceed() {
                 return timeExceed;
             }
 
-            public void setTimeExceed(int timeExceed) {
+            public void setTimeExceed(float timeExceed) {
                 this.timeExceed = timeExceed;
             }
 
-            public int getCommitExceed() {
+            public float getCommitExceed() {
                 return commitExceed;
             }
 
-            public void setCommitExceed(int commitExceed) {
+            public void setCommitExceed(float commitExceed) {
                 this.commitExceed = commitExceed;
             }
         }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.bshuiban.baselibrary.contract.ClassScheduleContract;
 import com.bshuiban.baselibrary.model.ClassScheduleBean;
+import com.bshuiban.baselibrary.model.StudentClassClassScheduleBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.ClassSchedulePresent;
 import com.bshuiban.baselibrary.view.customer.ClassSchedule;
@@ -40,6 +41,11 @@ public class ClassScheduleFragment extends BaseFragment<ClassSchedulePresent> im
     @Override
     public void updateSchedule(List<List<ClassScheduleBean.DataBean>> data) {
         classSchedule.setData(data);
+    }
+
+    @Override
+    public void updateSchedule1(StudentClassClassScheduleBean bean) {
+
     }
 
     @Override

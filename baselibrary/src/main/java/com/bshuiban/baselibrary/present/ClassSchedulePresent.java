@@ -3,6 +3,8 @@ package com.bshuiban.baselibrary.present;
 import com.bshuiban.baselibrary.contract.ClassScheduleContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 import com.bshuiban.baselibrary.model.ClassScheduleBean;
+import com.bshuiban.baselibrary.model.StudentClassClassScheduleBean;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.customer.ClassSchedule;
 import com.bshuiban.baselibrary.view.fragment.ClassScheduleFragment;
 
@@ -23,6 +25,22 @@ public class ClassSchedulePresent extends BasePresent<ClassScheduleContract.View
             protected void success(ClassScheduleBean classScheduleBean) {
                 if(isEffective()){
                     view.updateSchedule(classScheduleBean.getData());
+                }
+            }
+
+            @Override
+            protected void error(String error) {
+                view.fail(error);
+            }
+        });
+
+    }
+    public void askInternetForScheduleData() {
+        call = RetrofitService.getInstance().getServiceResult("getCourseListByCid","{\"classId\":\""+ User.getInstance().getClassId()+"\"}", new RetrofitService.CallResult<StudentClassClassScheduleBean>(StudentClassClassScheduleBean.class) {
+            @Override
+            protected void success(StudentClassClassScheduleBean classScheduleBean) {
+                if(isEffective()){
+                    view.updateSchedule1(classScheduleBean);
                 }
             }
 

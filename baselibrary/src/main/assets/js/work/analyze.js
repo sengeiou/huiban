@@ -3,12 +3,13 @@ var circle = document.getElementsByClassName("circle")[0];
 var ul = document.getElementsByClassName("ul")[0];
 var text = document.getElementsByTagName('p');
 var wrapper = document.getElementsByClassName('swiper-wrapper')[0];
-var answerlist = document.getElementsByClassName("answer")[0];
+var swiperWrapper = document.getElementById('swiper');
 var button = document.getElementsByClassName('span');
 var list = document.getElementById('xuan');
 var typee = document.getElementById('text');
 var ques = document.getElementsByClassName("swiper-slide");
 var analyze = document.getElementById("analyze");
+var swiper;
 var fl=true;
 circle.onclick = function () {
     if(fl) {
@@ -88,19 +89,6 @@ function homeWork(data) {
     //  var date =JSON.parse(data)
     var swiperWrapper = document.getElementsByClassName("swiper-wrapper")[0];
     var num1 = data.length;
-    if (num1 <= 9) {
-        var swiperContainer = document.getElementsByClassName('swiper-container')[0];
-        swiperContainer.style.width = "7.5rem"
-    } else {
-        var swiper = new Swiper('.swiper-container', {
-            slidesPerView: num1 * 1.4,
-            freeMode: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-        });
-    }
     var str = "";
     for (var i = 0; i < data.length; i++) {
         if(data[i].status == "2") {
@@ -114,7 +102,16 @@ function homeWork(data) {
         `;
         }
     }
-    swiperWrapper.innerHTML = str;
+     swiperWrapper.innerHTML =  `<div class="swiper-container">
+    <div class="swiper-wrapper">${str}
+    </div>
+    </div>`;
+    if(num1 >9) {
+        swiper = new Swiper('.swiper-container', {
+            slidesPerView:'auto' ,
+            freeMode:true,
+        });
+    }
     var button = document.getElementsByClassName("swiper-slide");
     var this_;
     for(var i=0; i<button.length; i++) {

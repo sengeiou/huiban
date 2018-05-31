@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>课程筛选</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/teacher.css">
+    <script src="./js/reset/jquery.min.js"></script>
+    <script src="./js/reset/rem.js"></script>
+</head>
+<body>
+    <div class="wrap change">
+        <header>
+            <span>
+                <i class="back"></i>
+            </span>	
+            <span></span>
+        </header>
+        <main>
+            <div class="subject">
+                <p>科目</p>
+                <div class="subjectBox"></div>
+            </div>
+            <div class="brand hide">
+                <p>品牌</p>
+                <div class="brandBox"></div>
+            </div>
+            <div class="type hide">
+                <p>类型</p>
+                <div class="typeBox"></div>
+            </div>
+            <div class="grade hide">
+                <p>年级</p>
+                <div class="gradeBox"></div>
+            </div>
+            <div id="sure">
+                确定
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+    var type = 0;
+    var subjectId,organId,classType,gradeId;
+    var brandMsg = $('.brand').html();
+    var typeMsg = $('.type').html();
+    var gradeMsg = $('.grade').html();
+    function getListNav (data) {
+        $('.subjectBox').html('');
+        $('.brand').html(brandMsg);
+        $('.type').html(typeMsg);
+        $('.grade').html(gradeMsg);
+        $('.brand').hide();
+        $('.type').hide();
+        $('.grade').hide();
+        var data = JSON.parse(data);
+        for (var i=0; i<data.length; i++) {
+            var nowMsg = $('.subjectBox').html();
+            $('.subjectBox').html(nowMsg + `<span>${data[i].subjectName}</span>`);
+        }
+        $('.subjectBox span').bind('click', function () {
+            var ind = $(this).index();
+            subjectId = data[ind].id;
+            var msg = JSON.stringify({"subjectId": subjectId});
+            type = 0;
+            $('.brand').html(brandMsg);
+            $('.type').html(typeMsg);
+            $('.grade').html(gradeMsg);   
+            $('.type').hide();
+            $('.grade').hide();
+            window.android.dealWithJson("getVipRelationEduList",msg);
+            $('.subjectBox span').removeClass('selected');
+            $(this).addClass('selected');
+            $('.brand').show();
+        });
+    }
+    function sxContent (data) {
+        var data = JSON.parse(data);
+        if (type == 0) {
+            organId = '';
+            classType = '';
+            gradeId = '';
+            for (var i=0; i<data.length; i++) {
+                var nowMsg = $('.brandBox').html();
+                $('.brandBox').html(nowMsg + `
+                    <span>${data[i].organName}</span>
+                `);
+            }
+            $('.brandBox span').bind('click', function () {
+                var ind = $(this).index();
+                organId = data[ind].orgId;
+                var msg = JSON.stringify({"subjectId": subjectId,"organId": organId});
+                type = 1;
+                $('.type').html(typeMsg);
+                $('.grade').html(gradeMsg);
+                $('.grade').hide();
+                window.android.dealWithJson("getVipRelationEduList",msg);
+                $('.brandBox span').removeClass('selected');
+                $(this).addClass('selected');
+                $('.type').show();
+            });
+        } else if (type == 1) {
+            classType = '';
+            gradeId = '';
+            for (var i=0; i<data.length; i++) {
+                var nowMsg = $('.typeBox').html();
+                $('.typeBox').html(nowMsg + `
+                    <span>${data[i].typeName}</span>
+                `);
+            }
+            $('.typeBox span').bind('click', function () {
+                var ind = $(this).index();
+                classType = data[ind].vipTypeId;
+                var msg = JSON.stringify({"subjectId": subjectId, "organId": organId, "classType":classType});
+                type = 2;
+                $('.grade').html(gradeMsg);
+                window.android.dealWithJson("getVipRelationEduList",msg);
+                $('.typeBox span').removeClass('selected');
+                $(this).addClass('selected');
+                $('.grade').show();
+            })
+        } else if (type == 2) {
+            gradeId = '';
+            for (var i=0; i<data.length; i++) {
+                var nowMsg = $('.gradeBox').html();
+                $('.gradeBox').html(nowMsg + `
+                    <span>${data[i].gradeName}</span>
+                `);
+            }
+            $('.gradeBox span').bind('click', function () {
+                var ind = $(this).index();
+                gradeId = data[ind].gradeId;
+                $('.gradeBox span').removeClass('selected');
+                $(this).addClass('selected');
+            });
+        }
+    }
+    getListNav(subjectNav);
+    $('#sure').bind('click', function () {
+        if (subjectId == '') {
+            subjectId = null;
+        }
+        if (organId == '') {
+            organId = null;
+        }
+        if (classType == '') {
+            classType = null;
+        }
+        if (gradeId == '') {
+            gradeId = null;
+        }
+        var msg = JSON.stringify({"subjectId": subjectId, "organId": organId, "classType":classType, "gradeId":gradeId});
+        window.android.dealWithJson("getVipRelationEduList",msg);
+    });
+    //点击返回上级页面
+    $('.back').bind('click', function () {
+        console.log('back');
+    });
+</script>
+</html>

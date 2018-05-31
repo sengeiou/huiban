@@ -8,11 +8,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.bshuiban.baselibrary.R;
-import com.bshuiban.baselibrary.view.webview.webActivity.WebLoginActivity;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
@@ -69,7 +67,7 @@ public class SplashActivity extends BaseActivity {
                 //}else{
                 try {
                     //startActivity(new Intent(SplashActivity.this,Class.forName("com.bshuiban.student.view.activity.StudentHomeActivity")));
-                    startActivity(new Intent(SplashActivity.this,Class.forName("com.bshuiban.baselibrary.view.webview.webActivity.WebLoginActivity")));
+                    startActivity(new Intent(SplashActivity.this,Class.forName("com.bshuiban.view.webActivity.WebLoginActivity")));
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }

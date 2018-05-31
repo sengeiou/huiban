@@ -1,3 +1,4 @@
+/*
 package com.bshuiban.baselibrary.view.activity;
 
 import android.content.Context;
@@ -7,12 +8,12 @@ import android.os.Bundle;
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.LoginContract;
 import com.bshuiban.baselibrary.model.LoginResultBean;
-import com.bshuiban.baselibrary.present.LoginPresent;
-import com.bshuiban.baselibrary.utils.aes.AESUtils;
 
+*/
 /**
  * 登录页
- */
+ *//*
+
 public class LoginActivity extends BaseActivity<LoginPresent> implements LoginContract.View{
 
     @Override
@@ -23,7 +24,8 @@ public class LoginActivity extends BaseActivity<LoginPresent> implements LoginCo
     }
 
 
-    /*@Override
+    */
+/*@Override
     public String getUserAccountNumber() {
         return null;
     }
@@ -31,7 +33,8 @@ public class LoginActivity extends BaseActivity<LoginPresent> implements LoginCo
     @Override
     public String getPassWord() {
         return null;
-    }*/
+    }*//*
+
 
     @Override
     public void loginSuccessToNextActivity(Class<?> cls, LoginResultBean.Data loginDataResJson) {
@@ -58,3 +61,4 @@ public class LoginActivity extends BaseActivity<LoginPresent> implements LoginCo
     }
 
 }
+*/

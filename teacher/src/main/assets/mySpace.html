@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的空间</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/teacher.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/rem.js"></script>
+    <!-- 
+        渲染个人信息: getMsg
+        渲染主讲微课: getClassList
+        渲染留言: getLeaveList
+     -->
+</head>
+<body>
+    <div class="wrap mySpace">
+        <header>
+            <span>
+                <i class="back"></i>
+            </span>	
+            <span>
+                我的空间
+            </span>
+        </header>
+        <main>
+            <div class="myId">
+            </div>
+            <div class="myMsg">
+                <dl>
+                    <dt><img src="../../../images/index/tube_class@2x.png" alt="" /></dt>
+                    <dd>
+                        <h3>刘红豆</h3>
+                        <p>主讲科目: <span class="mainSub"></span></p>
+                        <p>代课班级：<span class="class"></span>个</p>
+                        <p>微课数：<span class="classNum"></span></p>
+                    </dd>
+                </dl>
+                <div class="text"></div>
+            </div>
+            <div class="mainClass">
+                <h3>主讲微课<span class="all">查看全部></span></h3>
+                <div class="list"></div>
+            </div>
+            <!--<div class="leaveMsg">
+                <h3>
+                   留言<span class="allLeave">查看全部></span>
+                </h3>
+                <div class="leave">
+                    <div class="content">
+                        <textarea name="" id="inputMsg" cols="30" rows="10"></textarea>
+                        <div class="note">
+                            留言......
+                        </div>
+                    </div>
+                    <button class="inputMsg">发布</button>
+                    <div class="list"></div>
+                </div>
+            </div>-->
+        </main>
+    </div>
+</body>
+<script>
+    function getMsg (data) {
+        var data = JSON.parse(data);
+        for (var i =0; i< data.graSub.length; i++) {
+            var nowMsg = $('.myId').html();
+            if (i == 0) {
+                $('.myId').html(nowMsg + `${data.graSub[i]}老师`);
+            }else {
+                $('.myId').html(nowMsg + `/${data.graSub[i]}老师`);
+            }            
+        }
+        if (data.ipIco == '') {
+            $('.myMsg dl dt').html(`<img src="../../../images/index/tube_class@2x.png" alt="" onerror="this.src='../../../images/index/tube_class@2x.png' " />`);
+        }else {
+            $('.myMsg dl dt').html(`<img src="${data.ipIco}"  alt=""/>`);
+        }
+        $('.myMsg dl dd h3').html(`${data.teaName}`);
+        $('.myMsg dl dd .mainSub').html(`${data.subjectName}`);
+        $('.myMsg dl dd .class').html(`${data.classCnt}`);
+        $('.myMsg dl dd .classNum').html(`${data.videoCnt}`);
+        $('.myMsg .text').html(`${data.summary}`);
+        getClassList(data.video);
+    }
+    //渲染微课
+    function getClassList (data) {
+        var data = JSON.parse(data);
+        console.log(data.length);
+        for (var i = 0; i < data.length; i++) {
+            var nowMsg = $('.mainClass .list').html();
+            $('.mainClass .list').html(nowMsg + `
+                <dl>
+                    <dt class="classImg"></dt>
+                    <dd>
+                        <h3>${data[i].Name}</h3>
+                        <p>授课老师：${data[i].speakerName}</p>
+                        <h4>
+                            <span>
+                                <b></b>
+                                <i>${data[i].dzCount}</i>
+                            </span>
+                            <span>
+                                <b></b>
+                                <i>${data[i].viewCount}</i>
+                            </span>
+                        </h4>
+                    </dd>
+                </dl>
+            `);
+            if (data[i].imgUrl == '') {
+                $('.classImg').eq(i).html(`<img src="../../../images/index/tube_class@2x.png" alt="">`);
+            }else {
+                $('.classImg').eq(i).html(`<img src="${data[i].imgUrl}" alt="" onerror="this.src='../../../images/index/tube_class@2x.png' "/>`);
+            } 
+        }
+    }
+    //渲染留言
+    function getLeaveList (data) {
+        var data = JSON.parse(data);
+        for (var i = 0; i < data.length; i++) {
+            var nowMsg = $('.leaveMsg .list').html();
+            $('.leaveMsg .list').html(nowMsg + `
+                <dl>
+                    <dt></dt>
+                    <dd>
+                        <h2>${data[i].sendName}</h2>
+                        <p class="message">${data[i].content}</p>
+                        <p>${data[i].addTime}<span class="remove">删除</span><span class="reply">回复</span></p>
+                    </dd>
+                </dl>
+            `);
+            if (data[i].imgUrl == '') {
+                $('.leaveMsg .list dl:eq('+i+') dt').html(`<img src="../../../images/index/tube_class@2x.png" alt="" />`);
+            }else {
+                $('.leaveMsg .list dl:eq('+i+') dt').html(`<img src="${data[i].imgUrl}" alt="" onerror="this.src='../../../images/index/tube_class@2x.png' "/>`);
+            }
+        }
+        //点击删除留言
+        $('.leaveMsg .list .remove').bind('click', function () {
+            var ind = $(this).parents('dl').index();
+            console.log(data[ind].id);
+            // window.android.dealWithJson(data[ind].id);
+        });
+        //点击回复留言
+        $('.leaveMsg .list .reply').bind('click', function () {            
+            var ind = $(this).parents('dl').index();
+            console.log(data[ind].id);
+            // window.android.dealWithJson(data[ind].id);
+        })
+    }
+    //点击发布
+    $('.inputMsg').bind('click', function () {
+        var textMsg = $('#inputMsg').val();
+        var data = null;
+        if (textMsg == '') {
+            //data = JSON.stringify({"content":data});
+            //window.android.dealWithJson("addLeaveMessage",data);
+        }else {
+            //data = JSON.stringify({"content":textMsg});
+            window.android.replayMessage(textMsg);
+        }
+        $('#inputMsg').val('');
+        $('.note').show();
+    });
+    //点击返回上级页面
+    $('.back').bind('click', function () {
+        console.log('返回上级');
+    });
+    //点击查看主讲微课
+    $('.all').bind('click', function () {
+        //console.log('主讲微课');
+        window.android.toNextPage(0);
+    });
+    //点击查看留言
+    $('.allLeave').bind('click', function () {
+        //console.log('去留言');0 主讲微课-查看全部；1 留言查看全部 replayMessage
+        window.android.toNextPage(1);
+    });
+    //点击文本框取消默认值
+    $('.content').bind('click', function () {
+        $('.note').hide();
+    })
+</script>
+</html>

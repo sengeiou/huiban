@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>课堂记录</title>
+    <style>
+     html,
+        body,
+        .wrap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .wrap {
+            position: relative;
+        }
+
+        #main {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow-y: scroll;
+        }
+
+        #main .listoo {
+            position: relative;
+        }
+
+        #main .listoo:before,
+        .listoo:after {
+            width: 100%;
+            text-align: center;
+            height:  .8rem;
+            line-height: .8rem;
+            font-size: .28rem;
+            z-index: 9;
+            position: absolute;
+            display: block;
+            left: 0;
+        }
+
+        #main .listoo:before {
+            content: attr(uptext);
+            top: -.8rem;
+        }
+
+        #main .listoo:after {
+            content: attr(downtext);
+            bottom:  -.8rem;
+        }
+
+        .noComplate,
+        .complate {
+            padding-bottom: 1.2rem;
+        }
+
+        #filte {
+            position: fixed;
+            z-index: 2;
+            width: 100%;
+            background: #07cab9;
+            right: 0;
+            top: .9rem;
+            color: #eee;
+            line-height: .4rem;
+            text-align: center;
+            padding-top: .2rem;
+            padding-bottom: .2rem;
+        }
+
+        #filte .li {
+            width: 3.2rem;
+            height: 1rem;
+            line-height: 1rem;
+            font-size: .28rem;
+            border: 1px solid #eee;
+            float: left;
+            margin-left: .27rem;
+            margin-right: .27rem;
+            margin-bottom: .2rem;
+        }
+    </style>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/work.css">
+</head>
+<script src="./js/rem.js"></script>
+<script src="./js/jquery.min.js"></script>
+
+<body>
+    <ul id="filte"></ul>
+    <div class="wrap workIndex">
+        <header>
+            <span>
+                <a href="work.html">
+
+                </a>
+            </span>
+            <span>课堂记录</span>
+            <b class="details"></b>
+        </header>
+        <main id="main">
+         <div class="listoo" text="下拉刷新">
+            <div class="list complate">
+                <div class="listMsg">
+                    <dl>
+                        <dt>
+                            <h3>第六单元 化学方程式</h3>
+                            <p>化学/八年级/第六单元 化学方程式</p>
+                        </dt>
+                        <dd>
+                            <span></span>
+                            <span>
+                                <a href="./echarts.html" style="display:block; width:100%;height:100%"></a>
+                            </span>
+                        </dd>
+                    </dl>
+                    <p class="time">2017.05.01 19:40 - 2017.05.03 23:59</p>
+                </div>
+                <div class="listMsg">
+                    <dl>
+                        <dt>
+                            <h3>第六单元 化学方程式</h3>
+                            <p>化学/八年级/第六单元 化学方程式</p>
+                        </dt>
+                        <dd>
+                            <span></span>
+                            <span></span>
+                        </dd>
+                    </dl>
+                    <p class="time">2017.05.01 19:40 - 2017.05.03 23:59</p>
+                </div>
+            </div>
+            </div>
+        </main>
+       
+    </div>
+</body>
+<script src="./js/iscroll-probe.js"></script>
+<script src="./js/classrecord.js"></script>
+</html>

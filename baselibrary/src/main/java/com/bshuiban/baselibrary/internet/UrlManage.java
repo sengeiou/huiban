@@ -6,7 +6,7 @@ public class UrlManage {
     public final String BASE_URL;
     public static final int NEI_WANG = 0;
     public static final int WAI_WANG = 1;
-    private static final int type=WAI_WANG;
+    private static final int type=NEI_WANG;
 
     private static UrlManage manage;
 

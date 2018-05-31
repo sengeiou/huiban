@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>主讲微课</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/teacher.css">
+    <script src="./js/reset/jquery.min.js"></script>
+    <script src="./js/reset/rem.js"></script>    
+    <script src="./js/reset/iscroll-probe.js"></script>
+</head>
+<body>
+    <div class="wrap mainClassList">
+        <header>
+            <span>
+                <i class="back"></i>
+            </span>	
+            <span>
+                主讲微课
+            </span>
+        </header>
+        <main id="wrap">
+            <div class="list" uptext="下拉刷新">
+
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+    function getContent (data) {
+        var data = JSON.parse(data);
+        var nowMsg;
+        for (var i=0; i<data.length; i++) {
+            nowMsg = $('.list').html();
+            $('.list').html(nowMsg + `
+                <dl>
+                    <dt class="classImg"></dt>
+                    <dd>
+                        <h3>${data[i].Name}</h3>
+                        <p>授课老师：${data[i].speakerName}</p>
+                        <h4>
+                            <span>
+                                <b></b>
+                                <i>${data[i].dzCount}</i>
+                            </span>
+                            <span>
+                                <b></b>
+                                <i>${data[i].viewCount}</i>
+                            </span>
+                        </h4>
+                    </dd>
+                </dl>
+            `);
+            if (data[i].imgUrl == '') {
+                $('.classImg').eq(i).html(`<img src="./images/index/tube_class@2x.png" alt="">`);
+            }else {
+                $('.classImg').eq(i).html(`<img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/index/tube_class@2x.png' "/>`);
+            } 
+        }
+    }
+    $('.back').bind('click', function () {
+        console.log('返回上级');
+    });
+    var list = document.querySelector('.list');
+	var myIscroll = new IScroll('#wrap',{
+		scrollbars: true,
+		probeType: 3
+    });
+    var flag = true;
+	myIscroll.on('scroll',function(){
+		if(this.y > 40){
+			list.setAttribute('uptext','释放刷新');
+		}else if(this.y < 40 && this.y > 0){
+			list.setAttribute('uptext','下拉刷新');
+		}else if(this.y < this.maxScrollY - 40 ){
+			flag = true;
+        }
+	})
+	myIscroll.on('scrollEnd',function(){
+        list.setAttribute('text','下拉刷新');
+        if(this.y === this.maxScrollY){
+            console.log("上拉");
+            window.android.getMoreData(false)
+        }else if(this.y === 0) {
+            console.log("下拉");
+            window.android.getMoreData(true)
+        }
+	})
+</script>
+</html>

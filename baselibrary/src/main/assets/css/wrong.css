@@ -83,11 +83,32 @@
   margin-right: 0.2rem;
   margin-top: 0.15rem;
 }
-.moreWrong .list .navs #treeDemo li {
-  list-style: none;
+.moreWrong .list .navs li {
+  list-style: disc;
   color: #9b9b9b;
   font-size: 0.24rem;
   margin-top: 0.2rem;
+}
+.moreWrong .list .navs #all,.moreWrong .list .navs .tree1 {
+  list-style: none;
+}
+.moreWrong .list .navs .tree2 {
+  margin-left: 0.6rem;
+}
+.moreWrong .list .navs .tree3 {
+  margin-left: 0.3rem;
+}
+.moreWrong .list .navs .tree4 {
+  margin-left: 0.3rem;
+}
+.moreWrong .list .navs .tree5 {
+  margin-left: 0.3rem;
+}
+.moreWrong .list .navs .tree6 {
+  margin-left: 0.3rem;
+}
+.moreWrong .list .navs .tree7 {
+  margin-left: 0.3rem;
 }
 .wrongMsg main {
   background: #f9f9f9;
@@ -196,7 +217,6 @@
   line-height: 0.4rem;
   color: #00c7b5;
   margin-right: 0.4rem;
-  flex: 1;
 }
 .practive .msgBox .question .lxitem_ct_frm {
   flex: 9;
@@ -249,7 +269,4 @@
 }
 .practive .analysis p:nth-child(3) {
   padding-bottom: 0.2rem;
-}
-#treeDemo_301_ico {
-  display: block;
 }

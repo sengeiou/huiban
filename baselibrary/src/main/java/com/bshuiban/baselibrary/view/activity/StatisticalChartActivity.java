@@ -1,7 +1,6 @@
 package com.bshuiban.baselibrary.view.activity;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.StatisticalChartContract;

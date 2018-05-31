@@ -2,6 +2,7 @@ package com.bshuiban.baselibrary.present;
 
 import com.bshuiban.baselibrary.contract.ErrorHomeworkContract;
 import com.bshuiban.baselibrary.model.User;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -33,10 +34,7 @@ public class ErrorHomeworkPresent extends ListPresent<ErrorHomeworkContract.View
     public void itemClick(int index) {
         if (null!=jsonArray&&jsonArray.size()>index){
             JsonElement jsonElement = jsonArray.get(index);
-            if(jsonElement.isJsonObject()){
-                JsonObject asJsonObject = jsonElement.getAsJsonObject();
-
-            }
+            view.toErrorHomeworkAnalysisPage(new Gson().toJson(jsonElement));
         }
     }
 

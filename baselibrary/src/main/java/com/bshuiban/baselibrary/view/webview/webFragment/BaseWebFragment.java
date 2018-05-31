@@ -105,7 +105,7 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
         mWebView.loadUrl(url);
     }
     @Override
-    public void onDestroyView() {
+    public void onDetach() {
         if(null!=mWebView){
             mWebView.loadDataWithBaseURL(null,"","text/html","utf-8",null);
             mWebView.clearHistory();
@@ -113,7 +113,7 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
             mWebView.destroy();
             mWebView=null;
         }
-        super.onDestroyView();
+        super.onDetach();
     }
     protected void delete(String messageId, String pid){
 

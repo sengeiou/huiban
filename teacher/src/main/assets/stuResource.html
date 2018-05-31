@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>学习资源</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/teacher.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/rem.js"></script>    
+    <script src="./js/iscroll-probe.js"></script>
+</head>
+<body>
+    <div class="wrap stuResource">
+        <header>
+            <span>
+                <i class="back"></i>
+            </span>	
+            <span>
+                <input type="text" id="textMsg" placeholder="搜索课程">
+                <b class="search">
+
+                </b>
+            </span>
+            <span class="ico"></span>
+        </header>
+        <main id="wrap">
+            <div class="list" uptext="下拉刷新">
+
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+    function getContent (data) {
+        var data = JSON.parse(data);        
+        for(var i=0; i<data.length; i++){
+            var nowContent = $('.list').html();
+            $('.list').html(nowContent + `
+                <dl>
+                    <dt class="classImg"><img src="${data[i].imgUrl}" alt="" /></dt>
+                    <dd>
+                        <p>${data[i].Name}</p>
+                        <p>授课老师：${data[i].speakerName}</p>
+                        <span class="name">推荐给家长</span>
+                    </dd>
+                </dl>
+            `);        
+            if (data[i].imgUrl == '') {
+                $('.list dl:eq('+i+') dt').html(`<img src="./images/index/tube_class@2x.png" alt="" />`);
+            }else {
+                $('.list dl:eq('+i+') dt').html(`<img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/index/tube_class@2x.png' "/>`);
+            }
+        }
+        //点击推荐给家长
+        $('.name').bind('click', function () {
+            var ind = $(this).parents('dl').index();
+            console.log(ind);
+            var courseId = data[ind].CourseId;
+            window.android.recommendParent(courseId);
+            return false;
+        });
+        //点击进入课程详情
+        $('dl').bind('click', function () {
+            var ind = $(this).index();
+            var courseId = data[ind].CourseId;
+            window.android.itemClick(courseId);
+        });
+    }
+    var list = document.querySelector('.list');
+	var myIscroll = new IScroll('#wrap',{
+		scrollbars: true,
+		probeType: 3
+    });
+    var flag = true;
+	myIscroll.on('scroll',function(){
+		if(this.y > 40){
+			list.setAttribute('uptext','释放刷新');
+		}else if(this.y < 40 && this.y > 0){
+			list.setAttribute('uptext','下拉刷新');
+		}else if(this.y < this.maxScrollY - 40 ){
+			flag = true;
+        }
+	})
+	myIscroll.on('scrollEnd',function(){
+        list.setAttribute('text','下拉刷新');
+        if(this.y === this.maxScrollY){
+            console.log("上拉");
+        }else if(this.y === 0) {
+            console.log("下拉");
+        }
+	})
+    //点击查找
+    $('.search').bind('click', function () {
+        var msg = $('#textMsg').val();
+        window.android.dealWithJson(msg);
+    });
+    //回到上级页面
+    $('.back').bind('click', function () {
+        console.log('back');
+    });
+    //进入筛选
+    $('.ico').bind('click', function () {
+        console.log('change');
+        window.android.toSearchPage();
+    });
+</script>
+</html>

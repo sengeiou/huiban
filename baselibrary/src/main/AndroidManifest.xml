@@ -11,10 +11,7 @@
             android:name=".view.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".view.webview.webActivity.WebLoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".view.webview.webActivity.CollectionListActivity"
             android:screenOrientation="portrait"
@@ -83,8 +80,17 @@
         <activity
             android:name=".view.activity.SelectImgActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.webview.webActivity.ErrorFilterActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".view.webview.webActivity.ErrorFilterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.LessonInfWebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.VideoPlayerActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".view.webview.webActivity.SideCollectionListWebActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

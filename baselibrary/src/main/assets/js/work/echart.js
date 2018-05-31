@@ -1,5 +1,6 @@
+
 function count(data) {
-    var data =  JSON.parse(data);
+     var data =  JSON.parse(data);
     var title = document.getElementsByClassName("title")[0];
     var detail = document.getElementsByClassName("detail")[0];
     var num = document.getElementsByClassName("num")[0];
@@ -30,6 +31,29 @@ function count(data) {
             </tr>`;
    }
    table.innerHTML = str;
+   if(parseInt(data.userRate)<0) {
+    data.userRate = "--"
+    title.innerHTML = `<p>${data.title}</p>
+    <p>
+        <span>${data.addtime}</span> --
+        <span>${data.endtime}</span> </p>`;
+    num.innerHTML = data.examCnt;
+    pie.innerHTML = `<li>提交名次：${data.rank.commitSeo}</li>
+        <li>本次作业所用时间：${data.times}</li>
+        <li>正确率：${data.userRate}</li>
+        <li>班级平均正确率：${data.classRate}</li>`;
+   } else if(parseInt(data.classRate)<0){
+    data.classRate = "--";
+    title.innerHTML = `<p>${data.title}</p>
+    <p>
+        <span>${data.addtime}</span> --
+        <span>${data.endtime}</span> </p>`;
+    num.innerHTML = data.examCnt;
+    pie.innerHTML = `<li>提交名次：${data.rank.commitSeo}</li>
+        <li>本次作业所用时间：${data.times}</li>
+        <li>正确率：${data.userRate}</li>
+        <li>班级平均正确率：${data.classRate}</li>`;
+   } else {
     title.innerHTML = `<p>${data.title}</p>
     <p>
         <span>${data.addtime}</span> --
@@ -39,7 +63,7 @@ function count(data) {
         <li>本次作业所用时间：${data.times}</li>
         <li>正确率：${data.userRate}%</li>
         <li>班级平均正确率：${data.classRate}%</li>`;
-
+   }
 var myChart = echarts.init(document.getElementById('main'));
 var a = `答对${data.rw.right}题` ;  
 var b = `答错${data.rw.wrong}题` ;    

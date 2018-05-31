@@ -35,7 +35,7 @@ public class ConsolidationPresent extends BasePresent<ConsolidationContract.View
 
     @Override
     public void commitData(String json) {
-        askInternet("", json, new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
+        askInternet("addWrongQuestion", json, new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
             @Override
             protected void success(ResultBean resultBean) {
                 if(isEffective()){

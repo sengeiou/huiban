@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 
+import com.bshuiban.baselibrary.contract.ErrorHomeworkAnalysisContract;
 import com.bshuiban.baselibrary.contract.ErrorHomeworkContract;
 import com.bshuiban.baselibrary.present.ErrorHomeworkPresent;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
+import com.bshuiban.baselibrary.view.webview.webActivity.ConsolidationWebActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.ErrorFilterActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.ErrorHomeworkAnalysisActivity;
 
@@ -83,9 +85,14 @@ public class ErrorHomeworkWebFragment extends InteractionBaseWebViewFragment<Err
 
     @Override
     public void toErrorHomeworkAnalysisPage(String json) {
+        //TODO 勿删，‘\\’js自动转‘\’
+        json = json.replace("\\", "\\\\");//没办法
         startActivity(new Intent(getActivity(), ErrorHomeworkAnalysisActivity.class).putExtra("text",json));
     }
-
+   /* @Override
+    public void toConsolidationWebActivity(String json){
+        startActivity(new Intent(getActivity(),ErrorHomeworkAnalysisActivity.class).putExtra("json",json));
+    }*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent i) {
         switch (requestCode){

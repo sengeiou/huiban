@@ -7,6 +7,7 @@ var nodo = document.getElementsByClassName("navs")[0];
 var todo = document.getElementsByClassName("navs")[1];
 var filte = document.getElementById("filte");
 var res=[];
+var num=0;
 todo.onclick = function () {
     // 渲染已完成页面列表
     //complatelist(res2)
@@ -18,6 +19,7 @@ todo.onclick = function () {
     notdone.style.display = "none";
     done.style.display = "block";
     details.style.display = "block";
+    num = 1;
 }
 nodo.onclick = function () {
     active2.style.borderBottom = "none";
@@ -28,6 +30,7 @@ nodo.onclick = function () {
     done.style.display = "none";
     notdone.style.display = "block";
     details.style.display = "none";
+    num = 0;
 }
 // 点击筛选页完成课表
 details.onclick = function () {
@@ -141,6 +144,40 @@ window.onload = function () {
     // 未完成
     //nocomplate(res)
 }
+
+// 下拉刷新上拉加载
+var list = document.querySelector('.list');
+var myIscroll = new IScroll('#main', {
+    scrollbars: true,
+    probeType: 3
+});
+var flag = true;
+myIscroll.on('scroll', function () {
+    if (this.y > 40) {
+        list.setAttribute('uptext', '释放刷新');
+    } else if (this.y < 40 && this.y > 0) {
+        list.setAttribute('uptext', '下拉刷新');
+    } else if (this.y < this.maxScrollY - 40) {
+        flag = true;
+    }
+})
+myIscroll.on('scrollEnd', function () {
+    list.setAttribute('text', '下拉刷新');
+    if (this.y === this.maxScrollY) {
+        if(num == 0) {
+            console.log("上拉1");
+        } else {
+            console.log("上拉2");
+        }
+       
+    } else if (this.y === 0) {
+        if(num == 0) {
+            console.log("下拉1");
+        } else {
+            console.log("下拉2");
+        }
+    }
+})
 
 
 

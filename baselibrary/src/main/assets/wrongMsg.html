@@ -41,26 +41,32 @@
 <script>
 	function getContent (data) {
 		var data = JSON.parse(data);
-		console.log(data);
 		var nowMsg = $(".wrongBox").html();
-		console.log($(".wrongBox"));
 		$(".wrongBox").html(nowMsg + `
 			<div class="question">
 				${data.content}
 			</div>
 			<div class="yourAnswer">
-				你的答案：
-				<b>${data.myAnswer}</b>
+				
 			</div>
 			<div class="trueAnswer">
-				正确答案：
-				<b>${data.rightAnswer}</b>
+				
 			</div>
 			<div class="answerMsg">
 				答案解析：
 				${data.analysis}
 			</div>
-		`);
+		`);		
+		if(data.myAnswer === undefined){
+			$('.yourAnswer').html(`你的答案：<b>暂无答案</b>`);
+		}else {
+			$('.yourAnswer').html(`你的答案：<b>${data.myAnswer}</b>`);
+		}
+		if(data.rightAnswer === undefined){
+			$('.trueAnswer').html(`你的答案：<b>暂无答案</b>`);
+		}else {
+			$('.trueAnswer').html(`你的答案：<b>${data.rightAnswer}</b>`);
+		}
 		var flag = true;
 		$('.clearWrong').bind('click', function () {
 			if (flag) {
@@ -73,24 +79,20 @@
 		});
 		//重放视频
 		$('.repeatVideo').bind('click', function () {
-			var msg = JSON.stringify({"id": data.quesId});
-			window.android.playVideo(msg);
+			window.android.playVideo(data.videoUrl);
 		});
 		//进入巩固练习
 		$('.practiveWork').bind('click', function () {
-			var msg = JSON.stringify({"id": data.quesId});
-			window.android.consolidation(msg);
+			window.android.consolidation(data.quesId);
 		})
 		//确定删除错题
 		$('.sure').bind('click', function () {
 			$('.clearMark').hide();
-			var msg = JSON.stringify({"id": data.quesId});
-			window.android.deleteErrorHomework(msg);
+			window.android.deleteErrorHomework(data.quesId);
 		})
 		$('.no').bind('click', function () {
 			$('.clearMark').hide();
 		})
 	};
-	//getContent(data);
 </script>
 </html>

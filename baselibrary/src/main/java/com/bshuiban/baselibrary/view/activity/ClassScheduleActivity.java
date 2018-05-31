@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.view.fragment.ClassScheduleFragment;
+import com.bshuiban.baselibrary.view.fragment.ClassScheduleFragment1;
 
 public class ClassScheduleActivity extends BaseActivity {
 
@@ -16,6 +17,6 @@ public class ClassScheduleActivity extends BaseActivity {
         setContentView(R.layout.activity_class_schedule);
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fl_fragment,new ClassScheduleFragment(),"classSchedule").commit();
+        fragmentTransaction.add(R.id.fl_fragment,new ClassScheduleFragment1(),"classSchedule").commit();
     }
 }

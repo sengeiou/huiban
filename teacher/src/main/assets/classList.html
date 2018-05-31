@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的备课</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/teacher.css">
+    <script src="./js/rem.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/iscroll-probe.js"></script>
+</head>
+<body>
+    <div class="wrap classList">
+        <header>
+            <span>
+                <i class="back"></i>
+            </span>	
+            <span>我的备课</span>
+            <span class="more"></span>
+        </header>
+        <main id="wrap">
+            <div class="list" uptext="下拉刷新"></div>
+        </main>
+    </div>
+</body>
+<script>
+    function getContent (data) {
+        var data = JSON.parse(data);
+        for (var i=0; i<data.length; i++) {
+            var nowMsg = $('.list').html();
+            $('.list').html(nowMsg + `
+                <ul>
+                    <li>${data[i].chapName}<span></span></li>
+                    <li>${data[i].info}</li>
+                </ul>
+            `);
+        }
+        $('.list ul').bind('click', function () {
+            var ind = $(this).index();
+            var preId = data[ind].id;
+            window.android.itemClick(preId);
+        });
+    }
+    $('.back').bind('click', function () {
+        console.log("返回上级");
+    })
+    $('.more').bind('click', function () {
+        console.log("点击筛选");
+        window.android.toSearchPage();
+    });
+    var list = document.querySelector('.list');
+	var myIscroll = new IScroll('#wrap',{
+		scrollbars: true,
+		probeType: 3
+    });
+    var flag = true;
+	myIscroll.on('scroll',function(){
+		if(this.y > 40){
+			list.setAttribute('uptext','释放刷新');
+		}else if(this.y < 40 && this.y > 0){
+			list.setAttribute('uptext','下拉刷新');
+		}else if(this.y < this.maxScrollY - 40 ){
+			flag = true;
+        }
+	})
+	myIscroll.on('scrollEnd',function(){
+        list.setAttribute('text','下拉刷新');
+        if(this.y === this.maxScrollY){
+            console.log("上拉");
+        }else if(this.y === 0) {
+            console.log("下拉");
+        }
+	})
+</script>
+</html>

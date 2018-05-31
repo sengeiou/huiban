@@ -635,3 +635,26 @@ window.onload = function() {
     complatelist(res)
     $("#filte").hide()
 }
+var list = document.querySelector('.list');
+var myIscroll = new IScroll('#main', {
+    scrollbars: true,
+    probeType: 3
+});
+var flag = true;
+myIscroll.on('scroll', function () {
+    if (this.y > 40) {
+        list.setAttribute('uptext', '释放刷新');
+    } else if (this.y < 40 && this.y > 0) {
+        list.setAttribute('uptext', '下拉刷新');
+    } else if (this.y < this.maxScrollY - 40) {
+        flag = true;
+    }
+})
+myIscroll.on('scrollEnd', function () {
+    list.setAttribute('text', '下拉刷新');
+    if (this.y === this.maxScrollY) {
+        console.log("上拉");
+    } else if (this.y === 0) {
+        console.log("下拉");
+    }
+})

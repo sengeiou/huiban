@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
@@ -68,6 +69,9 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
         mWebView.loadUrl("file:///android_asset/"+name+".html");
     }
 
+    /**
+     * 网页加载完之后
+     */
     protected void webViewLoadFinished() {
 
     }
@@ -102,7 +106,7 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
         int i1 = datas.length - 1;
         for (int i = 0; i < datas.length; i++) {
             stringBuffer.append("'");
-            stringBuffer.append(datas[i]);
+            stringBuffer.append(replaceJson(datas[i]));
             stringBuffer.append("'");
             if(i< i1){
                 stringBuffer.append(",");
@@ -113,7 +117,12 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
         //mWebView.loadUrl("javascript:setLoginData('2030246','111111')");
         mWebView.loadUrl(url);
     }
-
+    private String replaceJson(String json){
+        if(TextUtils.isEmpty(json)){
+            return json;
+        }
+        return json.replace("\\", "\\\\");//没办法
+    }
     @Override
     protected void onDestroy() {
         if(null!=mWebView){

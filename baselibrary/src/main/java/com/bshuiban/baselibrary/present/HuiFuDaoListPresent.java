@@ -15,31 +15,43 @@ import com.google.gson.JsonParser;
  */
 public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> implements HuiFuDaoListContract.Present {
     private AllSubjectPresent allSubjectPresent;
-    private String key,json;
+    private String key, json;
+    private int subjectId = -1;
+
     public HuiFuDaoListPresent(HuiFuDaoListContract.View view) {
         super(view);
-        allSubjectPresent=new AllSubjectPresent<HuiFuDaoListContract.View>(view){
+        allSubjectPresent = new AllSubjectPresent<HuiFuDaoListContract.View>(view) {
             @Override
             protected void loadAllSubject(SubjectBean dataBean) {
                 HuiFuDaoListPresent.this.loadAllSubject(dataBean);
             }
         };
     }
-    public void reSetStart(){
-        start=0;
+
+    public void reSetStart() {
+        start = 0;
     }
+
     @Override
     public void screeningLesson(String key, String json) {
-        this.key=key;
+        this.key = key;
         JsonElement parse = new JsonParser().parse(json);
-        if(parse.isJsonObject()){
+        if (parse.isJsonObject()) {
             JsonObject asJsonObject = parse.getAsJsonObject();
-            asJsonObject.addProperty("index",start);
-            asJsonObject.addProperty("limit",limit);
-            this.json=gson.toJson(asJsonObject);
+            asJsonObject.addProperty("index", start);
+            asJsonObject.addProperty("limit", limit);
+            JsonElement subjectId1 = asJsonObject.get("subjectId");
+            if (null != subjectId1) {
+                subjectId = subjectId1.getAsInt();
+                guessWhatYouThink(String.valueOf(subjectId));
+            } else {
+                subjectId = -1;
+                clearArray();
+            }
+            this.json = gson.toJson(asJsonObject);
             getInterNetData();
-        }else{
-            if (isEffective()){
+        } else {
+            if (isEffective()) {
                 view.fail("提供的json串错误");
             }
         }
@@ -51,7 +63,7 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
     }
 
     private void loadAllSubject(SubjectBean subjectBean) {
-        if(isEffective()&&null!=subjectBean.getData()){
+        if (isEffective() && null != subjectBean.getData()) {
             view.loadAllSubject(gson.toJson(subjectBean.getData()));
         }
     }
@@ -61,14 +73,14 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
         RetrofitService.getInstance().getServiceResult("getVipRelationEduList", json, new RetrofitService.CallHTMLJsonArray() {
             @Override
             protected void success(JsonArray msg) {
-                if(isEffective()){
+                if (isEffective()) {
                     view.loadScreeningData(gson.toJson(msg));
                 }
             }
 
             @Override
             protected void fail(String error) {
-                if(isEffective()){
+                if (isEffective()) {
                     view.fail(error);
                 }
             }
@@ -80,16 +92,18 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
         RetrofitService.getInstance().getServiceResult("getVipSearchByUSub", "{\"subjectId\":\"" + subjectId + "\",\"userId\":\"" + User.getInstance().getUserId() + "\"}", new RetrofitService.CallHTMLJsonArray() {
             @Override
             protected void success(JsonArray msg) {
-                if(isEffective()){
+                if (isEffective()) {
                     String s = gson.toJson(msg);
                     view.loadGuessWhatYouThink(s);
+                    view.addTag();
                 }
             }
 
             @Override
             protected void fail(String error) {
-                if(isEffective()){
-                    view.fail(error);
+                if (isEffective()) {
+                    //view.fail(error);
+                    view.addTag();
                 }
             }
         });
@@ -97,6 +111,29 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
 
     @Override
     public void getInterNetData() {
-        RetrofitService.getInstance().getServiceResult(key,json,callHTMLJsonArray);
+        RetrofitService.getInstance().getServiceResult(key, json, callHTMLJsonArray);
+    }
+
+    @Override
+    public void updateView(String json) {
+        if (isEffective()) {
+            view.updateList(json);
+            view.addTag();
+        }
+    }
+
+    /**
+     * 列表错误结果
+     *
+     * @param error
+     */
+    @Override
+    public void fail(String error) {
+        super.fail(error);
+        view.addTag();//列表结果
+    }
+
+    public int getSubjectId() {
+        return subjectId;
     }
 }

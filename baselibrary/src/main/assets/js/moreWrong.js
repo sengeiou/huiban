@@ -8,21 +8,15 @@ var sId,vId,fId,seriBrandId,chapBranId;
 var subjectId, versionId, stageId;
 function subject (data) {
     var data = JSON.parse(data);
-    console.log(data);
     if(type == 1){
         $('.typeList').eq(2).html('');
         $('.typeList').eq(3).html('');
-        console.log("aaa--"+data.length);
         for (var i=0;i<data.length;i++) {
-            console.log("name--"+data[i].name);
             var nowSub = $('.typeList').eq(1).html();
-            console.log(nowSub);
-            console.log($('.typeList'));
             $('.typeList').eq(1).html(nowSub+`
                 <span>${data[i].name}</span>
             `);
             $('.typeList:eq(1) span').bind('click', function () {
-                console.log("aaa1--"+data.length);
                 for (var j=0; j<data.length; j++) {
                     if(data[j].name === $(this).text()){
                         if (data[j].subjectId == undefined) {
@@ -33,13 +27,13 @@ function subject (data) {
                     }
                 }
                 sId = subjectId;
-                console.log("subjectId = "+subjectId);
                 var msg = JSON.stringify(subjectId);
-                window.android.dealWithJson("getFilterVersionL",msg);     
+                window.android.dealWithJson("getFilterVersionL",msg);
+                type = 2;
             });
         }
-        type = 2;
     }else if (type == 2) {
+        $('.typeList').eq(2).html('');
         $('.typeList').eq(3).html('');
         for (var i=0;i<data.length;i++) {
             var nowSub = $('.typeList').eq(2).html();
@@ -59,11 +53,12 @@ function subject (data) {
                 }
                 vId = versionId;
                 var msg = JSON.stringify({"subjectId": subjectId,"versionId": versionId})
-                window.android.dealWithJson("getFilterFasL",msg);     
+                window.android.dealWithJson("getFilterFasL",msg);
+                type = 3;
             });
         }
-        type = 3;
     }else if (type == 3) {
+        $('.typeList').eq(3).html('');
         $('.list:eq(4) .navs').html('');
         for (var i=0;i<data.length;i++) {
             var nowSub = $('.typeList').eq(3).html();
@@ -82,11 +77,12 @@ function subject (data) {
                 }
                 fId = fasId;
                 var msg = JSON.stringify({"subjectId": subjectId,"versionId": versionId,"fasId":fasId});
-                window.android.dealWithJson("getFilterChapterL",msg);     
+                window.android.dealWithJson("getFilterChapterL",msg);
             });
         }
         type = 4;
     }else if (type == 4) {
+        $('.typeList').eq(4).html('');
         $('.navs').html(`<div id="treeDemo" class="ztree"></div>`);
         function zTreeOnClick (event,treeId,treeNode) {        
             chapBranId = treeNode.id;

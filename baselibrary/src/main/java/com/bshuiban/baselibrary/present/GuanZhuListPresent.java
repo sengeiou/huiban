@@ -21,9 +21,7 @@ public class GuanZhuListPresent extends ListPresent<GuanZhuListContract.View> im
     }
 
     @Override
-    public void guanZhu(String key,String json) {
-        //deleteUserAttention
-        //addUserAttention
+    public void guanZhu(String key, String json) {
         RetrofitService.getInstance().getServiceResult(key, json, new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
             @Override
             protected void success(ResultBean resultBean) {
@@ -34,7 +32,7 @@ public class GuanZhuListPresent extends ListPresent<GuanZhuListContract.View> im
             @Override
             protected void error(String error) {
                 if(isEffective())
-                    view.fail(error);
+                   view.fail(error);
             }
         });
     }

@@ -9,7 +9,7 @@ public interface LiuYanMsgListContract {
     }
     interface Parent{
         void deleteMessageItem(String messageId, String pid);
-
+        void getReplyMessage(int index);
         void replayMessage(String json);
     }
 }

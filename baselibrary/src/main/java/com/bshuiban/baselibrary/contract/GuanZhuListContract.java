@@ -16,6 +16,6 @@ public interface GuanZhuListContract extends ListContract{
          * @param msg
          */
         void getSearchData(String msg);
-        void guanZhu(String key,String json);
+        void guanZhu(String key, String json);
     }
 }

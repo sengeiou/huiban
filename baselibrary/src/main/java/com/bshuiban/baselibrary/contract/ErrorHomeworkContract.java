@@ -11,6 +11,8 @@ public interface ErrorHomeworkContract {
          * @param json
          */
         void toErrorHomeworkAnalysisPage(String json);
+
+        //void toConsolidationWebActivity(String json);
     }
     interface Present extends ListContract.Present{
         void loadErrorHomeworkData();

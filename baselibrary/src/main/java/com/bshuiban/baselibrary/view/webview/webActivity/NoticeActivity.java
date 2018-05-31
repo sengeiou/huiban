@@ -1,7 +1,9 @@
 package com.bshuiban.baselibrary.view.webview.webActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 
 import com.bshuiban.baselibrary.contract.NoticeContract;
@@ -17,9 +19,14 @@ public class NoticeActivity extends BaseWebActivity<NoticePresent> implements No
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        loadFileHtml("");
-        MessageList messageList=new MessageList();
+        Intent intent = getIntent();
+        boolean send = intent.getBooleanExtra("send", false);
+        if(!send) {
+            loadFileHtml("notic");
+        }else{
+            loadFileHtml("notic_teacher");
+        }
+        NoticeHtml messageList=new NoticeHtml();
         registerWebViewH5Interface(messageList);
         tPresent=new NoticePresent(this);
         messageList.setOnListener(new MessageList.OnMessageListListener(){
@@ -36,8 +43,13 @@ public class NoticeActivity extends BaseWebActivity<NoticePresent> implements No
     }
 
     @Override
+    protected void webViewLoadFinished() {
+        tPresent.getInterNetData();
+    }
+
+    @Override
     public void updateList(String json) {
-        loadJavascriptMethod("getContent",json);
+        loadJavascriptMethod("getContent",(json));
     }
 
     @Override
@@ -52,6 +64,22 @@ public class NoticeActivity extends BaseWebActivity<NoticePresent> implements No
 
     @Override
     public void fail(String error) {
-
+        toast(error);
+    }
+    class NoticeHtml extends MessageList{
+        @JavascriptInterface
+        public void send(){
+            try {
+                Class<?> aClass = Class.forName("com.bshuiban.teacher.view.webView.webActivity.SendNoticeWebActivity");
+                toNextActivity(aClass);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void toNextActivity(Class<?> aClass){
+        runOnUiThread(()->{
+            startActivity(new Intent(getApplicationContext(),aClass));
+        });
     }
 }

@@ -44,11 +44,11 @@ public class BaseFragment<T extends BasePresent> extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDetach() {
         if(null!=tPresent) {
             tPresent.cancel();
             tPresent=null;
         }
-        super.onDestroyView();
+        super.onDetach();
     }
 }

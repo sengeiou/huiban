@@ -49,7 +49,6 @@ public class HomeworkFragment extends InteractionBaseWebViewFragment implements 
         View view = inflater.inflate(R.layout.fragment_homework, container, false);
         init(view);
         return view;
-
     }
 
     private void init(View view) {

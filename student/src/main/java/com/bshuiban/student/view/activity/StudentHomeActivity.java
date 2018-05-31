@@ -23,6 +23,7 @@ import com.bshuiban.baselibrary.view.fragment.HomeworkFragment;
 import com.bshuiban.baselibrary.view.fragment.ReportFragment;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.bshuiban.baselibrary.view.webview.webActivity.CollectionListActivity;
+import com.bshuiban.baselibrary.view.webview.webActivity.SideCollectionListWebActivity;
 import com.bshuiban.baselibrary.view.webview.webFragment.ErrorHomeworkWebFragment;
 import com.bshuiban.baselibrary.view.webview.webFragment.InteractionBaseWebViewFragment;
 import com.bshuiban.student.R;
@@ -115,7 +116,7 @@ public class StudentHomeActivity extends HomePageActivity<InteractionBaseWebView
     protected void itemSelectedId(int id) {
         Class<?> cls;
         if (id == R.id.nav_gallery) {
-            cls= CollectionListActivity.class;
+            cls= SideCollectionListWebActivity.class;
         } else if (id == R.id.nav_about_self) {
             cls= AboutSelfActivity.class;
         } else if (id == R.id.nav_opinion) {

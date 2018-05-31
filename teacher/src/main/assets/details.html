@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>课程详情</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/teacher.css">
+</head>
+<script src="./js/rem.js"></script>
+<script src="./js/jquery.min.js"></script>
+<body>
+    <div class="wrap details">
+        <header>
+            <span>
+                <i></i>
+            </span>	
+            <span>课程详情</span>
+        </header>
+        <main>
+            <div class="classImg"></div>
+            <div class="synopsis"></div>
+            <div class="classTab">
+                <p class="navs">
+                    <span class="tab index">目录</span>
+                    <span class="tab">简介</span>
+                </p>
+                <div class="catalog"></div>
+                <div class="summary hide"></div>
+            </div>
+            <div class="button">
+                <p class="coll yCollect">收藏</p>
+                <p class="coll noCollect hide">取消收藏</p>
+                <p class="tj">推荐给家长</p>
+            </div>            
+        </main>
+    </div>
+</body>
+<script>
+    var tab = $('.tab');
+    tab.bind('click', function () {
+        $(this).addClass('index').siblings().removeClass('index');
+        var parentDom = $(this).parent(),
+            ind = $(this).index();
+        parentDom.siblings().eq(ind).show().siblings().hide();
+        parentDom.show();
+    })
+    function isCollect (coll) {
+        if(coll==0){
+            $('.yCollect').show();
+            $('.noCollect').hide();
+        }else {
+            $('.noCollect').show();
+            $('.yCollect').hide();
+        }
+    }
+    function getContent (data) {
+        var data = JSON.parse(data);
+        isCollect(data.collected);
+        if (data.imgUrlMin == '') {
+            $('.classImg').html(`<img src="../../../images/reset/class_overview_pic.png" alt="" />`);
+        }else {
+            $('.classImg').html(`<img src="${data.imgUrlMin}" alt="" onerror="this.src='../../../images/reset/class_overview_pic.png' "/>`);
+        }   
+        $('.synopsis').html(`
+            <p>${data.name}</p>
+            <p>科目：${data.subjectName}</p>
+            <p>年级：${data.gradeName}</p>
+        `);
+        $('.summary').html(`<p>${data.summary}</p>`);
+        console.log(data);
+        for (var i=0; i<data.content.length; i++) {
+            var nowMsg = $('.catalog').html();
+            $('.catalog').html(nowMsg + `<p>${data.content[i].name}</p>`);
+        }   
+        //点击课时
+        $('.catalog p').bind('click', function () {
+            var ind = $(this).index();
+            var msg = JSON.stringify({"playUrl":data.content[ind].playUrl});
+            window.android.playLesson(data.content[ind].playUrl);
+        });
+        //点击收藏
+        $('.yCollect').bind('click', function () {
+            window.android.makeCollect(true);
+        })    
+        //点击取消收藏
+        $('.noCollect').bind('click', function () {
+            window.android.makeCollect(false);
+        }); 
+        //点击推荐给家长
+        $('.tj').bind('click', function () {
+            console.log('推荐给家长');
+            window.android.recommendParent();
+        });
+    }
+    //getContent(data);
+</script>
+</html>

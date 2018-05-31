@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的收藏</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<script src="./js/rem.js"></script>
+<script src="./js/jquery.min.js"></script>
+<body>
+    <div class="wrap myFavorite">
+        <header>
+            <span>
+                <a href="../../index.html">
+                  
+                </a>
+            </span>	
+            <span>我的收藏</span>
+        </header>
+        <main>
+            <dl class="list">
+                <dt><img src="../../images/reset/class_overview_pic.png" alt=""></dt>
+                <dd>
+                    <p>麻辣词汇系列</p>
+                    <p>授课教师：<span>洪然</span></p>
+                     <p><span class="img1"></span><span>36</span><span class="img2"></span><span>600</span></p>
+                </dd>
+            </dl>
+            <dl class="list">
+                <dt><img src="../../images/reset/class_overview_pic.png" alt=""></dt>
+                <dd>
+                    <p>麻辣词汇系列</p>
+                    <p>授课教师：<span>洪然</span></p>
+                     <p><span class="img1"></span><span>36</span><span class="img2"></span><span>600</span></p>
+                </dd>
+            </dl>
+            <dl class="list">
+                <dt><img src="../../images/reset/class_overview_pic.png" alt=""></dt>
+                <dd>
+                    <p>麻辣词汇系列</p>
+                    <p>授课教师：<span>洪然</span></p>
+                     <p><span class="img1"></span><span>36</span><span class="img2"></span><span>600</span></p>
+                </dd>
+            </dl>
+        </main>
+    </div>
+</body>
+<script>
+     var res;
+     function rend(data) {
+        res = JSON.parse(data)
+         var main = document.getElementsByTagName("main")[0];
+         var str='';
+         for(var i=0; i<res.length; i++) {
+             console.log(res[i])
+             str+=`
+             <dl class="list">
+                <dt><img src=${res[i].imgUrl} onerror="this.src='../../images/reset/class_overview_pic.png'" alt=""></dt>
+                <dd>
+                    <p>${res[i].name}</p>
+                    <p>授课教师：<span>${res[i].gradeName}  ${res[i].subjectName}</span></p>
+                     <p><span class="img1"></span><span>${res[i].praiseCnt}</span><span class="img2"></span><span>${res[i].browseCnt}</span></p>
+                </dd>
+            </dl>
+             `;
+         }
+         main.innerHTML = str;
+     } 
+</script>
+</html>

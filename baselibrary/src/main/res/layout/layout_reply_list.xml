@@ -2,23 +2,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-   >
+    android:orientation="vertical">
+
     <include
         android:id="@+id/include"
+        layout="@layout/layout_liu_yan_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/layout_liu_yan_item"/>
+        android:layout_marginTop="@dimen/dp_10" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/tv_write_msg"
         android:layout_below="@+id/include"
-        android:layout_above="@+id/tv_write_msg"/>
-        <TextView
-            android:id="@+id/tv_write_msg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="写评论..."
-            android:layout_alignParentBottom="true"/>
+        android:background="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/tv_write_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="写评论..."
+        android:background="@android:color/white"/>
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.BaseView;
@@ -38,12 +39,12 @@ public class ErrorHomeworkAnalysisActivity extends BaseWebActivity<ErrorHomework
 
     @Override
     public void fail(String error) {
-
+        toast(error);
     }
 
     @Override
     public void deleteErrorHomeworkSuccess() {
-        loadJavascriptMethod("");
+        finish();
     }
 
     class ErrorHomeworkAnalysisHtml{
@@ -63,6 +64,7 @@ public class ErrorHomeworkAnalysisActivity extends BaseWebActivity<ErrorHomework
          */
         @JavascriptInterface
         public void consolidation(int examId){
+            Log.e(TAG, "consolidation: "+examId );
             runOnUiThread(()->{
                 startActivity(new Intent(getApplicationContext(),ConsolidationWebActivity.class).putExtra("examId",examId));
             });

@@ -3,6 +3,7 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 
 import com.bshuiban.baselibrary.contract.LiuYanMsgListContract;
@@ -17,6 +18,7 @@ import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageLis
 public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> implements LiuYanMsgListContract.View{
 
     private String messageUserId;
+    private String name;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> 
         frameLayout.addView(mWebView);
         setContentView(frameLayout);
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        name = intent.getStringExtra("name");
         messageUserId = intent.getStringExtra("userId");
         tPresent=new LiuYanMsgListParent(this,messageUserId);
         loadFileHtml("leave");
@@ -35,22 +37,22 @@ public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> 
         messageList.setOnListener(new MessageList.MessageListListener() {
             @Override
             public void deleteMessageItem(String messageId, String pid) {
-
+                tPresent.deleteMessageItem(messageId,pid);
             }
 
             @Override
             public void replayMessage(String json) {
-
+                tPresent.replayMessage(json);
             }
 
             @Override
             public void loadMore() {
-
+                tPresent.loadMoreData();
             }
 
             @Override
             public void refresh() {
-
+                tPresent.refresh();
             }
         });
     }
@@ -79,4 +81,13 @@ public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> 
     public void fail(String error) {
         toast(error);
     }
+    class LiuYanMsgListHtml extends MessageList{
+        @JavascriptInterface
+        public void reply(int index){
+            runOnUiThread(()->{
+                tPresent.getReplyMessage(index);
+            });
+        }
+    }
 }
+

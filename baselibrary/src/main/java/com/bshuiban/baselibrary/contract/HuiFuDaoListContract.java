@@ -9,6 +9,7 @@ public interface HuiFuDaoListContract {
         void loadScreeningData(String json);
         void loadAllSubject(String json);
         void loadGuessWhatYouThink(String json);
+        void addTag();
     }
     interface Present{
         /**

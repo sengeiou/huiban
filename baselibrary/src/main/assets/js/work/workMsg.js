@@ -4,7 +4,8 @@ var circle = document.getElementsByClassName("circle")[0];
 var ul = document.getElementsByClassName("ul")[0];
  text = document.getElementsByTagName('p');
 var swiperContainer = document.getElementsByClassName('swiper-container')[0];
-var swiperWrapper = document.getElementsByClassName('swiper-wrapper')[0];
+var swiperWrapper = document.getElementById('swiper')
+
 var fl = true;
 var trans,answer,pen,answerimg,text;
 var index1=0;
@@ -115,14 +116,7 @@ function homeWork(data) {
     var num1 = data.length;
     console.log(num1)
     // 题目个数超过9个开启轮播效果
-    if (num1 <= 9) {
-        var a = document.getElementsByClassName("swiper-slide")[0];
-    } else {
-        swiper = new Swiper('.swiper-container', {
-            slidesPerView: num1 * 1.3,
-            freeMode: false,
-        });
-    }
+  
 
     var str = "";
     for (var i = 0; i < num1; i++) {
@@ -131,7 +125,16 @@ function homeWork(data) {
     `;
     }
 
-    swiperWrapper.innerHTML = str;
+     swiperWrapper.innerHTML =  `<div class="swiper-container">
+    <div class="swiper-wrapper">${str}
+    </div>
+    </div>`;
+    if(num1 >9) {
+    swiper = new Swiper('.swiper-container', {
+        slidesPerView:'auto' ,
+        freeMode:true,
+    });
+}
     var button = document.getElementsByClassName("swiper-slide");
     var this_;
     for (var i = 0; i < button.length; i++) {

@@ -38,7 +38,6 @@
     $('#inputMsg').bind('focus', function () {
         $('.note').hide();
     });
-    var data ='[{"id":"5aeab012f5ddaf069d971dcc","imgUrl":"","send":"2012786","sendRoleId":3,"sendName":"\u767d\u5efa\u5f3a","content":"ss","addTime":"2018-05-03 14:45","slist":[{"id":"5aeab016f5ddaf069d971dce","send":"2012786","sendRoleId":3,"sendName":"\u767d\u5efa\u5f3a","receive":"2012792","receiveName":"\u9648\u4e39","content":"ss","addTime":"2018-05-03 14:45"}],"count":1},{"id":"5aea9934f5ddaf069d971dbc","imgUrl":"http:\/\/192.168.0.3:8091\/group2\/M00\/03\/1F\/ag4bNljTaPSAVPRXAAD0RdlZgF4285.png","send":"2013126","sendRoleId":1,"sendName":"\u5f20\u6f47","content":"\u8c22\u8c22","addTime":"2018-05-03 13:08","slist":[{"id":"5afbf8bcf5ddaf069d9721d6","send":"2013126","sendRoleId":1,"sendName":"\u5f20\u6f47","receive":"2012792","receiveName":"\u9648\u4e39","content":"hahahhahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u54c8\u554a\u554a\u54c8\u54c8\u54c8\u54c8\u54c8\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216\u6216","addTime":"\u521a\u521a"},{"id":"5afbe3f0f5ddaf069d9721d4","send":"2013126","sendRoleId":1,"sendName":"\u5f20\u6f47","receive":"2012792","receiveName":"\u9648\u4e39","content":"ffff","addTime":"1\u5c0f\u65f6\u524d"},{"id":"5aea99d1f5ddaf069d971dc6","send":"2013126","sendRoleId":1,"sendName":"\u5f20\u6f47","receive":"2012792","receiveName":"\u9648\u4e39","content":"\u60fa\u60fa\u60dc\u60fa\u60fa","addTime":"2018-05-03 13:10"}],"count":3},{"id":"5aea7aeaf5ddaf069d971d36","imgUrl":"","send":"2012786","sendRoleId":3,"sendName":"\u767d\u5efa\u5f3a","content":"ujjj","addTime":"2018-05-03 10:58","count":0},{"id":"5aea78d6f5ddaf069d971d34","imgUrl":"","send":"2012786","sendRoleId":3,"sendName":"\u767d\u5efa\u5f3a","content":"kk","addTime":"2018-05-03 10:50","count":0}]';
     //渲染列表
     function getContent (data) {
         var data = JSON.parse(data);
@@ -61,63 +60,11 @@
             }             
         }
     };
-    getContent(data);
     //点击回复弹出
-    $('.reply').bind('click', function () {            
-            var nowMsg = $('.replyBox').html();
-            var ind = $(this).parents('dl').index();
-            var msg = JSON.parse(data)[ind].slist;
-            $('.replyBox').animate({height: '12.5rem'}, [2000]);            
-            $(".replyBox").html(nowMsg + `
-                <dl>${$(this).parents('dl').html()}</dl>
-                <ul class="replyList"></ul>
-                <div class="rBox">
-                    <input id="replyMsg" type="text" placeholder="请输入要回复的内容"/>
-                    <button id="inputReply">发布</button>
-                </div>
-            `);
-            $(".replyBox .reply").html('');
-            if (msg == undefined) {
-                $('.replyList').html(`<p>当前还没有回复</p>`);
-            }else {
-                for (var i=0; i<msg.length; i++) {
-                    var nowListMsg = $('.replyList').html();
-                    $('.replyList').html(nowListMsg + `
-                        <li>
-                            <h3>
-                                <span>${msg[i].sendName}</span>
-                            </h3>
-                            <h3><span>${msg[i].content}</span><time>${msg[i].addTime}</time></h3>   
-                            <button class="removeReply">删除</button>                         
-                        </li>
-                    `);
-                }
-                nowListMsg = '';
-            }
-            //点击关闭弹窗
-            $('.close').bind('click', function () {
-                $('.replyBox').animate({height: '0'}, [2000]);
-                $(".replyBox").html(nowMsg);                
-            });
-            //点击回复
-            $('#inputReply').bind('click', function () {
-                var replyMsg = $('#replyMsg').val();
-                if (replyMsg == '') {
-                    replyMsg = 'null';
-                }
-                var recevieId = JSON.parse(data)[ind].send;
-                var messageId = JSON.parse(data)[ind].id;
-                var msg = JSON.stringify({"recevieId":recevieId,"messageId":messageId,"content":replyMsg});
-                window.android.dealWithJson("replayMessage", msg);
-                $("#replyMsg").val('');
-            });
-            //点击删除回复
-            $('.removeReply').bind('click', function () {
-                var index = $(this).parents('li').index();
-                var messageId = msg[index].id;
-                var pId = JSON.parse(data)[ind].id;
-                deleteMessageItem(pId);
-            });
+    $('.reply').bind('click', function () {
+        var nowMsg = $('.replyBox').html();
+        var ind = $(this).parents('dl').index();
+        window.android.reply(ind);
     });
     //点击发布
     $('.inputMsg').bind('click', function () {

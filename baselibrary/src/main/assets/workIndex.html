@@ -7,33 +7,73 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>作业单元列表</title>
     <style>
-        .noComplate,
+               .noComplate,
         .complate {
             padding-bottom: 1.2rem;
         }
-        #filte{
+
+        #filte {
             position: fixed;
             z-index: 2;
-            width:100%;
-            background:#07cab9;
-            right:0;
-            top:.9rem;
-            color:#eee;
+            width: 100%;
+            background: #07cab9;
+            right: 0;
+            top: .9rem;
+            color: #eee;
             line-height: .4rem;
-            text-align:center;
-            padding-top:.2rem;
+            text-align: center;
+            padding-top: .2rem;
             padding-bottom: .2rem;
         }
-        #filte .li{
-            width:3.2rem;
-            height:1rem;
+
+        #filte .li {
+            width: 3.2rem;
+            height: 1rem;
             line-height: 1rem;
             font-size: .28rem;
-            border:1px solid #eee;
-            float:left;
+            border: 1px solid #eee;
+            float: left;
             margin-left: .27rem;
             margin-right: .27rem;
-            margin-bottom:.2rem;
+            margin-bottom: .2rem;
+        }
+
+        #main {
+            height: 100%;
+            position: relative;
+            overflow-y: scroll;
+        }
+
+        #main .listoo {
+            position: relative;
+        }
+
+        #main .listoo:before,
+        .listoo:after {
+            width: 100%;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            z-index: 9;
+            position: absolute;
+            display: block;
+            left: 0;
+        }
+
+        #main .listoo:before {
+            content: attr(uptext);
+            top: -40px;
+        }
+
+        #main .listoo:after {
+            content: attr(downtext);
+            bottom: -40px;
+        }
+
+        .nodone,done {
+          width:100%;
+          height: 800px;
         }
     </style>
     <link rel="stylesheet" href="./css/reset.css">
@@ -61,28 +101,20 @@
                     <i class="active2">已完成</i>
                 </span>
             </nav>
-            <div class="list noComplate">
-                <div class="nodone">
-                    <div class="listMsg">
-                        <dl>
-                            <dt>
-                                <h3>第六单元 化学方程式</h3>
-                                <p>化学/八年级/第六单元 化学方程式</p>
-                            </dt>
-                            <dd>
-                                <a href="./workMsg.html"></a>
-                            </dd>
-                        </dl>
-                        <p class="time">2017.05.01 19:40 - 2017.05.03 23:59</p>
+            <div id="main">
+                <div class="listoo" text="下拉刷新">
+                    <div class="list noComplate">
+                        <div class="nodone">
+                        </div>
+                        <div class="done">
+                        </div>
                     </div>
                 </div>
-                <div class="done">
-                       
-                    </div>
             </div>
         </main>
     </div>
 </body>
+<script src="./js/iscroll-probe.js"></script>
 <script src="./js/workLimit.js"></script>
 
 </html>

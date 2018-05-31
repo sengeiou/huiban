@@ -52,7 +52,7 @@ public class GuanZhuListActivity extends BaseWebActivity<GuanZhuListPresent> imp
 
     @Override
     public void guanZhuResult() {
-
+        toast("成功");
     }
 
     @Override
@@ -81,10 +81,17 @@ public class GuanZhuListActivity extends BaseWebActivity<GuanZhuListPresent> imp
                GuanZhuListActivity.this.goLiuYan(name,userId);
             });
         }
+
+        /**
+         * 关注
+         */
         @JavascriptInterface
-        public void guanZhu(){
-            //deleteUserAttention
-            //addUserAttention
+        public void dealWithJson(String key,String json){
+           tPresent.guanZhu(key,json);
+        }
+        @JavascriptInterface
+        public void search(){
+
         }
     }
 }

@@ -97,9 +97,9 @@ public class RetrofitService {
         public void onResponse(retrofit2.Call<ResponseBody> call, Response<ResponseBody> response) {
             try {
                 String string = response.body().string();
-                Log.e(TAG, "onResponse: " + string);
+                //Log.e(TAG, "onResponse: " + string);
                 String s = AESUtils.desEncrypt(string);
-                Log.e(TAG, "onResponse: " + s);
+                //Log.e(TAG, "onResponse: " + s);
                 T t = gson.fromJson(s, tClass);
                 result(t);
             } catch (Exception e) {
@@ -259,7 +259,7 @@ public class RetrofitService {
                     Log.e(TAG, "onResponse:CallHTML " + s);
                     fail(s);
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 fail(e.getMessage());
             }

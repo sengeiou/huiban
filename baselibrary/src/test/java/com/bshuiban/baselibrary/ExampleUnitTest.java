@@ -20,7 +20,9 @@ public class ExampleUnitTest {
 
     @Test
     public void testInterface() throws InterruptedException {//{"userId":"2030246","time":"201805"}
-        RetrofitService.getInstance().getServiceResult("getStuLearnBottom","{\"userId\":\"2030246\",\"time\":\"201805\"}",new RetrofitService.CallTest());
+        RetrofitService.getInstance().getServiceResult("getClassTeacherNowC","{\"userId\":\"2030219\"}",new RetrofitService.CallTest());
+
+        //RetrofitService.getInstance().getServiceResult("getStuLearnBottom","{\"userId\":\"2030246\",\"time\":\"201805\"}",new RetrofitService.CallTest());
         Thread.sleep(2000);
     }
     @Test

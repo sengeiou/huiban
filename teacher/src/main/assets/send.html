@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>发通知</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/teacher.css">
+    <script src="./js/rem.js"></script>
+    <script src="./js/jquery.min.js"></script>
+</head>
+<body>
+    <div class="wrap sendBox">
+        <header>
+            <span>
+                <i></i>
+            </span>	
+            <span></span>
+            <span class="ico"></span>
+        </header>
+        <main>
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <div class="changeClass">
+                <p>
+                    <span>选择发送班级</span>
+                    <span class="sendBtn">发送</span>
+                </p>
+                <div class="classes">
+                    
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+    function getClass (data) {
+        var data = JSON.parse(data);
+        for (var i = 0; i < data.length; i++) {
+            var nowMsg = $('.classes').html();
+            $('.classes').html(nowMsg + `<h3><span></span>${data[i].className}</h3>`);
+        }
+        $('.classes h3 span').bind('click', function () {
+            if ($(this).attr('class') == 'check') {
+                $(this).removeClass('check');
+            } else {
+                $(this).addClass('check');
+            }        
+        })
+        $('.sendBtn').bind('click', function () {
+            var content;
+            if ($('textarea').val() == '') {
+                content = null;
+            } else {
+                content = $('textarea').val();
+            }
+            var classIds = [];
+            for (var i = 0; i < $('.classes h3 span').length; i++) {
+                if ($('.classes h3 span').eq(i).attr('class')=='check') {
+                    classIds.push(data[i].classId);
+                }
+                var classId = classIds.toString(',');
+            }
+            window.android.sendNotice(classId,content);
+            $('textarea').val('')
+        })
+    }
+    $('.back').bind('click', function () {
+        console.log("返回上级");
+    });
+    $('.ico').bind('click', function () {
+        console.log("发送");
+    });
+</script>
+</html>

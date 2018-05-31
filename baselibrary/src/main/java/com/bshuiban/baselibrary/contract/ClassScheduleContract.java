@@ -1,6 +1,7 @@
 package com.bshuiban.baselibrary.contract;
 
 import com.bshuiban.baselibrary.model.ClassScheduleBean;
+import com.bshuiban.baselibrary.model.StudentClassClassScheduleBean;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ public interface ClassScheduleContract {
          * @param data
          */
         void updateSchedule(List<List<ClassScheduleBean.DataBean>> data);
+
+        void updateSchedule1(StudentClassClassScheduleBean bean);
     }
     interface Present{
         /**

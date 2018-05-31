@@ -5,14 +5,16 @@ import android.util.Log;
 import com.bshuiban.baselibrary.contract.BaseView;
 import com.bshuiban.baselibrary.contract.ListContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
+import com.bshuiban.baselibrary.utils.JsonUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 /**
  * Created by xinheng on 2018/5/18.<br/>
  * describe：
  */
-public class ListPresent<T extends BaseView> extends BasePresent<T> implements ListContract.Present {
+public abstract class ListPresent<T extends BaseView> extends BasePresent<T> implements ListContract.Present {
     protected int limit=10;
     protected int start;
     protected JsonArray jsonArray;
@@ -36,9 +38,7 @@ public class ListPresent<T extends BaseView> extends BasePresent<T> implements L
 
         @Override
         protected void fail(String error) {
-            if(isEffective()){
-                view.fail(error);
-            }
+            ListPresent.this.fail(error);
         }
     };
     public ListPresent(T t) {
@@ -66,11 +66,18 @@ public class ListPresent<T extends BaseView> extends BasePresent<T> implements L
     public void updateView(String json) {
 
     }
-
+    public void fail(String error){
+        if(isEffective()){
+            view.fail(error);
+        }
+    }
     @Override
     public void clearArray() {
         if(null!=jsonArray){
             jsonArray=null;
         }
+    }
+    protected JsonObject pareJsonObj(String json){
+        return JsonUtils.parseJsonObjetNotNull(json);
     }
 }
