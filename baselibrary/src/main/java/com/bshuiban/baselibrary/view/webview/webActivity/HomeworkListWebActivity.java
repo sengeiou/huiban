@@ -149,7 +149,14 @@ public class HomeworkListWebActivity extends BaseWebActivity<HomeworkListPresent
             //workId prepareId
             runOnUiThread(() -> {
                 if (tPresent.getTAg()||home_type==Middle_Class) {//已完成
-                    startActivity(new Intent(getApplicationContext(), HomeworkReportActivity.class).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId));
+                    //startActivity(new Intent(getApplicationContext(), HomeworkReportActivity.class).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId));
+                    Class<?> aClass = null;
+                    try {
+                        aClass = Class.forName("com.bshuiban.teacher.view.activity.CorrectsHomeworkActivity");
+                        startActivity(new Intent(getApplicationContext(), aClass).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId));
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 } else {//未完成
                     startActivity(new Intent(getApplicationContext(), HomeworkPendingInfActivity.class).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId));
                 }

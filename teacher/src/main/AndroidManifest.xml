@@ -31,7 +31,8 @@
         <activity
             android:name=".view.webView.webActivity.LessonListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.CorrectsHomeworkActivity"></activity>
+        <activity android:name=".view.activity.CorrectsHomeworkActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

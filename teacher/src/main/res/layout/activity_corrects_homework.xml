@@ -7,17 +7,19 @@
     android:orientation="vertical"
     tools:context=".view.activity.CorrectsHomeworkActivity">
     <com.bshuiban.baselibrary.view.customer.TitleView
+        android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
         app:title_text="XX"
         app:title_color="@android:color/white"
         app:right_text="全"
+        app:title_size="@dimen/dp_20"
         android:background="@color/guide_start_btn"
         app:src_left="@mipmap/iv_back"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"/>
+        android:layout_height="wrap_content"/>
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"

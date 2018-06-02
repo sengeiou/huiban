@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>作业</title>
+		<link rel="stylesheet" type="text/css" href="css/select_problem.css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/add_content.js"></script>
+		<script type="text/javascript">
+			var data;
+			var num;
+			var id;
+			var id_fill;
+			var editor;
+
+			function setContent(jsons) {
+				$("#content").empty();
+				data = JSON.parse(jsons);
+				division_question(data);
+			}
+
+			function getData() {
+				if(data != undefined && data.data != undefined) {
+					var data_string = JSON.stringify(data.data);
+					logTag("getData", data_string);
+					window.test.setNewData(data_string);
+				} else {
+					window.test.setNewData(null);
+				}
+			}
+			/**
+			 * 更新原始数据
+			 * @param {int} num1
+			 * @param {int} num2
+			 * @param {Object} new_answer
+			 * @param {int} type
+			 */
+			function update_data(new_answer, type) {
+				var next_data = data;
+				var answer_arr;
+				if(next_data.stuAnswer != undefined && next_data.stuAnswer.length > 0) {
+					log(next_data.stuAnswer.toString());
+					answer_arr = next_data.stuAnswer.replace(/,/g, "").split("");
+				} else {
+					answer_arr = new Array();
+				}
+				log(answer_arr.toString());
+				if(type == -1) { //多选取消
+					$.each(answer_arr, function(i, item) {
+						log(item + ", " + new_answer);
+						if(item == new_answer) {
+							answer_arr.splice(i, 1);
+							return true;
+						}
+					});
+					//next_data.stuAnswer = arrayToString(answer_arr);
+					next_data.stuAnswer = answer_arr.join("");
+					return;
+				} else if(type == 1) { //多选添加
+					if($.inArray(new_answer, answer_arr) == -1) { //不包含
+						answer_arr.splice(0, 0, new_answer);
+					}
+					answer_arr.sort(function(a, b) { //排序
+						return a.localeCompare(b);
+					});
+					//next_data.stuAnswer = arrayToString(answer_arr);
+					next_data.stuAnswer = answer_arr.join("");
+					return;
+				}
+				next_data.stuAnswer = new_answer;
+				//next_data.ansType = type;//废弃
+				//log(data.data);
+				log('new_answer=' + new_answer);
+			}
+
+			function only_update_data(new_answer) {
+				if(num != undefined) {
+					log(num);
+					var arr = split_array(num);
+					update_data(arr[0], arr[1], new_answer, 0);
+				}
+			}
+			/**更新填空题数据*/
+			function only_update_data_fill(new_answer, num_fill) {
+				if(num != undefined) {
+					logTag("only_update_data_fill", num);
+					var arr = split_array(num);
+					var num1 = arr[0];
+					var num2 = arr[1];
+					if(typeof(data.data[num1].next[num2].stuAnswer) == 'object') {
+						data.data[num1].next[num2].stuAnswer[num_fill] = new_answer;
+					} else {
+						var array_answer = new Array(1);
+						array_answer[0] = new_answer;
+						data.data[num1].next[num2].stuAnswer = array_answer;
+					}
+					log(data.data);
+				}
+			}
+
+			function update_img(new_answer, local_answer) {
+				log(new_answer);
+				log(id);
+				if(id != undefined) {
+					var type = $("#" + id).attr("myType");
+					var content;
+					if("fill" == type) { //填空
+						if(id_fill != undefined) {
+							var fill = $("#" + id_fill);
+							var num = Number(fill.attr('num'));
+							var id_ = fill.attr('id');
+							if(num != NaN) {
+								only_update_data_fill(new_answer, num); //更新数据
+								fill.replaceWith(function() { //更新ui
+									return structure_img_fill('img', 'air_finsh.png', 'look_img', local_answer, id_, num);
+								});
+							}
+						} else {
+							logTag("id_fill", "error")
+						}
+					} else {
+						var content;
+						var text;
+						if(isContains(new_answer, "http") && isContains(new_answer, ":") && isContains(new_answer, "//")) { //图片
+							var img_answer = '<img src="' + new_answer + '" style="height:200px"/>';
+							var lo_answer = '<img src=' + local_answer + ' style="height:200px"/>';
+							only_update_data(img_answer);
+							//content = img_answer + add_revise_answer();
+							content = '<div class="img_text">' + lo_answer + '</div>';
+							text = content + add_revise_answer();
+							//init();
+						} else {
+							content = '<div class="img_text">' + new_answer + '</div>';
+							text = content + add_revise_answer();
+						}
+						log(text)
+						var hasImg = $("#" + id).has(".write_img").length;
+						if(hasImg > 0) {
+							$("#" + id).html(text);
+						}
+						$("#" + id).find(".img_text").html(img_answer);
+						//$("#" + id).find(".img_text").xheditor().setSource(lo_answer);
+						//$("#" + id).find(".xheTool").parent().hide();
+					}
+
+				}
+			}
+
+			function update_text(new_answer) {
+				logTag("update_text", new_answer);
+				if(id != undefined) {
+					var type = $("#" + id).attr("myType");
+					var content;
+					if("fill" == type) { //填空
+						if(id_fill != undefined) {
+							var fill = $("#" + id_fill);
+							var num = Number(fill.attr('num'));
+							var id_ = fill.attr('id');
+							if(num != NaN) {
+								only_update_data_fill(new_answer, num); //更新数据
+								fill.replaceWith(function() { //更新ui
+									//text = structure_a(id, i, answer);
+									return structure_a(id_, num, new_answer);
+								});
+							}
+						} else {
+							logTag("id_fill", "error")
+						}
+					} else {
+						only_update_data(new_answer)
+						var content = '<textarea class="img_text">' + new_answer + '</textarea>';
+						var text = content + add_revise_answer();
+						var hasImg = $("#" + id).has(".write_img").length;
+						if(hasImg > 0) {
+							$("#" + id).html(text);
+						}
+						$("#" + id).find(".img_text").html(new_answer);
+						$("#" + id).find(".img_text").xheditor().setSource(new_answer);
+						$("#" + id).find(".xheTool").parent().hide();
+					}
+				}
+			}
+			/**
+			 * 重置参数
+			 */
+			function reset_tag() {
+				num = undefined;
+				id = undefined;
+			}
+			/**
+			 * 设置参数
+			 */
+			function set_tag(parent) {
+				id = parent.attr('id');
+				num = parent.attr('name');
+				log(id + ', ' + num);
+			}
+			var show_bord = function() {
+				log('画板');
+				//alert('画板123');
+				if(window.test != undefined) {
+					window.test.show_paint_bord();
+				} else {
+					update_text('\\"');
+					//update_img('http://121.196.211.45:8090/group2/M00/00/67/rBDSalm1-neATql6AAA1wVKzgFE794.png')
+				}
+			}
+
+			function setClick() {
+				//log(statue + "竟然执行了")
+				$(".radio_select_bg").click(function() {
+					change_radio($(this));
+				});
+				$(".radio_unselect_bg").click(function() {
+					change_radio($(this));
+				});
+
+				//填空题
+				//text_a
+				//write_img
+				//look_img
+				//				$("#content input").each(function(){
+				//					$(this).remove();
+				//				});
+				//打开画板，预修改答案
+				$("div").on("click", '.text_a', function() {
+					set_tag($(this).parents('.fill'));
+					if($(this).parents('.fill').attr('mytype') == 'fill') { //填空
+						id_fill = $(this).attr('id');
+					}
+					show_bord();
+					return false;
+				});
+				//打开画板，预填写改答案
+				$("div").on("click", ".write_img", function() {
+					if($(this).parents('.fill').attr('mytype') == 'fill') {
+						id_fill = $(this).attr('id');
+						set_tag($(this).parents('.fill'))
+					} else {
+						set_tag($(this).parent())
+					}
+					show_bord();
+					return false;
+				});
+
+				//修改答案
+				$("div").on("click", ".revise_button", function() {
+					//两层div
+					var div_parent = $(this).parent().parent();
+					set_tag(div_parent);
+					var text = div_parent.children('.img_text').xheditor().getSource()
+					logTag('editor', text);
+					//var img_path = div_parent.children('img').attr('src');
+					//logTag('div',img_path);
+					show_bord();
+					return false;
+				});
+			}
+			window.onload = function() {
+				document.documentElement.style.webkitTouchCallout = 'none';
+
+				//计算题 ansType=1 img
+				//		1,text
+				//
+				if((window == undefined || window.test == undefined) && data == undefined) {
+					var string = '{"analysis":"【解析】\u003cbr /\u003e试题分析：原式括号中两项通分并利用同分母分式的减法法则计算，同时利用除法法则变形，约分后两项通分并利用同分母分式的加法法则计算得到最简结果，求出方程的解得到x的值，代入计算即可求出值．\u003cbr /\u003e试题解析：原式\u003d\u003cimg src\u003d\"http://static.zujuan.xkw.com/Upload/2016-09/12/b507e8ba-3fdd-46c7-b15f-656a4b6d9b8d/paper.files/image041.png\" style\u003d\"vertical-align:middle;\" /\u003e\u003cbr /\u003e\u003d\u003cimg src\u003d\"http://static.zujuan.xkw.com/Upload/2016-09/12/b507e8ba-3fdd-46c7-b15f-656a4b6d9b8d/paper.files/image042.png\" style\u003d\"vertical-align:middle;\" /\u003e\u003cbr /\u003e\u003d\u003cimg src\u003d\"http://static.zujuan.xkw.com/Upload/2016-09/12/b507e8ba-3fdd-46c7-b15f-656a4b6d9b8d/paper.files/image043.png\" style\u003d\"vertical-align:middle;\" /\u003e\u003cbr /\u003e\u003d\u003cimg src\u003d\"http://static.zujuan.xkw.com/Upload/2016-09/12/b507e8ba-3fdd-46c7-b15f-656a4b6d9b8d/paper.files/image044.png\" style\u003d\"vertical-align:middle;\" /\u003e，\u003cbr /\u003e解方程2x\u003d5x-1，得：x\u003d\u003cimg src\u003d\"http://static.zujuan.xkw.com/Upload/2016-09/12/b507e8ba-3fdd-46c7-b15f-656a4b6d9b8d/paper.files/image045.png\" style\u003d\"vertical-align:middle;\" /\u003e，\u003cbr /\u003e当x\u003d\u003cimg src\u003d\"http://static.zujuan.xkw.com/Upload/2016-09/12/b507e8ba-3fdd-46c7-b15f-656a4b6d9b8d/paper.files/image045.png\" style\u003d\"vertical-align:middle;\" /\u003e时，原式\u003d-\u003cimg src\u003d\"http://static.zujuan.xkw.com/Upload/2016-09/12/b507e8ba-3fdd-46c7-b15f-656a4b6d9b8d/paper.files/image040.png\" style\u003d\"vertical-align:middle;\" /\u003e．\u003cbr /\u003e考点：1.分式的化简求值；2.解一元一次方程.","ansType":0.0,"answer":"【答案】-\u003cimg src\u003d\"http://static.zujuan.xkw.com/Upload/2016-09/12/b507e8ba-3fdd-46c7-b15f-656a4b6d9b8d/paper.files/image040.png\" style\u003d\"vertical-align:middle;\" /\u003e．","content":"【题文】先化简，再求值：\u003cimg src\u003d\"http://static.zujuan.xkw.com/Upload/2016-09/12/b507e8ba-3fdd-46c7-b15f-656a4b6d9b8d/paper.files/image039.png\" style\u003d\"vertical-align:middle;\" /\u003e，其中x的值为方程2x\u003d5x-1的解．","crate":"0","examId":1221748,"knowArr":[],"optionName":"subjective","otherId":"4425315","resourceName":"好未来","sort":1,"status":1,"stuAnss":"","stuAnswer":"","stuAnswerArr":[],"stuAnswerKey":0,"type":15.0,"workId":18147}';
+					setContent(string);
+				}
+
+				//data_array=undefined;
+
+				//去除所有input标签
+				//$('input').remove();
+				//tkbox
+				$(".fill").each(function(j) {
+					$(this).find('.tkbox').each(function(i) {
+						var parent = $(this).parents('.fill');
+						var stuAnswers = parent.attr("answserStu");
+						var id = parent.attr('id');
+						//var answer_type = typeof(stuAnswers);
+						var name = 'air_nomal.png';
+						var class_name = 'write_img';
+						var text;
+						var answer;
+						//logTag(i + '', answer_type + ", " + stuAnswers + stuAnswers.length);
+						if(stuAnswers == undefined || stuAnswers == 'undefined' || stuAnswers.length == 0) {
+							name = 'air_nomal.png';
+							class_name = 'write_img';
+						} else {
+							answer = stuAnswers.split(",")[i];
+							log(answer);
+							if(answer != undefined && answer.length > 0) {
+								if(isContains(answer, "http") && isContains(answer, ":") && isContains(answer, "//")) { //图片
+									name = 'air_finsh.png';
+									class_name = 'look_img';
+								} else { //文字
+									answer = answer.replace(/lopadfgoegw150/g, "\"");
+									logTag("..fill", answer)
+									text = structure_a(id, i, answer);
+								}
+							}
+						}
+						$(this).replaceWith(function() {
+							if(text == undefined) {
+								text = structure_img_fill('img', name, class_name, answer, id, i);
+							}
+							return text;
+						});
+					});
+				});
+				/*
+				 * 若不允许修改，禁止监听即可
+				 */
+				//选择切换：选择题、判断题
+				//打开画布，展示之前答案
+				$("div").on("click", ".look_img", function() {
+					var div_parent = $(this).parent();
+					set_tag(div_parent);
+					if(div_parent.attr('mytype') == 'fill') { //填空
+						id_fill = $(this).attr('id');
+					}
+					var img_path = $(this).attr('name');
+					log(img_path);
+					if(window.test != undefined) {
+						window.test.show_img(img_path);
+					}
+					return false;
+				});
+
+				$("#content").children('.question').each(function() {
+					$(this).children("img").each(function() {
+						$(this).load(function() {
+							var width = $(this).width();
+							var width_p = $(this).parent().width();
+							log(width_p + ", p, " + width);
+							if(parseInt(width) > parseInt(width_p)) {
+								log($(this).attr("src"));
+								$(this).css('width', width_p);
+							}
+						});
+					});
+				});
+				setClickListener();
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="content" style="margin-bottom: 20px;"></div>
+	</body>
+
+</html>

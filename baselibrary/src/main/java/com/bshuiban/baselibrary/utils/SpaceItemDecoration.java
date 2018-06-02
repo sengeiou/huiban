@@ -69,7 +69,11 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
-        outRect.set(0, 0, 0, mDividerHeight);
+        if(mOrientation==LinearLayoutManager.VERTICAL) {
+            outRect.set(0, 0, 0, mDividerHeight);
+        }else {
+            outRect.set(0, 0, mDividerHeight, 0);
+        }
     }
 
     //绘制分割线

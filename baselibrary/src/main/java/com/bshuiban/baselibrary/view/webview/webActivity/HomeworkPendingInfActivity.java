@@ -2,18 +2,12 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.HomeworkPendingInfContract;
-import com.bshuiban.baselibrary.model.HomeWorkCommitBean;
 import com.bshuiban.baselibrary.model.Homework;
 import com.bshuiban.baselibrary.model.HomeworkInfBean;
 import com.bshuiban.baselibrary.model.HomeworkListData;
@@ -232,7 +226,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
                                                 String asString = stuAnswer.getAsString();
                                                 nextBean.setStuAnswer(asString);
                                                 dataHome.setComplete(!TextUtils.isEmpty(asString));
-                                                if (dataHome.isComplete()&&("radio".equals(nextBean.getOptionName()) || "check".equals(nextBean.getOptionName()))) {
+                                                if (dataHome.getComplete()&&("radio".equals(nextBean.getOptionName()) || "check".equals(nextBean.getOptionName()))) {
                                                     if (asString.equals(nextBean.getAnswer())) {
                                                         dataHome.setResult(1);
                                                     }else{
@@ -279,7 +273,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
                                                 String asString = stuAnswer.getAsString();
                                                 nextBeanX.setStuAnswer(asString);
                                                 dataHome.setComplete(!TextUtils.isEmpty(asString));
-                                                if (dataHome.isComplete()&&"radio".equals(nextBeanX.getOptionName()) || "check".equals(nextBeanX.getOptionName())) {
+                                                if (dataHome.getComplete()&&"radio".equals(nextBeanX.getOptionName()) || "check".equals(nextBeanX.getOptionName())) {
                                                     if (asString.equals(nextBeanX.getAnswer())) {
                                                         dataHome.setResult(1);
                                                     }else{
@@ -312,7 +306,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
                                             String asString = stuAnswer.getAsString();
                                             exam2.setStuAnswer(asString);
                                             dataHome.setComplete(!TextUtils.isEmpty(asString));
-                                            if (dataHome.isComplete()&&"radio".equals(exam2.getOptionName()) || "check".equals(exam2.getOptionName())) {
+                                            if (dataHome.getComplete()&&"radio".equals(exam2.getOptionName()) || "check".equals(exam2.getOptionName())) {
                                                 if (asString.equals(exam2.getAnswer())) {
                                                     dataHome.setResult(1);
                                                 }else{

@@ -40,7 +40,7 @@ public class Homework {
         private boolean complete;
         private int result=2;//0 错误 1 正确 2 未知 3 半对
 
-        public boolean isComplete() {
+        public boolean getComplete() {
             return complete;
         }
 

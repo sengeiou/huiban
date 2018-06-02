@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bshuiban.baselibrary.R;
 
-public class AboutSelfActivity extends AppCompatActivity {
+public class AboutSelfActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
