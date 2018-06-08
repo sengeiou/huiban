@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作业单元列表</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/work.css">
+    <link rel="stylesheet" href="./css/subjects.css">
+</head>
+<script src="./js/rem.js"></script>
+<script src="./js/jquery.min.js"></script>
+<body>
+    <div class="wrap workIndex">
+        <header>
+            <span>
+                <a class="back" href="finish_page.html">
+                </a>
+            </span>
+            <span class="subject">数学</span>
+        </header>
+        <main>
+            <nav>
+                <span class="navs">
+                    <i class="active">课前作业</i>
+                </span>
+                <span class="navs">
+                    <i class="active2">课后作业</i>
+                </span>
+            </nav>
+            <div id="main">
+                <div class="listoo" text="下拉刷新">
+                    <div class="list">
+                       <div class="subjects">
+                          <!-- 内容渲染 -->
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+<script src="./js/iscroll-probe.js"></script>
+<script src="./js/subjects.js"></script>
+</html>

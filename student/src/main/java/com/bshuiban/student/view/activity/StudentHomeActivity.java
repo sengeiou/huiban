@@ -166,7 +166,7 @@ public class StudentHomeActivity extends HomePageActivity<InteractionBaseWebView
             tv_text.setText(schoolName + gradleName + className);
             String icoPath = data.getIcoPath();
             if (TextUtils.isEmpty(icoPath)) {
-                iv_head.setImageResource(R.drawable.app_logo);
+                iv_head.setImageResource(R.mipmap.default_head);
             } else {
                 RequestOptions requestOptions = new RequestOptions()
                         .circleCrop()

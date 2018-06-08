@@ -46,5 +46,6 @@
         android:gravity="center"
         android:padding="@dimen/dp_10"
         android:layout_alignParentBottom="true"
+        android:textColor="@android:color/white"
         android:background="@drawable/circle_blue_bg"/>
 </RelativeLayout>

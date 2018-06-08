@@ -33,6 +33,7 @@
     </div>
 </body>
 <script>
+    var userType = window.android.getUserType();
     function getContent (data) {
         var data = JSON.parse(data);        
         for(var i=0; i<data.length; i++){
@@ -46,7 +47,10 @@
                         <span class="name">推荐给家长</span>
                     </dd>
                 </dl>
-            `);        
+            `);
+            if (userType == 4) {
+                $('.list .name').html(data[i].recTeaName+'推荐');
+            }
             if (data[i].imgUrl == '') {
                 $('.list dl:eq('+i+') dt').html(`<img src="./images/index/tube_class@2x.png" alt="" />`);
             }else {
@@ -54,13 +58,15 @@
             }
         }
         //点击推荐给家长
-        $('.name').bind('click', function () {
-            var ind = $(this).parents('dl').index();
-            console.log(ind);
-            var courseId = data[ind].CourseId;
-            window.android.recommendParent(courseId);
-            return false;
-        });
+        if (userType == 2 || userType == 3) {
+            $('.name').bind('click', function () {
+                var ind = $(this).parents('dl').index();
+                console.log(ind);
+                var courseId = data[ind].CourseId;
+                window.android.recommendParent(courseId);
+                return false;
+            });
+        }
         //点击进入课程详情
         $('dl').bind('click', function () {
             var ind = $(this).index();

@@ -1,5 +1,6 @@
 package com.bshuiban.baselibrary.view.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.GeneralSituationPresent;
 import com.bshuiban.baselibrary.view.adapter.GeneralSituationAdapter;
 import com.bshuiban.baselibrary.view.customer.LineTextView;
+import com.bshuiban.baselibrary.view.webview.webActivity.LiuYanMsgListActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -34,6 +36,8 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
     private LineTextView tv_teacher,tv_student;
     private ImageView iv;
     private RecyclerView recycle;
+    private boolean isTeacher=true;
+    private int position;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,7 +87,7 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
     public void updateView(GeneralBean.DataBean data) {
         String ipImgUrl = data.getIpImgUrl();
         if(TextUtils.isEmpty(ipImgUrl)){
-            iv.setImageResource(R.drawable.ic_menu_camera);
+            iv.setImageResource(R.mipmap.default_class);
         }else{
             Glide.with(getActivity()).load(ipImgUrl).into(iv);
         }
@@ -106,6 +110,17 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
     }
 
     @Override
+    public void guanZhuResult(boolean tag) {
+        if(isTeacher){
+            teaInfoBean.setIsAtten(tag?1:0);
+            teaInfoBeanGeneralSituationAdapter.notifyItemChanged(this.position);
+        }else {
+            stuInfoBean.setIsAtten(tag?1:0);
+            stuInfoBeanGeneralSituationAdapter.notifyItemChanged(this.position);
+        }
+    }
+
+    @Override
     public void fail(String error) {
         toast(error);
     }
@@ -120,6 +135,8 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
     public void dismissDialog() {
 
     }
+
+    private GeneralBean.DataBean.TeaInfoBean teaInfoBean;
     private GeneralSituationAdapter<GeneralBean.DataBean.TeaInfoBean> teaInfoBeanGeneralSituationAdapter=new GeneralSituationAdapter<GeneralBean.DataBean.TeaInfoBean>() {
         @Override
         protected String getImagePath(int position) {
@@ -137,15 +154,29 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
         }
 
         @Override
-        protected void toNextPageGuanZhu(int position) {
+        protected boolean getGuanzhu(int position) {
+            return mList.get(position).getIsAtten()==1;//是否关注(0否,1是)
+        }
 
+        @Override
+        protected void toNextPageGuanZhu(int position) {
+            GeneralSituationFragment.this.position=position;
+            teaInfoBean = mList.get(position);
+            int teacherId = teaInfoBean.getTeacherId();
+            tPresent.guanZhu(teaInfoBean.getIsAtten()==0,teacherId);
         }
 
         @Override
         protected void toNextPageLiuYan(int position) {
-
+            GeneralBean.DataBean.TeaInfoBean teaInfoBean = mList.get(position);
+            String name = teaInfoBean.getName();
+            int teacherId = teaInfoBean.getTeacherId();
+            startActivity(new Intent(getActivity(), LiuYanMsgListActivity.class)
+                    .putExtra("name",name)
+                    .putExtra("userId",teacherId+""));
         }
     };
+    private GeneralBean.DataBean.StuInfoBean stuInfoBean;
     private GeneralSituationAdapter<GeneralBean.DataBean.StuInfoBean> stuInfoBeanGeneralSituationAdapter=new GeneralSituationAdapter<GeneralBean.DataBean.StuInfoBean>() {
         @Override
         protected String getImagePath(int position) {
@@ -163,13 +194,26 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
         }
 
         @Override
-        protected void toNextPageGuanZhu(int position) {
+        protected boolean getGuanzhu(int position) {
+            return mList.get(position).getIsAtten()==1;//是否关注(0否,1是)
+        }
 
+        @Override
+        protected void toNextPageGuanZhu(int position) {
+            GeneralSituationFragment.this.position=position;
+            stuInfoBean = mList.get(position);
+            int studentId = stuInfoBean.getStudentId();
+            tPresent.guanZhu(stuInfoBean.getIsAtten()==0,studentId);
         }
 
         @Override
         protected void toNextPageLiuYan(int position) {
-
+            GeneralBean.DataBean.StuInfoBean stuInfoBean = mList.get(position);
+            String name = stuInfoBean.getName();
+            int studentId = stuInfoBean.getStudentId();
+            startActivity(new Intent(getActivity(), LiuYanMsgListActivity.class)
+            .putExtra("name",name)
+            .putExtra("userId",studentId+""));
         }
 
     };
@@ -180,10 +224,12 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
             tv_teacher.setSelectColor(Color.BLACK, color);
             tv_student.setSelectColor(color1, -1);
             recycle.setAdapter(teaInfoBeanGeneralSituationAdapter);
+            isTeacher=true;
         } else if (i == R.id.tv_student) {
             tv_student.setSelectColor(Color.BLACK, color);
             tv_teacher.setSelectColor(color1, -1);
             recycle.setAdapter(stuInfoBeanGeneralSituationAdapter);
+            isTeacher=false;
         } else if (i == R.id.tv_show) {
             int lineCount = tv_text.getLineCount();
             if (lineCount <= 3) {

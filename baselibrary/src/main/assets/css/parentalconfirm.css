@@ -1,0 +1,93 @@
+#main {
+    height: 100%;
+    position: relative;
+    overflow-y: scroll;
+}
+
+#main .listoo {
+    position: relative;
+}
+
+#main .listoo:before,
+.listoo:after {
+    width: 100%;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    z-index: 9;
+    position: absolute;
+    display: block;
+    left: 0;
+}
+
+#main .listoo:before {
+    content: attr(uptext);
+    top: -40px;
+}
+
+#main .listoo:after {
+    content: attr(downtext);
+    bottom: -40px;
+}
+.subj{
+    width:7.1rem;
+    height: 1.6rem;
+    background:white;
+    margin: 0 auto;
+    margin-bottom: 3%;
+    padding-top:2%;
+    position: relative;
+}
+.subj li{
+    padding-left: 5%;
+}
+.subj li:nth-of-type(1){
+    height: .7rem;
+    line-height: .7rem;
+    font-size: .32rem;
+}
+.subj li:nth-of-type(2){
+    font-size:.28rem;
+    color: gray;
+}
+.see1{
+    position: absolute;
+    right:8%;
+    top:30%;
+    width:.6rem;
+    height:.6rem;
+    background-image: url("../images/reset/see@2x.png");
+    background-size:.6rem .6rem;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    .see1 {
+        background-image: url("../images/reset/see@2x.png");
+      }
+    }
+    
+    @media only screen and (-webkit-min-device-pixel-ratio: 3) {
+        .see1 {
+        background-image:  url("../images/coach/see@3x.png");
+      }
+    }
+    .see2{
+        position: absolute;
+        right:8%;
+        top:30%;
+        width:.6rem;
+        height:.6rem;
+        background-image: url("../images/reset/copy@2x.png");
+        background-size:.6rem .6rem;
+    }
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+        .see2 {
+            background-image: url("../images/reset/copy@2x.png");
+          }
+        }
+        
+        @media only screen and (-webkit-min-device-pixel-ratio: 3) {
+            .see2 {
+            background-image:  url("../images/coach/copy@3x.png");
+          }
+        }

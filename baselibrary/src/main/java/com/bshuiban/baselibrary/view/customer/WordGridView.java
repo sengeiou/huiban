@@ -216,29 +216,18 @@ public class WordGridView extends View {
             //float word7  = 0.8f;//5颗星 20% 0.2
             float baseLine = baseLine3 + y_head + y_space * i;
             for (int j = 0; j < childIngs.length; j++) {
-                if (j < center_xs.length) {
+                if (j>0 && j < center_xs.length) {
                     String childIng = childIngs[j];
                     if("-1".equals(childIng)){
                         childIng="- -";
                     }else {
                         if (TextUtils.isEmpty(childIng)) {
                             childIng = " ";
+                        }else{
+                            childIng=childIng+"%";
                         }
                     }
-                    childIng = j == 0 ? childIng : (childIng + "%");
                     canvas.drawText(childIng, center_xs[j], baseLine, mPaint);
-                } else {//评分
-                    rectF.top = y_head + y_space * i;
-                    rectF.bottom = rectF.top + y_space;
-                    float score = 0;
-                    try {
-                        Log.e(TAG, "childIngs[6]=" + childIngs[6]);
-                        score = Float.parseFloat(childIngs[6]) / 100f;
-                        //score = new Random().nextInt(100)*0.01f;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    //drawStar(score, 5, rectF, canvas);
                 }
             }
             if (i < length_subject - 1) {

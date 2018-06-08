@@ -87,7 +87,7 @@ public class SelectImgActivity extends BaseActivity {
     @SuppressLint("CheckResult")
     private void add_img_path() {
         Flowable.create((FlowableOnSubscribe<String>) e -> {
-            Log.e("TAG", "add_img_path");
+            //Log.e("TAG", "add_img_path");
             Cursor mCursor = getContentResolver().query(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
             if (mCursor == null) {
@@ -97,7 +97,7 @@ public class SelectImgActivity extends BaseActivity {
                 //获取图片的路径
                 String path = mCursor.getString(mCursor
                         .getColumnIndex(MediaStore.Images.Media.DATA));
-                Log.e("TAG", "path=" + path);
+                //Log.e("TAG", "path=" + path);
                 list_path.add(path);
             }
             e.onNext("");
@@ -105,7 +105,7 @@ public class SelectImgActivity extends BaseActivity {
         }, BackpressureStrategy.ERROR).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
-                    Log.e("TAG", "accept");
+                    //Log.e("TAG", "accept");
                     if (list_path.size() == 0) {
                         return;
                     }
@@ -138,8 +138,8 @@ public class SelectImgActivity extends BaseActivity {
             @Override
             public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
                 //super.getItemOffsets(outRect, itemPosition, parent);
-//                int x40 = (int) getResources().getDimension(R.dimen.x40);
-//                int x38 = (int) getResources().getDimension(R.dimen.x38);
+                int x40 = (int) getResources().getDimension(R.dimen.dp_13);
+                int x38 = (int) getResources().getDimension(R.dimen.dp_12);
                 outRect.set(40, 38, 0, 0);
             }
         });

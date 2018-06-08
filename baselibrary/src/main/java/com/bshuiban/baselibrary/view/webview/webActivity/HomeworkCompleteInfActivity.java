@@ -4,16 +4,26 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.webkit.JavascriptInterface;
+
+import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.model.Homework;
+import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.model.HomeworkInfBean;
 import com.bshuiban.baselibrary.model.HomeworkListData;
 import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.view.adapter.HomeworkCountAdapter;
+import com.bshuiban.baselibrary.view.adapter.SortHomewrokAdapter;
+import com.bshuiban.baselibrary.view.customer.TitleView;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.HomeworkInfHtml;
+import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
 import com.google.gson.Gson;
+
 import java.util.List;
 
 import static com.bshuiban.baselibrary.view.webview.webActivity.HomeworkListWebActivity.HOME_PREPARE;
-import static com.bshuiban.baselibrary.view.webview.webActivity.HomeworkListWebActivity.HOME_TYPE;
 import static com.bshuiban.baselibrary.view.webview.webActivity.HomeworkListWebActivity.HOME_Work_Id;
 
 /**
@@ -24,28 +34,55 @@ import static com.bshuiban.baselibrary.view.webview.webActivity.HomeworkListWebA
  *
  */
 public class HomeworkCompleteInfActivity extends BaseWebActivity{
-    private Gson gson=new Gson();
     private int prepareId,workId;
-
+    private RecyclerView recycleView;
+    private List<HomeworkBean> homeworkBean;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_homework_complete);
         Intent intent = getIntent();
         prepareId = intent.getIntExtra(HOME_PREPARE, -1);
         workId = intent.getIntExtra(HOME_Work_Id, -1);
-        loadFileHtml("details");
+        mWebView=findViewById(R.id.webview);
+        recycleView=findViewById(R.id.recycleView);
+        TitleView titleView = findViewById(R.id.titleView);
+        titleView.setOnClickListener(v-> finish());
+        loadFileHtml("");
         registerWebViewH5Interface(new HomeworkCompleteInfHtml());
     }
 
     @Override
-    protected void webViewLoadFinished() {
-        //tPresent.loadHomeworkInf(workId,homeType);
-        HomeworkInfBean.DataBean homeworkInfBean = User.getInstance().getHomeworkInfBean();
-        List<HomeworkListData> homeworkInfList = HomeworkListData.getHomeworkInfList(homeworkInfBean);
-        loadJavascriptMethod("item", gson.toJson(homeworkInfList));
+    protected boolean initWebView() {
+        return false;
     }
 
-    class HomeworkCompleteInfHtml extends HomeworkInfHtml{
+    @Override
+    protected void webViewLoadFinished() {
+        HomeworkInfBean.DataBean homeworkInfBean = User.getInstance().getHomeworkInfBean();
+        homeworkBean = HomeworkBean.getHomeworkBean(homeworkInfBean);
+        Homework<HomeworkBean> homework = new Homework();
+        homework.setTitle(homeworkInfBean.getTitle());
+        homework.setFTime(homeworkInfBean.getTimes());
+        homework.setHomework(homeworkBean);
+        User.getInstance().setHomework(homework);
+        if(HomeworkBean.isEffictive(homeworkBean)) {
+            SortHomewrokAdapter adapter = new SortHomewrokAdapter();
+            adapter.setCount(homeworkBean.size());
+            recycleView.setAdapter(adapter);
+            adapter.setOnItemClickListener(position -> loadHtmlData(position));
+        }
+    }
+    private void loadHtmlData(int position){
+        HomeworkBean bean = this.homeworkBean.get(position);
+        String type = bean.getType();
+        int pageIndex = bean.getPageIndex();
+        int typeIndex = bean.getTypeIndex();
+        int problemIndex = bean.getProblemIndex();
+        String json = HomeworkBean.getProblemContent(User.getInstance().getHomeworkInfBean(), type, pageIndex, typeIndex, problemIndex);
+        loadJavascriptMethod("",json);
+    }
+    class HomeworkCompleteInfHtml extends UserTypeHtml{
         @JavascriptInterface
         public void toHomeworkResultPage(){
             runOnUiThread(()->{

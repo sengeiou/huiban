@@ -28,6 +28,7 @@ import com.bshuiban.teacher.present.TeacherHomePresent;
 import com.bshuiban.teacher.view.webView.webActivity.MySpaceWebActivity;
 import com.bshuiban.teacher.view.webView.webActivity.TeachClassWebActivity;
 import com.bshuiban.teacher.view.webView.webFragment.PrepareLessonsWebFragment;
+import com.bshuiban.teacher.view.webView.webFragment.ReportWebFragment;
 import com.bshuiban.teacher.view.webView.webFragment.TeacherHomePageFragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -141,7 +142,7 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
                 fragment = new PrepareLessonsWebFragment();
                 break;
             case BOTTOM3:
-                fragment = new ReportFragment();
+                fragment = new ReportWebFragment();
                 break;
             default:
                 fragment = null;
@@ -164,7 +165,7 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
             tv_text.setText(schoolName + gradleName + className);
             String icoPath = data.getIcoPath();
             if (TextUtils.isEmpty(icoPath)) {
-                iv_head.setImageResource(R.drawable.app_logo);
+                iv_head.setImageResource(R.mipmap.default_head);
             } else {
                 RequestOptions requestOptions = new RequestOptions()
                         .circleCrop()

@@ -3,6 +3,8 @@ package com.bshuiban.baselibrary.present;
 import com.bshuiban.baselibrary.contract.GeneralSituationContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 import com.bshuiban.baselibrary.model.GeneralBean;
+import com.bshuiban.baselibrary.model.ResultBean;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.fragment.GeneralSituationFragment;
 
 import java.util.HashMap;
@@ -23,6 +25,27 @@ public class GeneralSituationPresent extends BasePresent<GeneralSituationContrac
         if(isEffective()) {
             getClassInfo(view.getClassId(),view.getUserId());
         }
+    }
+
+    @Override
+    public void guanZhu(boolean tag, int attUserId) {
+        String key=tag?"addUserAttention":"deleteUserAttention";
+        //"userId":"","attUserId":
+        askInternet(key, "{\"userId\":\"" + User.getInstance().getUserId() + "\",\"attUserId\":" + attUserId + "}", new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
+            @Override
+            protected void success(ResultBean resultBean) {
+                if(isEffective()){
+                    view.guanZhuResult(tag);
+                }
+            }
+
+            @Override
+            protected void error(String error) {
+                if(isEffective()){
+                    view.fail(error);
+                }
+            }
+        });
     }
 
     /**

@@ -31,7 +31,6 @@ import static com.bshuiban.baselibrary.view.webview.webActivity.HomeworkListWebA
 public class HomeworkResultWebActivity extends BaseWebActivity<HomeworkResultPresent> implements HomeworkResultContract.View {
     private Gson gson = new Gson();
     private int workId, prepareId;
-    private boolean complete;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,12 +38,14 @@ public class HomeworkResultWebActivity extends BaseWebActivity<HomeworkResultPre
         Intent intent = getIntent();
         workId = intent.getIntExtra(HomeworkListWebActivity.HOME_Work_Id, -1);
         prepareId = intent.getIntExtra(HOME_PREPARE, -1);
-        complete = intent.getBooleanExtra("complete", true);
         tPresent = new HomeworkResultPresent(this);
         boolean complete = intent.getBooleanExtra("complete", true);
         if (complete) {
             loadFileHtml("list");
         } else {
+            long time = intent.getLongExtra("time", 0);
+            String time1 = Homework.getTime(time);
+            User.getInstance().getHomework().setTime(time1);
             loadFileHtml("submit");
         }
         registerWebViewH5Interface(new HomeworkResultHtml());

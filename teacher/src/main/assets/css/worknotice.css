@@ -1,0 +1,78 @@
+#main {
+    height: 100%;
+    position: relative;
+    overflow-y: scroll;
+}
+
+#main .listoo {
+    position: relative;
+}
+
+#main .listoo:before,
+.listoo:after {
+    width: 100%;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    z-index: 9;
+    position: absolute;
+    display: block;
+    left: 0;
+}
+
+#main .listoo:before {
+    content: attr(uptext);
+    top: -40px;
+}
+
+#main .listoo:after {
+    content: attr(downtext);
+    bottom: -40px;
+}
+.work h2{
+width: 100%;
+height: .8rem;
+font-size: .28rem;
+line-height: .8rem;
+text-align: center;
+background: #eee;
+color:gray;
+}
+.work h3{
+width: 100%;
+height: .8rem;
+font-size: .28rem;
+line-height: .8rem;
+text-align: center;
+color:#13cbbb;
+border-top:1px solid #eee;
+}
+table{
+    width:100%;
+}
+table caption{
+    height: .6rem;
+    line-height: .8rem;
+    font-size: .4rem;
+    color:#13cbbb;
+}
+table tr th{
+    text-align: center;
+    font-weight: normal;
+    font-size: .28rem;
+    color:gray;
+}
+table thead tr{
+    height: .7rem;
+    line-height: .7rem;
+}
+table tbody tr{
+    height: .7rem;
+    line-height: .7rem;
+}
+table tr td{
+    text-align: center;
+    font-size: .28rem;
+    color:gray;
+}

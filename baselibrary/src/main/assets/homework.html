@@ -65,7 +65,7 @@
             <div class="listoo" text="下拉刷新">
             <div class="topBox">
                 <div class="head">
-                    <img src="" class="userImg" onerror="this.src='./images/index/tube_class@2x.png'">
+                    <img src="" class="userImg" onerror="this.src='./images/reset/default_head.png'">
                     <p class="nowTime">
                         <span class="nowDate"></span>
                         <span class="week"></span>
@@ -454,7 +454,7 @@
                         <div class="left">
                             <dl>
                                 <dt>
-                                    <img class="err" src=${pro.imgUrl}alt="">
+                                     <img src=${pro.imgUrl} class="userImg" onerror="this.src='./images/reset/default_head.png'">
                                 </dt>
                                 <dd>
                                     <p class="name">${pro.sendName}
@@ -506,30 +506,32 @@
             })(i)
         }
     }
-    <!--var list = document.querySelector('.list');-->
-    <!--var myIscroll = new IScroll('#wrap', {-->
-        <!--scrollbars: true,-->
-        <!--probeType: 3-->
-    <!--});-->
-    <!--var flag = true;-->
-    <!--myIscroll.on('scroll', function () {-->
-        <!--if (this.y > 40) {-->
-            <!--list.setAttribute('uptext', '释放刷新');-->
-        <!--} else if (this.y < 40 && this.y > 0) {-->
-            <!--list.setAttribute('uptext', '下拉刷新');-->
-        <!--} else if (this.y < this.maxScrollY - 40) {-->
-            <!--flag = true;-->
-        <!--}-->
-    <!--})-->
-    <!--myIscroll.on('scrollEnd', function () {-->
-        <!--list.setAttribute('text', '下拉刷新');-->
-        <!--if (this.y === this.maxScrollY) {-->
-            <!--console.log("上拉");-->
-        <!--} else if (this.y === 0) {-->
-            <!--console.log("下拉");-->
-        <!--}-->
-    <!--})-->
-
+    var list = document.querySelector('.list');
+    var myIscroll = new IScroll('#wrap', {
+        scrollbars: true,
+        probeType: 3
+    });
+    var flag = true;
+    myIscroll.on('scroll', function () {
+        if (this.y > 40) {
+            list.setAttribute('uptext', '释放刷新');
+        } else if (this.y < 40 && this.y > 0) {
+            list.setAttribute('uptext', '下拉刷新');
+        } else if (this.y < this.maxScrollY - 40) {
+            flag = true;
+        }
+    })
+    myIscroll.on('scrollEnd', function () {
+        list.setAttribute('text', '下拉刷新');
+        if (this.y === this.maxScrollY) {
+            console.log("上拉");
+        } else if (this.y === 0) {
+            console.log("下拉");
+        }
+    })
+function userimgs(data) {
+$(".userImg").attr("src",data)
+}
 
 </script>
 

@@ -108,6 +108,16 @@
                 }
             }
             $('.swiper-wrapper').html(nowMsg + `<div class="swiper-slide navs">${data[i].subjectName}</div>`);
+            var swiper = new Swiper('.swiper-container', {
+                slidesPerView: 'auto',
+                freeMode: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                observer: true,
+                observeParents: true
+            });
             //点击切换样式
             $('.swiper-slide').bind('click', function () {
                 $(this).addClass('active').siblings().removeClass('active');
@@ -307,16 +317,10 @@
         
      }
      //sxContent(ywsx);
-     
+
      //导航滑动
-     var swiper = new Swiper('.swiper-container', {
-          slidesPerView: "auto",
-          freeMode: true,
-          pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-          }
-     });
+
+
     //点击取消
     $('.no').bind('click', function () {
         $('.mask').hide();

@@ -1,5 +1,6 @@
 package com.bshuiban.baselibrary.view.adapter;
 
+import android.arch.lifecycle.GeneratedAdapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.utils.TextUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -23,7 +25,10 @@ import java.util.List;
 public abstract class GeneralSituationAdapter<T> extends RecyclerView.Adapter<GeneralSituationAdapter.GeneralSituationHolder> {
     protected List<T> mList;
     private Context mContext;
-
+    private boolean tag;
+    public GeneralSituationAdapter(){
+        tag= User.getInstance().isParents();
+    }
     public void setContext(Context context) {
         mContext = context;
     }
@@ -40,7 +45,7 @@ public abstract class GeneralSituationAdapter<T> extends RecyclerView.Adapter<Ge
     }
 
     RequestOptions requestOptions = new RequestOptions()
-            .error(R.mipmap.app_logo)
+            .error(R.mipmap.default_head)
             .circleCrop();
 
     @Override
@@ -50,6 +55,18 @@ public abstract class GeneralSituationAdapter<T> extends RecyclerView.Adapter<Ge
         holder.tv_subject_name.setText(getSubjectName(position));
         holder.iv_guan_zhu.setTag(position);
         holder.iv_liu_yan.setTag(position);
+        if(tag){
+            holder.iv_liu_yan.setVisibility(View.INVISIBLE);
+            holder.iv_guan_zhu.setVisibility(View.INVISIBLE);
+        }else {
+            if (getGuanzhu(position)) {
+                holder.iv_liu_yan.setVisibility(View.VISIBLE);
+                holder.iv_guan_zhu.setImageResource(R.mipmap.guanzhu);
+            } else {
+                holder.iv_guan_zhu.setImageResource(R.mipmap.add_attention);
+                holder.iv_guan_zhu.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     protected abstract String getImagePath(int position);
@@ -57,7 +74,7 @@ public abstract class GeneralSituationAdapter<T> extends RecyclerView.Adapter<Ge
     protected abstract String getName(int position);
 
     protected abstract String getSubjectName(int position);
-
+    protected abstract boolean getGuanzhu(int position);
     //protected abstract Object getChangeMsg(int position);
     @Override
     public int getItemCount() {

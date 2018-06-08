@@ -23,7 +23,7 @@ public class ErrorFilterActivity extends BaseWebActivity<ErrorFilterPresent> imp
     @Override
     protected void webViewLoadFinished() {//首次 章节-科目 {"userId":"","schoolId":""}
         tag = true;
-        //tPresent.loadFilter("getFilterSubjectL", "{\"schoolId\":\"" + User.getInstance().getSchoolId() + "\"}");
+        tPresent.loadFilter("getFilterSubjectL", "{\"schoolId\":\"" + User.getInstance().getSchoolId() + "\"}");
     }
 
     @Override

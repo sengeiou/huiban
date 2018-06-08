@@ -96,13 +96,28 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
     protected void registerWebViewH5Interface(Object object){
         mWebView.addJavascriptInterface(object, "android");
     }
-    protected void loadJavascriptMethod(String methodName,String json){
-        if(null==json){
-            json="";
+    protected void loadJavascriptMethod(String methodName,String... datas){
+        StringBuffer stringBuffer=new StringBuffer();
+        int i1 = datas.length - 1;
+        for (int i = 0; i < datas.length; i++) {
+            stringBuffer.append("'");
+            stringBuffer.append(replaceJson(datas[i]));
+            stringBuffer.append("'");
+            if(i< i1){
+                stringBuffer.append(",");
+            }
         }
-        String url = "javascript:" + methodName + "('" + json + "')";
+        String url = "javascript:" + methodName + "(" + stringBuffer.toString() + ")";
         Log.e(TAG, "loadJavascriptMethod: "+url );
+        //mWebView.loadUrl("javascript:setLoginData('2030246','111111')");
         mWebView.loadUrl(url);
+    }
+    private String replaceJson(String json){
+        if(TextUtils.isEmpty(json)){
+            return json;
+        }
+        //TODO 勿删，‘\\’js自动转‘\’
+        return json.replace("\\", "\\\\");//没办法
     }
     @Override
     public void onDetach() {

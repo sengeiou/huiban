@@ -21,15 +21,20 @@ import java.util.List;
  * describe：
  */
 public class HomeworkCountAdapter extends RecyclerView.Adapter<HomeworkCountAdapter.HomeworkCountHolder> {
-    private int mPosition;
+    private int mPosition=0;
     private List<HomeworkBean> mList;
     private int dp1;
     private int colorSelected;
     private int colorUnselected;
     private int colorUnselectedBg;
+    private View lastView;
     public void setList(List<HomeworkBean> list) {
         this.mList = list;
         notifyDataSetChanged();
+    }
+
+    public List<HomeworkBean> getList() {
+        return mList;
     }
 
     @NonNull
@@ -72,13 +77,28 @@ public class HomeworkCountAdapter extends RecyclerView.Adapter<HomeworkCountAdap
             textView=(TextView) itemView;
             textView.setOnClickListener(v->{
                 Object tag = v.getTag();
-                if(null!=onItemClickListener&&tag instanceof Integer){
-                    int position = (int) tag;
-                    mPosition=position;
-                    onItemClickListener.itemClick(mList.get(position));
+                if(tag instanceof Integer&&mPosition!=(int) tag) {
+                    if (null != onItemClickListener) {
+                        int position = (int) tag;
+                        mPosition = position;
+                        onItemClickListener.itemClick(mList.get(position));
+                    }
+                    //setScaleLarge(v);
+//                    if (null != lastView) {
+//                        setScaleSmall(lastView);
+//                        lastView = v;
+//                    }
                 }
             });
         }
+    }
+    private void setScaleLarge(View view){
+        view.setScaleX(1.3f);
+        view.setScaleY(1.3f);
+    }
+    private void setScaleSmall(View view){
+        view.setScaleX(1/1.3f);
+        view.setScaleY(1/1.3f);
     }
     private void setTextViewDrawable(TextView textView,boolean correct,boolean complete){
        int colorBG,colorSlide,colorText;

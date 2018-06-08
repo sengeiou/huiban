@@ -21,12 +21,12 @@ public class ExampleUnitTest {
         //RetrofitService.getInstance().getServiceResult("getUserInfo", "{\"userId\":\"" + "2030219"+"\"}", new RetrofitService.CallTest());
         //RetrofitService.getInstance().getServiceResult("getHBUserDetail", "{\"userId\":\"" + "2030219"+"\",\"masterId\":\"2030219\"}", new RetrofitService.CallTest());
         //RetrofitService.getInstance().getServiceResult("getHBPrepareList", "{\"userId\":\"" + "2030219"+"\",\"start\":0,\"limit\":10}", new RetrofitService.CallTest());
-        //RetrofitService.getInstance().getServiceResult("getHBPreReleaseClass","{\"wtype\":"+1+",\"preId\":\""+"3755"+"\"}",new RetrofitService.CallTest());
+        RetrofitService.getInstance().getServiceResult("getHBPreReleaseClass","{\"wtype\":"+1+",\"preId\":\""+"3755"+"\"}",new RetrofitService.CallTest());
 //        RetrofitService.getInstance().getServiceResult("getClassTeacherNowC","{\"userId\":\"2030219\"}",new RetrofitService.CallTest());
         //"schoolId":"","subjectId":
         //RetrofitService.getInstance().getServiceResult("getReportsOfClasses","{\"userId\":\"2030219\"}",new RetrofitService.CallTest());
         //{"preparationId":"623","process":"1","workId":"9108","classId":"3000153"}
-        RetrofitService.getInstance().getServiceResult("getHBStudentTypeWork","{\"preparationId\":\"623\",\"process\":\"1\",\"workId\":\"9108\",\"classId\":\"3000153\"}",new RetrofitService.CallTest());
+//        RetrofitService.getInstance().getServiceResult("getHBStudentTypeWork","{\"preparationId\":\"623\",\"process\":\"1\",\"workId\":\"9108\",\"classId\":\"3000153\"}",new RetrofitService.CallTest());
 
         Thread.sleep(2000);
     }

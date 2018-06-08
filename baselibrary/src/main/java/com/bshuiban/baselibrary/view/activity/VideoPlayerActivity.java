@@ -117,7 +117,9 @@ public class VideoPlayerActivity extends BaseActivity {
             toast( "加载中,请稍后...");
             surface_view.setVideoPath(url);
             Log.e("---", "播放地址:" + url);
-            surface_view.setMediaController(new MediaController(this));
+            MediaController controller = new MediaController(this);
+
+            surface_view.setMediaController(controller);
             surface_view.requestFocus();
 
             surface_view.start();

@@ -10,7 +10,11 @@ import android.widget.FrameLayout;
 import com.bshuiban.baselibrary.contract.LessonInfContract;
 import com.bshuiban.baselibrary.present.LessonInfPresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
+import com.bshuiban.baselibrary.view.activity.PlayerVideoActivity;
 import com.bshuiban.baselibrary.view.activity.VideoPlayerActivity;
+import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
+
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
  * Created by xinheng on 2018/5/18.<br/>
@@ -75,7 +79,7 @@ public class LessonInfWebActivity<T extends LessonInfPresent> extends BaseWebAct
     public void fail(String error) {
 
     }
-    protected class LessonInfHtml{
+    protected class LessonInfHtml extends UserTypeHtml{
         /**
          * 收藏
          * @param tag 添加收藏 true；取消收藏 false
@@ -93,7 +97,7 @@ public class LessonInfWebActivity<T extends LessonInfPresent> extends BaseWebAct
             runOnUiThread(()->{
                 //播放视频
                 Log.e(TAG, "playLesson: "+playUrl );
-                VideoPlayerActivity.startVideoActivity(getApplicationContext(),playUrl);
+                PlayerVideoActivity.startPlayerVideoActivity(getApplicationContext(),playUrl);
             });
         }
     }

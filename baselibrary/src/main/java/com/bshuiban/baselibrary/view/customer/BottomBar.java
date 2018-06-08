@@ -4,14 +4,18 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
+
+import com.bshuiban.baselibrary.R;
 
 
 public class BottomBar extends LinearLayout {
@@ -49,8 +53,18 @@ public class BottomBar extends LinearLayout {
         mTabLayout = new LinearLayout(context);
         mTabLayout.setBackgroundColor(Color.WHITE);
         mTabLayout.setOrientation(LinearLayout.HORIZONTAL);
-        addView(mTabLayout, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
+        View view=new View(context);
+        int dp1 = (int) TypedValue.applyDimension(1, 1, getResources().getDisplayMetrics());
+        int dp5 = (int) TypedValue.applyDimension(1, 5, getResources().getDisplayMetrics());
+        //int dp10 = (int) getResources().getDimension(R.dimen.dp_10);
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp1);
+        params.bottomMargin=dp5;
+        view.setLayoutParams(params);
+        view.setBackgroundColor(ContextCompat.getColor(context, R.color.line_bord));
+        addView(view);
+        LayoutParams params1 = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params1.bottomMargin=dp5;
+        addView(mTabLayout, params1);
         mTabParams = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
         mTabParams.weight = 1;
     }

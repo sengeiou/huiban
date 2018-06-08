@@ -3,6 +3,7 @@ package com.bshuiban.baselibrary.internet;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.bshuiban.baselibrary.model.LogUtils;
 import com.bshuiban.baselibrary.model.ResultBean;
 import com.bshuiban.baselibrary.utils.aes.AESUtils;
 import com.google.gson.Gson;
@@ -17,13 +18,14 @@ import java.util.Map;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class RetrofitService {
     private static RetrofitService retrofitService;
-
+    private Retrofit retrofit;
     public static RetrofitService getInstance() {
         if (retrofitService == null) {
             synchronized (RetrofitService.class) {
@@ -36,6 +38,7 @@ public class RetrofitService {
     }
 
     private RetrofitService() {
+        retrofit=getRetrofit();
     }
 
     private static Gson gson = new Gson();
@@ -48,7 +51,7 @@ public class RetrofitService {
     }
 
     private BaseCall getResponseBodyCall() {
-        return getRetrofit().create(BaseCall.class);
+        return retrofit.create(BaseCall.class);
     }
 
     public void getServiceResultForResString(String modu, String resString, CallResTest callback) {
@@ -86,6 +89,46 @@ public class RetrofitService {
         return cipherText;
     }
 
+    /**
+     * 明文
+     * @param <T>
+     */
+    public abstract static class CallPlaintext<T> implements Callback<ResponseBody> {
+        private Class<T> tClass;
+
+        public CallPlaintext(Class<T> tClass) {
+            this.tClass = tClass;
+        }
+        @Override
+        public void onResponse(retrofit2.Call<ResponseBody> call, Response<ResponseBody> response) {
+            try {
+                String s = response.body().string();
+                //Log.e(TAG, "onResponse: " + string);
+                if(null!=s&&s.length()>0){
+                    if(";".equals(String.valueOf(s.charAt(s.length()-1)))){
+                        s=s.substring(0,s.length()-1);
+                    }
+                }
+                LogUtils.e(TAG, "onResponse: " + s);
+                T t = gson.fromJson(s, tClass);
+                result(t);
+            } catch (Exception e) {
+                e.printStackTrace();
+                error("parse-error");
+            }
+        }
+
+        protected abstract void error(String s);
+
+        protected abstract void result(T t);
+
+        @Override
+        public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+            if(null!=t){
+                error(t.getMessage());
+            }
+        }
+    }
     public static abstract class Call<T> implements Callback<ResponseBody> {
         private Class<T> tClass;
 
@@ -99,7 +142,7 @@ public class RetrofitService {
                 String string = response.body().string();
                 //Log.e(TAG, "onResponse: " + string);
                 String s = AESUtils.desEncrypt(string);
-                //Log.e(TAG, "onResponse: " + s);
+                LogUtils.e(TAG, "onResponse: " + s);
                 T t = gson.fromJson(s, tClass);
                 result(t);
             } catch (Exception e) {
@@ -142,6 +185,10 @@ public class RetrofitService {
             }
         }
 
+        /**
+         * 成功结果
+         * @param t 不肯能为null
+         */
         protected abstract void success(T t);
     }
 
@@ -297,7 +344,7 @@ public class RetrofitService {
                 String s = AESUtils.desEncrypt(string);
                 System.out.print(s);
                 result(s);
-                //Log.e(TAG, "onResponse: result = "+s );
+                //LogUtils.e(TAG, "onResponse: result = "+s );
             } catch (IOException e) {
                 e.printStackTrace();
             }

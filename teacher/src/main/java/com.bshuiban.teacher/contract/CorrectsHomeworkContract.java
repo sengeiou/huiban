@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface CorrectsHomeworkContract {
     interface View extends BaseView{
-        void updateListCountView(List<HomeworkBean> homeworkBean);
+        void updateListCountView(List<HomeworkBean> homeworkBean, String title);
     }
     interface Present{
         void loadHomeworkInf(int workId, int wtype);

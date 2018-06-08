@@ -62,4 +62,10 @@
         <attr name="middle_color" format="color" />
         <attr name="right_color" />
     </declare-styleable>
+    <declare-styleable name="TreeChildView">
+        <attr name="spaceCirclePoint" format="dimension"/>
+        <attr name="radius" format="dimension"/>
+        <attr name="spaceImgRight" format="dimension"/>
+        <attr name="colorPoint" format="color"/>
+    </declare-styleable>
 </resources>

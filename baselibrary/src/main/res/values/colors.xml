@@ -7,5 +7,10 @@
     <color name="tab_unselect">#a3a3a3</color>
     <color name="line_bord">#d2d2d2</color>
     <color name="gray_dia">#7a7e84</color>
-
+    <color name="grg_text">#D2D2D2</color>
+    <color name="gray1">#5a5e64</color>
+    <color name="black">#000</color>
+    <color name="white">#fff</color>
+    <color name="red1">#FF6F5F</color>
+    <color name="guide_light">#96FEF9</color>
 </resources>

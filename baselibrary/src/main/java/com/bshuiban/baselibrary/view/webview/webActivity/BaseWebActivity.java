@@ -2,21 +2,13 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.ViewGroup;
-import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
-import android.webkit.JsPromptResult;
-import android.webkit.JsResult;
-import android.webkit.RenderProcessGoneDetail;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -33,12 +25,16 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FrameLayout frameLayout = ViewUtils.getFrameLayout(this);
-        mWebView=getWebView(getApplicationContext());
-        frameLayout.addView(mWebView);
-        setContentView(frameLayout);
+        if(initWebView()) {
+            FrameLayout frameLayout = ViewUtils.getFrameLayout(this);
+            mWebView = getWebView(getApplicationContext());
+            frameLayout.addView(mWebView);
+            setContentView(frameLayout);
+        }
     }
-
+    protected boolean initWebView(){
+        return true;
+    }
     protected void setTAG(String tag){
         TAG=tag;
     }
@@ -52,6 +48,7 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
      * @param name
      */
     protected void loadFileHtml(String name){
+        mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -61,6 +58,9 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.e(TAG, "shouldOverrideUrlLoading: "+url );
+                if(url.lastIndexOf("finish_page.html")!=-1){
+                    finish();
+                }
                 return true;
             }
         });

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6, maximum-scale=0.6, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>错题</title>
     <link rel="stylesheet" href="./css/reset.css">
@@ -16,7 +16,7 @@
             <span>
             </span>
             <span>我的错题本</span>
-            <a class="more" href="./moreWrong.html"></a>
+            <a class="more" ></a>
         </header>
         <main>
         </main>
@@ -25,6 +25,10 @@
 </html>
 <script>
     function getMsg (data) {
+        if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0){
+            $('main').html('');
+            return;
+        }
         var data = JSON.parse(data);
         for (var i=0; i<data.length; i++) {
             var nowMsg = $('main').html();
@@ -34,10 +38,11 @@
                     <p class="yresult">你的答案：<span></span></p>
                 </div>
             `);
+            //console.log(data[i].myAnswer);
             if (data[i].myAnswer == '') {
-                $('.wrongMsg .yresult span').html(`---`);
+                $('.wrongMsg .yresult:eq('+i+') span').html(`---`);
             }else {
-                $('.wrongMsg .yresult span').html(`${data[i].myAnswer}`);
+                $('.wrongMsg .yresult:eq('+i+') span').html(`${data[i].myAnswer}`);
             }
         }
         //点击查看错题详情
@@ -46,9 +51,10 @@
             // var msg = JSON.stringify({"quesId":data[ind].quesId});
             window.android.itemClick(ind);
         });
+  		$("input").attr({disabled:"disabled"});
     };
     $(".wrongMsg").bind('click', function () {
-	$(this).css("border", "2px solid #00c7b5").siblings().css("border", "2px solid #fff");
+	    $(this).css("border", "2px solid #00c7b5").siblings().css("border", "2px solid #fff");
     })
     //点击筛选错题
     $('.more').bind('click', function () {

@@ -1,5 +1,6 @@
 package com.bshuiban.baselibrary.view.customer
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -7,10 +8,12 @@ import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Shader
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.bshuiban.baselibrary.R
+import com.bshuiban.baselibrary.model.LogUtils
 
 /**
  * Created by xinheng on 2018/5/3.<br></br>
@@ -22,7 +25,7 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
     private val paint2: Paint
     private val rect: RectF = RectF()
     private var progressValue: Float =0f
-    private val mColors = intArrayOf(resources.getColor(R.color.guide_start_btn), Color.RED)
+    private val mColors = intArrayOf(ContextCompat.getColor(getContext(),R.color.guide_start_btn), Color.RED)
 
     init {
         mPaint.isAntiAlias = true
@@ -36,6 +39,7 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
         paint2.color = mColors[1]
     }
 
+    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         var mWidth = measuredWidth-paddingLeft-paddingRight
         var mHeight = measuredHeight-paddingTop-paddingBottom
@@ -51,15 +55,16 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
         //        int count = mColors.length;
         //        int[] colors = new int[count];
         //        System.arraycopy(mColors, 0, colors, 0, count);
+        if(progressValue<=0f){
+            LogUtils.e(LogUtils.TAG, "section_=$progressValue")
+            return
+        }
+        val section_ = section * 360
         val y0 = mWidth / 4
         val shader = LinearGradient((mWidth - y0).toFloat(), y0.toFloat(), y0.toFloat(), (mHeight - y0).toFloat(), mColors, null,
                 Shader.TileMode.CLAMP)
         mPaint.shader = shader
-        val section_ = section * 360
         val ANGLE =170f
-        if(section==0f){
-            return
-        }
         if (section_ > ANGLE) {
             val v = section_ - ANGLE
             val v1 = v / 2
@@ -81,10 +86,10 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
         } catch (e: NumberFormatException) {
             e.printStackTrace()
         }
-        if(rateFloat!= progressValue){
+
             progressValue= rateFloat
             Log.e("TAG","进度-"+progressValue)
             invalidate()
-        }
+
     }
 }

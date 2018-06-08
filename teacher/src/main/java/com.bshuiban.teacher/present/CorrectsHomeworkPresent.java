@@ -24,6 +24,7 @@ public class CorrectsHomeworkPresent extends HomeworkPresent<CorrectsHomeworkCon
     @Override
     protected void updateHomeworkView(HomeworkInfBean.DataBean dataBean) {
         List<HomeworkBean> homeworkBean = HomeworkBean.getHomeworkBean(dataBean);
-        view.updateListCountView(homeworkBean);
+        String title = dataBean.getTitle();
+        view.updateListCountView(homeworkBean,title);
     }
 }

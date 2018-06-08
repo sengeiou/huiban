@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>知识点掌握详情</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/teacher.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/rem.js"></script>
+</head>
+<body>
+    <div class="wrap knows">
+        <header>
+            <span>
+                <i class="back"></i>
+            </span>	
+            <span>我的备课</span>
+        </header>
+        <main>
+            <nav>
+                <span class="active">知识点掌握详情</span>
+                <span>各题测试详情</span>
+            </nav>
+            <div class="knowsList">
+                
+            </div>
+            <div class="cslist hide">
+                <p>正确率<span class="msg"><img src="./images/teacher/watch@2x.png" alt=""></span></p>
+                <div class="mainBox">
+
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+    //知识点
+    function getData (data) {
+        var data = JSON.parse(data);        
+        for (var i=0; i<data.length; i++) {
+            var nowMsg = $('.knowsList').html();
+            if (data[i].rate == "-1") {
+                data[i].rate = 0;
+            }
+            $('.knowsList').html(nowMsg + `
+                <div class="list">
+                    <span class="name">${data[i].branName}</span>
+                    <span class="jd"></span><i>正确率:${data[i].rate}%</i>
+                </div>
+            `);
+            var rate = parseInt(data[i].rate);
+            $('.knowsList .jd').eq(i).css({"width":200*rate/100,"background":"#00c7b5"});
+        }
+    }
+    //各题测试
+    function getMsg (data) {
+        var data = JSON.parse(data);
+        for (var i=0; i<data.length; i++) {
+            var nowMsg = $('.mainBox').html();
+            if (data[i].classRate == "-1") {
+                data[i].classRate = 0;
+            }
+            $('.mainBox').html(nowMsg + `
+                <div class="list">
+                    <span class="name">第${data[i].sort}题</span>
+                    <span class="jd"></span><i>${data[i].classRate}%</i>
+                </div>
+            `);
+            var classRate = parseInt(data[i].classRate);
+            $('.cslist .jd').eq(i).css({"width":200*classRate/100});
+        }
+    }
+    $('nav span').bind('click', function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        if($(this).index() == 0){
+            $('.knowsList').show();
+            $('.cslist').hide();
+            window.android.changeItem(0);
+        } else {
+            $('.knowsList').hide();
+            $('.cslist').show();
+            window.android.changeItem(1);
+        }
+    });
+    $('.msg').bind('click', function () {
+        console.log("查看");
+        window.android.toNextPage();
+    })
+</script>
+</html>

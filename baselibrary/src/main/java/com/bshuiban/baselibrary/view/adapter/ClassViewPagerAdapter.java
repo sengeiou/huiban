@@ -51,4 +51,13 @@ public class ClassViewPagerAdapter extends FragmentPagerAdapter {
         }
         return fragment;
     }
+    private ItemSelectListener l;
+
+    public void setItemSelectListener(ItemSelectListener l) {
+        this.l = l;
+    }
+
+    interface ItemSelectListener{
+        void selectItem();
+    }
 }

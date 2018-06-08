@@ -1,8 +1,11 @@
 package com.bshuiban.baselibrary.internet;
 
+import java.io.File;
+
 public class UrlManage {
-    private static final String NEI_WANG_URL = "http://192.168.0.3/";
-    private static final String WAI_WANG_URL = "http://hcloud.bszhihui.com/";
+    private static final String NEI_WANG_URL = "http://192.168.0.3";
+    private static final String WAI_WANG_URL = "http://hcloud.bszhihui.com";
+    private static final String UPLOAD_URL = ":22125/";
     public final String BASE_URL;
     public static final int NEI_WANG = 0;
     public static final int WAI_WANG = 1;
@@ -34,6 +37,9 @@ public class UrlManage {
     }
 
     public String getBASE_URL() {
-        return BASE_URL;
+        return BASE_URL+"/";
+    }
+    public String getUploadUrl() {
+        return BASE_URL+UPLOAD_URL;
     }
 }

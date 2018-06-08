@@ -9,22 +9,26 @@ import android.webkit.JavascriptInterface;
 import com.bshuiban.baselibrary.contract.BaseView;
 import com.bshuiban.baselibrary.contract.ErrorHomeworkAnalysisContract;
 import com.bshuiban.baselibrary.present.ErrorHomeworkAnalysisPresent;
+import com.bshuiban.baselibrary.view.activity.PlayerVideoActivity;
 import com.bshuiban.baselibrary.view.activity.VideoPlayerActivity;
 
-public class ErrorHomeworkAnalysisActivity extends BaseWebActivity<ErrorHomeworkAnalysisPresent> implements ErrorHomeworkAnalysisContract.View{
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+
+public class ErrorHomeworkAnalysisActivity extends BaseWebActivity<ErrorHomeworkAnalysisPresent> implements ErrorHomeworkAnalysisContract.View {
     private String text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         text = getIntent().getStringExtra("text");
-        tPresent=new ErrorHomeworkAnalysisPresent(this);
+        tPresent = new ErrorHomeworkAnalysisPresent(this);
         loadFileHtml("wrongMsg");
         registerWebViewH5Interface(new ErrorHomeworkAnalysisHtml());
     }
 
     @Override
     protected void webViewLoadFinished() {
-        loadJavascriptMethod("getContent",text);
+        loadJavascriptMethod("getContent", text);
     }
 
     @Override
@@ -47,34 +51,39 @@ public class ErrorHomeworkAnalysisActivity extends BaseWebActivity<ErrorHomework
         finish();
     }
 
-    class ErrorHomeworkAnalysisHtml{
+    class ErrorHomeworkAnalysisHtml {
         /**
          * 观看视频
+         *
          * @param videoUrl
          */
         @JavascriptInterface
-        public void playVideo(String videoUrl){
-            runOnUiThread(()->{
-                VideoPlayerActivity.startVideoActivity(getApplicationContext(),videoUrl);
+        public void playVideo(String videoUrl) {
+            runOnUiThread(() -> {
+                PlayerVideoActivity.startPlayerVideoActivity(getApplicationContext(),videoUrl);
             });
         }
+
         /**
          * 巩固练习
+         *
          * @param examId 试题id
          */
         @JavascriptInterface
-        public void consolidation(int examId){
-            Log.e(TAG, "consolidation: "+examId );
-            runOnUiThread(()->{
-                startActivity(new Intent(getApplicationContext(),ConsolidationWebActivity.class).putExtra("examId",examId));
+        public void consolidation(int examId) {
+            Log.e(TAG, "consolidation: " + examId);
+            runOnUiThread(() -> {
+                startActivity(new Intent(getApplicationContext(), ConsolidationWebActivity.class).putExtra("examId", examId));
             });
         }
+
         /**
          * 删除错题
+         *
          * @param examId
          */
         @JavascriptInterface
-        public void deleteErrorHomework(int examId){
+        public void deleteErrorHomework(int examId) {
             tPresent.deleteErrorHomework(examId);
         }
 

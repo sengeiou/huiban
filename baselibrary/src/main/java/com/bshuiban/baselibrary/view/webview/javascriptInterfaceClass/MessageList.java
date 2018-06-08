@@ -9,7 +9,7 @@ import android.webkit.JavascriptInterface;
  * Created by xinheng on 2018/5/17.<br/>
  * describe：列表
  */
-public class MessageList {
+public class MessageList extends UserTypeHtml{
     protected Handler handler;
     private MessageListListener onListener;
     private ListRunnable runnable;

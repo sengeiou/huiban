@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.6, maximum-scale=0.6, user-scalable=no">
 	<title>错题详情</title>
 	<link rel="stylesheet" href="./css/reset.css">
 	<link rel="stylesheet" href="./css/wrong.css">
@@ -12,8 +13,7 @@
 	<div class="wrap wrongMsg">
 		<header>
 			<span>
-				<a href="./index.html">
-					
+				<a href="./finish_page.html">
 				</a>
 			</span>	
 			<span></span>
@@ -39,6 +39,14 @@
 	</div>
 </body>
 <script>
+	var userType = window.android.getUserType();
+	if (userType == 4) {
+        $('.practiveWork').hide();
+        $('.clearWrong').hide();
+    } else if (userType == 1) {
+        $('.practiveWork').show();
+        $('.clearWrong').show();
+   }
 	function getContent (data) {
 		var data = JSON.parse(data);
 		var nowMsg = $(".wrongBox").html();
@@ -63,9 +71,9 @@
 			$('.yourAnswer').html(`你的答案：<b>${data.myAnswer}</b>`);
 		}
 		if(data.rightAnswer === undefined){
-			$('.trueAnswer').html(`你的答案：<b>暂无答案</b>`);
+			$('.trueAnswer').html(`正确答案：<b>暂无答案</b>`);
 		}else {
-			$('.trueAnswer').html(`你的答案：<b>${data.rightAnswer}</b>`);
+			$('.trueAnswer').html(`正确答案：<b>${data.rightAnswer}</b>`);
 		}
 		var flag = true;
 		$('.clearWrong').bind('click', function () {
@@ -93,6 +101,9 @@
 		$('.no').bind('click', function () {
 			$('.clearMark').hide();
 		})
+		$("input").attr({disabled:"disabled"});
 	};
+
+
 </script>
 </html>

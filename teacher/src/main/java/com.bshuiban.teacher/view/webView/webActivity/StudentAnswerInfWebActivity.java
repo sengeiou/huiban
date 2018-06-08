@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,7 @@ import com.bshuiban.teacher.R;
 import com.bshuiban.teacher.contract.StudentAnswerInfContract;
 import com.bshuiban.teacher.model.PrepareLessonBean;
 import com.bshuiban.teacher.present.StudentAnswerInfPresent;
+import com.bshuiban.teacher.view.activity.CorrectsHomeworkActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -30,7 +32,6 @@ import java.util.List;
 public class StudentAnswerInfWebActivity extends BaseWebActivity<StudentAnswerInfPresent> implements StudentAnswerInfContract.View {
     private String preparationId,className;
     private int process,  workId,  classId;
-    private List<PrepareLessonBean.DataBean.ClassArrBean> classArrBeans;
     private Dialog dialog;
 
     @Override
@@ -45,20 +46,19 @@ public class StudentAnswerInfWebActivity extends BaseWebActivity<StudentAnswerIn
 //        Type type1 = new TypeToken<List<PrepareLessonBean.DataBean.ClassArrBean>>(){}.getType();
 //        classArrBeans = new Gson().fromJson(text, type1);
         tPresent=new StudentAnswerInfPresent(this);
+        loadFileHtml("classMsg");
+        registerWebViewH5Interface(new StudentAnswerInfHtml());
     }
 
     @Override
     protected void webViewLoadFinished() {
-        PrepareLessonBean.DataBean.ClassArrBean classArrBean = classArrBeans.get(0);
-        classId= classArrBean.getClassId();
-        String className = classArrBean.getClassName();
-        loadJavascriptMethod("",className);
+        //loadJavascriptMethod("",className);
         tPresent.loadAnswerInf(preparationId,process,workId,classId);
     }
 
     @Override
     public void updateView(String json) {
-        loadJavascriptMethod("",json);
+        loadJavascriptMethod("getContent",json);
     }
 
     @Override
@@ -79,15 +79,27 @@ public class StudentAnswerInfWebActivity extends BaseWebActivity<StudentAnswerIn
         /**
          * 启动班级弹窗
          */
-        @JavascriptInterface
+        /*@JavascriptInterface
         void startClassDialog(){
             runOnUiThread(()->{
-                showClassDialog();
+                //showClassDialog();
+            });
+        }*/
+        @JavascriptInterface
+        public void itemClick(int stuId,String stuName){
+            runOnUiThread(()->{
+                Intent intent=new Intent(getApplicationContext(),CorrectsHomeworkActivity.class);
+                intent.putExtra("preparationId",preparationId);
+                intent.putExtra("studentId",stuId);
+                intent.putExtra("workId",workId);
+                intent.putExtra("home_type",process);
+                intent.putExtra("stuName",stuName);
+                startActivity(intent);
             });
         }
     }
 
-    private void showClassDialog() {
+    /*private void showClassDialog() {
         if(dialog==null||!dialog.isShowing()) {
             dialog = new Dialog(this);
             ListView listView = new ListView(this);
@@ -105,7 +117,7 @@ public class StudentAnswerInfWebActivity extends BaseWebActivity<StudentAnswerIn
             });
             dialog.show();
         }
-    }
+    }*/
 
     @Override
     protected void onPause() {

@@ -6,6 +6,7 @@ import com.bshuiban.baselibrary.contract.LoginContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 import com.bshuiban.baselibrary.model.LoginResultBean;
 import com.bshuiban.baselibrary.present.BasePresent;
+import com.bshuiban.parents.view.activity.ParentsHomeActivity;
 import com.bshuiban.student.view.activity.StudentHomeActivity;
 import com.bshuiban.teacher.view.activity.TeacherHomeActivity;
 import com.google.gson.Gson;
@@ -97,12 +98,12 @@ public class LoginPresent extends BasePresent<LoginContract.View> implements Log
                     classes = TeacherHomeActivity.class;
                     break;
                 case 4:
-                    classes = Class.forName("com.bshuiban.parent.view.activity.ParentHomeActivity");
+                    classes = ParentsHomeActivity.class;
                     break;
                 default:
                     //classes = null;
             }
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return classes;

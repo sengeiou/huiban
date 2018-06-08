@@ -6,6 +6,10 @@ import android.graphics.Rect;
 
 import com.bshuiban.baselibrary.model.User;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Created by xinheng on 2018/5/3.<br/>
  * describe：文本工具
@@ -106,5 +110,22 @@ public class TextUtils {
             }
         }
         return sTag;
+    }
+    public static List<String> getListString(List list){
+        List<String> strings = new ArrayList<>();
+        if(null==list||list.size()==0){
+            return strings;
+        }
+        Iterator iterator = list.iterator();
+
+        while (iterator.hasNext()){
+            Object next = iterator.next();
+            if(next instanceof String){
+                strings.add((String) next);
+            }else {
+                strings.add(next.toString());
+            }
+        }
+        return strings;
     }
 }

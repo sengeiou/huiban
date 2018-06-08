@@ -141,10 +141,10 @@
 }
 
 .workIndex main .list .listMsg {
-  width: 6.85rem;
+  width: 94%;
   height: 1.75rem;
   border-radius: 0.1rem;
-  margin-left: 0.34rem;
+  margin-left:3%;
   margin-top: 0.28rem;
   font-weight: normal;
   position: relative;

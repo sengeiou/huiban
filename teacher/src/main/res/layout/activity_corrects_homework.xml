@@ -5,21 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:clipChildren="false"
     tools:context=".view.activity.CorrectsHomeworkActivity">
     <com.bshuiban.baselibrary.view.customer.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
-        app:title_text="XX"
+        app:title_text=""
         app:title_color="@android:color/white"
-        app:right_text="全"
+        app:right_text="提交"
+        app:right_color="@color/white"
         app:title_size="@dimen/dp_20"
         android:background="@color/guide_start_btn"
+        app:right_size="@dimen/dp_20"
         app:src_left="@mipmap/iv_back"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_20"/>
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"

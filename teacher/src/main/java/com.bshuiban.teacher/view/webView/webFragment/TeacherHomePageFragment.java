@@ -20,6 +20,8 @@ import com.bshuiban.baselibrary.view.webview.webActivity.LiuYanMsgListActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.NoticeActivity;
 import com.bshuiban.baselibrary.view.webview.webFragment.HomePageFragment;
 import com.bshuiban.teacher.view.webView.webActivity.LessonListActivity;
+import com.bshuiban.teacher.view.webView.webActivity.TeacherParentConfirmWebActivity;
+import com.bshuiban.teacher.view.webView.webActivity.TodayHomeworkWebActivity;
 
 /**
  * Created by xinheng on 2018/5/15.<br/>
@@ -62,7 +64,7 @@ public class TeacherHomePageFragment extends HomePageFragment {
                 tPresent.refresh();
             }
         });
-        loadFileHtml("homework");
+        loadFileHtml("teacherwork");
         registerWebViewH5Interface(stuHomePageHtml);
         return view;
     }
@@ -73,7 +75,7 @@ public class TeacherHomePageFragment extends HomePageFragment {
         tPresent.getTodaySchedule(userId);//今日课表
         tPresent.getHuiFuDaoTwoData();//慧辅导两条数据
         tPresent.getMessageList(userId);//留言列表
-        //loadJavascriptMethod("picture",User.getInstance().getUserData().getIcoPath());
+        loadJavascriptMethod("userimgs",User.getInstance().getUserData().getIcoPath());
     }
 
     private void toNextActivity(int type) {
@@ -102,6 +104,15 @@ public class TeacherHomePageFragment extends HomePageFragment {
             case 6:// 去留言
                 cls=LiuYanMsgListActivity.class;
                 break;
+            case 7://相关课程
+                cls=LessonListActivity.class;
+                break;
+            case 8://今日作业
+                cls= TodayHomeworkWebActivity.class;
+                break;
+            case 9://家长确认
+                cls= TeacherParentConfirmWebActivity.class;
+                break;
             default:
                 //学习资源
                 cls=null;
@@ -123,6 +134,10 @@ public class TeacherHomePageFragment extends HomePageFragment {
                 TeacherHomePageFragment.this.toNextActivity(type);
             });
         }
+
+        /**
+         * 切换侧边栏
+         */
         @JavascriptInterface
         public void toggleSlide(){
             getActivity().runOnUiThread(()->{

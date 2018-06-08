@@ -33,12 +33,24 @@
                 <p class="coll yCollect">收藏</p>
                 <p class="coll noCollect hide">取消收藏</p>
                 <p class="tj">推荐给家长</p>
-            </div>            
+            </div>
+            <div class="button parBtn" style="display:none">
+                <p class="coll yCollect">收藏</p >
+                <p class="coll noCollect" style="display:none">取消收藏</p >
+            </div>
         </main>
     </div>
 </body>
 <script>
     var tab = $('.tab');
+    var userType = window.android.getUserType();
+        if (userType == 4) {
+            $('.parBtn').show();
+            $('.teaBtn').hide();
+        } else if (userType == 2 || userType == 3) {
+            $('.parBtn').hide();
+            $('.teaBtn').show();
+    }
     tab.bind('click', function () {
         $(this).addClass('index').siblings().removeClass('index');
         var parentDom = $(this).parent(),

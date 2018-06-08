@@ -22,6 +22,7 @@ import com.bshuiban.baselibrary.view.adapter.RankPagerAdapter;
 import com.bshuiban.baselibrary.view.customer.BarsCharView;
 import com.bshuiban.baselibrary.view.customer.WordGridView;
 import com.bshuiban.baselibrary.view.customer.ZoomOutPageTransformer;
+import com.bshuiban.baselibrary.view.interfaces.OnReportDateListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,9 +56,14 @@ public class SubjectAllFragment extends BaseFragment<SubjectAllPresent> implemen
         barsCharView=view.findViewById(R.id.barsChar);
         initViewPager();
         include = view.findViewById(R.id.include);
-        tPresent.loadStuLearnReportAll(getTime());
-        tPresent.loadStudyBottom("201805");
+        updateDataForDate();
         return view;
+    }
+
+    public void updateDataForDate() {
+        String date=onReportDateListener.getDate();
+        tPresent.loadStuLearnReportAll(date);
+        tPresent.loadStudyBottom(date);
     }
 
     private void initViewPager() {
@@ -73,11 +79,6 @@ public class SubjectAllFragment extends BaseFragment<SubjectAllPresent> implemen
         viewPager.setOffscreenPageLimit(2); //缓存页面数
         //viewPager.setPageMargin(100); //每页的间隔
         //触摸事件反馈给viewpager
-    }
-
-    private String getTime(){
-        SimpleDateFormat sf=new SimpleDateFormat("yyyyMM");
-        return sf.format(new Date());
     }
     @Override
     public void startDialog() {
@@ -131,6 +132,11 @@ public class SubjectAllFragment extends BaseFragment<SubjectAllPresent> implemen
         barsCharView.setXArray(xArray);
     }
     private OnContrastData onContrastData;
+    private OnReportDateListener onReportDateListener;
+
+    public void setOnReportDateListener(OnReportDateListener onReportDateListener) {
+        this.onReportDateListener = onReportDateListener;
+    }
 
     public void setOnContrastData(OnContrastData onContrastData) {
         this.onContrastData = onContrastData;

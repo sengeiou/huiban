@@ -9,7 +9,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@android:color/darker_gray" />
+        android:background="@color/line_bord" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:id="@+id/tv_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XX"
+                android:text="- -"
                 android:layout_gravity="center_horizontal"
                 android:textSize="@dimen/dp_30"/>
             <TextView
@@ -109,21 +109,18 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
+        android:background="@color/line_bord"
+        android:layout_marginTop="@dimen/dp_10"/>
 
     <TextView
         android:id="@+id/tv_look_statistical_inf"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_43"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="查看统计详情"
         android:textColor="@color/guide_start_btn"
-        android:textSize="@dimen/dp_20" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@android:color/darker_gray" />
+        android:textSize="@dimen/dp_17" />
 
     <include
         android:id="@+id/include"

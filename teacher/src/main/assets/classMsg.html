@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/teacher.css">
+    <script src="./js/rem.js"></script>
+    <script src="./js/jquery.min.js"></script>
+</head>
+<body>
+    <div class="wrap classMsg">
+        <header>
+            <span>
+                <i class="back"></i>
+            </span>	
+            <span>我的备课</span>
+            <span class="ico"></span>
+        </header>
+        <nav class="hide">
+            <p class="all"><img src="./images/teacher/all@2x.png" />全部</p>
+            <p class="end"><img src="./images/teacher/right@2x.png" />已批阅</p>
+            <p class="con"><img src="./images/teacher/end_answer@2x.png" />未批阅</p>
+            <p class="no"><img src="./images/teacher/no_answer@2x.png" />未提交</p>
+        </nav>
+        <main>
+            <div class="time">
+
+            </div>
+            <div class="msg">
+
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+    var noCount = 0, count = 0, endCount = 0;
+    function getContent (data) {
+        var data = JSON.parse(data);
+        $('.time').html(data.releaseTime + '&nbsp; - &nbsp;' + data.endTime);
+        $('header span:eq(1)').text(data.className);
+        for (var i=0; i<data.list.length; i++) {
+            var nowMsg = $('.msg').html();
+            if(data.list[i].status<2){
+                noCount++;
+                $('.msg').html(nowMsg + `
+                    <span><img src="./images/teacher/no_answer@2x.png" /><i>${data.list[i].name}</i></span>
+                `);
+            } else if (data.list[i].status==3) {
+                endCount++;
+                $('.msg').html(nowMsg + `
+                    <span class="ends"><img src="./images/teacher/right_ico@2x.png" /><i>${data.list[i].name}</i></span>
+                `);
+            } else if (data.list[i].status==2) {
+                count++;
+                $('.msg').html(nowMsg + `
+                    <span class="answer"><img src="./images/teacher/end_answer@2x.png" /><i>${data.list[i].name}</i></span>
+                `);
+            }            
+        }
+        $('.all').html($('.all').html()+`(${data.list.length})`);
+        $('.con').html($('.con').html()+`(${endCount})`);
+        $('.end').html($('.end').html()+`(${count})`);
+        $('.no').html($('.no').html()+`(${noCount})`);
+        $('nav p').bind('click', function () {
+            $('.msg').html('');
+            var nowCon;
+            for (var i=0; i<data.list.length; i++) {
+                nowCon = $('.msg').html();
+                if ($(this).attr('class')=="no" && data.list[i].status<2) {
+                    $('.msg').html(nowCon + `
+                        <span><img src="./images/teacher/no_answer@2x.png" /><i>${data.list[i].name}</i></span>
+                    `);
+                } else if ($(this).attr('class')=="end" && data.list[i].status==3) {
+                    $('.msg').html(nowCon + `
+                        <span class="ends"><img src="./images/teacher/right_ico@2x.png" /><i>${data.list[i].name}</i></span>
+                    `);
+                } else if ($(this).attr('class')=="con" && data.list[i].status==2) {
+                    $('.msg').html(nowCon + `
+                        <span class="answer"><img src="./images/teacher/end_answer@2x.png" /><i>${data.list[i].name}</i></span>
+                    `);
+                } else if ($(this).attr('class')=="all") {
+                    $('.msg').html(nowMsg);
+                }
+            }
+            $('nav').hide();
+            //点击批阅
+            $('.answer').bind('click', function () {           
+                console.log($(this).text());
+                for (var i=0; i<data.list.length; i++) {
+                    if (data.list[i].name == $(this).text()) {
+                        var studentId = data.list[i].studentId;
+                        var stuName = data.list[ind].name;
+                        window.android.itemClick(studentId,stuName);
+                    }
+                }
+            })
+        });
+        //点击批阅
+        $('.msg span').bind('click', function () {
+            if ($(this).attr('class') == 'answer') {
+                var ind = $(this).index();
+                var studentId = data.list[ind].studentId;
+                var stuName = data.list[ind].name;
+                window.android.itemClick(studentId,stuName);
+            }
+        })
+    }
+    $('.ico').bind('click', function () {
+        $('nav').show();
+    });
+</script>
+</html>

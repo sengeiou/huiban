@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
 
 import com.bshuiban.baselibrary.contract.ErrorHomeworkAnalysisContract;
 import com.bshuiban.baselibrary.contract.ErrorHomeworkContract;
@@ -56,11 +57,8 @@ public class ErrorHomeworkWebFragment extends InteractionBaseWebViewFragment<Err
     }
 
     @Override
-    public void updateList(String json) {
-        //TODO 勿删，‘\\’js自动转‘\’
-        json = json.replace("\\", "\\\\");//没办法
+    public void updateList(String json) {//[]
         loadJavascriptMethod("getMsg",json);
-        //loadJavascriptMethod("getMsg","[]");
     }
 
     @Override
@@ -85,8 +83,6 @@ public class ErrorHomeworkWebFragment extends InteractionBaseWebViewFragment<Err
 
     @Override
     public void toErrorHomeworkAnalysisPage(String json) {
-        //TODO 勿删，‘\\’js自动转‘\’
-        json = json.replace("\\", "\\\\");//没办法
         startActivity(new Intent(getActivity(), ErrorHomeworkAnalysisActivity.class).putExtra("text",json));
     }
    /* @Override
@@ -103,6 +99,7 @@ public class ErrorHomeworkWebFragment extends InteractionBaseWebViewFragment<Err
                     int mFasId = i.getIntExtra("mFasId",-1);
                     int mChapBranId = i.getIntExtra("mChapBranId",-1);
                     int mSeriBrandId = i.getIntExtra("mSeriBrandId",-1);
+                    tPresent.clearArray();
                     tPresent.setSelectInf(mSubjectId,mVersionId,mFasId,mChapBranId,mSeriBrandId);
                 }
                 break;

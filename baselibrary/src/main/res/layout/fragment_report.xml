@@ -7,8 +7,19 @@
     android:orientation="vertical">
     <net.lucode.hackware.magicindicator.MagicIndicator
         android:id="@+id/magic"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="66dp"/>
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:textSize="@dimen/dp_13"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:drawableLeft="@mipmap/date_left"
+        android:drawablePadding="@dimen/dp_10"
+        android:text="XXXX年XX月"
+        android:gravity="center_vertical"/>
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

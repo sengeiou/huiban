@@ -15,10 +15,15 @@ public class HomeworkBean extends Homework.Data {
     public static final String ONLINE = "onLine";
     public static final String EXAM = "exam";
     public static final String VIDEO = "video";
+    private boolean objective;
     /**
      * 是否批阅
      */
     private boolean correct;
+    /**
+     * 试题Id
+     */
+    private int problemId;
     /**
      * 此题所属试卷类型
      */
@@ -35,6 +40,14 @@ public class HomeworkBean extends Homework.Data {
      * 一类题第几道
      */
     private int problemIndex;
+
+    public boolean getObjective() {
+        return objective;
+    }
+
+    public void setObjective(boolean objective) {
+        this.objective = objective;
+    }
 
     public String getType() {
         return type;
@@ -76,6 +89,14 @@ public class HomeworkBean extends Homework.Data {
         this.problemIndex = problemIndex;
     }
 
+    public int getProblemId() {
+        return problemId;
+    }
+
+    public void setProblemId(int problemId) {
+        this.problemId = problemId;
+    }
+
     private static HomeworkBean getHomeworkBean(String type, int pageIndex, int typeIndex, int problemIndex) {
         return getHomeworkBean(false, type, pageIndex, typeIndex, problemIndex);
     }
@@ -88,6 +109,99 @@ public class HomeworkBean extends Homework.Data {
         homeworkBean.setProblemIndex(problemIndex);
         homeworkBean.setCorrect(correct);
         return homeworkBean;
+    }
+
+    /**
+     * 填入问题答案
+     *
+     * @param stuAnswer       学生答案
+     * @param indexAnswer     学生答案位置（多个填空）
+     * @param homeworkInfBean 作业
+     * @param type            试卷类型
+     * @param pageIndex       第几个试卷
+     * @param typeIndex       第几类
+     * @param problemIndex    第几个
+     */
+    public static void setProblemAnswer(HomeworkBean bean,String stuAnswer, int indexAnswer, HomeworkInfBean.DataBean homeworkInfBean, String type, int pageIndex, int typeIndex, int problemIndex) {
+        String optionName;
+        bean.setComplete(!TextUtils.isEmpty(stuAnswer));
+        switch (type) {
+            case ONLINE:
+                List<HomeworkInfBean.DataBean.OnLineBean> onLine = homeworkInfBean.getOnLine();
+                HomeworkInfBean.DataBean.OnLineBean onLineBean = onLine.get(pageIndex);
+                List<HomeworkInfBean.DataBean.OnLineBean.NextBean> next = onLineBean.getNext();
+                HomeworkInfBean.DataBean.OnLineBean.NextBean nextBean = next.get(problemIndex);
+                optionName = nextBean.getOptionName();
+            {
+                switch (optionName) {
+                    case "fill":
+                        nextBean.setStuAnswer(dealWithAnswerList(stuAnswer));
+                        break;
+                    case "subjective":
+                        nextBean.setStuAnswer(addImgAnswer(stuAnswer));
+                        break;
+                    default:
+                        nextBean.setStuAnswer(stuAnswer);
+                        if(isSelect(optionName)){
+                           bean.setCorrect(true);
+                           bean.setResult(isRight((String) nextBean.getAnswer(),stuAnswer)?1:0);
+                        }
+                }
+            }
+            break;
+            case EXAM:
+                HomeworkInfBean.DataBean.ExamPaperBean.ExamBean.NextBeanX nextBeanX = homeworkInfBean.getExamPaper().get(pageIndex).getExam().get(typeIndex).getNext().get(problemIndex);
+                optionName = nextBeanX.getOptionName();
+            {
+                switch (optionName) {
+                    case "fill":
+                        nextBeanX.setStuAnswer(dealWithAnswerList(stuAnswer));
+                        break;
+                    case "subjective":
+                        nextBeanX.setStuAnswer(addImgAnswer(stuAnswer));
+                        break;
+                    default:
+                        nextBeanX.setStuAnswer(stuAnswer);
+                        if(isSelect(optionName)){
+                            bean.setCorrect(true);
+                            bean.setResult(isRight((String) nextBeanX.getAnswer(),stuAnswer)?1:0);
+                        }
+                }
+            }
+            break;
+            case VIDEO://没有主观题
+                HomeworkInfBean.DataBean.VideoBean.Exam exam = homeworkInfBean.getVideo().get(pageIndex).getExam().get(problemIndex);
+                optionName = exam.getOptionName();
+            {
+                exam.setStuAnswer(stuAnswer);
+                if(isSelect(optionName)){
+                    bean.setCorrect(true);
+                    bean.setResult(isRight((String) exam.getAnswer(),stuAnswer)?1:0);
+                }
+            }
+            break;
+            default:
+        }
+
+    }
+
+    private static List<String> dealWithAnswerList(String answer) {
+        ArrayList<String> strings = new ArrayList<>(0);
+        strings.add(answer);
+        return strings;
+    }
+    private static String addImgAnswer(String answer) {
+        String s;
+        if(TextUtils.isEmpty(answer)){
+           s="";
+        }else {
+            if(answer.indexOf("http")==0) {
+                s = "<img src=\"" + answer + "\"/>";
+            }else {
+                s=answer;
+            }
+        }
+        return s;
     }
 
     public static String getProblemContent(HomeworkInfBean.DataBean homeworkInfBean, String type, int pageIndex, int typeIndex, int problemIndex) {
@@ -135,6 +249,7 @@ public class HomeworkBean extends Homework.Data {
                             String optionName = nextBean.getOptionName();
                             if (isSelect(optionName)) {
                                 homeworkBean.setCorrect(true);
+                                homeworkBean.setObjective(true);
                                 String stuAnswer = (String) nextBean.getStuAnswer();
                                 homeworkBean.setComplete(TextUtils.isEmpty(stuAnswer));
                                 homeworkBean.setResult(isRight((String) nextBean.getAnswer(), stuAnswer) ? 1 : 0);
@@ -161,6 +276,7 @@ public class HomeworkBean extends Homework.Data {
                                     String optionName = nextBeanX.getOptionName();
                                     if (isSelect(optionName)) {
                                         homeworkBean.setCorrect(true);
+                                        homeworkBean.setObjective(true);
                                         String stuAnswer = (String) nextBeanX.getStuAnswer();
                                         homeworkBean.setComplete(TextUtils.isEmpty(stuAnswer));
                                         homeworkBean.setResult(isRight((String) nextBeanX.getAnswer(), stuAnswer) ? 1 : 0);
@@ -184,6 +300,7 @@ public class HomeworkBean extends Homework.Data {
                         String optionName = exam1.getOptionName();
                         if (isSelect(optionName)) {
                             homeworkBean.setCorrect(true);
+                            homeworkBean.setObjective(true);
                             String stuAnswer = exam1.getStuAnswer();
                             homeworkBean.setComplete(TextUtils.isEmpty(stuAnswer));
                             homeworkBean.setResult(isRight(exam1.getAnswer(), stuAnswer) ? 1 : 0);
@@ -201,7 +318,7 @@ public class HomeworkBean extends Homework.Data {
     }
 
     public static boolean isSelect(String name) {
-        if (null != name && ("check".equals(name) || "radio".equals(name))) {
+        if (null != name && ("check".equals(name) || "radio".equals(name) || "judge".equals(name))) {
             return true;
         }
         return false;

@@ -11,7 +11,6 @@
             android:name=".view.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".view.webview.webActivity.CollectionListActivity"
             android:screenOrientation="portrait"
@@ -89,8 +88,12 @@
         <activity
             android:name=".view.activity.VideoPlayerActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".view.webview.webActivity.SideCollectionListWebActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.webview.webActivity.SideCollectionListWebActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.PlayerVideoActivity"
+            android:screenOrientation="landscape"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

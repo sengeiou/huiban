@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ import com.bshuiban.baselibrary.R;
  */
 @SuppressLint("AppCompatCustomView")
 public class LineTextView extends TextView {
-    private int lineColor=getResources().getColor(R.color.guide_start_btn);
+    private int lineColor= ContextCompat.getColor(getContext(),R.color.guide_start_btn);
     private int lineWidth=5;
     private int lineType=0;
     private Paint mPaint;
@@ -63,8 +64,9 @@ public class LineTextView extends TextView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(lineColor>0) {
+        if(lineColor!=-1) {
             mPaint.setColor(lineColor);
+            mPaint.setStrokeWidth(lineWidth);
             if (lineType == Line_Bottom) {
                 canvas.drawLine(0, getMeasuredHeight(), getMeasuredWidth(), getMeasuredHeight(), mPaint);
             } else {

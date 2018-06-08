@@ -18,6 +18,11 @@ public class User {
     private HomeworkInfBean.DataBean homeworkInfBean;
     private Homework homework;
     private String userName;
+    private String imgHeadUrl="";
+    public int getUserType() {
+        return data.getUserType();
+    }
+
     public static User getInstance() {
         if(null==user){
             synchronized (User.class){
@@ -43,6 +48,15 @@ public class User {
         }
         return data.getUserId();
     }
+
+    public String getImgHeadUrl() {
+        return imgHeadUrl;
+    }
+
+    public void setImgHeadUrl(String imgHeadUrl) {
+        this.imgHeadUrl = imgHeadUrl;
+    }
+
     public LoginResultBean.Data getUserData(){
         return data;
     }
@@ -72,6 +86,38 @@ public class User {
     public String getGradeId() { return data.getGradeId();}
     public String getSchoolId() { return data.getSchoolId();}
 
+    /**
+     * 获取班级列表，逗号拼接
+     * @return
+     */
+    public String getClassIdArrayString() {
+        List<String> classIds = data.getClassId();
+        StringBuffer stringBuffer=new StringBuffer();
+        if(classIds!=null&&classIds.size()>0){
+            for (int i = 0; i < classIds.size(); i++) {//3
+                String s = classIds.get(i);
+                stringBuffer.append(s);
+                if(i<classIds.size()-1) {
+                    stringBuffer.append(",");
+                }
+            }
+        }
+        return stringBuffer.toString();
+    }
+    public boolean isTeacher(){
+        int userType = User.getInstance().getUserData().getUserType();
+        if(userType!=1&&userType!=4){
+            return true;
+        }
+        return false;
+    }
+    public boolean isParents(){
+        int userType = User.getInstance().getUserData().getUserType();
+        if(userType==4){
+            return true;
+        }
+        return false;
+    }
     public SubjectBean getSubjectBean() {
         return subjectBean;
     }

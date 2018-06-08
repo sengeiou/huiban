@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.webkit.JavascriptInterface;
 
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.LessonInfWebActivity;
@@ -84,6 +85,7 @@ public class LessonListActivity extends BaseWebActivity<LessonListPresent> imple
                 startActivityForResult(intent,100);
             });
         }
+
     }
 
     @Override

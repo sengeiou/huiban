@@ -8,12 +8,12 @@
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
-        app:title_size="@dimen/dp_20"
+        app:title_size="@dimen/dp_18"
         app:title_color="@android:color/white"
-        app:title_text="XXX"
+        app:title_text="图片选择"
         app:src_left="@mipmap/iv_back"
-        android:background="#4A4A4A"
-        app:right_size="@dimen/dp_20"
+        android:background="@color/guide_start_btn"
+        app:right_size="@dimen/dp_15"
         app:right_text="完成"
         app:right_color="@android:color/white"/>
     <android.support.v7.widget.RecyclerView

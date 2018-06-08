@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.present.BasePresent;
+import com.bshuiban.baselibrary.present.ImageUploadHeadPresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.customer.BottomBar;
 import com.bshuiban.baselibrary.view.fragment.InteractionBaseFragment;
@@ -33,6 +34,7 @@ public abstract class HomePageActivity<T extends Fragment,P extends BasePresent>
         navigationView.setNavigationItemSelectedListener(this);
         initNavigationView(navigationView);
         initBottomBar(rg_container);
+        new ImageUploadHeadPresent(null).loadImageHead();
     }
     protected abstract void initNavigationView(NavigationView navigationView);
     protected abstract void initBottomBar(BottomBar bottomBar);

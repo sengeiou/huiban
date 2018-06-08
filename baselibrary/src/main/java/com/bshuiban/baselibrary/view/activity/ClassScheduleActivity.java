@@ -17,6 +17,6 @@ public class ClassScheduleActivity extends BaseActivity {
         setContentView(R.layout.activity_class_schedule);
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fl_fragment,new ClassScheduleFragment1(),"classSchedule").commit();
+        fragmentTransaction.add(R.id.fl_fragment,new ClassScheduleFragment(),"classSchedule").commit();
     }
 }

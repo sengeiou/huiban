@@ -37,7 +37,6 @@ public class ConsolidationWebActivity extends BaseWebActivity<ConsolidationPrese
 
     @Override
     public void updateView(String json) {
-        json = json.replace("\\", "\\\\");//没办法
         loadJavascriptMethod("getContent",json);
     }
 

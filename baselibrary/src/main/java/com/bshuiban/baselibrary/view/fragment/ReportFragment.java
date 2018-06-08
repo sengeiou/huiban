@@ -9,10 +9,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.ReportContract;
@@ -21,7 +23,9 @@ import com.bshuiban.baselibrary.model.SubjectBean;
 import com.bshuiban.baselibrary.present.ReportPresent;
 import com.bshuiban.baselibrary.view.activity.BaseFragmentActivity;
 import com.bshuiban.baselibrary.view.adapter.ClassViewPagerAdapter;
+import com.bshuiban.baselibrary.view.interfaces.OnReportDateListener;
 import com.bshuiban.baselibrary.view.webview.webFragment.InteractionBaseWebViewFragment;
+import com.xinheng.date_dialog.dialog.SelectDateDialog;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -33,18 +37,22 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by xinheng on 2018/5/21.<br/>
  * describe：报告
  */
-public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent> implements ReportContract.View {
+public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent> implements ReportContract.View,OnReportDateListener {
     private List<StuLearnReportBean.DataBean.ContrastBean> arrayList;
     private ReportViewPagerAdapter classViewPagerAdapter;
     private MagicIndicator magicIndicator;
     private ViewPager viewPager;
+    private TextView tv_date;
+    private int mYear,mMonth;
     private CommonNavigatorAdapter commonNavigatorAdapter;
 
     @Override
@@ -65,16 +73,62 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
         View view = inflater.inflate(R.layout.fragment_report, container, false);
         magicIndicator=view.findViewById(R.id.magic);
         viewPager=view.findViewById(R.id.viewPager);
+        tv_date=view.findViewById(R.id.tv_date);
+        tv_date.setOnClickListener(v->{
+            SelectDateDialog selectDateDialog = new SelectDateDialog(getActivity(), new SelectDateDialog.OnClickListener() {
+                @Override
+                public boolean onSure(int year, int month, int day, long time) {
+                    month+=1;
+                    if(year>nowYear||(year==nowYear&&month>nowMonth)){
+                        toast("日期超了。。。");
+                        return false;
+                    }
+                    if (year != mYear || mMonth != month) {
+                        mYear = year;
+                        mMonth = month;
+                        updateTVDate(true);
+                    }
+                    return false;
+                }
+
+                @Override
+                public boolean onCancel() {
+                    return false;
+                }
+            });
+            selectDateDialog.setDateType(SelectDateDialog.YEAR_MONTH);
+            selectDateDialog.show(mYear,mMonth-1,1);
+        });
         updateTitleData();
+        setDate();
         //tPresent.getTitleBarData();
         return view;
     }
+    private int nowMonth,nowYear;
+    private void setDate(){
+        Calendar calendar=Calendar.getInstance(Locale.CHINA);
+        nowYear=mYear=calendar.get(Calendar.YEAR);
+        nowMonth=mMonth=calendar.get(Calendar.MONTH)+1;
+        updateTVDate(false);
+    }
+    private void updateTVDate(boolean tag){
 
+        tv_date.setText(String.format("%d年%02d月统计报告",mYear,mMonth));
+        if(tag){
+            if(nowFragment instanceof SubjectAllFragment){
+                ((SubjectAllFragment) nowFragment).updateDataForDate();
+            }else {
+                ((SubjectChildFragment) nowFragment).updateDataForDate();
+            }
+        }
+    }
     public void updateTitleBar1(List<StuLearnReportBean.DataBean.ContrastBean> contrastBeans) {
         if(null!=contrastBeans&&contrastBeans.size()>0) {
-            arrayList.addAll(contrastBeans);
-            commonNavigatorAdapter.notifyDataSetChanged();
-            classViewPagerAdapter.notifyDataSetChanged();
+            if(arrayList.size()<2) {
+                arrayList.addAll(contrastBeans);
+                commonNavigatorAdapter.notifyDataSetChanged();
+                classViewPagerAdapter.notifyDataSetChanged();
+            }
         }
     }
     public void updateTitleBar(List<SubjectBean.DataBean> data) {
@@ -92,7 +146,7 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
         arrayList.add(e);
         classViewPagerAdapter=new ReportViewPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(classViewPagerAdapter);
-        magicIndicator.setBackgroundColor(Color.WHITE);
+        magicIndicator.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.guide_start_btn));
         CommonNavigator commonNavigator = new CommonNavigator(getActivity());
         commonNavigatorAdapter = new CommonNavigatorAdapter() {
 
@@ -104,9 +158,9 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(getActivity());
-                simplePagerTitleView.setNormalColor(Color.BLACK);
+                simplePagerTitleView.setNormalColor(ContextCompat.getColor(getActivity(),R.color.guide_light));
                 simplePagerTitleView.setPadding(15,0,15,0);
-                simplePagerTitleView.setSelectedColor(getResources().getColor(R.color.guide_start_btn));
+                simplePagerTitleView.setSelectedColor(Color.WHITE);
                 simplePagerTitleView.setOnClickListener((v)->{
                     viewPager.setCurrentItem(index,false);
                 });
@@ -116,10 +170,9 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
 
             @Override
             public IPagerIndicator getIndicator(Context context) {
-
                 LinePagerIndicator linePagerIndicator = new LinePagerIndicator(getActivity());
                 linePagerIndicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
-                linePagerIndicator.setColors(getResources().getColor(R.color.guide_start_btn));
+                linePagerIndicator.setColors(Color.WHITE);
                 return linePagerIndicator;
             }
         };
@@ -147,6 +200,12 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
     public void fail(String error) {
         toast(error);
     }
+
+    @Override
+    public String getDate() {
+        return String.format("%d%02d",mYear,mMonth);
+    }
+    private Fragment nowFragment;
     private class ReportViewPagerAdapter extends FragmentPagerAdapter{
 
         public ReportViewPagerAdapter(FragmentManager fm) {
@@ -164,21 +223,23 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
                         updateTitleBar1(contrastBeans);
                     }
                 });
+                subjectAllFragment.setOnReportDateListener(ReportFragment.this);
+                nowFragment=subjectAllFragment;
                 return subjectAllFragment;
             }else {
                 Bundle bundle = new Bundle();
                 bundle.putInt("subjectId", arrayList.get(position).getSubjectId());
                 SubjectChildFragment subjectChildFragment = new SubjectChildFragment();
                 subjectChildFragment.update(bundle);
+                subjectChildFragment.setOnReportDateListener(ReportFragment.this);
+                nowFragment=subjectChildFragment;
                 return subjectChildFragment;
             }
-            //return position==0? subjectAllFragment : subjectChildFragment;
         }
 
         @Override
         public int getCount() {
             return arrayList==null?0:arrayList.size();
-
         }
     }
 

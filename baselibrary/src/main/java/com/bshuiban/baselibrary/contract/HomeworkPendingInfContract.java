@@ -1,6 +1,6 @@
 package com.bshuiban.baselibrary.contract;
 
-import com.bshuiban.baselibrary.model.HomeworkListData;
+import com.bshuiban.baselibrary.model.HomeworkBean;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import java.util.List;
  */
 public interface HomeworkPendingInfContract {
     interface View extends BaseView{
-        void updateHomeworkTitleList(List<HomeworkListData> list);
-        void updataAnswerResult(String answer);
+        void updateHomeworkTitleList(List<HomeworkBean> list, int time);
+        void updateAnswerResult(String answer);
     }
     interface Present extends HomeworkReportContract.Present{
         void uploadImage(String imgPath);

@@ -7,10 +7,10 @@ import java.util.List;
  * describe：作业结果
  *
  */
-public class Homework {
+public class Homework<T extends Homework.Data> {
     private String title;
     private String time;
-    private List<Data> homework;
+    private List<T> homework;
 
     public String getTitle() {
         return title;
@@ -28,11 +28,11 @@ public class Homework {
         this.time = time;
     }
 
-    public List<Data> getHomework() {
+    public List<T> getHomework() {
         return homework;
     }
 
-    public void setHomework(List<Data> homework) {
+    public void setHomework(List<T> homework) {
         this.homework = homework;
     }
 
@@ -56,5 +56,28 @@ public class Homework {
             this.result = result;
         }
     }
-
+    public void setFTime(String time){
+        float aFloat = 0;
+        try {
+            aFloat = Float.parseFloat(time);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        setTime(getTime(aFloat));
+    }
+    public static String getTime(float time){
+        int h= (int) (time/3600);
+        int m=(int)(time-h*3600)/60;
+        int s=(int)(time-h*3600-m*60);
+        String hour=h>0?(h+"时"):"";
+        String min="";
+        if(h>0){
+            min="0分";
+        }else{
+            if(m>0){
+                min=m+"分";
+            }
+        }
+        return hour+min+s+"秒";
+    }
 }

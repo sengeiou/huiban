@@ -76,7 +76,7 @@ public class StudentHomePageFragment extends HomePageFragment {
         tPresent.getTodaySchedule(userId);//今日课表
         tPresent.getHuiFuDaoTwoData();//慧辅导两条数据
         tPresent.getMessageList(userId);//留言列表
-        //loadJavascriptMethod("picture",User.getInstance().getUserData().getIcoPath());
+        loadJavascriptMethod("userimgs",User.getInstance().getUserData().getIcoPath());
     }
 
     private void toNextActivity(int type) {

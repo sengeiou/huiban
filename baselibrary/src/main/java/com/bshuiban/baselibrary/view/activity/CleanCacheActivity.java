@@ -11,10 +11,11 @@ import android.widget.TextView;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.utils.GlideCacheUtil;
+import com.bshuiban.baselibrary.utils.UserSharedPreferencesUtils;
 
 import java.io.File;
 
-public class CleanCacheActivity extends AppCompatActivity {
+public class CleanCacheActivity extends BaseActivity {
     private Button btn_cache;
     private TextView tv_use_space;
     private TextView tv_persent;
@@ -26,6 +27,7 @@ public class CleanCacheActivity extends AppCompatActivity {
         tv_use_space = findViewById(R.id.tv_use_space);
         btn_cache.setOnClickListener(v -> {
             //clearAllDefaultCache(this);
+            UserSharedPreferencesUtils.cleanUserData(getApplicationContext());
             GlideCacheUtil.getInstance().clearImageDiskCache(getApplicationContext());
             tv_use_space.setText(String.valueOf(0.0)+"MB");
             tv_persent.setText("占据手机0.0%储存空间");

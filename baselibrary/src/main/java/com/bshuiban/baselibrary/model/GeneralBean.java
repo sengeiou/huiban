@@ -142,7 +142,7 @@ public class GeneralBean extends ResultBean {
             private String name;
             private String imgUrl;
             private String subjectName;
-            private int isAtten;
+            private int isAtten;//是否关注(0否,1是)
 
             public int getId() {
                 return id;
@@ -257,7 +257,7 @@ public class GeneralBean extends ResultBean {
             private String stuSubStr;
             private String stuSubStrAll;
             private int stuCheck;
-
+            private int isAtten;//是否关注(0否,1是)
             public int getId() {
                 return id;
             }
@@ -336,6 +336,14 @@ public class GeneralBean extends ResultBean {
 
             public void setStuCheck(int stuCheck) {
                 this.stuCheck = stuCheck;
+            }
+
+            public int getIsAtten() {
+                return isAtten;
+            }
+
+            public void setIsAtten(int isAtten) {
+                this.isAtten = isAtten;
             }
         }
     }

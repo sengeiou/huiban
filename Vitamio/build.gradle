@@ -6,10 +6,9 @@ dependencies {
 android {
     compileSdkVersion 21
     buildToolsVersion '27.0.3'
-
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 21
+        targetSdkVersion 22
     }
     sourceSets {
         main {
@@ -23,8 +22,9 @@ android {
     }
     buildTypes {
         release {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),'proguard-project.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
     }
-
+    productFlavors {
+    }
 }

@@ -1,11 +1,9 @@
 package com.bshuiban.baselibrary.present;
 
+import com.bshuiban.baselibrary.internet.RetrofitService;
 import com.bshuiban.baselibrary.utils.aes.AESUtils;
-import com.bshuiban.baselibrary.view.activity.LoginActivity;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by xinheng on 2018/4/26.<br/>
@@ -47,9 +45,11 @@ public class LoginPresentTest {
     public void login() {
 //        String s = AESUtils.desEncrypt("1vxbnSZ65iLzwbwF6r/eBUMmxd44RNUVwcz1pGEjQGihyj02sIs5CryI5ptYces6JQGJLwP7frzSzpEWiaqohJUvDux51A9nvH/S3dOQTFo=");
 //        System.out.print(s+"\n");
-        LoginPresent loginPresent=new LoginPresent(null);
-        loginPresent.login("2030246","111111");
+//        LoginPresent loginPresent=new LoginPresent(null);
+        //loginPresent.login("2030246","111111");
         //loginPresent.askInternet("","{\"userId\":\"2030246\",\"userPwd\":\"111111\"}");
+        //{"code":"2002","msg":"success","data":{"userId":2030219,"userType":3,"realName":"\u694a\u694a","icoPath":"","schoolId":45,"schoolName":"\u9752\u5c9b\u5b9e\u9a8c\u521d\u7ea7\u4e2d\u5b66","classId":[3000153,3000151],"gradeId":0,"otherId":"2030219","vipDays":0}}
+        RetrofitService.getInstance().getServiceResult("logInByUidAndPwd","{\"userId\":\"2030219\",\"userPwd\":\"222222\"}",new RetrofitService.CallTest());
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

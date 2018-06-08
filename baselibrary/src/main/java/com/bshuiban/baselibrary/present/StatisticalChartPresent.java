@@ -20,7 +20,7 @@ public class StatisticalChartPresent extends BasePresent<StatisticalChartContrac
     /**
      * 课前1，课中2，课后3
      */
-    private int type;
+    private int type=1;
 
     public StatisticalChartPresent(StatisticalChartContract.View view) {
         super(view);
@@ -32,7 +32,7 @@ public class StatisticalChartPresent extends BasePresent<StatisticalChartContrac
 
     @Override
     public void getStatisticalData(String subjectId, String time) {
-        if (subjectId.equals(mSubjectId) && time.equals(mTime)) {
+        if (subjectId!=null&&subjectId.equals(mSubjectId) && time.equals(mTime)) {
             return;
         }
         mSubjectId = subjectId;
@@ -84,5 +84,22 @@ public class StatisticalChartPresent extends BasePresent<StatisticalChartContrac
             }
         }
         view.updateStatisticalChartView(listBeans);
+    }
+    public List<StatisticalChartBean.DataBean.ListBean> getList(int type){
+        List<StatisticalChartBean.DataBean.ListBean> listBeans = null;
+        if (null != data) {
+            switch (type) {
+                case 1:
+                    listBeans = data.getPreList();
+                    break;
+                case 2:
+                    listBeans = data.getInList();
+                    break;
+                default:
+                    listBeans = data.getWorkList();
+                    break;
+            }
+        }
+        return listBeans;
     }
 }

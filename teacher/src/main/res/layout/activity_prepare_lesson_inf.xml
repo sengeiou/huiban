@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/white"
     tools:context=".view.activity.PrepareLessonInfActivity">
     <com.bshuiban.baselibrary.view.customer.TitleView
         android:layout_width="match_parent"
@@ -13,7 +12,8 @@
         app:src_left="@mipmap/iv_back"
         android:background="@color/guide_start_btn"
         />
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -25,10 +25,10 @@
             android:layout_height="match_parent"
             android:clipChildren="false"
             android:layout_marginTop="@dimen/dp_50"
-            android:layout_marginRight="@dimen/dp_40"
-            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_50"
+            android:layout_marginLeft="@dimen/dp_50"
             />
-    </LinearLayout>
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -68,4 +68,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/dot_red" />
     </FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"/>
 </LinearLayout>

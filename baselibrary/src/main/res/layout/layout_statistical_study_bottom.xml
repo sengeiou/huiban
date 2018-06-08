@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="@dimen/dp_10">
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -24,7 +24,7 @@
                 android:id="@+id/imageView0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/app_logo" />
+                android:src="@mipmap/study_video" />
 
             <TextView
                 android:id="@+id/textView1"
@@ -53,7 +53,7 @@
                 android:id="@+id/imageView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/app_logo"/>
+                android:src="@mipmap/study_time"/>
 
             <TextView
                 android:id="@+id/textView11"
@@ -88,7 +88,7 @@
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/app_logo"/>
+                android:src="@mipmap/jion_answer_count"/>
 
             <TextView
                 android:id="@+id/textView21"
@@ -117,7 +117,7 @@
                 android:id="@+id/imageView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/app_logo" />
+                android:src="@mipmap/complete_test" />
 
             <TextView
                 android:id="@+id/textView31"
@@ -139,5 +139,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_10"
         android:background="@color/line_bord"/>
 </LinearLayout>
