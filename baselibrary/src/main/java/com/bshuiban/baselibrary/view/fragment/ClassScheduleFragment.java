@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import com.bshuiban.baselibrary.contract.ClassScheduleContract;
 import com.bshuiban.baselibrary.model.ClassScheduleBean;
@@ -32,10 +33,12 @@ public class ClassScheduleFragment extends BaseFragment<ClassSchedulePresent> im
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ScrollView scrollView=new ScrollView(container.getContext());
         classSchedule=new ClassSchedule(getActivity());
         classSchedule.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tPresent.askInternetForScheduleData(User.getInstance().getClassId());
-        return classSchedule;
+        scrollView.addView(classSchedule);
+        return scrollView;
     }
 
     @Override

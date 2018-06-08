@@ -24,11 +24,11 @@ public class ClassSchedule extends View {
     /**
      * 头部信息字体大小
      */
-    private int headTextSize = 30;
+    private int headTextSize = (int) getResources().getDimension(R.dimen.dp_11);
     /**
      * 上下午字体大小
      */
-    private int dateTextSize = 40;
+    private int dateTextSize = (int) getResources().getDimension(R.dimen.dp_13);
     /**
      * 数字字体大小
      */
@@ -36,7 +36,7 @@ public class ClassSchedule extends View {
     /**
      * 表格内字体大小
      */
-    private int textSize = 26;
+    private int textSize = (int) getResources().getDimension(R.dimen.dp_9);
     /**
      * 线条颜色
      */
@@ -52,11 +52,11 @@ public class ClassSchedule extends View {
     /**
      * 表格高度
      */
-    private int gridHeight = 100;
+    private int gridHeight = (int) getResources().getDimension(R.dimen.dp_30);
     /**
      * 头部表格高度
      */
-    private int gridHeadHeight = 130;
+    private int gridHeadHeight = (int) getResources().getDimension(R.dimen.dp_43);
     private Paint mPaint, paintLine;
     private float everyLength;
     private List<List<ClassScheduleBean.DataBean>> data;
