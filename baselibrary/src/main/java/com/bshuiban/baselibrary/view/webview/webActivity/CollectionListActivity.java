@@ -18,17 +18,15 @@ public class CollectionListActivity extends BaseWebActivity<CollectionPresent> i
         registerWebViewH5Interface();
         loadFileHtml("follow");
         tPresent.getInterNetData();
-        mWebView.setWebViewClient(new WebViewClient(){
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                if(tag){
-                    loadJavascriptMethod("getContent",json);
-                }else{
-                    tag=true;
-                }
-            }
-        });
+    }
+
+    @Override
+    protected void webViewLoadFinished() {
+        if(tag){
+            loadJavascriptMethod("getContent",json);
+        }else{
+            tag=true;
+        }
     }
 
     private boolean tag=false;

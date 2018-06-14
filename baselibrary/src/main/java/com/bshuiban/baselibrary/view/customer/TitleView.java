@@ -36,7 +36,7 @@ public class TitleView extends View {
     private Drawables drawables;
     private Paint paint;
     private int drawablePadding = (int) getResources().getDimension(R.dimen.dp_9);
-    private Rect left_rect, right_rect;
+    private Rect left_rect, right_rect,center_rect;
     private String TAG = getClass().getSimpleName();
     private boolean left_click_intercept = true;
     /**
@@ -119,7 +119,7 @@ public class TitleView extends View {
 
     private void setCompoundDrawables(Drawable drawableLeft, Drawable drawableCenter, Drawable drawableRight) {
         final boolean isDrawables = drawableLeft != null || drawableCenter != null || drawableRight != null;
-        if (!isDrawables) {
+        if (isDrawables) {
             if (drawables != null) {
                 if (drawables.mDrawableLeft != null)
                     drawables.mDrawableLeft.setCallback(null);
@@ -130,31 +130,35 @@ public class TitleView extends View {
                 if (drawables.mDrawableRight != null)
                     drawables.mDrawableRight.setCallback(null);
                 drawables.mDrawableRight = null;
+            } else {
+                if (drawables == null) {
+                    drawables = new Drawables();
+                }
+                if (drawables.mDrawableLeft != drawableLeft && drawables.mDrawableLeft != null) {
+                    drawables.mDrawableLeft.setCallback(null);
+                }
+                drawables.mDrawableLeft = drawableLeft;
+
+                if (drawables.mDrawableCenter != drawableCenter && drawables.mDrawableCenter != null) {
+                    drawables.mDrawableCenter.setCallback(null);
+                }
+                drawables.mDrawableCenter = drawableCenter;
+
+                if (drawables.mDrawableRight != drawableRight && drawables.mDrawableRight != null) {
+                    drawables.mDrawableRight.setCallback(null);
+                }
+                drawables.mDrawableRight = drawableRight;
             }
-        } else {
+            final Rect compoundRect = drawables.mCompoundRect;
+            int[] state = getDrawableState();
+            setDrawableParameter(drawableLeft, compoundRect, state);
+            setDrawableParameter(drawableCenter, compoundRect, state);
+            setDrawableParameter(drawableRight, compoundRect, state);
+        }else {
             if (drawables == null) {
                 drawables = new Drawables();
             }
-            if (drawables.mDrawableLeft != drawableLeft && drawables.mDrawableLeft != null) {
-                drawables.mDrawableLeft.setCallback(null);
-            }
-            drawables.mDrawableLeft = drawableLeft;
-
-            if (drawables.mDrawableCenter != drawableCenter && drawables.mDrawableCenter != null) {
-                drawables.mDrawableCenter.setCallback(null);
-            }
-            drawables.mDrawableCenter = drawableCenter;
-
-            if (drawables.mDrawableRight != drawableRight && drawables.mDrawableRight != null) {
-                drawables.mDrawableRight.setCallback(null);
-            }
-            drawables.mDrawableRight = drawableRight;
         }
-        final Rect compoundRect = drawables.mCompoundRect;
-        int[] state = getDrawableState();
-        setDrawableParameter(drawableLeft, compoundRect, state);
-        setDrawableParameter(drawableCenter, compoundRect, state);
-        setDrawableParameter(drawableRight, compoundRect, state);
     }
 
     private void setDrawableParameter(Drawable drawable, Rect compoundRect, int[] state) {
@@ -313,11 +317,16 @@ public class TitleView extends View {
             drawables.mDrawableCenter.draw(canvas);
             canvas.restoreToCount(saveCount);
             if (text_width > 0) {
+                if (center_rect == null) center_rect = new Rect();
+                center_rect.set((int) dx - 5, 0, (int) (dx - 5+bounds.width()+text_width), getMeasuredHeight());
                 canvas.drawText(title_text, dx + width_drawable + drawablePadding, com.bshuiban.baselibrary.utils.TextUtils.getTextBaseLine(getMeasuredHeight() / 2f, paint), paint);
             }
         } else {
             if (text_width > 0) {
-                canvas.drawText(title_text, (getMeasuredWidth() - text_width) / 2f, com.bshuiban.baselibrary.utils.TextUtils.getTextBaseLine(getMeasuredHeight() / 2f, paint), paint);
+                float x = (getMeasuredWidth() - text_width) / 2f;
+                if (center_rect == null) center_rect = new Rect();
+                center_rect.set((int) x - 5, 0, (int) (x-5+text_width), getMeasuredHeight());
+                canvas.drawText(title_text, x, com.bshuiban.baselibrary.utils.TextUtils.getTextBaseLine(getMeasuredHeight() / 2f, paint), paint);
             }
         }
     }
@@ -371,6 +380,11 @@ public class TitleView extends View {
             listener.rightClick(this);
             return true;
         }
+        if (isContain(center_rect, x, y) && listener != null) {
+            listener.centerClick(this);
+            return true;
+        }
+
         return false;
     }
 
@@ -401,11 +415,17 @@ public class TitleView extends View {
     public void setOnClickListener(@Nullable OnClickListener l) {
         listener = l;
     }
-
-    public interface OnClickListener {
+    public abstract static class OnClickListener implements IOnClickListener{
+        @Override
+        public void centerClick(View v) {
+        }
+    }
+    public interface IOnClickListener {
         void leftClick(View v);
 
         //void centerClick(View v);
         void rightClick(View v);
+
+        void centerClick(View v);
     }
 }

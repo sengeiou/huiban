@@ -1,5 +1,4 @@
 var res,stu,oldStu,type=false;
-
 function updateStudentAnswer(){
     console.log(stu+", "+type);
     if( stu!= undefined) {//非首次
@@ -14,12 +13,12 @@ function rende(data) {
     updateStudentAnswer();
     res = JSON.parse(data);
     stu = data.stuAnswer;
-    oldStu = stu+'';
+    oldStu = stu;
     var problemType=res.optionName;
     console.log(problemType);
-    if(problemType == "radio" || problemType=="check" || problemType == "judge") {
+    if(problemType == "radio" || problemType=="check" || problemType == "judge"|| problemType == "fill") {
         type=true;
-    }
+   }
     // 是主观题的条件
     var text = document.getElementById("text");
     if (res.optionName == "subjective") {
@@ -35,9 +34,15 @@ function rende(data) {
         </div>`;
         var imgtype = document.querySelectorAll('[img-type="tex"]');
         answerimg = document.getElementsByClassName("answerimg")[0];
+        texts = document.getElementsByClassName("picture")[0];
         trans = document.getElementsByClassName('Trans')[0];
         answer = document.getElementById("answer");
         pen = document.getElementsByClassName('pen')[0];
+       if(res.stuAnswer != "") {
+        answer.style.display = 'block';
+        trans.style.display = 'none';
+          texts.innerHTML=res.stuAnswer
+       }
         for (var i = 0; i < imgtype.length; i++) {
             imgtype[i].style.height = '0.4rem';
         }
@@ -46,10 +51,11 @@ function rende(data) {
             // 拍照点击事件
             document.getElementsByClassName("camera")[0].onclick = function () {
                 console.log("111")
-                trans.style.display = "none";
 
+              
                 console.log(res)
                 window.android.startAnswerPage(1);
+      
             }
         }
         // 调取本地图片
@@ -57,8 +63,8 @@ function rende(data) {
         // 图片点击事件
         function drawing(data) {
             document.getElementsByClassName("drawing")[0].onclick = function () {
-                trans.style.display = "none";
 
+              
                 window.android.startAnswerPage(2);
             }
         }
@@ -67,8 +73,8 @@ function rende(data) {
         // 写字点击事件
         function words(data) {
             document.getElementsByClassName("words")[0].onclick = function () {
-                trans.style.display = "none";
 
+               
                 window.android.startAnswerPage(3);
             }
         }
@@ -88,12 +94,20 @@ function rende(data) {
     </div>`;
         var judge = document.getElementsByClassName('judge')[0];
         var imgs = document.getElementsByTagName('span');
+        if(res.stuAnswer != "") {
+            if(res.stuAnswer == "对") {
+                imgs[0].className = "img3";
+            } 
+            if(res.stuAnswer == "错") {
+                imgs[1].className = "img4"
+             } 
+        }
         judge.addEventListener('click', function (e) {
             if (e.target.nodeName == "SPAN") {
                 if (e.target.className == "img1") {
                     e.target.className = "img3"
                     res.stuAnswer = "对"
-                    stu = res.stuAnswer;
+                     stu = res.stuAnswer;
                     console.log(res.stuAnswer)
                 } else if (e.target.className == "img2") {
                     e.target.className = "img4"
@@ -115,7 +129,9 @@ function rende(data) {
     // 是填空题的调件
     if (res.optionName == "fill") {
         text.innerHTML = `<ul class="list">${res.content}<textarea class="tkbox" placeholder="请在此处填写答案..."></textarea></ul>`;
-        var answerres = [];
+        if(res.stuAnswer != ""){
+            $(".tkbox").val(res.stuAnswer[0])
+        }
         var imgtype = document.querySelectorAll('[img-type="tex"]');
         var tkbox = document.getElementsByClassName("tkbox")[0];
         tkbox.style.display = "none";
@@ -124,9 +140,9 @@ function rende(data) {
             imgtype[i].style.height = '0.32rem';
         }
         $(".tkbox").bind('input propertychange', function () {
-            answerres[0] = $(this).val();
-            res.stuAnswer = answerres;
-            console.log(res.stuAnswer);
+            res.stuAnswer = $(this).val();
+            stu = res.stuAnswer;
+            //console.log(res.stuAnswer);
         });
     };
     if (res.optionName == "radio") {
@@ -247,16 +263,17 @@ function rende(data) {
 }
 // 图片、拍摄、文本
 function subproblem(data) {
-    trans.style.display = "none";
 
     res.stuAnswer = data;
-    var regex = /^http\.bmp|\.jpg|\.png|\.tiff|\.gif|\.pcx|\.tga|\.exif|\.jpeg|\.bmp|\.fpx|\.svg|\.psd|\.cdr|\.pcd|\.dxf|\.ufo|\.eps|\.ai|\.raw|\.WMF|\.webp$/;
+    var regex = /^http\.bmp|\.jpg|\.jpeg|\.png|\.tiff|\.gif|\.pcx|\.tga|\.exif|\.fpx|\.svg|\.psd|\.cdr|\.pcd|\.dxf|\.ufo|\.eps|\.ai|\.raw|\.WMF|\.webp$/;
     if (regex.test(data)) {
-      answer.style.display = 'block';
+     trans.style.display = "none";
         answerimg.src = data;
+        answer.style.display = 'block';
     } else {
+     trans.style.display = "none";
+        answer.style.display = 'block';
         answerimg.style.display = "none";
-          answer.style.display = 'block';
-        text.innerHTML = data;
+        texts.innerHTML = data;
     }
 }

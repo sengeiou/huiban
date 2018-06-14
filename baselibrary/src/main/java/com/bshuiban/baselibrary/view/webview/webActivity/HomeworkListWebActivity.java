@@ -8,6 +8,7 @@ import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 
 import com.bshuiban.baselibrary.contract.HomeworkListContract;
+import com.bshuiban.baselibrary.model.LogUtils;
 import com.bshuiban.baselibrary.present.HomeworkListPresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
@@ -78,6 +79,7 @@ public class HomeworkListWebActivity extends BaseWebActivity<HomeworkListPresent
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         boolean refresh = intent.getBooleanExtra("refresh", false);
+        LogUtils.e(LogUtils.TAG,"refresh="+refresh);
         if (refresh) {
             if (!tPresent.getTAg()) {
                 tPresent.setTag(0);

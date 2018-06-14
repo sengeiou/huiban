@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.bshuiban.baselibrary.present.BasePresent;
+import com.bshuiban.baselibrary.utils.NetUtils;
+import com.bshuiban.baselibrary.view.dialog.HuiBanLoadingDialog;
 
 /**
  * Created by xinheng on 2018/5/4.<br/>
@@ -12,6 +14,8 @@ import com.bshuiban.baselibrary.present.BasePresent;
 public class BaseFragment<T extends BasePresent> extends Fragment {
     protected T tPresent;
     private Toast toast;
+    private HuiBanLoadingDialog myLoadingDialog;
+
     /**
      * 吐司
      * @param s 内容
@@ -50,5 +54,24 @@ public class BaseFragment<T extends BasePresent> extends Fragment {
             tPresent=null;
         }
         super.onDetach();
+    }
+    protected void showLoadingDialog() {
+        if (myLoadingDialog == null) {
+            myLoadingDialog = new HuiBanLoadingDialog(getActivity());
+        } else {
+            myLoadingDialog.setContext(getActivity());
+        }
+        if (myLoadingDialog != null && myLoadingDialog.isShowing()) {
+            myLoadingDialog.dismiss();
+        }
+        if (!NetUtils.isNetworkAvalible(getActivity().getApplicationContext())) {
+            return;
+        }
+        myLoadingDialog.show();
+    }
+    protected void dismissLoadingDialog() {
+        if (myLoadingDialog != null && myLoadingDialog.isShowing()) {
+            myLoadingDialog.dismiss();
+        }
     }
 }

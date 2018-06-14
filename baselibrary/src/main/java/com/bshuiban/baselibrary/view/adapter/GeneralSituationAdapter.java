@@ -56,15 +56,16 @@ public abstract class GeneralSituationAdapter<T> extends RecyclerView.Adapter<Ge
         holder.iv_guan_zhu.setTag(position);
         holder.iv_liu_yan.setTag(position);
         if(tag){
-            holder.iv_liu_yan.setVisibility(View.INVISIBLE);
-            holder.iv_guan_zhu.setVisibility(View.INVISIBLE);
+            holder.iv_liu_yan.setVisibility(View.GONE);
+            holder.iv_guan_zhu.setVisibility(View.GONE);
         }else {
             if (getGuanzhu(position)) {
                 holder.iv_liu_yan.setVisibility(View.VISIBLE);
                 holder.iv_guan_zhu.setImageResource(R.mipmap.guanzhu);
             } else {
+                holder.iv_liu_yan.setVisibility(View.INVISIBLE);
                 holder.iv_guan_zhu.setImageResource(R.mipmap.add_attention);
-                holder.iv_guan_zhu.setVisibility(View.INVISIBLE);
+                holder.iv_guan_zhu.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -94,6 +95,8 @@ public abstract class GeneralSituationAdapter<T> extends RecyclerView.Adapter<Ge
             tv_subject_name = view.findViewById(R.id.tv_subject_name);
             iv_guan_zhu = view.findViewById(R.id.iv_guan_zhu);
             iv_liu_yan = view.findViewById(R.id.iv_liu_yan);
+            iv_guan_zhu.setOnClickListener(onClickListener);
+            iv_liu_yan.setOnClickListener(onClickListener);
         }
     }
 

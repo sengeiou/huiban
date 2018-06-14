@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Vitamio/Vitamio.iml" filepath="$PROJECT_DIR$/Vitamio/Vitamio.iml" />
       <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/date_dialog/date_dialog.iml" filepath="$PROJECT_DIR$/date_dialog/date_dialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/huiban.iml" filepath="$PROJECT_DIR$/huiban.iml" />

@@ -1,5 +1,6 @@
 package com.bshuiban.baselibrary.view.customer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Environment;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,17 +21,22 @@ import android.view.OrientationEventListener;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -47,8 +54,8 @@ public class CameraPreview extends FrameLayout implements SurfaceHolder.Callback
     private Button button_enter;
     private Button button_cancle;
     private Bitmap bitmap;
-    private CameraOrientation cameraOrientation;
-    private int camerarotate;
+    //private CameraOrientation cameraOrientation;
+    private int camerarotate = 90;
     private int tuoluoyi_default = 0;
 
     @Override
@@ -70,8 +77,7 @@ public class CameraPreview extends FrameLayout implements SurfaceHolder.Callback
 //                button_enter.setVisibility(GONE);
 //                button_takephoto.setVisibility(VISIBLE);
             if (onCameraCallBack != null) {
-
-                String path= Environment.getExternalStorageDirectory().getAbsolutePath() + "/Hbag/"+"photo/";
+                String path = User.path + "photo/";
                 onCameraCallBack.takePhoto(FileUtils.saveBitmap(bitmap, path, createFileName()));
             }
 
@@ -87,17 +93,11 @@ public class CameraPreview extends FrameLayout implements SurfaceHolder.Callback
      **/
 
     public static String createFileName() {
-
-        String fileName = "";
-
+        String fileName;
         Date date = new Date(System.currentTimeMillis()); // 系统当前时间
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-
-                "'IMG'_yyyyMMdd_HHmmss");// 设置日期格式
-
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("'IMG'_yyyyMMdd_HHmmss");// 设置日期格式
         fileName = dateFormat.format(date) + ".jpeg";// 设置照片的名称
-
         return fileName;
     }
 
@@ -168,19 +168,70 @@ public class CameraPreview extends FrameLayout implements SurfaceHolder.Callback
         button_takephoto.setOnClickListener(this);
         button_enter.setOnClickListener(this);
         button_cancle.setOnClickListener(this);
-        cameraOrientation = new CameraOrientation(context, SensorManager.SENSOR_DELAY_NORMAL);
+        //cameraOrientation = new CameraOrientation(context, SensorManager.SENSOR_DELAY_NORMAL);
 
         try {
             mCamera = Camera.open();
             mHolder = surface_camera.getHolder();
             mHolder.addCallback(CameraPreview.this);
             mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+            mCamera.setDisplayOrientation(90);
+            setPictureSizes();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("TAG", "打开相机失败");
         }
 
 
+    }
+
+    private void setPictureSizes() {
+        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        float rateHeightWidth = dm.heightPixels * 1f / dm.widthPixels;//>1
+        Log.e("TAG", "setPictureSizes: " + rateHeightWidth + ", " + dm.heightPixels + ", " + dm.widthPixels);
+        Camera.Parameters parameters = mCamera.getParameters();
+        List<Camera.Size> supportedPictureSizes = parameters.getSupportedPictureSizes();
+        Collections.sort(supportedPictureSizes, (o1, o2) -> o1.height > o2.height ? 0 : 1);
+        if (null != supportedPictureSizes) {
+            for (int i = 0; i < supportedPictureSizes.size(); i++) {
+                Camera.Size size = supportedPictureSizes.get(i);
+                Log.e("TAG", "Picture: height=" + size.height + ", width=" + size.width);
+                if (equalRate(size.width, size.height, rateHeightWidth)) {
+                    parameters.setPictureSize(size.width, size.height);
+                    break;
+                }
+            }
+        }
+        List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
+        Collections.sort(supportedPreviewSizes, (o1, o2) -> o1.height > o2.height ? 0 : 1);
+        if (null != supportedPreviewSizes) {
+            for (int i = 0; i < supportedPreviewSizes.size(); i++) {
+                Camera.Size size = supportedPreviewSizes.get(i);
+                Log.e("TAG", "Preview: height=" + size.height + ", width=" + size.width);
+                if (equalRate(size.width, size.height, rateHeightWidth)) {
+                    parameters.setPreviewSize(size.width, size.height);
+                    FrameLayout.LayoutParams layoutParams = (LayoutParams) surface_camera.getLayoutParams();
+                    layoutParams.height = (int) (dm.widthPixels * 1f * size.width / size.height);
+                    layoutParams.width= dm.widthPixels;
+                    Log.e("TAG", "setPictureSizes: "+layoutParams.height+", "+layoutParams.width );
+                    surface_camera.setLayoutParams(layoutParams);
+                    surface_camera.invalidate();
+                    break;
+                }
+            }
+        }
+        mCamera.setParameters(parameters);
+    }
+
+    private boolean equalRate(int width, int height, float rate) {
+        float r = (float) width / (float) height;
+        if (Math.abs(r - rate) <= 0.2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
@@ -192,12 +243,12 @@ public class CameraPreview extends FrameLayout implements SurfaceHolder.Callback
             imageview_camera_show.setVisibility(GONE);
             mCamera.setPreviewDisplay(holder);
             mCamera.startPreview();
-            cameraOrientation.enable();
+            //cameraOrientation.enable();
             start();
             Log.e("---", "surface创建完成");
         } catch (IOException e) {
             e.printStackTrace();
-           // Log.d(TAG, "Error setting camera preview: " + e.getMessage());
+            // Log.d(TAG, "Error setting camera preview: " + e.getMessage());
         }
     }
 
@@ -252,7 +303,7 @@ public class CameraPreview extends FrameLayout implements SurfaceHolder.Callback
 
     public void surfaceDestroyed(SurfaceHolder holder) {
         // empty. Take care of releasing the Camera preview in your activity.
-        cameraOrientation.disable();
+        //cameraOrientation.disable();
         mCamera.stopPreview();
     }
 
@@ -306,7 +357,7 @@ public class CameraPreview extends FrameLayout implements SurfaceHolder.Callback
     protected void focusOnRect(Rect rect) {
         if (mCamera != null) {
             Camera.Parameters parameters = mCamera.getParameters(); // 先获取当前相机的参数配置对象
-            parameters.setPictureSize(1600, 1200);
+            //parameters.setPictureSize(1600, 1200);
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO); // 设置聚焦模式
             //Log.d(TAG, "parameters.getMaxNumFocusAreas() : " + parameters.getMaxNumFocusAreas());
             if (parameters.getMaxNumFocusAreas() > 0) {
@@ -323,13 +374,13 @@ public class CameraPreview extends FrameLayout implements SurfaceHolder.Callback
     protected void focusOnRect() {
         if (mCamera != null) {
             Camera.Parameters parameters = mCamera.getParameters(); // 先获取当前相机的参数配置对象
-            parameters.setPictureSize(1600, 1200);
+            //parameters.setPictureSize(1600, 1200);
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO); // 设置聚焦模式
             mCamera.cancelAutoFocus(); // 先要取消掉进程中所有的聚焦功能
             mCamera.setParameters(parameters); // 一定要记得把相应参数设置给相机
             try {
                 mCamera.autoFocus(this);
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
         }

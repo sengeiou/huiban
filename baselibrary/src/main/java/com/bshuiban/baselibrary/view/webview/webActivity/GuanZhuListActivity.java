@@ -3,23 +3,22 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
-import android.widget.FrameLayout;
 
 import com.bshuiban.baselibrary.contract.GuanZhuListContract;
 import com.bshuiban.baselibrary.present.GuanZhuListPresent;
-import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 
 /**
  * 关注列表
  */
-public class GuanZhuListActivity extends BaseWebActivity<GuanZhuListPresent> implements GuanZhuListContract.View{
+public class GuanZhuListActivity extends BaseWebActivity<GuanZhuListPresent> implements GuanZhuListContract.View {
+    private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        tPresent=new GuanZhuListPresent(this);
+        tPresent = new GuanZhuListPresent(this);
         loadFileHtml("follow");
         GuanZhuList object = new GuanZhuList();
         object.setOnListener(new MessageList.OnMessageListListener() {
@@ -33,7 +32,7 @@ public class GuanZhuListActivity extends BaseWebActivity<GuanZhuListPresent> imp
                 tPresent.refresh();
             }
         });
-        mWebView.addJavascriptInterface(object,"android");
+        mWebView.addJavascriptInterface(object, "android");
     }
 
     @Override
@@ -42,22 +41,28 @@ public class GuanZhuListActivity extends BaseWebActivity<GuanZhuListPresent> imp
     }
 
     @Override
-    public void goLiuYan(String name,String userId) {
+    public void goLiuYan(String name, String userId) {
         Intent intent = new Intent(this, LiuYanMsgListActivity.class);
-        intent.putExtra("name",name);
-        intent.putExtra("userId",userId);
+        intent.putExtra("name", name);
+        intent.putExtra("userId", userId);
         startActivity(intent);
     }
 
 
     @Override
-    public void guanZhuResult() {
-        toast("成功");
+    public void guanZhuResult(boolean tag) {
+        if (tag) {
+            loadJavascriptMethod("removeType", String.valueOf(index));
+            toast("添加关注成功");
+        } else {
+            loadJavascriptMethod("addType", String.valueOf(index));
+            toast("取消关注成功");
+        }
     }
 
     @Override
     public void updateList(String json) {
-        loadJavascriptMethod("getContent",json);
+        loadJavascriptMethod("getContent", json);
     }
 
     @Override
@@ -72,13 +77,14 @@ public class GuanZhuListActivity extends BaseWebActivity<GuanZhuListPresent> imp
 
     @Override
     public void fail(String error) {
-
+        toast(error);
     }
-    class GuanZhuList extends MessageList{
+
+    class GuanZhuList extends MessageList {
         @JavascriptInterface
-        public void goLiuYan(String name,String userId){
-            handler.post(()->{
-               GuanZhuListActivity.this.goLiuYan(name,userId);
+        public void goLiuYan(String name, String userId) {
+            handler.post(() -> {
+                GuanZhuListActivity.this.goLiuYan(name, userId);
             });
         }
 
@@ -86,12 +92,14 @@ public class GuanZhuListActivity extends BaseWebActivity<GuanZhuListPresent> imp
          * 关注
          */
         @JavascriptInterface
-        public void dealWithJson(String key,String json){
-           tPresent.guanZhu(key,json);
+        public void dealWithAttention(boolean tag, int id, int index) {
+            tPresent.guanZhu(tag, id);
+            GuanZhuListActivity.this.index = index;
         }
-        @JavascriptInterface
-        public void search(){
 
+        @JavascriptInterface
+        public void search(String msg) {
+            tPresent.getSearchData(msg);
         }
     }
 }

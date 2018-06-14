@@ -41,13 +41,12 @@ import static com.bshuiban.baselibrary.view.webview.webActivity.HomeworkListWebA
  */
 public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingInfPresent> implements HomeworkPendingInfContract.View {
     private int homeType, workId, prepareId;
-    private String homeworkTime;
     private RecyclerView recycleView;
     private List<HomeworkBean> homeworkBean;
     /**
      * 当前题目
      */
-    private HomeworkBean bean, lastBean;
+    private HomeworkBean bean, lastBean,shouldBean;
     private long startTime;
 
     @Override
@@ -108,6 +107,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
 
     private void loadHtmlData(int position) {
         lastBean = this.bean;
+        shouldBean=lastBean;
         this.bean = this.homeworkBean.get(position);
         String type = bean.getType();
         int pageIndex = bean.getPageIndex();
@@ -115,7 +115,6 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
         int problemIndex = bean.getProblemIndex();
         String json = HomeworkBean.getProblemContent(User.getInstance().getHomeworkInfBean(), type, pageIndex, typeIndex, problemIndex);
         loadJavascriptMethod("rende", json);
-
     }
 
     @Override
@@ -228,16 +227,16 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
         @JavascriptInterface
         public void updateStuAnswer(String stuAnswer) {
             Log.e(TAG, "setStuAnswer: " + stuAnswer);
-            changeHomeworkStuAnswer(lastBean, stuAnswer);
+            changeHomeworkStuAnswer(shouldBean, stuAnswer);
         }
     }
 
     boolean check;
-
     private void toNextPage() {
         if (!check) {
             check = true;
             long time = (System.currentTimeMillis() - startTime) / 1000;
+            shouldBean=bean;
             loadJavascriptMethod("updateStudentAnswer");
             User.getInstance().getHomeworkInfBean().setTimes(time + "");
             new Handler().postDelayed(new Runnable() {

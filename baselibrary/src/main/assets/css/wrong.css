@@ -42,7 +42,6 @@
 }
 .wrongPage main .wrongMsg .yresult {
   width: 6.58rem;
-  position: absolute;
   bottom: 0.23rem;
   left: 0.23rem;
 }
@@ -192,7 +191,6 @@ width: 98%!important;
 }
 .practive .msgBox .question {
   display: flex;
-  justify-content: space-between;
 }
 .practive .msgBox .question .type {
   display: block;
@@ -202,10 +200,13 @@ width: 98%!important;
   border-radius:2px;
   font-size: 0.28rem;
   text-align: center;
-  line-height: 0.4rem;
+  line-height: 0.4rem; 
   color: #00c7b5;
   margin-right: 0.4rem;
   flex: 1;
+}
+.practive .msgBox .question .con {
+  flex: 8;
 }
 .practive .msgBox .question .lxitem_ct_frm {
   flex: 9;

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".view.activity.TextActivity"
-    android:background="#80FFFFFF">
+    android:background="@color/white">
     <com.bshuiban.baselibrary.view.customer.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
@@ -20,21 +20,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="若果内容较多，建议使用拍照或上传图片方式作答"
-        android:textColor="#F2D7A3"
-        android:textSize="@dimen/dp_17"
-        android:paddingLeft="@dimen/dp_10"/>
+        android:textColor="#FFF2D7A3"
+        android:textSize="@dimen/dp_13"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableLeft="@mipmap/text_head"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_15"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_3"
-        android:background="@color/tab_unselect"/>
+        android:background="@color/line_text"/>
     <EditText
         android:id="@+id/et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/dp_60"
+        android:minHeight="@dimen/dp_120"
+        android:textColor="@color/black"
         android:hint="请输入答案"
         android:gravity="top"
         android:padding="@dimen/dp_10"
-        android:textSize="@dimen/dp_17"
+        android:textSize="@dimen/dp_15"
+        android:background="@null"
+        android:textCursorDrawable="@null"
         />
 </LinearLayout>

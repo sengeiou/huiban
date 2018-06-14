@@ -3,12 +3,17 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 
 import com.bshuiban.baselibrary.contract.LiuYanMsgListContract;
+import com.bshuiban.baselibrary.model.MessageBean;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.LiuYanMsgListParent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
+import com.bshuiban.baselibrary.view.dialog.CommentDialog;
+import com.bshuiban.baselibrary.view.dialog.ReplyDialog;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 
 /**
@@ -30,9 +35,15 @@ public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> 
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
         messageUserId = intent.getStringExtra("userId");
+        if(TextUtils.isEmpty(messageUserId)){
+            messageUserId= User.getInstance().getUserId();
+        }
+        if(TextUtils.isEmpty(name)){
+            name=User.getInstance().getUserName();
+        }
         tPresent=new LiuYanMsgListParent(this,messageUserId);
         loadFileHtml("leave");
-        MessageList messageList=new MessageList();
+        LiuYanMsgListHtml messageList=new LiuYanMsgListHtml();
         registerWebViewH5Interface(messageList);
         messageList.setOnListener(new MessageList.MessageListListener() {
             @Override
@@ -81,12 +92,48 @@ public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> 
     public void fail(String error) {
         toast(error);
     }
+
+    @Override
+    public void startReplyDialog(MessageBean.DataBean dataBean) {
+        ReplyDialog replyDialog=new ReplyDialog(this);
+        replyDialog.setViewData(dataBean);
+        replyDialog.show();
+        replyDialog.setMessageListListener(new ReplyDialog.MessageListListener() {
+            @Override
+            public void deleteMessageItem(String messageId, String pid) {
+                tPresent.deleteMessageItem(messageId,pid);
+            }
+
+            @Override
+            public void showCommitDialog() {
+                CommentDialog commentDialog = new CommentDialog("请输入内容", inputText -> {
+                    //recevieId= ;//int,接收人id，给谁留言
+                    //String sendId= User.getInstance().getUserId();//int,留言人、发送人id
+                    //messageId		//int，消息id，评论时传空
+                    //String content			//string 回复的内容
+                    //"recevieId":,"messageId":,"content":"","sendId":""
+                    tPresent.replayMessage("{\"recevieId\":\""+dataBean.getSend()+"\",\"messageId\":\""+dataBean.getId()+"\",\"content\":\""+inputText+"\"}");
+                    replyDialog.dismiss();
+                });
+                commentDialog.show(getSupportFragmentManager(),"commit");
+            }
+        });
+    }
+
     class LiuYanMsgListHtml extends MessageList{
         @JavascriptInterface
         public void reply(int index){
             runOnUiThread(()->{
                 tPresent.getReplyMessage(index);
             });
+        }
+        @JavascriptInterface
+        public String getRecevieId(){
+            return messageUserId;
+        }
+        @JavascriptInterface
+        public String getName(){
+            return name;
         }
     }
 }

@@ -22,7 +22,6 @@ public class WebLoginActivity extends BaseWebActivity<LoginPresent> implements L
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //mWebView.loadData(null, "text/html", "utf-8");
         tPresent = new LoginPresent(this);
         init();
@@ -30,13 +29,16 @@ public class WebLoginActivity extends BaseWebActivity<LoginPresent> implements L
     class LoginHtml{
         @JavascriptInterface
         public void log(String msg){
-            Log.e(TAG, "log: "+msg );
+            if(msg!=null){
+                toast(msg);
+            }
         }
         @JavascriptInterface
         public void login(final String userId,final String passwrod){
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    startDialog();
                     tPresent.login(userId,passwrod);
                 }
             });
@@ -77,33 +79,26 @@ public class WebLoginActivity extends BaseWebActivity<LoginPresent> implements L
         saveUserData(loginData);
         dismissDialog();
         startActivity(new Intent(getApplicationContext(), cls));
-//        try {
-//            startActivity(new Intent(getApplicationContext(), Class.forName("com.b")));
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
         finish();
     }
 
     private void saveUserData(LoginResultBean.Data loginData) {
         User.getInstance().setData(loginData);
-        Log.e(TAG, "saveUserData: "+User.getInstance().getUserData().toString());
-        //UserSharedPreferencesUtils.saveUserData(getApplicationContext(),AESUtils.encrypt(new Gson().toJson(loginData)));
         UserSharedPreferencesUtils.saveUserData(getApplicationContext(),new Gson().toJson(loginData));
     }
 
     @Override
     public void startDialog() {
-
+        showLoadingDialog();
     }
 
     @Override
     public void dismissDialog() {
-
+        dismissLoadingDialog();
     }
 
     @Override
     public void fail(String error) {
-
+        toast(error);
     }
 }

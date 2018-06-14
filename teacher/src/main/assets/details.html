@@ -14,7 +14,7 @@
     <div class="wrap details">
         <header>
             <span>
-                <i></i>
+                <a href="/finish_page.html"></a>
             </span>	
             <span>课程详情</span>
         </header>
@@ -70,11 +70,7 @@
     function getContent (data) {
         var data = JSON.parse(data);
         isCollect(data.collected);
-        if (data.imgUrlMin == '') {
-            $('.classImg').html(`<img src="../../../images/reset/class_overview_pic.png" alt="" />`);
-        }else {
-            $('.classImg').html(`<img src="${data.imgUrlMin}" alt="" onerror="this.src='../../../images/reset/class_overview_pic.png' "/>`);
-        }   
+        $('.classImg').html(`<img src="${data.imgUrlMin}" alt="" onerror="this.src='./images/reset/default_head.png' "/>`);
         $('.synopsis').html(`
             <p>${data.name}</p>
             <p>科目：${data.subjectName}</p>

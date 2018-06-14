@@ -52,12 +52,7 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
         frameLayout.addView(mWebView);
         return frameLayout;
     }
-
-    /**
-     * 加载本地网页
-     * @param name
-     */
-    protected void loadFileHtml(String name){
+    protected void loadPathHtml(String name){
         mWebView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -73,7 +68,15 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
         });
         setWebViewSetting(mWebView);
         //webView.loadUrl("content://com.ansen.webview/sdcard/test.html");
-        mWebView.loadUrl("file:///android_asset/"+name+".html");
+        mWebView.loadUrl(name);
+    }
+    /**
+     * 加载本地网页
+     * @param name
+     */
+    protected void loadFileHtml(String name){
+        //webView.loadUrl("content://com.ansen.webview/sdcard/test.html");
+        loadPathHtml("file:///android_asset/"+name+".html");
     }
 
     protected void webViewLoadFinished() {

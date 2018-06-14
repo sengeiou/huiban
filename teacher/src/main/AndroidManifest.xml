@@ -6,7 +6,8 @@
         <activity
             android:name=".view.activity.TeacherHomeActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
             android:name=".view.webView.webActivity.MySpaceWebActivity"
             android:screenOrientation="portrait" />
@@ -35,6 +36,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.HomeworkAnswerInfActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.TeachScheduleActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".view.webView.webActivity.StudentAnswerInfWebActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.webView.webActivity.CorrectResultWebActivity"
@@ -46,6 +49,8 @@
         <activity android:name=".view.webView.webActivity.TeacherParentConfirmSubjectWebActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.webView.webActivity.MiddleReportInfWebActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.webView.webActivity.SendClassActivityWebActivity"
             android:screenOrientation="portrait"/>
     </application>
 

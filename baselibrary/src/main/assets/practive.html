@@ -12,14 +12,12 @@
 	<div class="wrap practive">
 		<header>
 			<span>
-				<a href="./wrongMsg.html">
-					
-				</a>
+				<a href="/finish_page.html"></a>
 			</span>	
 			<span>巩固练习</span>
 		</header>
 		<main>
-			<h3 class="title">测试知识点：分式</h3>
+			<h3 class="title"></h3>
 		</main>
 		<i class="sureButton">
 			提交
@@ -29,7 +27,11 @@
 <script>	
 	function getContent (data) {
 		var data = JSON.parse(data);
-		$('.title').html(data[0].knowName);
+		if(data[0].knowName==null||data[0].knowName==undefined||data[0].knowName==''){
+			$('.title').hide();
+		}else{
+			$('.title').html(data[0].knowName);
+		}
 		var que_id = [];
 		for (var i=0; i<data.length; i++) {
 			que_id.push({"ExamId":data[i].ExamId,"myAnswer":''});
@@ -38,7 +40,7 @@
 				<div class="msgBox">
 					<div class="question">
 						<span class="type"></span>
-						${data[i].content}
+						<div class="con">${data[i].content}</div>
 					</div>
 					<div class="changeButton"></div>
 					<div class="result hide">

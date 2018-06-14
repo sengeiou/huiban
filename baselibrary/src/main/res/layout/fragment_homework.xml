@@ -11,7 +11,6 @@
         android:layout_height="@dimen/dp_40"
         app:title_text="我的作业"
         app:title_size="@dimen/dp_20"
-        app:src_left="@mipmap/iv_back"
         android:background="@color/guide_start_btn"
         app:title_color="@android:color/white"/>
     <LinearLayout

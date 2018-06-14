@@ -23,7 +23,7 @@
     <div class="wrap coachBox">
         <header>
             <span>
-                <i class="back"></i>
+                <a href="/finish_page.html"></a>
             </span>	
             <span>慧辅导</span>
         </header>
@@ -145,7 +145,7 @@
             var nowMsg = $('.courseList .list').html();
             $('.courseList .list:eq(0)').html(nowMsg + `
                     <dl>
-                        <dt class="classImg"><img src="${data[i].imgUrl}" alt="" /></dt>
+                        <dt class="classImg"><img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/reset/classPic.png' "/></dt>
                         <dd>
                             <h3>${data[i].Name}</h3>
                             <p>${data[i].gradeName}</p>
@@ -185,7 +185,7 @@
             var nowMsg = $('.courseList:eq(1) .list').html();
             $('.courseList:eq(1) .list').html(nowMsg + `
                 <dl>
-                    <dt class="classImg"><img src="${data[i].imgUrl}" alt="" /></dt>
+                    <dt class="classImg"><img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/reset/classPic.png' "/></dt>
                     <dd>
                         <h3>${data[i].Name}</h3>
                         <p>${data[i].gradeName}</p>

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bshuiban.baselibrary">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -62,7 +63,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.TextActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/translucent" />
         <activity
             android:name=".view.webview.webActivity.ErrorHomeworkAnalysisActivity"
             android:screenOrientation="portrait" />
@@ -86,14 +88,16 @@
             android:name=".view.webview.webActivity.LessonInfWebActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.VideoPlayerActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".view.webview.webActivity.SideCollectionListWebActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.PlayerVideoActivity"
-            android:screenOrientation="landscape"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".view.activity.PlayerVideoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
+        <activity android:name=".view.activity.ChangeUserActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.webview.webActivity.TestWebViewActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

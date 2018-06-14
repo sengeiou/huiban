@@ -4,14 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.contract.TeachClassContract;
+import com.bshuiban.baselibrary.model.HomeworkBean;
+import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.present.TeachClassPresent;
 import com.bshuiban.baselibrary.view.adapter.ClassViewPagerAdapter;
 import com.bshuiban.baselibrary.view.customer.TitleView;
+import com.bshuiban.baselibrary.view.fragment.ClassActivityFragment;
+import com.bshuiban.baselibrary.view.fragment.ClassScheduleFragment;
+import com.bshuiban.baselibrary.view.fragment.GeneralSituationFragment;
+import com.xinheng.date_dialog.dialog.SeleTwoDialog;
+import com.xinheng.date_dialog.dialog.SelectDateDialog;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -23,25 +34,36 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 班级容器
  */
-public class ClassActivity extends BaseActivity {
+public class ClassActivity extends BaseActivity<TeachClassPresent> implements TeachClassContract.View {
 
     private TitleView titleView;
+    private List<TeachClassBean.DataBean> data;
+    private ClassViewPagerAdapter classViewPagerAdapter;
+    private int mPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
         titleView = findViewById(R.id.titleView);
-        ArrayList<String> arrayList=new ArrayList<>();
+        if (User.getInstance().isTeacher()) {
+            tPresent = new TeachClassPresent(this);
+            tPresent.loadTeachClass();
+        }
+        ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("概况");
         arrayList.add("学习动态");
         arrayList.add("班级活动");
         arrayList.add("班级课表");
         String className = User.getInstance().getClassName();
+        if (TextUtils.isEmpty(className)) {
+            className = "我的班级";
+        }
         titleView.setTitle_text(className);
         titleView.setOnClickListener(new TitleView.OnClickListener() {
             @Override
@@ -51,11 +73,11 @@ public class ClassActivity extends BaseActivity {
 
             @Override
             public void rightClick(View v) {
-                if(User.getInstance().isTeacher()){
+                if (User.getInstance().isTeacher()) {
                     //SendClassActivityWebActivity
                     try {
                         Class<?> aClass = Class.forName("com.bshuiban.teacher.view.webView.webActivity.SendClassActivityWebActivity");
-                        Intent intent=new Intent(getApplicationContext(),aClass);
+                        Intent intent = new Intent(getApplicationContext(), aClass);
                         startActivity(intent);
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -63,14 +85,43 @@ public class ClassActivity extends BaseActivity {
 
                 }
             }
-        });
-        MagicIndicator magicIndicator=findViewById(R.id.magic);
-        ViewPager viewPager=findViewById(R.id.viewPager);
 
-        final ClassViewPagerAdapter classViewPagerAdapter=new ClassViewPagerAdapter(getSupportFragmentManager(),arrayList);
+            @Override
+            public void centerClick(View v) {
+                if (User.getInstance().isTeacher()&&HomeworkBean.isEffictive(data)) {
+                    startClassDialog();
+                }
+            }
+        });
+        MagicIndicator magicIndicator = findViewById(R.id.magic);
+        ViewPager viewPager = findViewById(R.id.viewPager);
+        classViewPagerAdapter = new ClassViewPagerAdapter(getSupportFragmentManager(), arrayList);
         viewPager.setAdapter(classViewPagerAdapter);
         magicIndicator.setBackgroundColor(Color.WHITE);
-        CommonNavigator commonNavigator=new CommonNavigator(this);
+
+        CommonNavigator commonNavigator = new CommonNavigator(this) {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if (User.getInstance().isTeacher()) {
+                    mPosition=position;
+                    switch (position) {
+                        case 2:
+                            titleView.setRight_text("新建", Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
+                            break;
+                        case 3:
+                            titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
+                            break;
+                        case 1:
+                            titleView.setTitle_text("学习动态");
+                            titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
+                            break;
+                        default:
+                            titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
+                    }
+                }
+            }
+        };
         CommonNavigatorAdapter commonNavigatorAdapter = new CommonNavigatorAdapter() {
 
             @Override
@@ -82,18 +133,14 @@ public class ClassActivity extends BaseActivity {
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(getApplication());
                 simplePagerTitleView.setNormalColor(Color.BLACK);
-                simplePagerTitleView.setPadding(15,0,15,0);
+                simplePagerTitleView.setPadding(15, 0, 15, 0);
                 simplePagerTitleView.setSelectedColor(getResources().getColor(R.color.guide_start_btn));
-                simplePagerTitleView.setTextSize(getResources().getDimension(R.dimen.dp_6));
+                simplePagerTitleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, getResources().getDimension(R.dimen.dp_4));
                 simplePagerTitleView.setText(arrayList.get(index));
-                simplePagerTitleView.setOnClickListener((v)->{
-                    viewPager.setCurrentItem(index,false);
+                simplePagerTitleView.setOnClickListener((v) -> {
+                    viewPager.setCurrentItem(index, false);
                 });
-                if(User.getInstance().isTeacher()&&index==2){
-                    titleView.setRight_text("新建",Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
-                }else {
-                    titleView.setRight_text(null,Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
-                }
+
                 return simplePagerTitleView;
             }
 
@@ -107,6 +154,58 @@ public class ClassActivity extends BaseActivity {
         };
         commonNavigator.setAdapter(commonNavigatorAdapter);
         magicIndicator.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicator,viewPager);
+        ViewPagerHelper.bind(magicIndicator, viewPager);
+    }
+
+    private void startClassDialog() {
+        List<String> list=new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
+            String className = data.get(i).getClassName();
+            list.add(className);
+        }
+        new SeleTwoDialog(this, new SeleTwoDialog.OnClickListener() {
+            @Override
+            public boolean onSure(String left, int leftIndex, String right, int rightIndex) {
+                TeachClassBean.DataBean dataBean = data.get(leftIndex);
+                String classId = dataBean.getClassId();
+                Fragment fragment = classViewPagerAdapter.getFragment(mPosition);
+                if(fragment instanceof ClassScheduleFragment) {
+                    ((ClassScheduleFragment) fragment).updateSchedule(classId);
+                }else if(fragment instanceof GeneralSituationFragment){
+                    ((GeneralSituationFragment) fragment).update(classId);
+                }else if(fragment instanceof ClassActivityFragment){
+                    ((ClassActivityFragment) fragment).update(classId);
+                }
+                titleView.setTitle_text(dataBean.getClassName());
+                return false;
+            }
+
+            @Override
+            public boolean onCancel() {
+                return false;
+            }
+        }, list, null).show();
+    }
+
+    @Override
+    public void updateData(List<TeachClassBean.DataBean> data) {
+        this.data = data;
+        if (HomeworkBean.isEffictive(data))
+            titleView.setTitle_text(data.get(0).getClassName());
+    }
+
+    @Override
+    public void startDialog() {
+
+    }
+
+    @Override
+    public void dismissDialog() {
+
+    }
+
+    @Override
+    public void fail(String error) {
+
     }
 }

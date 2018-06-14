@@ -1494,13 +1494,11 @@ bottom:-40px;
 
 .coachBox main .courseList .list dl {
   width: 100%;
-  height: 2.16rem;
   border-top: solid 0.02rem #f4f4f4;
   display: flex;
 }
 
 .coachBox main .courseList .list dl .classImg {
-  width: 4rem;
   border-radius: 0.1rem;
   margin: 0.16rem;
 }
@@ -1512,6 +1510,7 @@ bottom:-40px;
 
 .coachBox main .courseList .list dl dd {
   margin: 0.16rem;
+  float: left;
 }
 
 .coachBox main .courseList .list dl dd h3 {
@@ -1524,17 +1523,20 @@ bottom:-40px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-right:5%;
 }
 
 .coachBox main .courseList .list dl dd p {
   font-size: 0.28rem;
   color: #9A9A9A;
   line-height: 0.4rem;
+  padding-right:5%;
 }
 
 .coachBox main .courseList .mask {
   width: 100%;
-  height: 10.75rem;
+  height: 9rem;
+  overflow-Y:scroll;
   position: fixed;
   top: 2.6rem;
   left: 0;
@@ -1664,11 +1666,13 @@ bottom:-40px;
 
 .coachBox main .subject .list dl dd h3 {
   margin-bottom: 0;
+  padding-right: 5%;
 }
 
 .coachBox main .subject .list dl dd h4 {
   text-align: right;
   font-weight: normal;
+  padding-right: 5%;
 }
 
 .coachBox main .subject .list dl dd h4 span b {
@@ -1677,6 +1681,7 @@ bottom:-40px;
   height: 0.25rem;
   background-size: 100%;
   background-repeat: no-repeat;
+  padding-right: 5%;
 }
 
 .coachBox main .subject .list dl dd h4 span:nth-child(1) {
@@ -1733,21 +1738,11 @@ bottom:-40px;
 .courseDetails .classImg {
   width: 100%;
   height: 3.93rem;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-image: url("../images/index/work@2x.png");
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .courseDetails .classImg {
-    background-image: url("../images/index/work@2x.png");
-  }
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 3) {
-  .courseDetails .classImg {
-    background-image: url("../images/index/work@3x.png");
-  }
+.courseDetails .classImg img {
+  width: 100%;
+  height: auto;
 }
 
 .courseDetails .synopsis {
@@ -1934,11 +1929,12 @@ bottom:-40px;
   color: #aaa;
   width: 1rem;
   height: 0.4rem;
+  line-height: 0.4rem;
   background: #eee;
   border-radius: 0.05rem;
   text-align: center;
-  line-height: 0.4rem;
   margin-left: 0.3rem;
+  padding-top: 0.06rem;
 }
 .leave .replyBox {
   width: 100%;
@@ -2093,6 +2089,9 @@ bottom:-40px;
   flex-direction: column;
   margin-right: 0.3rem;
   color: #00c7d5;
+}
+.follow main .content .right aside span {
+    width: 1.2rem;
 }
 .follow a {
   color: #00c7d5;

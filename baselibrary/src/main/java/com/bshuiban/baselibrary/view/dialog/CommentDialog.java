@@ -49,7 +49,6 @@ public class CommentDialog extends DialogFragment implements TextWatcher, View.O
 
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         // 使用不带Theme的构造器, 获得的dialog边框距离屏幕仍有几毫米的缝隙。
         dialog = new Dialog(getActivity(), R.style.Comment_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 设置Content前设定
@@ -89,7 +88,7 @@ public class CommentDialog extends DialogFragment implements TextWatcher, View.O
                     public void run() {
                         KeyBoyUtils.hideSoftKeyBoard(getActivity());
                     }
-                }, 200);
+                }, 0);
             }
         });
         return dialog;
@@ -126,8 +125,6 @@ public class CommentDialog extends DialogFragment implements TextWatcher, View.O
         int i = v.getId();
         if (i == R.id.dialog_comment_send) {
             checkContent();
-            //case R.id.iv_emoji:
-            //et_content.setText("");
         }
     }
 

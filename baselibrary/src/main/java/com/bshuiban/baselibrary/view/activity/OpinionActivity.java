@@ -8,6 +8,9 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,6 +25,9 @@ import java.io.File;
 public class OpinionActivity extends BaseActivity<OpinionPresent> implements OpinionContract.View{
     private File imageFile;
     private EditText et_content;
+    private TextView tv_text_count;
+    private int Max_Count=200;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +36,9 @@ public class OpinionActivity extends BaseActivity<OpinionPresent> implements Opi
         View iv_title_bar_head = findViewById(R.id.iv_title_bar_head);
         TextView tv_title_bar_title = findViewById(R.id.tv_title_bar_title);
         et_content = findViewById(R.id.et_content);
-        tv_title_bar_title.setText("表意见反馈");
+        tv_text_count = findViewById(R.id.tv_count);
+        updateContentCount(et_content);
+        tv_title_bar_title.setText("意见反馈");
         ImageView iv_select_subject = findViewById(R.id.iv_select_subject);
         iv_select_subject.setImageResource(R.mipmap.iv_send_feedback);
         //View rv_select_picture = findViewById(R.id.rv_select_picture);
@@ -48,7 +56,24 @@ public class OpinionActivity extends BaseActivity<OpinionPresent> implements Opi
 
         }
     };
+    private void updateContentCount(EditText et_content) {
+        et_content.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Max_Count)});
+        et_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int length = charSequence.length();
+                tv_text_count.setText(length+"/"+Max_Count);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+    }
     private void sendOpinion() {
         String content = et_content.getText().toString();
         tPresent.sendOpinion(content);

@@ -4,16 +4,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
+import com.bshuiban.baselibrary.view.webview.webActivity.ErrorFilterActivity;
 import com.bshuiban.baselibrary.view.webview.webFragment.BaseWebFragment;
 import com.bshuiban.baselibrary.view.webview.webFragment.InteractionBaseWebViewFragment;
+import com.bshuiban.teacher.R;
 import com.bshuiban.teacher.contract.PrepareLessonsContract;
 import com.bshuiban.teacher.present.PrepareLessonsPresent;
 import com.bshuiban.teacher.view.activity.PrepareLessonInfActivity;
 import com.bshuiban.teacher.view.webView.webActivity.FilterConditionActivity;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.bshuiban.teacher.view.activity.PrepareLessonInfActivity.PREID;
 
@@ -47,6 +61,10 @@ public class PrepareLessonsWebFragment extends InteractionBaseWebViewFragment<Pr
         });
         registerWebViewH5Interface(lessonsHtml);
     }
+    /*@Override
+    protected View getFragmentView() {
+        return null;
+    }*/
 
     @Override
     protected void webViewLoadFinished() {
@@ -60,12 +78,12 @@ public class PrepareLessonsWebFragment extends InteractionBaseWebViewFragment<Pr
 
     @Override
     public void startDialog() {
-
+        showLoadingDialog();
     }
 
     @Override
     public void dismissDialog() {
-
+        dismissLoadingDialog();
     }
 
     @Override
@@ -74,22 +92,41 @@ public class PrepareLessonsWebFragment extends InteractionBaseWebViewFragment<Pr
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-            case SEARCH_REQUESTCODE:
-                if(null!=data){
-                    String text = data.getStringExtra("text");
-                    tPresent.loadLessons(text);
-                }
-                break;
-        }
-    }
-
-    @Override
     public void update(Bundle bundle) {
 
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent i) {
+        switch (requestCode){
+            case SEARCH_REQUESTCODE:
+                if(i!=null){
+                    int mSubjectId = i.getIntExtra("mSubjectId",-1);
+                    int mVersionId = i.getIntExtra("mVersionId",-1);
+                    int mFasId = i.getIntExtra("mFasId",-1);
+                    int mChapBranId = i.getIntExtra("mChapBranId",-1);
+                    int mSeriBrandId = i.getIntExtra("mSeriBrandId",-1);
+                    tPresent.clearArray();
+                    //tPresent.setSelectInf(mSubjectId,mVersionId,mFasId,mChapBranId,mSeriBrandId);
+                    String json = new Gson().toJson(getJsonMap(mSubjectId, mVersionId, mFasId, mChapBranId, mSeriBrandId));
+                    tPresent.loadLessons(json);
+                }
+                break;
 
+        }
+    }
+    private Map<String, Object> getJsonMap(int mSubjectId,int mVersionId,int mFasId,int mChapBranId,int mSeriBrandId) {
+        Map<String, Object> map = new HashMap<>();
+//        map.put("userId", userId);
+//        map.put("index",start);
+//        map.put("limit",limit);
+
+        map.put("subjectId", mSubjectId);
+        map.put("versionId",mVersionId);
+        map.put("fasId",mFasId);
+        map.put("chapBranId",mChapBranId);
+        map.put("seriBrandId",mSeriBrandId);
+        return map;
+    }
     class PrepareLessonsHtml extends MessageList{
         /**
          * 跳转搜索页面
@@ -97,7 +134,7 @@ public class PrepareLessonsWebFragment extends InteractionBaseWebViewFragment<Pr
         @JavascriptInterface
         public void toSearchPage(){
             getActivity().runOnUiThread(()->{
-                startActivityForResult(new Intent(getActivity(),FilterConditionActivity.class),SEARCH_REQUESTCODE);
+                startActivityForResult(new Intent(getActivity(),ErrorFilterActivity.class),SEARCH_REQUESTCODE);
             });
         }
 

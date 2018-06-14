@@ -50,11 +50,13 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_general_situation, container, false);
         init(view);
+        classId=User.getInstance().getClassId();
         tPresent.askInterNetForData();
         return view;
     }
     private int color;
     private int color1;
+    private String classId;
     private void init(View view) {
         iv = view.findViewById(R.id.iv);
         tv_text = view.findViewById(R.id.tv_text);
@@ -106,7 +108,7 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
 
     @Override
     public String getClassId() {
-        return User.getInstance().getSchoolId();
+        return classId;
     }
 
     @Override
@@ -240,5 +242,10 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
                 tv_show.setText("展开");
             }
         }
+    }
+
+    public void update(String classId) {
+        this.classId=classId;
+        tPresent.askInterNetForData();
     }
 }

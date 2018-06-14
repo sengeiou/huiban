@@ -16,6 +16,7 @@ import com.bshuiban.baselibrary.view.activity.ClassScheduleActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.bshuiban.baselibrary.view.webview.webActivity.GuanZhuListActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.HuiFuDaoListActivity;
+import com.bshuiban.baselibrary.view.webview.webActivity.LessonInfWebActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.LiuYanMsgListActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.NoticeActivity;
 import com.bshuiban.baselibrary.view.webview.webFragment.HomePageFragment;
@@ -63,7 +64,7 @@ public class ParentsHomePageFragment extends HomePageFragment {
                 tPresent.refresh();
             }
         });
-        loadFileHtml("teacherwork");
+        loadFileHtml("parents");
         registerWebViewH5Interface(stuHomePageHtml);
         return view;
     }
@@ -73,7 +74,7 @@ public class ParentsHomePageFragment extends HomePageFragment {
         String userId = User.getInstance().getUserId();
         tPresent.getTodaySchedule(userId);//今日课表
         tPresent.getHuiFuDaoTwoData();//慧辅导两条数据
-        tPresent.getMessageList(userId);//留言列表
+        //tPresent.getMessageList(userId);//留言列表
         loadJavascriptMethod("userimgs",User.getInstance().getUserData().getIcoPath());
     }
 
@@ -101,6 +102,7 @@ public class ParentsHomePageFragment extends HomePageFragment {
                 cls= HuiFuDaoListActivity.class;
                 break;
             case 6:// 去留言
+                intent.putExtra("name",User.getInstance().getUserName());
                 cls=LiuYanMsgListActivity.class;
                 break;
             case 7://相关课程
@@ -138,7 +140,10 @@ public class ParentsHomePageFragment extends HomePageFragment {
                 ParentsHomePageFragment.this.toNextActivity(type);
             });
         }
-
+        @JavascriptInterface
+        public void toNextHuiFuActivity(String courseId) {
+            getActivity().runOnUiThread(() -> startActivity(new Intent(getActivity(),LessonInfWebActivity.class).putExtra("courseId",courseId)));
+        }
         /**
          * 切换侧边栏
          */
@@ -153,6 +158,14 @@ public class ParentsHomePageFragment extends HomePageFragment {
             getActivity().runOnUiThread(()->{
                 tPresent.getReplyMessage(index);
             });
+        }
+        @JavascriptInterface
+        @Override
+        public void getMoreData(boolean action) {
+            if(action) {
+                tPresent.getTodaySchedule(User.getInstance().getUserId());
+            }
+            //super.getMoreData(action);
         }
     }
 }

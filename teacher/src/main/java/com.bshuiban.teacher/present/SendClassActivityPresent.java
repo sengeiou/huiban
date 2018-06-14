@@ -37,7 +37,7 @@ public class SendClassActivityPresent extends BasePresent<SendNoticeContract.Vie
 
     @Override
     public void sendNotice(String classIds, String content) {//{"userId":"","classIds":"","content":""}
-        askInternet("addClassNotices", "{\"userId\":\""+User.getInstance().getUserId()+"\",\"classIds\":\""+classIds+"\",\"content\":\""+content+"\"}", new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
+        askInternet("addClassActivities", "{\"userId\":\""+User.getInstance().getUserId()+"\",\"classIds\":\""+classIds+"\",\"content\":\""+content+"\"}", new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
             @Override
             protected void success(ResultBean resultBean) {
                 if(isEffective()){

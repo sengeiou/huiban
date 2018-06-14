@@ -7,7 +7,7 @@ package com.bshuiban.baselibrary.contract;
 public interface GuanZhuListContract extends ListContract{
     interface View extends ListContract.View{
         void goLiuYan(String name,String userId);
-        void guanZhuResult();
+        void guanZhuResult(boolean tag);
     }
     interface Present {
 
@@ -16,6 +16,11 @@ public interface GuanZhuListContract extends ListContract{
          * @param msg
          */
         void getSearchData(String msg);
-        void guanZhu(String key, String json);
+        /**
+         * 关注
+         * @param tag true 加关注
+         * @param attUserId
+         */
+        void guanZhu(boolean tag, int attUserId);
     }
 }

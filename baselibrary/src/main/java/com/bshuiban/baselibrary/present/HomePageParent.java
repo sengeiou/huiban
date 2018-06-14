@@ -15,7 +15,7 @@ import java.util.List;
  * describe：
  */
 public class HomePageParent extends ListPresent<HomePageContract.View> implements HomePageContract.Parent {
-    private static final String userId = /*User.getInstance().getUserId()*/"2030246";
+    private static final String userId = User.getInstance().getUserId();
     private List<MessageBean.DataBean> dataBeans;
 
     public HomePageParent(HomePageContract.View view) {
@@ -45,7 +45,7 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
             @Override
             protected void fail(String error) {
                 if (isEffective())
-                    view.fail(error);
+                    view.fail("今日课表结果："+error);
             }
         });
     }
@@ -65,7 +65,7 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
             @Override
             protected void fail(String error) {
                 if (isEffective()) {
-                    view.fail(error);
+                    view.fail("慧辅导："+error);
                 }
             }
         });
@@ -87,8 +87,8 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
 
             @Override
             protected void fail(String error) {
-                if (isEffective()) {
-                    view.fail(error);
+                if (isEffective()&&error!=null&&!error.contains("暂无数据")) {
+                    view.fail("留言："+error);
                 }
             }
         });
@@ -96,13 +96,16 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
 
     @Override
     public void delete(String messageId, String pid) {
+        String key;
         String json;
         if (null == pid) {
-            json = "{\"userId\":\"" + userId + "\",\"messageId\":\"" + messageId + "\"}";
+            key = "delComment";
+            json = "{\"userId\":\"" + User.getInstance().getUserId() + "\",\"messageId\":\"" + messageId + "\"}";
         } else {
-            json = "{\"messageId\":\"" + messageId + "\",\"pid\":\"" + pid + "\"}";
+            key = "delCommentReply";
+            json = "{\"pid\":\"" + pid + "\",\"messageId\":\"" + messageId + "\"}";
         }
-        askInternet("delComment", json, new RetrofitService.CallHTML() {
+        askInternet(key, json, new RetrofitService.CallHTML() {
             @Override
             protected void success(String msg) {
                 if (isEffective()) {

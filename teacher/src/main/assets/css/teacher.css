@@ -7,16 +7,16 @@
     position: absolute;
     top: 0;
     left: 0;  
-    z-index:10;          
+    z-index:10;
 }
 .mainClassList main, .classList main {
     width: 100%;
-    height: 100%;
+    height:100%;
+    overflow-Y:scroll;
     position: relative;
-    overflow-y: scroll;
 }
 .mainClassList main .list, .classList main .list {
-    height: 16rem;
+    height: 20rem;
     position: relative;
 }
 .mainClassList main .list:before,.list:after, .classList main .list:before,.list:after {
@@ -53,11 +53,10 @@
     width: 100%;
     height: 100%;
     position: relative;
-    overflow-y: scroll;
+    overflow: hidden;
 }
 .stuResource main .list {
     position: relative;
-    height: 16rem;
 }
 .stuResource main .list:before,.list:after{
     width: 100%;
@@ -384,8 +383,12 @@
 .sendBox header .ico {
     background-image: url("../images/index/send@2x.png");
 }
-.classMsg header .ico {
-    background-image: url("../images/teacher/change@2X.png");
+.classMsg header .ico img {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .stuResource main .list dl {
     display: flex;
@@ -546,10 +549,10 @@
     padding-top: 0.1px;
 }
 .notic main .list div {
-    padding: 0.12rem;
-    width: 7.1rem;
+    padding: 2%;
+    width: 90%;
     margin-top: 0.35rem;
-    margin-left: 0.2rem;
+    margin-left:5%;
     background: #fff;
     color: #9b9b9b;
 }
@@ -889,6 +892,7 @@ header .more {
 .knows .cslist p {
     width: 100%;
     height: 0.8rem;
+    line-height: 0.8rem;
     color: #00c7b5;
     text-align: center;
     position: relative;

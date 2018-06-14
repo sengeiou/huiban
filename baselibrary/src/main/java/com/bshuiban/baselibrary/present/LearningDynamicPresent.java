@@ -31,7 +31,9 @@ public class LearningDynamicPresent extends BasePresent<LearningDynamicContract.
 
             @Override
             protected void error(String error) {
-
+                if(isEffective()){
+                    view.fail(error);
+                }
             }
         });
 

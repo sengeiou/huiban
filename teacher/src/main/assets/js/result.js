@@ -5,7 +5,12 @@ var res;
 function exercise(data) {
      res = JSON.parse(data);
     console.log(data)
-
+    if(res.content == undefined) {
+    res.content = ""
+    }
+    if(res.stuAnswer == undefined) {
+    res.content = ""
+    }
     // 单、多选题
     if (res.optionName == "radio" || res.optionName == "check") {
         if (res.classRate == -1) {

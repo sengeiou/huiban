@@ -26,8 +26,11 @@ public class ExampleUnitTest {
         //RetrofitService.getInstance().getServiceResult("getHBTeaPreExamRate","{\"preId\":7316,\"type\":2,\"classId\":\"3000153\",\"workId\":19791}",new RetrofitService.CallTest());
         //RetrofitService.getInstance().getServiceResult("getStuLearnBottom","{\"userId\":\"2030246\",\"time\":\"201805\"}",new RetrofitService.CallTest());
         //new ImageUploadHeadPresent(null).loadImageHead();
-        System.out.print("http://".indexOf("http"));
-        Thread.sleep(1000);
+        String phone="13426480529";
+        //RetrofitService.getInstance().getServiceResult ("getUserRoleByMobile","{\"mobile\":\""+phone+"\"}",new RetrofitService.CallTest());
+        RetrofitService.getInstance().getServiceResult ("getSoftVersionLastest",(String)null,new RetrofitService.CallTest());
+
+        Thread.sleep(2000);
     }
     @Test
     public void addition_isCorrect() {

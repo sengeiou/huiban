@@ -27,9 +27,11 @@ import java.util.List;
 public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.View> implements HomeworkResultContract.Present {
     private HomeWorkCommitBean homeWorkCommitBean;
     private Gson gson=new Gson();
-    public HomeworkResultPresent(HomeworkResultContract.View view) {
+    public HomeworkResultPresent(HomeworkResultContract.View view,boolean complete) {
         super(view);
-        homeWorkCommitBean=getHomeworkCommitJson();
+        if(!complete) {
+            homeWorkCommitBean = getHomeworkCommitJson();
+        }
     }
 
     @Override
@@ -100,8 +102,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
     }
     public static HomeWorkCommitBean getHomeworkCommitJson(){
         HomeworkInfBean.DataBean homeworkInfBean = User.getInstance().getHomeworkInfBean();
-        int time;
-        Homework homework = User.getInstance().getHomework();
+        /*Homework homework = User.getInstance().getHomework();
         if(null==homework){
             homework=new Homework();
             time = toInt(homeworkInfBean.getTimes());
@@ -110,31 +111,37 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
             User.getInstance().setHomework(homework);
         }else {
             String time1 = homework.getTime();// 11时2分1秒
-            int hIndex = time1.indexOf("时");
-            String h="",m="",s="";
-            if(hIndex>-1){
-                h=time1.substring(0,hIndex);
+            if(null==time1){
+                time1=homeworkInfBean.getTimes();
+                time=toInt(time1);
+                homework.setTime(getTime(time));
+            }else {
+                int hIndex = time1.indexOf("时");
+                String h = "", m = "", s = "";
+                if (hIndex > -1) {
+                    h = time1.substring(0, hIndex);
+                }
+                hIndex += 1;
+                int mIndex = time1.indexOf("分");
+                if (mIndex > -1) {
+                    m = time1.substring(hIndex, mIndex);
+                }
+                mIndex += 1;
+                int sIndex = time1.indexOf("秒");
+                if (sIndex > -1) {
+                    s = time1.substring(mIndex, sIndex);
+                }
+                int hour = toInt(h);
+                int min = toInt(m);
+                int socend = toInt(s);
+                time = hour * 60 + min * 60 + socend;
             }
-            hIndex+=1;
-            int mIndex=time1.indexOf("分");
-            if(mIndex>-1){
-                m=time1.substring(hIndex,mIndex);
-            }
-            mIndex+=1;
-            int sIndex=time1.indexOf("秒");
-            if (sIndex>-1){
-                s=time1.substring(mIndex,sIndex);
-            }
-            int hour = toInt(h);
-            int min = toInt(m);
-            int socend = toInt(s);
-            time=hour*60+min*60+socend;
-        }
-        List<Homework.Data> dataList=new ArrayList<>();//作业结果记录
+        }*/
+        //List<Homework.Data> dataList=new ArrayList<>();//作业结果记录
         HomeWorkCommitBean homeWorkCommitBean=new HomeWorkCommitBean();
         homeWorkCommitBean.setClassId(User.getInstance().getClassId());
         homeWorkCommitBean.setPrepareId(-1);
-        homeWorkCommitBean.setTimes(time);
+        homeWorkCommitBean.setTimes(toInt(homeworkInfBean.getTimes()));
         homeWorkCommitBean.setUserId(User.getInstance().getUserId());
         //homeWorkCommitBean.setWorkId(workId);
         //homeWorkCommitBean.setPrepareId(prepareId);//列表接口提供
@@ -153,7 +160,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
                         bean1.setStuAnswer(bean.getStuAnswer());
                         bean1.setType(bean.getOptionName());
                         listOnline.add(bean1);
-                        boolean empty = isEmpty(bean.getStuAnswer());
+                        /*boolean empty = isEmpty(bean.getStuAnswer());
                         Homework.Data data11=new Homework.Data();
                         data11.setComplete(!empty);
                         if(empty&&isSelect(bean.getOptionName())){
@@ -161,7 +168,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
                         }else{
                             data11.setResult(2);
                         }
-                        dataList.add(data11);
+                        dataList.add(data11);*/
                     }
 
                 }
@@ -190,7 +197,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
                             answerBean.setStuAnswer(nextBeanX.getStuAnswer());
                             answerBean.setType(nextBeanX.getOptionName());
                             prepareWorkAnswerBeans.add(answerBean);
-                            boolean empty = isEmpty(nextBeanX.getStuAnswer());
+                            /*boolean empty = isEmpty(nextBeanX.getStuAnswer());
                             Homework.Data data11 = new Homework.Data();
                             data11.setComplete(!empty);
                             if (empty && isSelect(nextBeanX.getOptionName())) {
@@ -198,7 +205,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
                             } else {
                                 data11.setResult(2);
                             }
-                            dataList.add(data11);
+                            dataList.add(data11);*/
                         }
                     }
                 }
@@ -222,7 +229,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
                     videoAnswerBean1.setStuAnswer(exam1.getStuAnswer());
                     videoAnswerBean1.setType(exam1.getOptionName());
                     videoAnswerBeanList.add(videoAnswerBean1);
-                    boolean empty = isEmpty(exam1.getStuAnswer());
+                    /*boolean empty = isEmpty(exam1.getStuAnswer());
                     Homework.Data data11 = new Homework.Data();
                     data11.setComplete(!empty);
                     if (empty && isSelect(exam1.getOptionName())) {
@@ -230,7 +237,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
                     } else {
                         data11.setResult(2);
                     }
-                    dataList.add(data11);
+                    dataList.add(data11);*/
                 }
             }
             if(videoAnswerBeanList.size()>0){
@@ -242,7 +249,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
         homeWorkCommitBean.setExamAnswer(listOnline);
         homeWorkCommitBean.setExamPaperAnswer(listExamPaper);
         homeWorkCommitBean.setVideoAnswer(prepareVideoAnswerBeans);
-        homework.setHomework(dataList);
+        //homework.setHomework(dataList);
 //        return new Gson().toJson(homeWorkCommitBean);
         return homeWorkCommitBean;
     }

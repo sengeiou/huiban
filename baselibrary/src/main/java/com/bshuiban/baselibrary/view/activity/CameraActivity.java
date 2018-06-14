@@ -1,8 +1,11 @@
 package com.bshuiban.baselibrary.view.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.view.customer.CameraPreview;
@@ -17,6 +20,7 @@ public class CameraActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
         camera_preview = (CameraPreview) findViewById(R.id.camera_preview);
         camera_preview.setOnCameraCallBack(file -> {
             String absolutePath = file.getAbsolutePath();

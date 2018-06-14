@@ -5,11 +5,6 @@
     <attr name="title_color" format="color" />
     <attr name="right_size" format="dimension"/>
     <attr name="right_color" format="color"/>
-    <declare-styleable name="RefreshView">
-        <attr name="type" format="enum">
-            <enum name="sun" value="0" />
-        </attr>
-    </declare-styleable>
     <declare-styleable name="LineTextView">
         <attr name="lineType" format="enum">
             <enum name="left" value="0"/>
@@ -67,5 +62,10 @@
         <attr name="radius" format="dimension"/>
         <attr name="spaceImgRight" format="dimension"/>
         <attr name="colorPoint" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="PullToRefreshLayout">
+        <attr name="view_error" format="reference" />
+        <attr name="view_empty" format="reference" />
+        <attr name="view_loading" format="reference" />
     </declare-styleable>
 </resources>

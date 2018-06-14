@@ -6,13 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import com.bshuiban.baselibrary.contract.BaseView;
 import com.bshuiban.baselibrary.contract.ErrorHomeworkAnalysisContract;
 import com.bshuiban.baselibrary.present.ErrorHomeworkAnalysisPresent;
 import com.bshuiban.baselibrary.view.activity.PlayerVideoActivity;
-import com.bshuiban.baselibrary.view.activity.VideoPlayerActivity;
-
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 public class ErrorHomeworkAnalysisActivity extends BaseWebActivity<ErrorHomeworkAnalysisPresent> implements ErrorHomeworkAnalysisContract.View {
     private String text;

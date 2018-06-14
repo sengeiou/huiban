@@ -28,7 +28,7 @@ function setLoginData(userId, password) {
         </div>
         <div class="loginFrom">
             <label class="tab">
-                <span id="num">手机号</span>
+                <span id="num">账号</span>
                 <input type="number" name="phone" id="userNumber">
                 <br/>
                 <hr/>
@@ -58,9 +58,13 @@ submit.onclick = function () {
          pwd = document.getElementById('userPwd').value;
     if (phone == '') {
         phone = null;
+        window.android.login("请输入账号");
+        return;
     }
     if (pwd == '') {
         pwd = null;
+        window.android.login("请输入密码");
+        return;
     }
     //var msg = JSON.stringify({"userId": phone, "userPwd": pwd,"terminal":7});
     window.android.login(phone, pwd);

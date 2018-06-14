@@ -19,7 +19,7 @@ public class TodayHomeworkWebActivity extends BaseWebActivity<TodayHomeworkPrese
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tPresent=new TodayHomeworkPresent(this);
-        loadFileHtml("");
+        loadFileHtml("parentsNotice");
     }
 
     @Override
@@ -30,7 +30,7 @@ public class TodayHomeworkWebActivity extends BaseWebActivity<TodayHomeworkPrese
     @Override
     public void updateListView(int type, String json) {
         nowWtype=type;
-        String name="";
+        String name="worknotice";
         loadJavascriptMethod(name,json);
     }
 

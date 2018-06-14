@@ -30,17 +30,22 @@
             return;
         }
         var data = JSON.parse(data);
-        for (var i=0; i<data.length; i++) {
+        var regex = /^http\.bmp|\.jpg|\.jpeg|\.png|\.tiff|\.gif|\.pcx|\.tga|\.exif|\.fpx|\.svg|\.psd|\.cdr|\.pcd|\.dxf|\.ufo|\.eps|\.ai|\.raw|\.WMF|\.webp$/;     
+        for (var i=0; i<data.length; i++) {         
             var nowMsg = $('main').html();
+            if(data[i].content == undefined){
+                data[i].content = '';
+            }
             $('main').html(nowMsg + `
                 <div class="wrongMsg">
                     <div class="examina">${data[i].content}</div>
                     <p class="yresult">你的答案：<span></span></p>
                 </div>
             `);
-            //console.log(data[i].myAnswer);
             if (data[i].myAnswer == '') {
                 $('.wrongMsg .yresult:eq('+i+') span').html(`---`);
+            }else if (regex.test(data[i].myAnswer)) {
+                $('.wrongMsg .yresult:eq('+i+') span').html(`<img src="${data[i].myAnswer}" style="max-width:2rem;vertical-align:text-top;"/>`);
             }else {
                 $('.wrongMsg .yresult:eq('+i+') span').html(`${data[i].myAnswer}`);
             }

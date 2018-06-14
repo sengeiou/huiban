@@ -15,7 +15,7 @@ import com.bshuiban.baselibrary.utils.ScreenUtils;
 
 /**
  * Created by xinheng on 2018/5/19.<br/>
- * describe：
+ * describe：随手势下拉删除
  */
 public class MoveDialog extends Dialog{
     float startY;
@@ -33,10 +33,11 @@ public class MoveDialog extends Dialog{
         window.setWindowAnimations(R.style.bottomShow);
         WindowManager.LayoutParams windowparams = window.getAttributes();
         window.setGravity(Gravity.BOTTOM);
-        windowparams.height = (int) DensityUtil.dip2px(getContext(), 300);
+        windowparams.height = (int) DensityUtil.dip2px(getContext(), 500);
         windowparams.width = ScreenUtils.getScreenWidth(getContext());
         window.setBackgroundDrawableResource(android.R.color.transparent);
         window.setAttributes(windowparams);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN| WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override

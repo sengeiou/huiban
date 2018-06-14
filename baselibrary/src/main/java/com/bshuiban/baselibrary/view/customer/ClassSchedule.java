@@ -6,7 +6,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -36,7 +40,7 @@ public class ClassSchedule extends View {
     /**
      * 表格内字体大小
      */
-    private int textSize = (int) getResources().getDimension(R.dimen.dp_9);
+    private int textSize = (int) getResources().getDimension(R.dimen.dp_10);
     /**
      * 线条颜色
      */
@@ -46,19 +50,20 @@ public class ClassSchedule extends View {
     /**
      * 休息背景色
      */
-    private int restBgColor = Color.GRAY;
+    private int restBgColor = ContextCompat.getColor(getContext(),R.color.line_bord);
     private int dateTextColor = Color.WHITE;
     private int dateBgColors[] = {ContextCompat.getColor(getContext(), R.color.guide_start_btn), Color.parseColor("#F5A623"), Color.parseColor("#1D4B81")};
     /**
      * 表格高度
      */
-    private int gridHeight = (int) getResources().getDimension(R.dimen.dp_30);
+    private int gridHeight = (int) getResources().getDimension(R.dimen.dp_33);
     /**
      * 头部表格高度
      */
     private int gridHeadHeight = (int) getResources().getDimension(R.dimen.dp_43);
     private Paint mPaint, paintLine;
     private float everyLength;
+    private boolean teachTag;
     private List<List<ClassScheduleBean.DataBean>> data;
 
     public ClassSchedule(Context context) {
@@ -78,6 +83,11 @@ public class ClassSchedule extends View {
         paintLine.setColor(lineColor);
         dp1 = TypedValue.applyDimension(1, 1, getResources().getDisplayMetrics());
         paintLine.setStrokeWidth(dp1);
+    }
+
+    public void setTeachTag(boolean teachTag) {
+        this.teachTag = teachTag;
+        //gridHeight = (int) getResources().getDimension(R.dimen.dp_66);
     }
 
     @Override
@@ -101,9 +111,9 @@ public class ClassSchedule extends View {
         mPaint.setTextAlign(Paint.Align.RIGHT);
         //canvas.drawText("星期",everyLength*2, TextUtils.getTextBaseLine(TextUtils.getTextHeightR("星",mPaint)/2,mPaint));
         float everyLength2 = everyLength * 2;
-        TextUtils.drawText("星期", everyLength2, 0, mPaint, canvas);
+        TextUtils.drawText("星期", everyLength2-10, 10, mPaint, canvas);
         mPaint.setTextAlign(Paint.Align.CENTER);
-        TextUtils.drawTextBottom("科目", everyLengthHalf, gridHeadHeight, mPaint, canvas);
+        TextUtils.drawTextBottom("科目", everyLengthHalf, gridHeadHeight-10, mPaint, canvas);
         float textHeadBaseLine = TextUtils.getTextBaseLine(gridHeadHeight / 2f, mPaint);
         String week[] = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
         float xCenter[] = new float[week.length + 2];
@@ -185,6 +195,9 @@ public class ClassSchedule extends View {
         boolean tag = texts == null || texts.size() == 0;//数据无效
         List<ClassScheduleBean.DataBean> dataBeans = null;
         ClassScheduleBean.DataBean dataBean;
+        //float x;
+        TextPaint textPaint = new TextPaint();
+        textPaint.set(mPaint);
         for (int i = 0; i < COUNT; i++) {
             if (!tag && texts.size() > i) {
                 dataBeans = texts.get(i);
@@ -192,16 +205,39 @@ public class ClassSchedule extends View {
                 dataBeans = null;
             }
             canvas.drawLine(everyLength, top, getMeasuredWidth(), top, paintLine);
+            int size=0;
             if (null != dataBeans) {
+                //x = 2 * everyLength;
                 for (int j = 2; j < xCenter.length; j++) {
                     if (dataBeans.size() > j) {
                         dataBean = dataBeans.get(j);
-                        if (null != dataBean && null != dataBean.getSubjectName()) {
-                            canvas.drawText(dataBean.getSubjectName(), xCenter[j], baseLine + top, mPaint);
+                        if (null != dataBean) {
+                            String subjectName = dataBean.getSubjectName();
+                            //dataBean.get
+                            if(teachTag){
+                                String sub = TextUtils.cleanNull(dataBean.getSubName());
+                                if(sub.length()>0){
+                                    sub="("+sub+")";
+                                }
+                                subjectName=TextUtils.cleanNull(dataBean.getClassName())+ sub;
+                            }
+                            //Log.e("TAG", "drawDateArea: "+subjectName );
+                            if(!android.text.TextUtils.isEmpty(subjectName)){
+                                StaticLayout layout = new StaticLayout(subjectName, textPaint, (int)everyLength, Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
+                                //canvas.drawText(subjectName, xCenter[j], baseLine + top, mPaint);
+                                //Log.e("TAG", "drawDateArea: x = "+ xCenter[j] +", top = "+top );
+                                canvas.save();
+                                canvas.translate(xCenter[j],top);
+                                layout.draw(canvas);
+                                canvas.restore();
+                                size++;
+                            }
                         }
                     }
+                   // x=+everyLength;
                 }
             }
+            canvas.drawText(String.valueOf(size),xCenter[1],baseLine+top,mPaint);
             top += this.gridHeight;
         }
         return top;

@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 
 import com.bshuiban.baselibrary.contract.HomePageContract;
 import com.bshuiban.baselibrary.model.MessageBean;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.HomePageParent;
+import com.bshuiban.baselibrary.view.dialog.CommentDialog;
 import com.bshuiban.baselibrary.view.dialog.ReplyDialog;
 
 /**
@@ -71,5 +73,25 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
         ReplyDialog replyDialog=new ReplyDialog(getActivity());
         replyDialog.setViewData(dataBean);
         replyDialog.show();
+        replyDialog.setMessageListListener(new ReplyDialog.MessageListListener() {
+            @Override
+            public void deleteMessageItem(String messageId, String pid) {
+                tPresent.delete(messageId,pid);
+            }
+
+            @Override
+            public void showCommitDialog() {
+                CommentDialog commentDialog = new CommentDialog("请输入内容", inputText -> {
+                    //recevieId= ;//int,接收人id，给谁留言
+                    String sendId= User.getInstance().getUserId();//int,留言人、发送人id
+                    //messageId		//int，消息id，评论时传空
+                    //String content			//string 回复的内容
+                    //"recevieId":,"messageId":,"content":"","sendId":""
+                    tPresent.addRecevier("{\"recevieId\":\""+dataBean.getSend()+"\",\"messageId\":\""+dataBean.getId()+"\",\"content\":\""+inputText+"\",\"sendId\":\""+sendId+"\"}");
+                    replyDialog.dismiss();
+                });
+                commentDialog.show(getChildFragmentManager(),"commit");
+            }
+        });
     }
 }

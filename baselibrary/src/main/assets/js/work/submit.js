@@ -40,8 +40,12 @@ var hint = document.getElementsByClassName("hint")[0];
     }
 // 提交作业
 submit.onclick = function() {
-    hint.style.display = "block";
-    num.innerHTML = count;
+    if( count != 0) {
+        hint.style.display = "block";
+        num.innerHTML = count;
+    }else{
+        window.android.commitHomework(true);
+    }
 }
 // 继续作答
     continu.onclick = function () {

@@ -2,6 +2,7 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.model.HomeworkInfBean;
 import com.bshuiban.baselibrary.model.HomeworkListData;
 import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.utils.SpaceItemDecoration;
 import com.bshuiban.baselibrary.view.adapter.HomeworkCountAdapter;
 import com.bshuiban.baselibrary.view.adapter.SortHomewrokAdapter;
 import com.bshuiban.baselibrary.view.customer.TitleView;
@@ -46,10 +48,17 @@ public class HomeworkCompleteInfActivity extends BaseWebActivity{
         workId = intent.getIntExtra(HOME_Work_Id, -1);
         mWebView=findViewById(R.id.webview);
         recycleView=findViewById(R.id.recycleView);
+
         TitleView titleView = findViewById(R.id.titleView);
         titleView.setOnClickListener(v-> finish());
-        loadFileHtml("");
+        titleView.setRight_text(null, Color.WHITE,14);
+        loadFileHtml("homework_details");
         registerWebViewH5Interface(new HomeworkCompleteInfHtml());
+        int dimension = (int) getResources().getDimension(R.dimen.dp_10);
+        int dimension5 = (int) getResources().getDimension(R.dimen.dp_5);
+        recycleView.setPadding(dimension5, dimension5, 0, dimension5);
+        recycleView.addItemDecoration(new SpaceItemDecoration(this, RecyclerView.HORIZONTAL, dimension, Color.WHITE));
+
     }
 
     @Override
@@ -71,6 +80,7 @@ public class HomeworkCompleteInfActivity extends BaseWebActivity{
             adapter.setCount(homeworkBean.size());
             recycleView.setAdapter(adapter);
             adapter.setOnItemClickListener(position -> loadHtmlData(position));
+            loadHtmlData(0);
         }
     }
     private void loadHtmlData(int position){
@@ -80,7 +90,7 @@ public class HomeworkCompleteInfActivity extends BaseWebActivity{
         int typeIndex = bean.getTypeIndex();
         int problemIndex = bean.getProblemIndex();
         String json = HomeworkBean.getProblemContent(User.getInstance().getHomeworkInfBean(), type, pageIndex, typeIndex, problemIndex);
-        loadJavascriptMethod("",json);
+        loadJavascriptMethod("rende",json);
     }
     class HomeworkCompleteInfHtml extends UserTypeHtml{
         @JavascriptInterface

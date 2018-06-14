@@ -15,7 +15,7 @@
     <div class="wrap stuResource">
         <header>
             <span>
-                <i class="back"></i>
+                <a href="/finish_page.html"></a>
             </span>	
             <span>
                 <input type="text" id="textMsg" placeholder="搜索课程">
@@ -27,20 +27,26 @@
         </header>
         <main id="wrap">
             <div class="list" uptext="下拉刷新">
-
+                <div class="listBox"></div>
             </div>
         </main>
     </div>
 </body>
 <script>
     var userType = window.android.getUserType();
+    function changeString(string){
+        if(string==undefined||string=='null'||string==null){
+            return '';
+        }
+        return string;
+    }
     function getContent (data) {
         var data = JSON.parse(data);        
         for(var i=0; i<data.length; i++){
-            var nowContent = $('.list').html();
-            $('.list').html(nowContent + `
+            var nowContent = $('.listBox').html();
+            $('.listBox').html(nowContent + `
                 <dl>
-                    <dt class="classImg"><img src="${data[i].imgUrl}" alt="" /></dt>
+                    <dt class="classImg"><img src="${data[i].imgUrl}" onerror="this.src='./images/reset/default_head.png' " alt="" /></dt>
                     <dd>
                         <p>${data[i].Name}</p>
                         <p>授课老师：${data[i].speakerName}</p>
@@ -49,12 +55,7 @@
                 </dl>
             `);
             if (userType == 4) {
-                $('.list .name').html(data[i].recTeaName+'推荐');
-            }
-            if (data[i].imgUrl == '') {
-                $('.list dl:eq('+i+') dt').html(`<img src="./images/index/tube_class@2x.png" alt="" />`);
-            }else {
-                $('.list dl:eq('+i+') dt').html(`<img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/index/tube_class@2x.png' "/>`);
+                $('.list .name').html(changeString(data[i].recTeaName)+'推荐');
             }
         }
         //点击推荐给家长
@@ -66,6 +67,8 @@
                 window.android.recommendParent(courseId);
                 return false;
             });
+            $('.list').css('height',$('.listBox').height());
+            myIscroll.refresh();
         }
         //点击进入课程详情
         $('dl').bind('click', function () {

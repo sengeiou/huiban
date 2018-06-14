@@ -11,8 +11,11 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
+import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.baselibrary.view.fragment.InteractionBaseFragment;
 import com.bshuiban.baselibrary.view.interfaces.OnFragmentInteractionListener;
@@ -27,7 +30,15 @@ public abstract class InteractionBaseWebViewFragment<T extends BasePresent> exte
 
     public abstract void update(Bundle bundle);
     protected int getLayoutResource(){
-        return -1;
+        return R.layout.activity_test_web_view;
+    }
+    protected void initWebView(View view) {
+        mWebView=view.findViewById(R.id.webview);
+        setWebViewSetting(mWebView);
+        TextView tv_sure=view.findViewById(R.id.tv_sure);
+        EditText et_content = view.findViewById(R.id.et_content);
+        et_content.setText("http://192.168.0.3:90/");
+        tv_sure.setOnClickListener(v-> loadPathHtml(et_content.getText().toString().trim()));
     }
     @Override
     public void onAttach(Context context) {
@@ -44,7 +55,9 @@ public abstract class InteractionBaseWebViewFragment<T extends BasePresent> exte
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentView = getFragmentView();
         if(null== fragmentView) {
-            return inflater.inflate(getLayoutResource(), container, false);
+            View inflate = inflater.inflate(getLayoutResource(), container, false);
+            initWebView(inflate);
+            return inflate;
         }else{
             return fragmentView;
         }

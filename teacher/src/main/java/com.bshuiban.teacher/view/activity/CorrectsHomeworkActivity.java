@@ -86,6 +86,11 @@ public class CorrectsHomeworkActivity extends BaseActivity<CorrectsHomeworkPrese
                         .putExtra("preparationId", preId)
                         .putExtra("json", new Gson().toJson(adapter.getList())));
             }
+
+            @Override
+            public void centerClick(View v) {
+
+            }
         });
         RecyclerView recyclerView = findViewById(R.id.recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));

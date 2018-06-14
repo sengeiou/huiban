@@ -33,7 +33,7 @@ public class ClassScheduleBean extends ResultBean {
          */
 
         private int id;
-        private int classId;
+        private String classId;
         private int semesterId;
         private int week;
         private int num;
@@ -43,6 +43,8 @@ public class ClassScheduleBean extends ResultBean {
         private String endTime;
         private String subjectName;
         private String teacherName;
+        private String subName;
+        private String className;
 
         public int getId() {
             return id;
@@ -52,11 +54,11 @@ public class ClassScheduleBean extends ResultBean {
             this.id = id;
         }
 
-        public int getClassId() {
+        public String getClassId() {
             return classId;
         }
 
-        public void setClassId(int classId) {
+        public void setClassId(String classId) {
             this.classId = classId;
         }
 
@@ -118,6 +120,22 @@ public class ClassScheduleBean extends ResultBean {
 
         public String getSubjectName() {
             return subjectName;
+        }
+
+        public String getSubName() {
+            return subName;
+        }
+
+        public void setSubName(String subName) {
+            this.subName = subName;
+        }
+
+        public String getClassName() {
+            return className;
+        }
+
+        public void setClassName(String className) {
+            this.className = className;
         }
 
         public void setSubjectName(String subjectName) {

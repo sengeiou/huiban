@@ -1,6 +1,7 @@
 package com.bshuiban.baselibrary.model;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -325,6 +326,7 @@ public class HomeworkBean extends Homework.Data {
     }
 
     public static boolean isRight(String answer, String stuAnswer) {
+        Log.e("TAG", "isRight: "+answer+", "+stuAnswer );
         if (TextUtils.isEmpty(answer) || TextUtils.isEmpty(stuAnswer)) {
             return false;
         }

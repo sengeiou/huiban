@@ -1,5 +1,6 @@
 package com.bshuiban.baselibrary.view.fragment;
 
+
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.adapter.ClassActivityAdapter;
@@ -16,9 +17,8 @@ import java.util.List;
 public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean.DataBean,ClassActivityAdapter,ClassActivityPresent> implements ClassActivityContract.View {
     @Override
     public void updateViewForData(List<ClassActivityBean.DataBean> data) {
-        adapter.updateList(data);
+        super.updateView(data);
     }
-
     @Override
     public void startDialog() {
 
@@ -32,6 +32,7 @@ public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean
     @Override
     public void fail(String error) {
         toast(error);
+        dismissFresh();
     }
 
     @Override
@@ -46,11 +47,17 @@ public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean
 
     @Override
     protected ClassActivityAdapter getAdapter() {
-        return new ClassActivityAdapter();
+        return new ClassActivityAdapter(getActivity());
     }
 
     @Override
     protected void startPresent() {
-        tPresent.askInternetForClassActivityData(User.getInstance().getClassId(), start,limit);
+        String classId = User.getInstance().getClassId();
+        tPresent.askInternetForClassActivityData(classId, start,limit);
+    }
+
+    public void update(String classId) {
+        start=0;
+        tPresent.askInternetForClassActivityData(classId, start,limit);
     }
 }

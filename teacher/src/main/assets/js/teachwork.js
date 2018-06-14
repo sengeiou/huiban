@@ -112,34 +112,72 @@ function switchs(list) {
             res3.push(pro)
         }
     }
+//    if (hour > 0 && hour < 12) {
+//        for (pro of res1) {
+//            if (pro.subjectName == "") {
+//                pro.subjectName = "无课";
+//            }
+//            str1 += `<span>${pro.subjectName} ${pro.num}</span>`;
+//            $(".teachtime").html("上午课程")
+//        }
+//        curriculum[0].innerHTML = str1;
+//    } else if (hour > 12 && hour < 18) {
+//        for (pro of res2) {
+//            if (pro.subjectName == "") {
+//                pro.subjectName = "无课";
+//            }
+//            str2 += `<span>${pro.subjectName} ${pro.num}</span>`;
+//            $(".teachtime").html("下午课程")
+//        }
+//        curriculum[0].innerHTML = str2;
+//    } else {
+//        for (pro of res3) {
+//            if (pro.subjectName == "") {
+//                pro.subjectName = "无课";
+//            }
+//            str3 += `<span>${pro.subjectName} ${pro.num}</span>`;
+//            $(".teachtime").html("晚上课程")
+//        }
+//        curriculum[0].innerHTML = str3;
+//    }
     if (hour > 0 && hour < 12) {
         for (pro of res1) {
-            if (pro.subjectName == "") {
-                pro.subjectName = "无课";
-            }
-            str1 += `<span>${pro.subjectName} ${pro.num}</span>`;
-            $(".teachtime").html("上午课程")
+        if (pro.subjectName == "") {
+        pro.subjectName = "无课";
+        }
+        str1 += `<span>${pro.subjectName} ${pro.num}</span>`;
+        $(".teachtime").html("上午课程")
+        }
+        if(res1[0].subjectName=="无课" && res1[1].subjectName== "无课" && res1[2].subjectName== "无课" && res1[3].subjectName== "无课") {
+        str1 = `<span>上午没有课程 </span>`;
         }
         curriculum[0].innerHTML = str1;
-    } else if (hour > 12 && hour < 18) {
+        } else if (hour > 12 && hour < 18) {
         for (pro of res2) {
-            if (pro.subjectName == "") {
-                pro.subjectName = "无课";
-            }
-            str2 += `<span>${pro.subjectName} ${pro.num}</span>`;
-            $(".teachtime").html("下午课程")
+        if (pro.subjectName == "") {
+        pro.subjectName = "无课";
+        }
+        str2 += `<span>${pro.subjectName} ${pro.num}</span>`;
+        $(".teachtime").html("下午课程")
+        }
+        if(res2[0].subjectName=="无课" && res2[1].subjectName== "无课" && res2[2].subjectName== "无课" && res2[3].subjectName== "无课") {
+        str2 = `<span>下午没有课程 </span>`;
         }
         curriculum[0].innerHTML = str2;
-    } else {
+        } else {
         for (pro of res3) {
-            if (pro.subjectName == "") {
-                pro.subjectName = "无课";
-            }
-            str3 += `<span>${pro.subjectName} ${pro.num}</span>`;
-            $(".teachtime").html("晚上课程")
+        if (pro.subjectName == "") {
+        pro.subjectName = "无课";
+        }
+        str3 += `<span>${pro.subjectName} ${pro.num}</span>`;
+        $(".teachtime").html("晚上课程")
+        }
+        if(res3[0].subjectName=="无课" && res3[1].subjectName== "无课") {
+        console.log("1111")
+        str3 = `<span>今晚没有课程 </span>`;
         }
         curriculum[0].innerHTML = str3;
-    }
+        }
 }
 
 // 慧辅导导航
@@ -148,14 +186,23 @@ function imag(list) {
     var str = "";
     var list = document.getElementsByClassName("list")[0];
     str += `
-    <div class="course">
-                <img src=${data[0].imgUrl} alt="">
-            </div>
-            <div class="course">
-                <img src=${data[1].imgUrl}alt="">
-            </div>
+     <div class="course">
+     <img src=${data[0].imgUrl} class="userImg" onerror="this.src='./images/reset/classPic.png'">
+     </div>
+     <div class="course">
+     <img src=${data[1].imgUrl} class="userImg" onerror="this.src='./images/reset/classPic.png'">
+     </div>
     `;
     list.innerHTML = str;
+    var course = document.getElementsByClassName('course');
+    for(var i=0; i<course.length; i++) {
+    (function(i){
+    course[i].onclick = function() {
+    window.android.toNextHuiFuActivity(data[i].CourseId)
+             }
+        })(i)
+     }
+    }
 }
 var array;
 // 留言页 回复页

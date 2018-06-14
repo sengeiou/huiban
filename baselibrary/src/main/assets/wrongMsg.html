@@ -49,7 +49,14 @@
    }
 	function getContent (data) {
 		var data = JSON.parse(data);
+		var regex = /^http\.bmp|\.jpg|\.jpeg|\.png|\.tiff|\.gif|\.pcx|\.tga|\.exif|\.fpx|\.svg|\.psd|\.cdr|\.pcd|\.dxf|\.ufo|\.eps|\.ai|\.raw|\.WMF|\.webp$/;     
 		var nowMsg = $(".wrongBox").html();
+		if (data.content == undefined) {
+			data.content = '';
+		}
+		if (data.analysis == undefined) {
+			data.analysis = '';
+		}
 		$(".wrongBox").html(nowMsg + `
 			<div class="question">
 				${data.content}
@@ -64,9 +71,12 @@
 				答案解析：
 				${data.analysis}
 			</div>
-		`);		
+		`);
+		console.log(data.myAnswer);
 		if(data.myAnswer === undefined){
 			$('.yourAnswer').html(`你的答案：<b>暂无答案</b>`);
+		}else if (regex.test(data.myAnswer)) {
+			$('.yourAnswer').html(`你的答案：<img src="${data.myAnswer}" style="max-width:2rem;vertical-align:text-top;"/>`);
 		}else {
 			$('.yourAnswer').html(`你的答案：<b>${data.myAnswer}</b>`);
 		}

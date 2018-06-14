@@ -29,7 +29,11 @@ public class ClassScheduleFragment extends BaseFragment<ClassSchedulePresent> im
         super.onCreate(savedInstanceState);
         tPresent = new ClassSchedulePresent(this);
     }
-
+    public void updateSchedule(String classId){
+        if(tPresent!=null){
+            tPresent.askInternetForScheduleData(classId);
+        }
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

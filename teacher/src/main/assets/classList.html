@@ -15,7 +15,7 @@
     <div class="wrap classList">
         <header>
             <span>
-                <i class="back"></i>
+                <a href="/finish_page.html"></a>
             </span>	
             <span>我的备课</span>
             <span class="more"></span>
@@ -52,34 +52,35 @@
             window.android.itemClick(preId);
         });
     }
-    $('.back').bind('click', function () {
-        console.log("返回上级");
-    })
+
     $('.more').bind('click', function () {
-        console.log("点击筛选");
+        //console.log("点击筛选");
+        window.android.toSearchPage();
     });
-    <!--var list = document.querySelector('.list');-->
-	<!--var myIscroll = new IScroll('#wrap',{-->
-		<!--scrollbars: true,-->
-		<!--probeType: 3-->
-    <!--});-->
-    <!--var flag = true;-->
-	<!--myIscroll.on('scroll',function(){-->
-		<!--if(this.y > 40){-->
-			<!--list.setAttribute('uptext','释放刷新');-->
-		<!--}else if(this.y < 40 && this.y > 0){-->
-			<!--list.setAttribute('uptext','下拉刷新');-->
-		<!--}else if(this.y < this.maxScrollY - 40 ){-->
-			<!--flag = true;-->
-        <!--}-->
-	<!--})-->
-	<!--myIscroll.on('scrollEnd',function(){-->
-        <!--list.setAttribute('text','下拉刷新');-->
-        <!--if(this.y === this.maxScrollY){-->
-            <!--console.log("上拉");-->
-        <!--}else if(this.y === 0) {-->
-            <!--console.log("下拉");-->
-        <!--}-->
-	<!--})-->
+    var list = document.querySelector('.list');
+	var myIscroll = new IScroll('#wrap',{
+		scrollbars: true,
+		probeType: 3
+    });
+    var flag = true;
+	myIscroll.on('scroll',function(){
+		if(this.y > 40){
+			list.setAttribute('uptext','释放刷新');
+		}else if(this.y < 40 && this.y > 0){
+			list.setAttribute('uptext','下拉刷新');
+		}else if(this.y < this.maxScrollY - 40 ){
+			flag = true;
+        }
+	})
+	myIscroll.on('scrollEnd',function(){
+        list.setAttribute('text','下拉刷新');
+        if(this.y === this.maxScrollY){
+            console.log("上拉");
+            window.android.getMoreData(false);
+        }else if(this.y === 0) {
+            window.android.getMoreData(true);
+            console.log("下拉");
+        }
+	})
 </script>
 </html>

@@ -1,7 +1,5 @@
 package com.bshuiban.baselibrary.internet;
 
-import java.io.File;
-
 public class UrlManage {
     private static final String NEI_WANG_URL = "http://192.168.0.3";
     private static final String WAI_WANG_URL = "http://hcloud.bszhihui.com";
@@ -9,7 +7,7 @@ public class UrlManage {
     public final String BASE_URL;
     public static final int NEI_WANG = 0;
     public static final int WAI_WANG = 1;
-    private static final int type=WAI_WANG;
+    private static final int type=NEI_WANG;
 
     private static UrlManage manage;
 

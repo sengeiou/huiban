@@ -8,6 +8,7 @@ var todo = document.getElementsByClassName("navs")[1];
 var filte = document.getElementById("filte");
 var res=[];
 var num=0;
+ $(".details").hide();
 todo.onclick = function () {
     // 渲染已完成页面列表
     //complatelist(res2)
@@ -137,7 +138,8 @@ function complately(data) {
 
 // 页面加载
 window.onload = function () {
-    $("#filte").hide()
+    $("#filte").hide();
+    $(".details").hide();
     done.style.display = "none";
     details.style.display = "none";
     // 数据渲染

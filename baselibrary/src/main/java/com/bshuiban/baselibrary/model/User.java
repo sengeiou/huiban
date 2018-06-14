@@ -1,5 +1,6 @@
 package com.bshuiban.baselibrary.model;
 
+import android.os.Environment;
 import android.util.Log;
 
 import com.bshuiban.baselibrary.utils.UserSharedPreferencesUtils;
@@ -11,7 +12,7 @@ import java.util.List;
  * describe：
  */
 public class User {
-
+    public static final String path= Environment.getExternalStorageDirectory().getAbsolutePath() + "/HuiBan/";
     private SubjectBean subjectBean;
     private LoginResultBean.Data data;
     private static User user;
@@ -34,10 +35,6 @@ public class User {
         return user;
     }
     public String getClassId(){
-        if(null==data){
-            Log.e("TAG", "getUserId: 异常！！！" );
-            return "3000153";
-        }
         return data.getClassId1();
     }
 
@@ -69,11 +66,7 @@ public class User {
     }
 
     public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+        return data.getRealName();
     }
 
     public void setData(LoginResultBean.Data data) {

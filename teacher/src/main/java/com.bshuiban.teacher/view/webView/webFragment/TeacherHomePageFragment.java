@@ -16,9 +16,11 @@ import com.bshuiban.baselibrary.view.activity.ClassScheduleActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.bshuiban.baselibrary.view.webview.webActivity.GuanZhuListActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.HuiFuDaoListActivity;
+import com.bshuiban.baselibrary.view.webview.webActivity.LessonInfWebActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.LiuYanMsgListActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.NoticeActivity;
 import com.bshuiban.baselibrary.view.webview.webFragment.HomePageFragment;
+import com.bshuiban.teacher.view.activity.TeachScheduleActivity;
 import com.bshuiban.teacher.view.webView.webActivity.LessonListActivity;
 import com.bshuiban.teacher.view.webView.webActivity.TeacherParentConfirmWebActivity;
 import com.bshuiban.teacher.view.webView.webActivity.TodayHomeworkWebActivity;
@@ -88,11 +90,11 @@ public class TeacherHomePageFragment extends HomePageFragment {
                 cls= ClassActivity.class;
                 break;
             case 1://课表
-                cls=ClassScheduleActivity.class;
+                cls=TeachScheduleActivity.class;
                 break;
             case 2://通知
-                //cls= NoticeActivity.class;
-                cls= LessonListActivity.class;
+                cls= NoticeActivity.class;
+                //cls= LessonListActivity.class;
                 intent.putExtra("send",true);
                 break;
             case 3://关注
@@ -134,7 +136,10 @@ public class TeacherHomePageFragment extends HomePageFragment {
                 TeacherHomePageFragment.this.toNextActivity(type);
             });
         }
-
+        @JavascriptInterface
+        public void toNextHuiFuActivity(String courseId) {
+            getActivity().runOnUiThread(() -> startActivity(new Intent(getActivity(),LessonInfWebActivity.class).putExtra("courseId",courseId)));
+        }
         /**
          * 切换侧边栏
          */
@@ -149,6 +154,14 @@ public class TeacherHomePageFragment extends HomePageFragment {
             getActivity().runOnUiThread(()->{
                 tPresent.getReplyMessage(index);
             });
+        }
+        @JavascriptInterface
+        @Override
+        public void getMoreData(boolean action) {
+            if(action) {
+                tPresent.getTodaySchedule(User.getInstance().getUserId());
+            }
+            super.getMoreData(action);
         }
     }
 }

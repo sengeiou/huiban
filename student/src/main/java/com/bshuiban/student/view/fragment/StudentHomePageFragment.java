@@ -20,6 +20,7 @@ import com.bshuiban.baselibrary.view.activity.ClassScheduleActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.bshuiban.baselibrary.view.webview.webActivity.GuanZhuListActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.HuiFuDaoListActivity;
+import com.bshuiban.baselibrary.view.webview.webActivity.LessonInfWebActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.LiuYanMsgListActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.NoticeActivity;
 import com.bshuiban.baselibrary.view.webview.webFragment.HomePageFragment;
@@ -102,6 +103,9 @@ public class StudentHomePageFragment extends HomePageFragment {
             case 6:// 去留言
                 cls=LiuYanMsgListActivity.class;
                 break;
+            case 7://慧辅导详情
+                cls=LessonInfWebActivity.class;
+                break;
             default:
                 //学习资源
                 cls=null;
@@ -123,6 +127,10 @@ public class StudentHomePageFragment extends HomePageFragment {
             });
         }
         @JavascriptInterface
+        public void toNextHuiFuActivity(String courseId) {
+            getActivity().runOnUiThread(() -> startActivity(new Intent(getActivity(),LessonInfWebActivity.class).putExtra("courseId",courseId)));
+        }
+        @JavascriptInterface
         public void toggleSlide(){
             getActivity().runOnUiThread(()->{
                 mListener.transportData("toggleSlide");
@@ -133,6 +141,14 @@ public class StudentHomePageFragment extends HomePageFragment {
             getActivity().runOnUiThread(()->{
                 tPresent.getReplyMessage(index);
             });
+        }
+        @JavascriptInterface
+        @Override
+        public void getMoreData(boolean action) {
+            if(action) {
+                tPresent.getTodaySchedule(User.getInstance().getUserId());
+            }
+            super.getMoreData(action);
         }
     }
 }

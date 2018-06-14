@@ -73,6 +73,7 @@ public class ParentsUser extends ResultBean {
         private List<Integer> classId;
         private List<?> interest;
         private List<String> className;
+        private List<ChildrenList> stuArr;
 
         public String getUserId() {
             return userId;
@@ -256,6 +257,61 @@ public class ParentsUser extends ResultBean {
 
         public void setClassName(List<String> className) {
             this.className = className;
+        }
+
+        public List<ChildrenList> getStuArr() {
+            return stuArr;
+        }
+
+        public void setStuArr(List<ChildrenList> stuArr) {
+            this.stuArr = stuArr;
+        }
+    }
+    public static class ChildrenList{
+        private String stuId;
+        private String stuName;
+        private String schoolId;
+        private String classId;
+        private String gradeId;
+
+        public String getStuId() {
+            return stuId;
+        }
+
+        public void setStuId(String stuId) {
+            this.stuId = stuId;
+        }
+
+        public String getStuName() {
+            return stuName;
+        }
+
+        public void setStuName(String stuName) {
+            this.stuName = stuName;
+        }
+
+        public String getSchoolId() {
+            return schoolId;
+        }
+
+        public void setSchoolId(String schoolId) {
+            this.schoolId = schoolId;
+        }
+
+        public String getClassId() {
+            return classId;
+        }
+
+        public void setClassId(String classId) {
+            this.classId = classId;
+        }
+
+        public String getGradeId() {
+            return gradeId;
+        }
+
+        public void setGradeId(String gradeId) {
+            this.gradeId = gradeId;
         }
     }
 }

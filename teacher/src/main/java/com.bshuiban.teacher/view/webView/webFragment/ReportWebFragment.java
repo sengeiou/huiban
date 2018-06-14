@@ -1,5 +1,6 @@
 package com.bshuiban.teacher.view.webView.webFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.model.LogUtils;
 import com.bshuiban.baselibrary.utils.TextUtils;
+import com.bshuiban.baselibrary.view.activity.StatisticalChartActivity;
 import com.bshuiban.baselibrary.view.webview.webFragment.InteractionBaseWebViewFragment;
 import com.bshuiban.teacher.contract.ReportContract;
 import com.bshuiban.teacher.present.ReportPresent;
@@ -102,7 +104,15 @@ public class ReportWebFragment extends InteractionBaseWebViewFragment<ReportPres
     public void fail(String error) {
         toast(error);
     }
-
+    private void startStatisticalChartActivity(){
+        if(subjectId==-1){
+            toast("想选择学科");
+            return;
+        }
+        startActivity(new Intent(getActivity(), StatisticalChartActivity.class)
+                .putExtra("time", getStringDate())
+                .putExtra("subjectId", subjectId+""));
+    }
     class ReportHtml {
         /**
          * 启动弹窗
@@ -120,7 +130,12 @@ public class ReportWebFragment extends InteractionBaseWebViewFragment<ReportPres
         public void changeItem(int type) {
             classData = type == 0;
         }
-
+        @JavascriptInterface
+        public void statisticalChartActivity(){
+            getActivity().runOnUiThread(()->{
+                startStatisticalChartActivity();
+            });
+        }
     }
 
     private void showReportDialog(int type) {

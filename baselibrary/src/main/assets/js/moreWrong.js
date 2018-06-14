@@ -72,7 +72,8 @@ function subject (data) {
                     }
                 }
                 var msg = JSON.stringify({"subjectId": subjectId,"versionId": versionId,"fasId":fasId});
-                window.android.dealWithJson("getFilterChapterL",msg);   
+                window.android.dealWithJson("getFilterChapterL",msg);
+                $(this).css({'background': '#e0f8f6', 'color': '#00c7b5'}).siblings().css({'background': '#fff', 'color': '#9b9b9b'});
             });
         }
     } else if (type == 4) {

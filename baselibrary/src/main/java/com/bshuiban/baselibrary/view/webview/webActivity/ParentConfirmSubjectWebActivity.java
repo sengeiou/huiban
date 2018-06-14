@@ -6,6 +6,7 @@ import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.ParentConfirmSubjectContract;
 import com.bshuiban.baselibrary.present.ParentConfirmSubjectPresent;
+import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
 
 /**
  * Created by xinheng on 2018/6/5.<br/>
@@ -27,7 +28,6 @@ public abstract class ParentConfirmSubjectWebActivity<T extends ParentConfirmSub
     @Override
     protected void webViewLoadFinished() {
         tPresent.loadSubjectList(subjectId,nowWtype);
-        //tPresent.loadSubjectList(subjectId,3);
     }
 
     @Override
@@ -52,7 +52,7 @@ public abstract class ParentConfirmSubjectWebActivity<T extends ParentConfirmSub
     }
 
     protected abstract T getPresent();
-    protected class ParentConfirmSubjectHtml{
+    protected class ParentConfirmSubjectHtml extends UserTypeHtml{
         /**
          *
          * @param type ,课前1，课后3

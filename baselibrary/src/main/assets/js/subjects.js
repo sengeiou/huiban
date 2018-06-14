@@ -1,5 +1,6 @@
 var res;
 var num = 0;
+
 $(".navs").delegate("i", "click", function () {
     if ($(this).html() == "课前作业") {
         num = 0;
@@ -16,30 +17,55 @@ $(".navs").delegate("i", "click", function () {
 function worknotice(data) {
     res = JSON.parse(data)
     console.log(res)
+    var usertype = window.android.getUserType();
+    if (usertype == 2 || usertype == 3) {
     $(".subject").html(res[0].subName)
     for (var i = 0; i < res.length; i++) {
-        $(".subjects").append(`<div class="subconf">
-        <ul class="rate">
-            <li class="rate1">${res[i].className}${res[i].subName}作业 / 周报确认</li>
-            <li class="rate2"><span class="large">${res[i].confirmCnt}</span>位家长已查看过确认报告</li>
-            <li class="rate3">${res[i].beginDay}/${res[i].endDay}</li>
-        </ul>
-        <table class="table">
-            <tr>
-                <td>布置次数</td>
-                <td>完成率</td>
-                <td>确认率</td>
-            </tr>
-            <tr>
-                <td>${res[i].workCnt}</td>
-                <td>${res[i].finishRate}%</td>
-                <td>${res[i].confirmRate}%</td>
-            </tr>
-        </table>
+    $(".subjects").append(`<div class="subconf">
+    <ul class="rate">
+    <li class="rate1">${res[i].className}${res[i].subName}作业 / 周报确认</li>
+    <li class="rate2"><span class="large">${res[i].confirmCnt}</span>位家长已查看过确认报告</li>
+    <li class="rate3">${res[i].beginDay}/${res[i].endDay}</li>
+    </ul>
+    <table class="table">
+    <tr>
+    <td>布置次数</td>
+    <td>完成率</td>
+    <td>确认率</td>
+    </tr>
+    <tr>
+    <td>${res[i].workCnt}</td>
+    <td>${res[i].finishRate}%</td>
+    <td>${res[i].confirmRate}%</td>
+    </tr>
+    </table>
     </div>`)
     }
+    } else {
+    $(".subject").html(res[0].subName)
+    for (var i = 0; i < res.length; i++) {
+    $(".subjects").append(`<div class="subconf">
+    <ul class="rate">
+    <li class="rate1">${res[i].className}${res[i].subName}作业 / 周报确认</li>
+    <li class="rate2"><span class="large">本周共布置作业${res[i].confirmCnt}次</span></li>
+    <li class="rate3">${res[i].beginDay}/${res[i].endDay}</li>
+    </ul>
+    <table class="table">
+    <tr>
+    <td>布置次数</td>
+    <td>完成率</td>
+    <td>确认率</td>
+    </tr>
+    <tr>
+    <td>${res[i].workCnt}</td>
+    <td>${res[i].finishRate}%</td>
+    <td>${res[i].confirmRate}%</td>
+    </tr>
+    </table>
+    </div>`)
+    }
+    }
 }
-worknotice(data)
 var list = document.querySelector('.list');
 var myIscroll = new IScroll('#main', {
     scrollbars: true,

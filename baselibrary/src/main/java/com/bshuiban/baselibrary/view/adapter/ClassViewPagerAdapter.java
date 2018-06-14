@@ -18,17 +18,22 @@ import java.util.ArrayList;
  */
 public class ClassViewPagerAdapter extends FragmentPagerAdapter {
     private ArrayList<String> mList;
+    private ArrayList<Fragment> mListFragment;
+    //private ClassScheduleFragment fragment;
 
     public ClassViewPagerAdapter(FragmentManager fm, ArrayList<String> list) {
         super(fm);
         this.mList = list;
+        mListFragment=new ArrayList<>();
     }
 
     @Override
     public int getCount() {
         return null == mList ? 0 : mList.size();
     }
-
+    public Fragment getFragment(int index){
+        return mListFragment.get(index);
+    }
     @Override
     public Fragment getItem(int position) {
 //        arrayList.add("概况");
@@ -46,18 +51,11 @@ public class ClassViewPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 fragment = new ClassActivityFragment();
                 break;
-            default:
-                fragment = new ClassScheduleFragment1();
+            default: {
+                fragment = new ClassScheduleFragment();
+            }
         }
+        mListFragment.add(fragment);
         return fragment;
-    }
-    private ItemSelectListener l;
-
-    public void setItemSelectListener(ItemSelectListener l) {
-        this.l = l;
-    }
-
-    interface ItemSelectListener{
-        void selectItem();
     }
 }

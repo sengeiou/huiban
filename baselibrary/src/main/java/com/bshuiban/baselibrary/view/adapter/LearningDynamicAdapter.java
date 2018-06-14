@@ -28,7 +28,7 @@ public class LearningDynamicAdapter extends RefreshLoadAdapter<LearningDynamicBe
         return new LearningDynamicHolder(view);
     }
 
-    RequestOptions requestOptions = new RequestOptions().error(R.drawable.ic_menu_camera).circleCrop();
+    RequestOptions requestOptions = new RequestOptions().error(R.mipmap.default_head).circleCrop();
     @Override
     public void onBindViewHolder(LearningDynamicHolder holder, int position) {
         LearningDynamicBean.DataBean bean = mList.get(position);

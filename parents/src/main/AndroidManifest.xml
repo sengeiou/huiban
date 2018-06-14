@@ -5,6 +5,12 @@
             android:name=".view.activity.ParentsHomeActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
+        <activity android:name=".view.webView.webActivity.TodayHomeworkWebActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.webView.webActivity.PatentsParentConfirmWebActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.webView.webActivity.ParentsParentConfirmSubjectWebActivity"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>
 

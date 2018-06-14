@@ -2,6 +2,18 @@
 var res;
 function exercise(data) {
     res = JSON.parse(data);
+        if(res.content == undefined) {
+        res.content = ""
+        }
+        if(res.classRate == undefined) {
+        res.classRate = ""
+        }
+        if(res.stuList == undefined) {
+        res.stuList = ""
+        }
+        if(res.analysis == undefined) {
+        res.analysis = ""
+        }
     // 单、多选题
     if (res.optionName == "radio" || res.optionName == "check") {
         if (res.classRate == -1) {

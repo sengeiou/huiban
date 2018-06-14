@@ -14,6 +14,8 @@ import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.utils.SpaceItemDecoration;
 import com.bshuiban.baselibrary.view.adapter.RefreshLoadAdapter;
 import com.bshuiban.baselibrary.present.BasePresent;
+import com.bshuiban.baselibrary.view.pulltorefresh.BaseRefreshListener;
+import com.bshuiban.baselibrary.view.pulltorefresh.PullToRefreshLayout;
 
 import java.util.List;
 
@@ -27,6 +29,8 @@ import java.util.List;
  */
 public abstract class RecycleViewFragment<T, A extends RefreshLoadAdapter, P extends BasePresent> extends BaseFragment<P> {
     protected RecyclerView recyclerView;
+    protected PullToRefreshLayout pullToRefreshLayout;
+
     /**
      * 加载数量
      */
@@ -42,7 +46,9 @@ public abstract class RecycleViewFragment<T, A extends RefreshLoadAdapter, P ext
         initPresent();
         super.onCreate(savedInstanceState);
     }
-
+    /**
+     * 初始化P层
+     */
     protected abstract void initPresent();
 
     @Nullable
@@ -72,24 +78,47 @@ public abstract class RecycleViewFragment<T, A extends RefreshLoadAdapter, P ext
     }
 
     protected void initView(View view) {
+        pullToRefreshLayout = (PullToRefreshLayout) view.findViewById(R.id.pullToRefreshView);
+        pullToRefreshLayout.setRefreshListener(new BaseRefreshListener() {
+
+            @Override
+            public void refresh() {
+                start = 0;
+                startPresent();
+            }
+
+            @Override
+            public void loadMore() {
+                if(hasMoreDate()){
+                    start+=limit;
+                    startPresent();
+                }
+            }
+        });
     }
 
     ;
 
     protected abstract A getAdapter();
 
-    /**
-     * 初始化P层
-     */
+
     protected abstract void startPresent();
 
     protected void updateView(List<T> list) {
+        dismissFresh();
         if (null != list) {
             if (start != 0) {
                 adapter.updateList(list);
             } else {
                 adapter.setList(list);
             }
+        }
+    }
+
+    protected void dismissFresh() {
+        if(null!=pullToRefreshLayout){
+            pullToRefreshLayout.finishRefresh();
+            pullToRefreshLayout.finishLoadMore();
         }
     }
 

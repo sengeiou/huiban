@@ -2,21 +2,44 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+    <com.bshuiban.baselibrary.view.customer.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        app:title_text="回复"
+        app:src_left="@mipmap/close"
+        app:title_size="@dimen/dp_15"
+        android:background="@color/white"/>
 
     <include
         android:id="@+id/include"
         layout="@layout/layout_liu_yan_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10" />
-
+        android:layout_below="@+id/titleView"/>
+    <View
+        android:id="@+id/line"
+        android:layout_below="@+id/include"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_bord"/>
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:layout_below="@+id/line"
+        android:text="全部评论"
+        android:textColor="@color/black"
+        android:background="@color/white"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/tv_write_msg"
-        android:layout_below="@+id/include"
+        android:layout_below="@+id/tv"
         android:background="@android:color/white"/>
 
     <TextView
@@ -24,6 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="写评论..."
+        android:text=" 写评论..."
+        android:padding="@dimen/dp_10"
         android:background="@android:color/white"/>
 </RelativeLayout>

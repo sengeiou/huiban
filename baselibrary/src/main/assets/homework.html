@@ -120,10 +120,10 @@
                 <h3 class="title">慧辅导</h3>
                 <div class="list">
                     <div class="course">
-                        <img src="./images/reset/class_overview_pic.png" alt="">
+                        <img src="./images/reset/class_overview_pic.png" alt="" onerror="this.src='./images/reset/classPic.png' ">
                     </div>
                     <div class="course">
-                        <img src="./images/reset/class_overview_pic.png" alt="">
+                        <img src="./images/reset/class_overview_pic.png" alt="" onerror="this.src='./images/reset/classPic.png' ">
                     </div>
                 </div>
                 <p class="lookAll">
@@ -152,67 +152,8 @@
                     </span>
                 </h3>
                 <div class="box">
-                    <div class="leaveWord">
-                        <div class="left">
-                            <dl>
-                                <dt>
-                                    <img src="./images/reset/ic_home_class.png" alt="">
-                                </dt>
-                                <dd>
-                                    <p class="name">杜鹃
-                                        <span> 五年级二班</span>
-                                    </p>
-                                    <p class="time">10月20日 20:30</p>
-                                    <p class="content">看会小说风科技文化发空间划分空间大会上的感觉萨国际化发生科技大空间</p>
-                                    <p class="button">
-                                        <span class="reply">回复</span>
-                                        <span class="dele">删除</span>
-                                    </p>
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>
-                    <div class="leaveWord">
-                        <div class="left">
-                            <dl>
-                                <dt>
-                                    <img src="./images/reset/ic_home_class.png" alt="">
-                                </dt>
-                                <dd>
-                                    <p class="name">杜鹃
-                                        <span> 五年级二班</span>
-                                    </p>
-                                    <p class="time">10月20日 20:30</p>
-                                    <p class="content">看会小说风科技文化发空间划分空间大会上的感觉萨国际化发生科技大空间快点结婚时刻记得哈市科就会看见</p>
-                                    <p class="button">
-                                        <span>回复</span>
-                                        <span>删除</span>
-                                    </p>
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>
-                    <div class="leaveWord">
-                        <div class="left">
-                            <dl>
-                                <dt>
-                                    <img src="./images/reset/ic_home_class.png" alt="">
-                                </dt>
-                                <dd>
-                                    <p class="name">杜鹃
-                                        <span> 五年级二班</span>
-                                    </p>
-                                    <p class="time">10月20日 20:30</p>
-                                    <p class="content">看会小说风科技文化发空间划分空间大会上的感觉萨国际化发生科技大空间快点结婚时刻记得哈市科就会看见</p>
-                                    <p class="button">
-                                        <span>回复</span>
-                                        <span>删除</span>
-                                    </p>
-                                </dd>
-                            </dl>
-                        </div>
 
-                    </div>
+
                 </div>
                 <h2 class="more">查看全部</h2>
             </div>
@@ -378,27 +319,38 @@
                 res3.push(pro)
             }
         }
-        for (pro of res1) {
+       for (pro of res1) {
             if (pro.subjectName == "") {
-                pro.subjectName = "无课";
+            pro.subjectName = "无课";
             }
-            str1 += `<span>${pro.subjectName} ${pro.num}</span>`;
-        }
-        curriculum[0].innerHTML = str1;
-        for (pro of res2) {
+            str1 += `<span>${pro.subjectName} </span>`;
+            }
+            if(res1[0].subjectName=="无课" && res1[1].subjectName== "无课" && res1[2].subjectName== "无课" && res1[3].subjectName== "无课") {
+
+            str1 = `<span>上午没有课程 </span>`;
+            }
+            curriculum[0].innerHTML = str1;
+            for (pro of res2) {
             if (pro.subjectName == "") {
-                pro.subjectName = "无课";
+            pro.subjectName = "无课";
             }
-            str2 += `<span>${pro.subjectName} ${pro.num}</span>`;
-        }
-        curriculum[1].innerHTML = str2;
-        for (pro of res3) {
+            str2 += `<span>${pro.subjectName} </span>`;
+            }
+            if(res2[0].subjectName=="无课" && res2[1].subjectName== "无课" && res2[2].subjectName== "无课" && res2[3].subjectName== "无课") {
+            str2 = `<span>下午没有课程 </span>`;
+            }
+            curriculum[1].innerHTML = str2;
+            for (pro of res3) {
             if (pro.subjectName == "") {
-                pro.subjectName = "无课";
+            pro.subjectName = "无课";
             }
-            str3 += `<span>${pro.subjectName} ${pro.num}</span>`;
-        }
-        curriculum[2].innerHTML = str3;
+            str3 += `<span>${pro.subjectName} </span>`;
+            }
+            if(res3[0].subjectName=="无课" && res3[1].subjectName== "无课") {
+            console.log("1111")
+            str3 = `<span>今晚没有课程 </span>`;
+            }
+            curriculum[2].innerHTML = str3;
     }
 
 
@@ -425,14 +377,23 @@
         var str = "";
         var list = document.getElementsByClassName("list")[0];
         str += `
-            <div class="course">
-                        <img src=${data[0].imgUrl} alt="">
-                    </div>
-                    <div class="course">
-                        <img src=${data[1].imgUrl}alt="">
-                    </div>
+        <div class="course">
+        <img src=${data[0].imgUrl} class="userImg" onerror="this.src='./images/reset/classPic.png'">
+        </div>
+        <div class="course">
+        <img src=${data[1].imgUrl} class="userImg" onerror="this.src='./images/reset/classPic.png'">
+        </div>
             `;
         list.innerHTML = str;
+        var course = document.getElementsByClassName('course');
+        for(var i=0; i<course.length; i++) {
+        (function(i){
+        course[i].onclick = function() {
+        window.android.toNextHuiFuActivity(data[i].CourseId)
+                      }
+                })(i)
+            }
+        }
     }
     var array;
     // 留言页 回复页
@@ -501,34 +462,34 @@
                     var msgid = data[i].id;
                     console.log(msgid)
                     window.android.deleteMessageItem(msgid, null)
-
                 }
             })(i)
         }
     }
-    var list = document.querySelector('.list');
-    var myIscroll = new IScroll('#wrap', {
-        scrollbars: true,
-        probeType: 3
-    });
-    var flag = true;
-    myIscroll.on('scroll', function () {
-        if (this.y > 40) {
-            list.setAttribute('uptext', '释放刷新');
-        } else if (this.y < 40 && this.y > 0) {
-            list.setAttribute('uptext', '下拉刷新');
-        } else if (this.y < this.maxScrollY - 40) {
-            flag = true;
-        }
-    })
-    myIscroll.on('scrollEnd', function () {
-        list.setAttribute('text', '下拉刷新');
-        if (this.y === this.maxScrollY) {
-            console.log("上拉");
-        } else if (this.y === 0) {
-            console.log("下拉");
-        }
-    })
+    <!--var list = document.querySelector('.list');-->
+    <!--var myIscroll = new IScroll('#wrap', {-->
+        <!--scrollbars: true,-->
+        <!--probeType: 3-->
+    <!--});-->
+    <!--var flag = true;-->
+    <!--myIscroll.on('scroll', function () {-->
+        <!--if (this.y > 40) {-->
+            <!--list.setAttribute('uptext', '释放刷新');-->
+        <!--} else if (this.y < 40 && this.y > 0) {-->
+            <!--list.setAttribute('uptext', '下拉刷新');-->
+        <!--} else if (this.y < this.maxScrollY - 40) {-->
+            <!--flag = true;-->
+        <!--}-->
+    <!--})-->
+    <!--myIscroll.on('scrollEnd', function () {-->
+        <!--list.setAttribute('text', '下拉刷新');-->
+        <!--if (this.y === this.maxScrollY) {-->
+            <!--console.log("上拉");-->
+        <!--} else if (this.y === 0) {-->
+            <!--console.log("下拉");-->
+            <!--window.android.getMoreData(true);-->
+        <!--}-->
+    <!--})-->
 function userimgs(data) {
 $(".userImg").attr("src",data)
 }

@@ -21,7 +21,7 @@
 }
 #main .listoo:before {
     content: attr(uptext);
-    top: -.8rem;
+    top: 1rem;
 }
 #main .listoo:after {
     content: attr(downtext);

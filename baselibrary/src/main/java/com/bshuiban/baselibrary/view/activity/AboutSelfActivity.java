@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.view.customer.TitleView;
 
 public class AboutSelfActivity extends BaseActivity {
 
@@ -16,9 +17,9 @@ public class AboutSelfActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_self);
-        ImageView iv_select_subject = findViewById(R.id.iv_select_subject);
-        iv_select_subject.setOnClickListener(v -> finish());
         TextView mTvVersionName = findViewById(R.id.tv_versionName);
+        TitleView titleView = findViewById(R.id.titleView);
+        titleView.setOnClickListener(v -> finish());
         mTvVersionName.setText(getVersionName());
     }
     private String getVersionName() {

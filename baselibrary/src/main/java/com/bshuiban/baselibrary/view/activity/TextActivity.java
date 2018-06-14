@@ -17,7 +17,6 @@ public class TextActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.activity_text);
         TitleView titleView=findViewById(R.id.titleView);
         et=findViewById(R.id.et);

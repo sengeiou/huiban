@@ -6,11 +6,16 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bshuiban.baselibrary.view.activity.AboutSelfActivity;
+import com.bshuiban.baselibrary.view.activity.ChangeUserActivity;
 import com.bshuiban.baselibrary.view.activity.CleanCacheActivity;
 import com.bshuiban.baselibrary.view.activity.HomePageActivity;
 import com.bshuiban.baselibrary.view.activity.OpinionActivity;
@@ -19,6 +24,7 @@ import com.bshuiban.baselibrary.view.customer.BottomBarTab;
 import com.bshuiban.baselibrary.view.fragment.HomeworkFragment;
 import com.bshuiban.baselibrary.view.fragment.ReportFragment;
 import com.bshuiban.baselibrary.view.webview.webActivity.CollectionListActivity;
+import com.bshuiban.baselibrary.view.webview.webActivity.SideCollectionListWebActivity;
 import com.bshuiban.baselibrary.view.webview.webFragment.ErrorHomeworkWebFragment;
 import com.bshuiban.baselibrary.view.webview.webFragment.InteractionBaseWebViewFragment;
 import com.bshuiban.teacher.R;
@@ -53,9 +59,17 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
     }
 
     @Override
-    protected void initNavigationView(NavigationView navigationView) {
-        View view = navigationView.inflateHeaderView(R.layout.nav_teacher_header_home_page);
-        navigationView.inflateMenu(R.menu.activity_home_page_teacher_drawer);
+    protected void initNavigationView(FrameLayout rl, LinearLayout navigationView) {
+        View view = LayoutInflater.from(this).inflate(R.layout.nav_teacher_header_home_page,rl,false);
+        rl.addView(view,0);
+        navigationView.addView(getSlideView(R.mipmap.teach_class,"所教班级","nav_teach_class",navigationView));
+        navigationView.addView(getSlideView(R.mipmap.my_shoucang,"我的收藏","nav_gallery",navigationView));
+        navigationView.addView(getSlideView(R.mipmap.my_space,"我的空间","nav_my_space",navigationView));
+        navigationView.addView(getSlideView(R.mipmap.about_huiban,"关于慧班","nav_about_self",navigationView));
+        navigationView.addView(getSlideView(R.mipmap.yijianfankui,"意见反馈","nav_opinion",navigationView));
+        navigationView.addView(getSlideView(R.mipmap.cleancouche,"清除缓存","nav_clear_cache",navigationView));
+        navigationView.addView(getSlideView(R.mipmap.change_user,"切换身份","nav_change_user",navigationView));
+
         //头像
         iv_head = (ImageView) view.findViewById(R.id.iv_head);
         //简介
@@ -111,19 +125,21 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
     }
 
     @Override
-    protected void itemSelectedId(int id) {
+    protected void itemSelectedId(String id) {
         Class<?> cls;
-        if (id==R.id.nav_teach_class) {
+        if (id.equals("nav_teach_class")){
             cls = TeachClassWebActivity.class;
-        }else if(id==R.id.nav_my_space){
+        }else if(id.equals("nav_my_space")){
             cls= MySpaceWebActivity.class;
-        }else if (id == R.id.nav_gallery) {
-            cls= CollectionListActivity.class;
-        } else if (id == R.id.nav_about_self) {
+        }else if (id.equals("nav_gallery")) {
+            cls= SideCollectionListWebActivity.class;
+        } else if (id.equals("nav_about_self")) {
             cls= AboutSelfActivity.class;
-        } else if (id == R.id.nav_opinion) {
+        } else if (id.equals("nav_opinion")) {
             cls=OpinionActivity.class;
-        } else {//nav_clear_cache
+        } else if(id.equals("nav_change_user")){
+            cls=ChangeUserActivity.class;
+        }else {//nav_clear_cache
             cls= CleanCacheActivity.class;
         }
         if(null!=cls) {

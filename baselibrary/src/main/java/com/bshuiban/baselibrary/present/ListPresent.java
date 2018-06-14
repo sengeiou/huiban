@@ -54,6 +54,7 @@ public abstract class ListPresent<T extends BaseView> extends BasePresent<T> imp
     @Override
     public void refresh() {
         start=0;
+        clearArray();
         getInterNetData();
     }
 

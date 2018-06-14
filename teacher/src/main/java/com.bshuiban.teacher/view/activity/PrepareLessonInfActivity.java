@@ -19,6 +19,7 @@ import com.bshuiban.baselibrary.model.LogUtils;
 import com.bshuiban.baselibrary.utils.TextUtils;
 import com.bshuiban.baselibrary.utils.ZoominPagerTransFormer;
 import com.bshuiban.baselibrary.view.activity.BaseActivity;
+import com.bshuiban.baselibrary.view.customer.TitleView;
 import com.bshuiban.teacher.R;
 import com.bshuiban.teacher.contract.PrepareLessonInfContract;
 import com.bshuiban.teacher.model.PrepareLessonBean;
@@ -161,6 +162,8 @@ public class PrepareLessonInfActivity extends BaseActivity<PrepareLessonInfPrese
 
     private void init() {
         mVp = findViewById(R.id.vp_student_homework);
+        TitleView titleView = findViewById(R.id.titleView);
+        titleView.setOnClickListener(v -> finish());
         mIvRedDot = findViewById(R.id.iv_guide_red_dot);
         mLlDots = findViewById(R.id.ll_guide_gray_dots);
         mImageViewList = new ArrayList<>();

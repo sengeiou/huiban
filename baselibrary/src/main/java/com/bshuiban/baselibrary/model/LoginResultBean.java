@@ -36,6 +36,7 @@ public class LoginResultBean extends ResultBean {
     public class Data {
         private String userId="2030246";
         private String passWord;
+        private String mobile;
         private int userType;
 
         private String realName;
@@ -56,6 +57,14 @@ public class LoginResultBean extends ResultBean {
         private int vipDays;
 
         private List<String> className;
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
 
         public void setUserId(String userId) {
             this.userId = userId;

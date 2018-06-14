@@ -1,11 +1,11 @@
 var res;
+var count=0;
 function remakes(data) {
     res = JSON.parse(data);
     $(".total").html(res.title);
     $(".names").html(res.stuName);
     $(".totals").html(`共${res.title.length}道`);
     var str="";
-    var count=0;
     for(var i=0;i<res.homework.length;i++) {
         if(res.homework[i].correct == true) {
             if(res.homework[i].result == 0) {
@@ -39,9 +39,13 @@ function remakes(data) {
 
 // 批改完成啊按钮
 $(".button").click(function(){
-   $(".hint").css({
-       "display":"block"
-   })
+  if (count != 0) {
+      $(".hint").css({
+      "display": "block"
+      })
+  }else{
+      window.android.commit();
+  }
 })
 // 继续作答
 $(".span2").click(function(){

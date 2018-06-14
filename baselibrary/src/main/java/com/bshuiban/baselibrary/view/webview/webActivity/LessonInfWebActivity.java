@@ -5,16 +5,11 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
-import android.widget.FrameLayout;
 
 import com.bshuiban.baselibrary.contract.LessonInfContract;
 import com.bshuiban.baselibrary.present.LessonInfPresent;
-import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.activity.PlayerVideoActivity;
-import com.bshuiban.baselibrary.view.activity.VideoPlayerActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
-
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
  * Created by xinheng on 2018/5/18.<br/>

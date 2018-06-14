@@ -38,7 +38,6 @@ public class HomeworkResultWebActivity extends BaseWebActivity<HomeworkResultPre
         Intent intent = getIntent();
         workId = intent.getIntExtra(HomeworkListWebActivity.HOME_Work_Id, -1);
         prepareId = intent.getIntExtra(HOME_PREPARE, -1);
-        tPresent = new HomeworkResultPresent(this);
         boolean complete = intent.getBooleanExtra("complete", true);
         if (complete) {
             loadFileHtml("list");
@@ -48,6 +47,7 @@ public class HomeworkResultWebActivity extends BaseWebActivity<HomeworkResultPre
             User.getInstance().getHomework().setTime(time1);
             loadFileHtml("submit");
         }
+        tPresent = new HomeworkResultPresent(this,complete);
         registerWebViewH5Interface(new HomeworkResultHtml());
     }
 

@@ -50,7 +50,7 @@ public class StatisticalChartActivity extends BaseActivity<StatisticalChartPrese
         tv_front.setOnClickListener(onClickListener);
         tv_middle.setOnClickListener(onClickListener);
         tv_after.setOnClickListener(onClickListener);
-
+        findViewById(R.id.iv).setOnClickListener(v -> finish());
     }
     private View.OnClickListener onClickListener= v -> {
         if(!data){

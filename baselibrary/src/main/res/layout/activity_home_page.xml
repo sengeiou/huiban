@@ -5,20 +5,59 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="start"
+    android:fitsSystemWindows="true">
 
     <include
         layout="@layout/layout_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="@dimen/dp_260"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:layout_gravity="start"
+        android:background="@color/white">
+        <FrameLayout
+            android:id="@+id/head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <android.support.design.widget.NavigationView
+        </FrameLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/head"
+            android:layout_above="@+id/tv_login_out"
+            >
+            <LinearLayout
+                android:id="@+id/ll_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
+        <TextView
+            android:id="@+id/tv_login_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="退出登录"
+            android:layout_alignParentBottom="true"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+    <!--<android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true"/>-->
         <!--app:headerLayout="@layout/nav_header_home_page"
         app:menu="@menu/activity_home_page_drawer"-->
 </android.support.v4.widget.DrawerLayout>
