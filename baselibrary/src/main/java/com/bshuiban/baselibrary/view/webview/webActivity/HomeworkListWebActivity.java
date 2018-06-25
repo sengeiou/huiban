@@ -9,9 +9,11 @@ import android.widget.FrameLayout;
 
 import com.bshuiban.baselibrary.contract.HomeworkListContract;
 import com.bshuiban.baselibrary.model.LogUtils;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.HomeworkListPresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
+import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
 
 /**
  * Created by xinheng on 2018/5/24.<br/>
@@ -125,6 +127,11 @@ public class HomeworkListWebActivity extends BaseWebActivity<HomeworkListPresent
     }
 
     class HomeworkListHtml extends MessageList {
+        @JavascriptInterface
+        public int getUserType() {
+            return User.getInstance().getUserType();
+        }
+
         /**
          * 更改学科
          *
@@ -150,7 +157,7 @@ public class HomeworkListWebActivity extends BaseWebActivity<HomeworkListPresent
         public void toNextPage(int workId, int prepareId) {
             //workId prepareId
             runOnUiThread(() -> {
-                if (tPresent.getTAg()||home_type==Middle_Class) {//已完成
+                if (tPresent.getTAg() || home_type == Middle_Class) {//已完成
                     startActivity(new Intent(getApplicationContext(), HomeworkReportActivity.class).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId));
                 } else {//未完成
                     startActivity(new Intent(getApplicationContext(), HomeworkPendingInfActivity.class).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId));

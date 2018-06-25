@@ -12,6 +12,7 @@ import com.bshuiban.baselibrary.model.LogUtils;
 import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
 import com.bshuiban.teacher.contract.CorrectResultContract;
 import com.bshuiban.teacher.present.CorrectResultPresent;
+import com.bshuiban.teacher.view.activity.PrepareLessonInfActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -34,6 +35,8 @@ public class CorrectResultWebActivity extends BaseWebActivity<CorrectResultPrese
     private String studentId;
     private String preId;
     private List<HomeworkBean> homeworkBeans;
+    private String classId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,7 @@ public class CorrectResultWebActivity extends BaseWebActivity<CorrectResultPrese
         registerWebViewH5Interface(new CorrectResultHtml());
         this.workId = getIntent().getIntExtra(HOME_Work_Id, -1);
         home_type = getIntent().getIntExtra(HOME_TYPE, 1);
+        classId = getIntent().getStringExtra("classId");
         tPresent=new CorrectResultPresent(this);
     }
 
@@ -71,13 +75,14 @@ public class CorrectResultWebActivity extends BaseWebActivity<CorrectResultPrese
                 HomeworkBean homeworkBean = homeworkBeans.get(i);
                 if(homeworkBean.getCorrect()) {
                     stringBuffer.append(homeworkBean.getProblemId());
-                    stringBuffer.append("_");
+                    stringBuffer.append("___");
                     stringBuffer.append(getAnswerResult(homeworkBean.getResult()));
-                    stringBuffer.append(",");
+                    //stringBuffer.append("_,_");
+                    stringBuffer.append("_,_");
                 }
             }
             int length = stringBuffer.length();
-            String s = stringBuffer.delete(length - 1, length).toString();
+            String s = stringBuffer.delete(length - 3, length).toString();
             LogUtils.e(TAG, "changeForMarkHBWork: "+s );
             return s;
         }
@@ -97,6 +102,7 @@ public class CorrectResultWebActivity extends BaseWebActivity<CorrectResultPrese
 
     @Override
     public void commitSuccess() {
+        startActivity(new Intent(getApplicationContext(),PrepareLessonInfActivity.class));
         finish();
     }
 
@@ -117,7 +123,7 @@ public class CorrectResultWebActivity extends BaseWebActivity<CorrectResultPrese
     class CorrectResultHtml{
         @JavascriptInterface
         public void commit(){
-            tPresent.commitHomeworkResult(preId,home_type,workId,studentId,changeForMarkHBWork(homeworkBeans));
+            tPresent.commitHomeworkResult(classId,preId,home_type,workId,studentId,changeForMarkHBWork(homeworkBeans));
         }
     }
 }

@@ -17,6 +17,21 @@ function count(data) {
     }
     var str =  `<caption>知识掌握详情</caption>`;
    for(var i=0; i<data.knowArr.length; i++) {
+           if(parseInt(data.knowArr[i].rate)<0) {
+           data.knowArr[i].rate = "--";
+            var  rate = (data.knowArr[i].rate)*(2)/50 +'rem';
+                  console.log(rate)
+                  str+=` <tr>
+                           <td style="text-align:center">${data.knowArr[i].branName}</td>
+                           <td>
+                               <p style="width:${rate}"></p>
+                           </td>
+                           <td>
+                               <p>完成${data.knowArr[i].cnt}题</p>
+                               <p>正确率${data.knowArr[i].rate}</p>
+                           </td>
+                       </tr>`;
+           } else {
        var  rate = (data.knowArr[i].rate)*(2)/50 +'rem';
        console.log(rate)
        str+=` <tr>
@@ -29,6 +44,7 @@ function count(data) {
                     <p>正确率${data.knowArr[i].rate}%</p>
                 </td>
             </tr>`;
+       }
    }
    table.innerHTML = str;
    if(parseInt(data.userRate)<0) {
@@ -104,7 +120,8 @@ option = {
                 }
             }
         }
-    ]
+    ],
+    color: ['#35d1c4','#ff7777','#78bcfd','#f69664']
 };
 
 

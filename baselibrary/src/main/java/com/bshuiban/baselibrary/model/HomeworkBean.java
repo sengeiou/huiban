@@ -22,9 +22,9 @@ public class HomeworkBean extends Homework.Data {
      */
     private boolean correct;
     /**
-     * 试题Id
+     * 试题Id 拼接的
      */
-    private int problemId;
+    private String problemId;
     /**
      * 此题所属试卷类型
      */
@@ -90,11 +90,11 @@ public class HomeworkBean extends Homework.Data {
         this.problemIndex = problemIndex;
     }
 
-    public int getProblemId() {
+    public String getProblemId() {
         return problemId;
     }
 
-    public void setProblemId(int problemId) {
+    public void setProblemId(String problemId) {
         this.problemId = problemId;
     }
 
@@ -248,6 +248,7 @@ public class HomeworkBean extends Homework.Data {
                         HomeworkInfBean.DataBean.OnLineBean.NextBean nextBean = next.get(j);
                         if (null != next) {
                             String optionName = nextBean.getOptionName();
+                            homeworkBean.setProblemId("5___0___"+nextBean.getExamId());
                             if (isSelect(optionName)) {
                                 homeworkBean.setCorrect(true);
                                 homeworkBean.setObjective(true);
@@ -275,6 +276,7 @@ public class HomeworkBean extends Homework.Data {
                                 HomeworkInfBean.DataBean.ExamPaperBean.ExamBean.NextBeanX nextBeanX = next.get(k);
                                 if (null != next) {
                                     String optionName = nextBeanX.getOptionName();
+                                    homeworkBean.setProblemId("6___"+nextBeanX.getPaperId()+"___"+nextBeanX.getExamId());
                                     if (isSelect(optionName)) {
                                         homeworkBean.setCorrect(true);
                                         homeworkBean.setObjective(true);
@@ -299,6 +301,7 @@ public class HomeworkBean extends Homework.Data {
                     HomeworkInfBean.DataBean.VideoBean.Exam exam1 = exam.get(j);
                     if (null != exam1) {
                         String optionName = exam1.getOptionName();
+                        homeworkBean.setProblemId("8___"+exam1.getVideoId()+"___"+exam1.getExamId());
                         if (isSelect(optionName)) {
                             homeworkBean.setCorrect(true);
                             homeworkBean.setObjective(true);

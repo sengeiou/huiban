@@ -60,6 +60,7 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
     private void loadJingPing() {
         JsonObject jsonObject = new JsonObject();
         jingPin = true;
+        tPresent.reSetStart();
         tPresent.screeningLesson("getHBCourseList", new Gson().toJson(jsonObject));
     }
 
@@ -140,7 +141,7 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
         @JavascriptInterface
         public void dealWithJson(String key, String json) {
             if ("getHBCourseList".equals(key)) {
-                tPresent.reSetStart();
+                //tPresent.reSetStart();
                 jingPin = false;
                 tPresent.screeningLesson("getHBCourseList", json);
             } else {//获取筛选条件

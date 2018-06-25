@@ -29,7 +29,6 @@ public class TodayHomeworkWebActivity extends BaseWebActivity<TodayHomeworkPrese
 
     @Override
     public void updateListView(int type, String json) {
-        nowWtype=type;
         String name="worknotice";
         loadJavascriptMethod(name,json);
     }
@@ -66,6 +65,7 @@ public class TodayHomeworkWebActivity extends BaseWebActivity<TodayHomeworkPrese
         public void changeItem(int type){
             if(type!=nowWtype) {
                 tPresent.loadTodayHomework(type);
+                nowWtype=type;
             }
         }
 

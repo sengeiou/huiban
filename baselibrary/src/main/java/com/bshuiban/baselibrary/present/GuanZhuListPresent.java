@@ -28,7 +28,7 @@ public class GuanZhuListPresent extends ListPresent<GuanZhuListContract.View> im
     public void getInterNetData() {
         if(!android.text.TextUtils.isEmpty(search)){
             //{"schoolId":"","start":,"limit":}
-            String json = "{\"key\":\""+search+"\",\"schoolId\":\"" + User.getInstance().getSchoolId() + "\",\"start\":" + start + ",\"limit\":" + limit + "}";
+            String json = "{\"teaId\":\""+User.getInstance().getReallyUserId()+"\",\"key\":\""+search+"\",\"schoolId\":\"" + User.getInstance().getSchoolId() + "\",\"start\":" + start + ",\"limit\":" + limit + "}";
             search=null;
             askInternet("getHBTeacherList", json ,callHTMLJsonArray);
         }else {
@@ -37,10 +37,10 @@ public class GuanZhuListPresent extends ListPresent<GuanZhuListContract.View> im
         }
     }
     @Override
-    public void guanZhu(boolean tag, int attUserId) {
+    public void guanZhu(boolean tag, String attUserId) {
         String key=tag?"addUserAttention":"deleteUserAttention";
         //"userId":"","attUserId":
-        askInternet(key, "{\"userId\":\"" + User.getInstance().getUserId() + "\",\"attUserId\":" + attUserId + "}", new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
+        askInternet(key, "{\"userId\":\"" + User.getInstance().getUserId() + "\",\"attUserId\":\"" + attUserId + "\"}", new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
             @Override
             protected void success(ResultBean resultBean) {
                 if(isEffective()){

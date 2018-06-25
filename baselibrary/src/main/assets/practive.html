@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.6, maximum-scale=0.6, user-scalable=no">
 	<title>巩固练习</title>
 	<link rel="stylesheet" href="./css/reset.css">
 	<link rel="stylesheet" href="./css/wrong.css">
@@ -27,6 +28,7 @@
 <script>	
 	function getContent (data) {
 		var data = JSON.parse(data);
+		console.log(data[0]);
 		if(data[0].knowName==null||data[0].knowName==undefined||data[0].knowName==''){
 			$('.title').hide();
 		}else{

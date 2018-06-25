@@ -13,6 +13,6 @@ public class ParentConfirmPresent extends com.bshuiban.baselibrary.present.Paren
 
     @Override
     protected String getKey() {
-        return "getHBParConSubInfo";
+        return "getHBParConSubStatus";
     }
 }

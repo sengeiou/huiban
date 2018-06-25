@@ -1,5 +1,4 @@
 var details = document.getElementsByClassName("details")[0];
-var notdone = document.getElementsByClassName("nodone")[0];
 var active = document.getElementsByClassName("active")[0];
 var active2 = document.getElementsByClassName("active2")[0];
 var done = document.getElementsByClassName("done")[0];
@@ -9,29 +8,29 @@ var filte = document.getElementById("filte");
 var res=[];
 var num=0;
  $(".details").hide();
+  $("#filte").hide();
 todo.onclick = function () {
     // 渲染已完成页面列表
     //complatelist(res2)
+     $(".done").html(" ")
     window.android.changeDataType(true)
     active.style.borderBottom = "none";
     active.style.color = "#E7E7E7";
     active2.style.borderBottom = "solid 0.08rem #00CFBF";
     active2.style.color = "#747474";
-    notdone.style.display = "none";
-    done.style.display = "block";
     details.style.display = "block";
     num = 1;
 }
 nodo.onclick = function () {
+     $(".done").html('');
     active2.style.borderBottom = "none";
     window.android.changeDataType(false)
     active2.style.color = "#E7E7E7";
     active.style.borderBottom = "solid 0.08rem #00CFBF";
     active.style.color = "#747474";
-    done.style.display = "none";
-    notdone.style.display = "block";
     details.style.display = "none";
     num = 0;
+    window.android.changeSubjectId(0)
 }
 // 点击筛选页完成课表
 details.onclick = function () {
@@ -48,6 +47,14 @@ function nocomplate(data) {
     res = JSON.parse(data)
     var str = "";
     var str2 = "";
+    $(".done").html(" ");
+     var usertype = window.android.getUserType();
+     var classNameNoComplete;
+     if(usertype == 4) {
+        classNameNoComplete='looka';
+     }else{
+        classNameNoComplete='jump';
+     }
     for (var i = 0; i < res.length; i++) {
         var addtime = new Date(res[i].addTime * 1000).toLocaleDateString();
         var endtime = new Date(res[i].endTime * 1000).toLocaleDateString();
@@ -59,25 +66,43 @@ function nocomplate(data) {
                         <p>${res[i].descInfo}</p>
                     </dt>
                     <dd>
-                        <a href="javascript:void(0)" class="jump"></a>
+                        <a href="javascript:void(0)" class=${classNameNoComplete}></a>
                     </dd>
                 </dl>
                 <p class="time">${addtime}--${endtime}</p>
             </div>
        `;
     }
-    notdone.innerHTML = str;
-    var jump = document.getElementsByClassName("jump");
-    // 未完成页点击跳转到每个单元对应的试题页
-    window.android.log("点击"+jump.length);
-    for (var i = 0; i < jump.length; i++) {
-        (function (i) {
-            jump[i].onclick = function () {
-                window.android.log("点击");
-                window.android.toNextPage(res[i].workId, res[i].prepareId);
-            }
-        })(i)
+    done.innerHTML = str;
+    $('.listoo').css('height',$('.done').height()+100);
+        myIscroll.refresh();
+    //var usertype = window.android.getUserType();
+    if(usertype != 4) {
+        var jump = document.getElementsByClassName("jump");
+        // 未完成页点击跳转到每个单元对应的试题页
+        //window.android.log("点击"+jump.length);
+        for (var i = 0; i < jump.length; i++) {
+            (function (i) {
+                jump[i].onclick = function () {
+                    //window.android.log("点击");
+                    window.android.toNextPage(res[i].workId, res[i].prepareId);
+                }
+            })(i)
+        }
+    } else {
+        var jump = document.getElementsByClassName("looka");
+        // 未完成页点击跳转到每个单元对应的试题页
+        //window.android.log("点击"+jump.length);
+        for (var i = 0; i < jump.length; i++) {
+            (function (i) {
+                jump[i].onclick = function () {
+                    //window.android.log("点击");
+                    window.android.toNextPage(res[i].workId, res[i].prepareId);
+                }
+            })(i)
+        }
     }
+
 }
 // 完成页
 function complatelist(data) {
@@ -125,6 +150,8 @@ function complately(data) {
                 `;
     }
     done.innerHTML = str3;
+    $('.listoo').css('height',$('.done').height()+100);
+        myIscroll.refresh();
     var look = document.getElementsByClassName("look");
     // 未完成页点击跳转到每个单元对应的试题页
     for (var i = 0; i < look.length; i++) {
@@ -139,8 +166,7 @@ function complately(data) {
 // 页面加载
 window.onload = function () {
     $("#filte").hide();
-    $(".details").hide();
-    done.style.display = "none";
+    $(".details").hide()
     details.style.display = "none";
     // 数据渲染
     // 未完成

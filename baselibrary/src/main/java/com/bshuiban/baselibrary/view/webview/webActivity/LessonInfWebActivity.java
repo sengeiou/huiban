@@ -7,17 +7,22 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.LessonInfContract;
+import com.bshuiban.baselibrary.contract.TeachClassContract;
+import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.present.LessonInfPresent;
 import com.bshuiban.baselibrary.view.activity.PlayerVideoActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
+
+import java.util.List;
 
 /**
  * Created by xinheng on 2018/5/18.<br/>
  * describe：课程详情
  */
-public class LessonInfWebActivity<T extends LessonInfPresent> extends BaseWebActivity<T> implements LessonInfContract.View{
+public class LessonInfWebActivity<T extends LessonInfPresent> extends BaseWebActivity<T> implements LessonInfContract.View,TeachClassContract.View{
     private final String HTML_FILE_NAME="courseDetails";
     protected String courseId;
+    protected List<TeachClassBean.DataBean> data;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,8 +77,14 @@ public class LessonInfWebActivity<T extends LessonInfPresent> extends BaseWebAct
 
     @Override
     public void fail(String error) {
-
+        toast(error);
     }
+
+    @Override
+    public void updateData(List<TeachClassBean.DataBean> data) {
+        this.data=data;
+    }
+
     protected class LessonInfHtml extends UserTypeHtml{
         /**
          * 收藏

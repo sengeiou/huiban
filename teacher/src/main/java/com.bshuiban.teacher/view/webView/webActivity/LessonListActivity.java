@@ -22,7 +22,19 @@ public class LessonListActivity extends BaseWebActivity<LessonListPresent> imple
         super.onCreate(savedInstanceState);
         tPresent=new LessonListPresent(this);
         loadFileHtml("stuResource");
-        registerWebViewH5Interface(new LessonListHtml());
+        LessonListHtml object = new LessonListHtml();
+        object.setOnListener(new MessageList.OnMessageListListener(){
+            @Override
+            public void refresh() {
+                tPresent.refresh();
+            }
+
+            @Override
+            public void loadMore() {
+                tPresent.loadMoreData();
+            }
+        });
+        registerWebViewH5Interface(object);
     }
 
     @Override
@@ -93,7 +105,7 @@ public class LessonListActivity extends BaseWebActivity<LessonListPresent> imple
         switch (requestCode){
             case 100:
                 if(data!=null){
-                    String json = data.getStringExtra("json");
+                    String json = data.getStringExtra("text");
                     tPresent.loadLessonListData(json);
                 }
                 break;

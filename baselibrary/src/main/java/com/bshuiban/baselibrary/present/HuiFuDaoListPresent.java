@@ -30,31 +30,14 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
 
     public void reSetStart() {
         start = 0;
+        clearArray();
     }
 
     @Override
     public void screeningLesson(String key, String json) {
         this.key = key;
-        JsonElement parse = new JsonParser().parse(json);
-        if (parse.isJsonObject()) {
-            JsonObject asJsonObject = parse.getAsJsonObject();
-            asJsonObject.addProperty("index", start);
-            asJsonObject.addProperty("limit", limit);
-            JsonElement subjectId1 = asJsonObject.get("subjectId");
-            if (null != subjectId1) {
-                subjectId = subjectId1.getAsInt();
-                guessWhatYouThink(String.valueOf(subjectId));
-            } else {
-                subjectId = -1;
-                clearArray();
-            }
-            this.json = gson.toJson(asJsonObject);
-            getInterNetData();
-        } else {
-            if (isEffective()) {
-                view.fail("提供的json串错误");
-            }
-        }
+        this.json=json;
+        getInterNetData();
     }
 
     @Override
@@ -102,7 +85,9 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
             @Override
             protected void fail(String error) {
                 if (isEffective()) {
-                    //view.fail(error);
+                    if(error!=null&&error.contains("暂无数据")) {
+                        view.fail("猜你所想："+error);
+                    }
                     view.addTag();
                 }
             }
@@ -111,7 +96,26 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
 
     @Override
     public void getInterNetData() {
-        RetrofitService.getInstance().getServiceResult(key, json, callHTMLJsonArray);
+        JsonElement parse = new JsonParser().parse(json);
+        if (parse.isJsonObject()) {
+            JsonObject asJsonObject = parse.getAsJsonObject();
+            JsonElement subjectId1 = asJsonObject.get("subjectId");
+            if (null != subjectId1) {
+                subjectId = subjectId1.getAsInt();
+                guessWhatYouThink(String.valueOf(subjectId));
+            } else {//精品
+                subjectId = -1;
+                clearArray();
+            }
+            asJsonObject.addProperty("index", start);
+            asJsonObject.addProperty("limit", limit);
+            this.json = gson.toJson(asJsonObject);
+            RetrofitService.getInstance().getServiceResult(key, json, callHTMLJsonArray);
+        } else {
+            if (isEffective()) {
+                view.fail("提供的json串错误");
+            }
+        }
     }
 
     @Override

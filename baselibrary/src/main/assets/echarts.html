@@ -10,7 +10,7 @@
 
     <!-- <link rel="stylesheet" href="./css/homework.css"> -->
     <style>
-        * {
+         * {
             margin: 0;
             margin: 0;
             box-sizing: border-box;
@@ -22,27 +22,12 @@
         }
 
         .detail {
-            position: absolute;
-            display: block;
-            bottom: .22rem;
-            right: .34rem;
-            width: .42rem;
-            height: .4rem;
-            background-image: url("../../images/work/details@2x.png");
-            background-size: 100%;
-
-        }
-
-        @media only screen and (-webkit-min-device-pixel-ratio:2) {
-            .detail {
-                background-image: url("../../images/work/details@2x.png");
-            }
-        }
-
-        @media only screen and (-webkit-min-device-pixel-ratio:3) {
-            .detail {
-                background-image: url("../../images/work/details@3x.png");
-            }
+        position: absolute;
+        display: block;
+        bottom: .22rem;
+        right: .34rem;
+        width: .42rem !important;
+        height: .4rem;
         }
 
         .title {
@@ -68,7 +53,7 @@
 
         .title p:nth-of-type(2) {
             color: #bebebe;
-            margin-bottom: .3rem;
+            margin-bottom: .16rem;
         }
 
         .title p:nth-of-type(2) span {
@@ -112,19 +97,20 @@
             margin-bottom: .34rem;
         }
 
-        .pie li:nth-of-type(odd) {
-            width: 2.5rem;
-            padding-left: .5rem;
-            margin-right: .4rem;
+       .pie li:nth-of-type(odd) {
+        width: 35%;
+        padding-left: 5%;
+        margin-right: 5%;
+        margin-left:5%;
         }
         .pie li:nth-of-type(2),
         .pie li:nth-of-type(4) {
-            width: 4.6rem;
-            padding-left: .9rem;
+        width:50%;
+        padding-left: 5%;
         }
 
         #main {
-            width: 7.5rem;
+            width:100%;
             height: 7.5rem;
             position: absolute;
             top: 2.3rem;
@@ -165,9 +151,9 @@
         }
 
         #column {
-            width: 7.18rem;
+            width:96%;
             margin-bottom: .3rem;
-            margin-left: .16rem;
+            margin-left:2%;
             margin-top: 10.2rem;
         }
         table{
@@ -213,7 +199,7 @@
                <a href="/finish_page.html"></a>
             </span>
             <span>作业报告</span>
-            <a href="details.html" class="detail"> </a>
+            <img class="detail" src="./images/work/details@2x.png" alt="">
         </header>
         <div class="title">
             <p>第六单元 化学方程式</p>

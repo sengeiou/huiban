@@ -118,7 +118,7 @@
             <!-- 慧辅导 -->
             <div class="coach">
                 <h3 class="title">慧辅导</h3>
-                <div class="list">
+                <div class="listlo">
                     <div class="course">
                         <img src="./images/reset/class_overview_pic.png" alt="" onerror="this.src='./images/reset/classPic.png' ">
                     </div>
@@ -151,9 +151,10 @@
                         </a>
                     </span>
                 </h3>
+                <div class="bigbox">
                 <div class="box">
 
-
+                   </div>
                 </div>
                 <h2 class="more">查看全部</h2>
             </div>
@@ -242,7 +243,6 @@
         hour = myDate.getHours();
     }
     getNowTime();
-
     // 班级页
     var classes = document.getElementsByClassName('class')[0];
     //  课表页 
@@ -296,11 +296,13 @@
     messa.onclick = function () {
         window.android.toNextActivity(6)
     }
-
+    //个人头像点击
+    $(".userImg").click(function(){
+        console.log("111")
+    })
 
     //切换课表
     function switchs(list) {
-    window.android.log(list)
         console.log(list);
         var data = JSON.parse(list);
         var tab = document.getElementsByClassName("tab")[0];
@@ -365,17 +367,26 @@
         $(this).parent().show();
     })
     if (hour >= 1 && hour <= 12) {
+        curriculum[0].style.display = "flex";
+        curriculum[1].style.display = "none";
+        curriculum[2].style.display = "none";
         $('.morning').removeClass("morning").addClass("mornings")
-    } else if (hour > 12 && hour <= 18) {
-        $('.afternoon').removeClass("afternoon").addClass("afternoons")
-    } else {
-        $('.evening').removeClass("evening").addClass("evenings")
-    }
+        } else if (hour > 12 && hour <= 18) {
+        $('.afternoon').removeClass("afternoon").addClass("afternoons");
+        curriculum[0].style.display = "none";
+        curriculum[1].style.display = "flex";
+        curriculum[2].style.display = "none";
+        } else {
+        $('.evening').removeClass("evening").addClass("evenings");
+        curriculum[0].style.display = "none";
+        curriculum[1].style.display = "none";
+        curriculum[2].style.display = "flex";
+        }
     // 慧辅导导航
     function imag(list) {
         var data = JSON.parse(list)
         var str = "";
-        var list = document.getElementsByClassName("list")[0];
+        var list = document.getElementsByClassName("listlo")[0];
         str += `
         <div class="course">
         <img src=${data[0].imgUrl} class="userImg" onerror="this.src='./images/reset/classPic.png'">
@@ -394,10 +405,15 @@
                 })(i)
             }
         }
-    }
+
     var array;
     // 留言页 回复页
     function message(list) {
+        $('.box').html('');
+        if(list==''||list=='null'||list==null||list=='[]'){
+            $('.more').hide();
+            return;
+        }
         var data = JSON.parse(list)
         console.log(data)
         var attr = "";
@@ -434,6 +450,8 @@
         }
         var xbox = document.getElementsByClassName("box")[0];
         xbox.innerHTML = attr;
+        $('.bigbox').css('height',$('.box').height()+10);
+        myIscroll.refresh();
         var dele = document.getElementsByClassName("dele");
         var rep = document.getElementsByClassName("rep");
         var button = document.getElementsByTagName("button")[0];
@@ -466,32 +484,32 @@
             })(i)
         }
     }
-    <!--var list = document.querySelector('.list');-->
-    <!--var myIscroll = new IScroll('#wrap', {-->
-        <!--scrollbars: true,-->
-        <!--probeType: 3-->
-    <!--});-->
-    <!--var flag = true;-->
-    <!--myIscroll.on('scroll', function () {-->
-        <!--if (this.y > 40) {-->
-            <!--list.setAttribute('uptext', '释放刷新');-->
-        <!--} else if (this.y < 40 && this.y > 0) {-->
-            <!--list.setAttribute('uptext', '下拉刷新');-->
-        <!--} else if (this.y < this.maxScrollY - 40) {-->
-            <!--flag = true;-->
-        <!--}-->
-    <!--})-->
-    <!--myIscroll.on('scrollEnd', function () {-->
-        <!--list.setAttribute('text', '下拉刷新');-->
-        <!--if (this.y === this.maxScrollY) {-->
-            <!--console.log("上拉");-->
-        <!--} else if (this.y === 0) {-->
-            <!--console.log("下拉");-->
-            <!--window.android.getMoreData(true);-->
-        <!--}-->
-    <!--})-->
+    var list = document.querySelector('.listoo');
+    var myIscroll = new IScroll('#wrap', {
+        scrollbars: true,
+        probeType: 3
+    });
+    var flag = true;
+    myIscroll.on('scroll', function () {
+        if (this.y > 40) {
+            list.setAttribute('uptext', '释放刷新');
+        } else if (this.y < 40 && this.y > 0) {
+            list.setAttribute('uptext', '下拉刷新');
+        } else if (this.y < this.maxScrollY - 40) {
+            flag = true;
+        }
+    })
+    myIscroll.on('scrollEnd', function () {
+        list.setAttribute('text', '下拉刷新');
+        if (this.y === this.maxScrollY) {
+            //console.log("上拉");
+        } else if (this.y === 0) {
+            console.log("下拉");
+            window.android.getMoreData(true);
+        }
+    })
 function userimgs(data) {
-$(".userImg").attr("src",data)
+    $(".userImg").attr("src",data)
 }
 
 </script>

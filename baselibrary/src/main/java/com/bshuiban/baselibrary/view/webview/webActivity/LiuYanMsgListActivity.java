@@ -24,6 +24,7 @@ public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> 
 
     private String messageUserId;
     private String name;
+    private boolean isSelf;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> 
         if(TextUtils.isEmpty(name)){
             name=User.getInstance().getUserName();
         }
+        isSelf=messageUserId==User.getInstance().getUserId();
         tPresent=new LiuYanMsgListParent(this,messageUserId);
         loadFileHtml("leave");
         LiuYanMsgListHtml messageList=new LiuYanMsgListHtml();
@@ -95,7 +97,7 @@ public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> 
 
     @Override
     public void startReplyDialog(MessageBean.DataBean dataBean) {
-        ReplyDialog replyDialog=new ReplyDialog(this);
+        ReplyDialog replyDialog=new ReplyDialog(this,isSelf);
         replyDialog.setViewData(dataBean);
         replyDialog.show();
         replyDialog.setMessageListListener(new ReplyDialog.MessageListListener() {
@@ -134,6 +136,14 @@ public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> 
         @JavascriptInterface
         public String getName(){
             return name;
+        }
+        @JavascriptInterface
+        public String getUserId(){
+            return User.getInstance().getUserId();
+        }
+        @JavascriptInterface
+        public boolean isSelf(){
+            return isSelf;
         }
     }
 }

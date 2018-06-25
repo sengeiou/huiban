@@ -12,24 +12,30 @@
 <script src="./js/jquery.min.js"></script>
 <script src="./js/iscroll-probe.js"></script>
 <body>
-    <div class="wrap notic">
-        <header>
+<div class="wrap notic">
+    <header>
             <span>
                 <a href="/finish_page.html"></a>
-            </span>	
-            <span>通知</span>
-        </header>
-        <main id="wrap">
-            <div class="list" uptext="下拉刷新"></div>
-        </main>
-    </div>
+            </span>
+        <span>通知</span>
+        <!--<span class="send">-->
+                <!--<img src="./images/index/add@2x.png" alt="">-->
+            <!--</span>-->
+    </header>
+    <main id="wrap">
+        <div class="list" uptext="下拉刷新" style="height:800px">
+            <div class="listBox"></div>
+        </div>
+    </main>
+</div>
 </body>
 <script>
     function getContent (data) {
         var data = JSON.parse(data);
+        $('.listBox').html('');
         for (var i=0; i<data.length;i++) {
-            var nowMsg = $('.list').html();
-            $('.list').html(nowMsg+`
+            var nowMsg = $('.listBox').html();
+            $('.listBox').html(nowMsg+`
                 <div>
                     <p>${data[i].content}</p>
                     <p>
@@ -39,7 +45,13 @@
                 </div>
             `);
         }
+        $('.list').css('height',$('.listBox').height()+50);
+        myIscroll.refresh();
     }
+    $('.send').bind('click', function () {
+        console.log("发通知");
+        window.android.send();
+    })
     var list = document.querySelector('.list');
 	var myIscroll = new IScroll('#wrap',{
 		scrollbars: true,
@@ -56,16 +68,18 @@
         }
 	})
 	myIscroll.on('scrollEnd',function(){
-                  list.setAttribute('text','下拉刷新');
-                  if(this.y === this.maxScrollY){
-                      console.log("上拉");
-                  }else if(this.y === 0) {
-                      console.log("下拉");
-                  }
+        list.setAttribute('text','下拉刷新');
+        if(this.y === this.maxScrollY){
+            console.log("上拉");
+            window.android.getMoreData(false);
+        }else if(this.y === 0) {
+            console.log("下拉");
+            window.android.getMoreData(true);
+        }
 	})
-      //点击返回上个页面
-      $('.back').bind('click', function () {
+    //点击返回上个页面
+    $('.back').bind('click', function () {
 
-      })
+    })
 </script>
 </html>

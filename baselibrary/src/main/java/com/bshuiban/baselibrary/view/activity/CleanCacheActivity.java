@@ -3,12 +3,15 @@ package com.bshuiban.baselibrary.view.activity;
 import android.os.Environment;
 import android.os.StatFs;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.utils.DialogUtils;
 import com.bshuiban.baselibrary.utils.GlideCacheUtil;
 import com.bshuiban.baselibrary.view.customer.TitleView;
+import com.bshuiban.baselibrary.view.dialog.MessageDialog;
 
 import java.io.File;
 
@@ -26,15 +29,19 @@ public class CleanCacheActivity extends BaseActivity {
         tv_use_space = findViewById(R.id.tv_use_space);
         btn_cache.setOnClickListener(v -> {
             //clearAllDefaultCache(this);
-            GlideCacheUtil.getInstance().clearImageDiskCache(getApplicationContext());
-            tv_use_space.setText(String.valueOf(0.0)+"MB");
+            startCleanDialog();
             //tv_persent.setText("占据手机0.0%储存空间");
         });
         tv_persent = findViewById(R.id.tv_persent);
         tv_use_space.setText(GlideCacheUtil.getInstance().getCacheSize(getApplicationContext()));
-        long persent = (GlideCacheUtil.getInstance().getCacheSizeLong(getApplicationContext())/getSDTotalSize())*100;
-
+        //long persent = (GlideCacheUtil.getInstance().getCacheSizeLong(getApplicationContext())/getSDTotalSize())*100;
         //tv_persent.setText("占据手机"+persent+"%储存空间");
+    }
+    private void startCleanDialog(){
+        DialogUtils.showMessageSureCancelDialog(this,"确定清理慧班的缓存数据吗？",v -> {
+            GlideCacheUtil.getInstance().clearImageDiskCache(getApplicationContext());
+            tv_use_space.setText(String.valueOf(0.0)+"MB");
+        });
     }
     /**
      * 获得SD卡总大小

@@ -187,6 +187,7 @@
 
 .workIndex main .list .listMsg .time {
   font-size: 0.18rem;
+  height:.32rem;
   color: #fff;
   position: absolute;
   bottom: 0;
@@ -262,8 +263,8 @@
   width: 1rem;
   height: 1rem;
   background-repeat: no-repeat;
-  margin-top: 0.3rem;
-  margin-right: 0.28rem;
+  margin-top:25%;
+  margin-right: 10%;
   background-size: 100%;
   background-image: url("../images/work/have_read@2x.png");
 }
@@ -283,8 +284,8 @@
 .workIndex main .complate dd span:last-child {
   width: 0.52rem;
   height: 0.52rem;
-  margin-top: 0.54rem;
-  margin-right: 0.3rem;
+  margin-top: 35%;
+  margin-right:20%;
   background-repeat: no-repeat;
   background-size: 100%;
   background-image: url("../images/work/see@2x.png");
@@ -323,4 +324,25 @@
   .workIndex main .noComplate dd a {
     background-image: url("../images/work/do_work@3x.png");
   }
+}
+.workIndex main .list .listMsg .looka{
+position: absolute;
+width:.6rem;
+height:.6rem;
+right:30%;
+top:1%;
+background-image: url("../images/work/see@2x.png");
+background-repeat: no-repeat;
+background-size: 100%;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+.workIndex main .list .listMsg .looka {
+background-image: url("../images/work/see@2x.png");
+}
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+.workIndex main .list .listMsg .looka {
+background-image: url("../images/work/see@2x.png");
+}
 }

@@ -44,21 +44,21 @@
                 <h3>主讲微课<span class="all">查看全部></span></h3>
                 <div class="list"></div>
             </div>
-            <!--<div class="leaveMsg">
+            <div class="leaveMsg">
                 <h3>
                    留言<span class="allLeave">查看全部></span>
                 </h3>
-                <div class="leave">
-                    <div class="content">
-                        <textarea name="" id="inputMsg" cols="30" rows="10"></textarea>
-                        <div class="note">
-                            留言......
-                        </div>
-                    </div>
-                    <button class="inputMsg">发布</button>
-                    <div class="list"></div>
-                </div>
-            </div>-->
+                <!--<div class="leave">-->
+                    <!--<div class="content">-->
+                        <!--<textarea name="" id="inputMsg" cols="30" rows="10"></textarea>-->
+                        <!--<div class="note">-->
+                            <!--留言......-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<button class="inputMsg">发布</button>-->
+                    <!--<div class="list"></div>-->
+                <!--</div>-->
+            </div>
         </main>
     </div>
 </body>
@@ -87,13 +87,11 @@
     }
     //渲染微课
     function getClassList (data) {
-        var data = JSON.parse(data);
-        console.log(data.length);
         for (var i = 0; i < data.length; i++) {
             var nowMsg = $('.mainClass .list').html();
             $('.mainClass .list').html(nowMsg + `
                 <dl>
-                    <dt class="classImg"></dt>
+                    <dt class="classImg"><img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/reset/classPic.png' "/></dt>
                     <dd>
                         <h3>${data[i].Name}</h3>
                         <p>授课老师：${data[i].speakerName}</p>
@@ -110,12 +108,15 @@
                     </dd>
                 </dl>
             `);
-            if (data[i].imgUrl == '') {
-                $('.classImg').eq(i).html(`<img src="../../../images/index/tube_class@2x.png" alt="">`);
-            }else {
-                $('.classImg').eq(i).html(`<img src="${data[i].imgUrl}" alt="" onerror="this.src='../../../images/index/tube_class@2x.png' "/>`);
-            } 
         }
+        $('.list dl').bind('click', function () {
+            var ind = $(this).index();
+            if (data[ind].isTrans == 0) {
+                window.android.toast("转码中");
+            }else {
+                window.android.playVideo(data[ind].flv_url);
+            }
+        });
     }
     //渲染留言
     function getLeaveList (data) {

@@ -4,6 +4,7 @@ import com.bshuiban.baselibrary.contract.ClassActivityContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 import com.bshuiban.baselibrary.model.ClassActivityBean;
 import com.bshuiban.baselibrary.model.ClassScheduleBean;
+import com.bshuiban.baselibrary.model.ResultBean;
 
 import java.util.List;
 
@@ -39,5 +40,24 @@ public class ClassActivityPresent extends BasePresent<ClassActivityContract.View
     @Override
     public String getJsonString(String classId, int start, int limit) {
         return "{\"classId\":\""+classId+"\",\"start\":"+start+",\"limit\":"+limit+"}";
+    }
+
+    @Override
+    public void deleteActivity(String classId, String activityId) {//"":"","":""
+        askInternet("delClassActivities", "{\"classId\":\""+classId+"\",\"id\":\""+activityId+"\"}", new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
+            @Override
+            protected void success(ResultBean resultBean) {
+                if(isEffective()) {
+                    view.refresh();
+                }
+            }
+
+            @Override
+            protected void error(String error) {
+                if(isEffective()){
+                    view.fail(error);
+                }
+            }
+        });
     }
 }

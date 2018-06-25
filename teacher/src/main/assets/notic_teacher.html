@@ -23,16 +23,19 @@
             </span>
         </header>
         <main id="wrap">
-            <div class="list" uptext="下拉刷新" style="height:800px"></div>
+            <div class="list" uptext="下拉刷新" style="min-height:650px">
+                <div class="listBox"></div>
+            </div>
         </main>
     </div>
 </body>
 <script>
     function getContent (data) {
+        $('.listBox').html('');
         var data = JSON.parse(data);
         for (var i=0; i<data.length;i++) {
-            var nowMsg = $('.list').html();
-            $('.list').html(nowMsg+`
+            var nowMsg = $('.listBox').html();
+            $('.listBox').html(nowMsg+`
                 <div>
                     <p>${data[i].content}</p>
                     <p>
@@ -42,9 +45,11 @@
                 </div>
             `);
         }
+        $('.list').css('height',$('.listBox').height()+50);
+        myIscroll.refresh();
     }
     $('.send').bind('click', function () {
-        console.log("发通知");
+        //console.log("发通知");
         window.android.send();
     })
     var list = document.querySelector('.list');
@@ -66,13 +71,13 @@
         list.setAttribute('text','下拉刷新');
         if(this.y === this.maxScrollY){
             console.log("上拉");
+            window.android.getMoreData(false);
         }else if(this.y === 0) {
             console.log("下拉");
+            window.android.getMoreData(true);
+
         }
 	})
-    //点击返回上个页面
-    $('.back').bind('click', function () {
 
-    })
 </script>
 </html>

@@ -14,6 +14,6 @@ public interface CorrectsHomeworkContract {
         void updateListCountView(List<HomeworkBean> homeworkBean, String title);
     }
     interface Present{
-        void loadHomeworkInf(int workId, int wtype);
+        void loadHomeworkInf(int workId, int wtype, String s);
     }
 }

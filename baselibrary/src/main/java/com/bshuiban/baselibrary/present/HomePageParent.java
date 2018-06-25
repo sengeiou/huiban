@@ -6,6 +6,7 @@ import com.bshuiban.baselibrary.contract.HomePageContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 import com.bshuiban.baselibrary.model.MessageBean;
 import com.bshuiban.baselibrary.model.User;
+import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
@@ -73,25 +74,26 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
 
     @Override
     public void getMessageList(String userId) {//{"userId":""."start":,"limit":10}
-        askInternet("getUserLeaveList", "{\"userId\":\"" + userId + "\",\"start\":" + start + ",\"limit\":" + limit + "}", new RetrofitService.CallHTML() {
-            @Override
-            protected void success(String msg) {
-                if (isEffective()) {
-                    view.updateMessageList(msg);
-                }
-                if (!TextUtils.isEmpty(msg)) {
-                    dataBeans = gson.fromJson(msg, new TypeToken<List<MessageBean.DataBean>>() {
-                        }.getType());
-                }
-            }
+        askInternet("getUserLeaveList", "{\"userId\":\"" + userId + "\",\"start\":" + start + ",\"limit\":" + limit + "}",callHTMLJsonArray);
+    }
 
-            @Override
-            protected void fail(String error) {
-                if (isEffective()&&error!=null&&!error.contains("暂无数据")) {
-                    view.fail("留言："+error);
-                }
-            }
-        });
+    @Override
+    public void updateView(String json) {
+        view.updateMessageList(json);
+        if (!TextUtils.isEmpty(json)) {
+            dataBeans = gson.fromJson(json, new TypeToken<List<MessageBean.DataBean>>() {
+            }.getType());
+        }
+    }
+
+    @Override
+    public void fail(String error) {
+        if(start>0&&error.contains("暂无数据")){
+            error="没有更多数据了";
+        }else {
+            view.updateMessageList("[]");
+        }
+        view.fail("留言："+error);
     }
 
     @Override
@@ -109,7 +111,8 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
             @Override
             protected void success(String msg) {
                 if (isEffective()) {
-                    getMessageList(User.getInstance().getUserId());
+                    //getMessageList(User.getInstance().getUserId());
+                    refresh();
                 }
             }
 
@@ -128,7 +131,8 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
             @Override
             protected void success(String msg) {
                 if (isEffective()) {
-                    getMessageList(User.getInstance().getUserId());
+                    //getMessageList(User.getInstance().getUserId());
+                    refresh();
                 }
             }
 
@@ -146,9 +150,5 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
         if(isEffective()&&null!=dataBeans&&dataBeans.size()>index){
             view.startReplyDialog(dataBeans.get(index));
         }
-    }
-
-    public void test() {
-        RetrofitService.getInstance().getServiceResult("getTodayCourseListBySid", getJsonString("2030246"), new RetrofitService.CallTest());
     }
 }

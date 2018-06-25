@@ -26,6 +26,7 @@ import com.bshuiban.baselibrary.view.activity.TextActivity;
 import com.bshuiban.baselibrary.view.adapter.SortHomewrokAdapter;
 import com.bshuiban.baselibrary.view.customer.TitleView;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.HomeworkInfHtml;
+import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
 
 import java.io.File;
 import java.util.List;
@@ -73,7 +74,12 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
             }
         });
         tPresent = new HomeworkPendingInfPresent(this);
-        loadFileHtml("workMsg");
+        if (User.getInstance().isParents()) {
+            loadFileHtml("homework_details");
+            titleView.setRight_text(null,-1,0);
+        }else {
+            loadFileHtml("workMsg");
+        }
         registerWebViewH5Interface(new HomeworkPendingHtml());
         startTime = System.currentTimeMillis();
         int dimension = (int) getResources().getDimension(R.dimen.dp_10);
@@ -204,6 +210,14 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
     }
 
     class HomeworkPendingHtml extends HomeworkInfHtml {
+        @JavascriptInterface
+        public int getUserType(){
+            return User.getInstance().getUserType();
+        }
+        @JavascriptInterface
+        public boolean isParentsLook(){
+            return User.getInstance().isParents();
+        }
         /**
          * 启动答题页
          *

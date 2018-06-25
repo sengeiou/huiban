@@ -11,9 +11,10 @@ import com.bshuiban.teacher.present.FilterConditionPresent;
 
 /**
  * Created by xinheng on 2018/5/30.<br/>
- * describe：
+ * describe：课程筛选
  */
 public class FilterConditionActivity extends BaseWebActivity<FilterConditionPresent> implements FilterConditionContract.View {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +22,12 @@ public class FilterConditionActivity extends BaseWebActivity<FilterConditionPres
         loadFileHtml(getFileHtmlName());
         registerWebViewH5Interface(new FilterConditionHtml());
     }
+
+    @Override
+    protected void webViewLoadFinished() {
+        tPresent.loadAllSubject();
+    }
+
     protected String getFileHtmlName(){
         return "change";
     }
@@ -28,8 +35,14 @@ public class FilterConditionActivity extends BaseWebActivity<FilterConditionPres
     public void updateView(String json) {
         loadJavascriptMethod(getJavascriptMethodName(),json);
     }
+
+    @Override
+    public void loadAllSubject(String json) {
+        loadJavascriptMethod("getListNav",json);
+    }
+
     protected String getJavascriptMethodName(){
-        return "";
+        return "sxContent";
     }
     @Override
     public void startDialog() {

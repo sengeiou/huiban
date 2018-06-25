@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,9 @@ import android.webkit.WebViewClient;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.activity.ClassActivity;
 import com.bshuiban.baselibrary.view.activity.ClassScheduleActivity;
+import com.bshuiban.baselibrary.view.dialog.MessageDialog;
+import com.bshuiban.baselibrary.view.pulltorefresh.BaseRefreshListener;
+import com.bshuiban.baselibrary.view.pulltorefresh.PullToRefreshLayout;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.bshuiban.baselibrary.view.webview.webActivity.GuanZhuListActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.HuiFuDaoListActivity;
@@ -81,7 +85,7 @@ public class StudentHomePageFragment extends HomePageFragment {
     }
 
     private void toNextActivity(int type) {
-        Log.e(TAG, "toNextActivity: type="+type );
+        //Log.e(TAG, "toNextActivity: type="+type );
         Class<?> cls;
         switch (type) {
             // 0 班级，1 课表，2 通知，3 关注，4 慧辅导，5 学习资源，6 去留言
@@ -106,9 +110,14 @@ public class StudentHomePageFragment extends HomePageFragment {
             case 7://慧辅导详情
                 cls=LessonInfWebActivity.class;
                 break;
-            default:
+            default://5
                 //学习资源
-                cls=null;
+                try {
+                    cls=Class.forName("com.bshuiban.teacher.view.webView.webActivity.LessonListActivity");
+                } catch (ClassNotFoundException e) {
+                    cls=null;
+                    e.printStackTrace();
+                }
         }
         if(null!=cls) {
             startActivity(new Intent(getActivity(), cls));

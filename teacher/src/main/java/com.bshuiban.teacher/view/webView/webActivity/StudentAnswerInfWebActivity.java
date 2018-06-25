@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * Created by xinheng on 2018/5/30.<br/>
- * describe：学生答题情况
+ * describe：学生答题情况 已批阅、未批阅
  */
 public class StudentAnswerInfWebActivity extends BaseWebActivity<StudentAnswerInfPresent> implements StudentAnswerInfContract.View {
     private String preparationId,className;
@@ -94,6 +94,7 @@ public class StudentAnswerInfWebActivity extends BaseWebActivity<StudentAnswerIn
                 intent.putExtra("workId",workId);
                 intent.putExtra("home_type",process);
                 intent.putExtra("stuName",stuName);
+                intent.putExtra("classId",classId+"");
                 startActivity(intent);
             });
         }

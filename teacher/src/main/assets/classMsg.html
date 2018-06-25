@@ -14,7 +14,7 @@
     <div class="wrap classMsg">
         <header>
             <span>
-                <a class="back" herf="finish_page.html"></a>
+                <a class="back" href="/finish_page.html"></a>
             </span>	
             <span>我的备课</span>
             <span class="ico"><img src="./images/teacher/change@2x.png" alt=""></span>
@@ -58,11 +58,11 @@
                 $('.msg').html(nowMsg + `
                     <span class="answer"><img src="./images/teacher/end_answer@2x.png" /><i>${data.list[i].name}</i></span>
                 `);
-            }            
+            }
         }
         $('.all').html($('.all').html()+`(${data.list.length})`);
-        $('.con').html($('.con').html()+`(${endCount})`);
-        $('.end').html($('.end').html()+`(${count})`);
+        $('.con').html($('.con').html()+`(${count})`);
+        $('.end').html($('.end').html()+`(${endCount})`);
         $('.no').html($('.no').html()+`(${noCount})`);
         $('nav p').bind('click', function () {
             $('.msg').html('');
@@ -92,7 +92,7 @@
                 for (var i=0; i<data.list.length; i++) {
                     if (data.list[i].name == $(this).text()) {
                         var studentId = data.list[i].studentId;
-                        var stuName = data.list[ind].name;
+                        var stuName = data.list[i].name;
                         window.android.itemClick(studentId,stuName);
                     }
                 }

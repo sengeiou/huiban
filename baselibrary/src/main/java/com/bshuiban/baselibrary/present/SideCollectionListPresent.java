@@ -18,7 +18,7 @@ public class SideCollectionListPresent extends ListPresent<SideCollectionListCon
     }
     @Override
     public void getInterNetData() {
-        askInternet("getUserCollectVipCourseList", "{\"userId\":\""+ User.getInstance().getUserId()+"\",\"index\":"+start+",\"limit\":"+limit+"}", callHTMLJsonArray);
+        askInternet("getUserCollectVipCourseList", "{\"userId\":\""+ User.getInstance().getReallyUserId()+"\",\"index\":"+start+",\"limit\":"+limit+"}", callHTMLJsonArray);
     }
 
     @Override

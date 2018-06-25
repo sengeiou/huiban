@@ -14,7 +14,7 @@
     <div class="wrap report">
         <header>
             <span>
-                <a href="/finish_page.html"></a>
+
             </span>	
             <span>报告</span>
         </header>
@@ -43,15 +43,15 @@
                 </div>
                 <p class="watchPic">查看统计图</p>
                 <div class="changeBtn">
-                    <span>2017年5月</span>
-                    <span>科目</span>
-                    <span>年级</span>
+                    <span><img src="./images/reset/ico.png" />2017年5月</span>
+                    <span><img src="./images/reset/ico.png" />科目</span>
+                    <span><img src="./images/reset/ico.png" />年级</span>
                 </div> 
             </div>
             <div class="stuBox hide">
                 <p class="title">学生知识掌握详情</p>
                 <div class="mainBox"></div>
-                <div class="className"><span>科目</span><span>年级/班级</span></div>
+                <div class="className"><span><img src="./images/reset/ico.png" />科目</span><span><img src="./images/reset/ico.png" />年级/班级</span></div>
             </div>
         </main>
     </div>
@@ -105,23 +105,23 @@
         });
     //更换时间
     function changeTime (data) {
-        $('.changeBtn span:eq(0)').html(data);
+        $('.changeBtn span:eq(0)').html(`<img src="./images/reset/ico.png" />${data}`);
     }
     //更换科目
     function changeSubject (data) {
-        $('.changeBtn span:eq(1)').html(data);
+        $('.changeBtn span:eq(1)').html(`<img src="./images/reset/ico.png" />${data}`);
     }
     //更换年级
     function changeGrade (data) {
-        $('.changeBtn span:eq(2)').html(data);
+        $('.changeBtn span:eq(2)').html(`<img src="./images/reset/ico.png" />${data}`);
     }
     //更换班级
     function changeclass (data) {
-        $('.className span:eq(1)').html(data);
+        $('.className span:eq(1)').html(`<img src="./images/reset/ico.png" />${data}`);
     }
     //学生掌握情况切换科目
     function stuSub (data) {
-        $('.className span:eq(0)').html(data);
+        $('.className span:eq(0)').html(`<img src="./images/reset/ico.png" />${data}`);
     }
     $('.back').bind('click', function () {
         console.log("返回上级");

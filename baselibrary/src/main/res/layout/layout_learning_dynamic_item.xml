@@ -6,8 +6,8 @@
     android:paddingLeft="10dp">
     <ImageView
         android:id="@+id/iv"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_60"
+        android:layout_width="@dimen/dp_43"
+        android:layout_height="@dimen/dp_43"
         android:src="@mipmap/default_head"/>
     <TextView
         android:id="@+id/tv_text"

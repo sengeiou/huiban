@@ -25,7 +25,10 @@ public class HomeworkPresent<V extends BaseView> extends BasePresent<V> {
         super(v);
     }
     protected void loadHomeworkInfData(int workId,int wtype) {
-        askInternet("getStuWorkInfo",getJsonMap(workId,wtype), new RetrofitService.CallResult<HomeworkInfBean>(HomeworkInfBean.class) {
+        loadHomeworkInfData(workId,wtype,User.getInstance().getUserId());
+    }
+    protected void loadHomeworkInfData(int workId,int wtype,String studentId) {
+        askInternet("getStuWorkInfo",getJsonMap(workId,wtype,studentId), new RetrofitService.CallResult<HomeworkInfBean>(HomeworkInfBean.class) {
             @Override
             protected void success(HomeworkInfBean homeworkInfBean) {
                 if(!isEffective()){
@@ -45,9 +48,9 @@ public class HomeworkPresent<V extends BaseView> extends BasePresent<V> {
         });
     }
     protected void updateHomeworkView(HomeworkInfBean.DataBean dataBean){}
-    private Map<String,Object> getJsonMap(int workId, int wtype){
+    private Map<String,Object> getJsonMap(int workId, int wtype,String studentId){
         Map<String,Object>map=new HashMap<>();
-        map.put("studentId", User.getInstance().getUserId());
+        map.put("studentId", studentId);
         map.put("workId",workId);
         map.put("wtype",wtype);
         map.put("roleId",User.getInstance().getUserData().getUserType());//用户身份(1学生，4家长)

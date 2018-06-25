@@ -15,30 +15,32 @@
     <div class="wrap classList">
         <header>
             <span>
-                <a href="/finish_page.html"></a>
-            </span>	
+            </span>
             <span>我的备课</span>
             <span class="more"></span>
         </header>
         <main id="wrap">
-            <div class="list" uptext="下拉刷新"></div>
+            <div class="list" uptext="下拉刷新">
+                <div class="listBox"></div>
+            </div>
         </main>
     </div>
 </body>
 <script>
     function getContent (data) {
         var data = JSON.parse(data);
+        $('.listBox').html('');
         for (var i=0; i<data.length; i++) {
-            var nowMsg = $('.list').html();
+            var nowMsg = $('.listBox').html();
             if (data[i].noMarkCnt>0) {
-                $('.list').html(nowMsg + `
+                $('.listBox').html(nowMsg + `
                     <ul>
                         <li>${data[i].chapName}<span></span></li>
                         <li>${data[i].info}</li>
                     </ul>
                 `);
             }else {
-                $('.list').html(nowMsg + `
+                $('.listBox').html(nowMsg + `
                     <ul>
                         <li>${data[i].chapName}</li>
                         <li>${data[i].info}</li>
@@ -48,11 +50,13 @@
         }
         $('.list ul').bind('click', function () {
             var ind = $(this).index();
+            console.log("ind:"+ind);
             var preId = data[ind].id;
             window.android.itemClick(preId);
         });
+        $('.list').css('height', $('.listBox').height()+50);
+        myIscroll.refresh();
     }
-
     $('.more').bind('click', function () {
         //console.log("点击筛选");
         window.android.toSearchPage();

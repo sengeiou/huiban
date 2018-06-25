@@ -1,15 +1,9 @@
 package com.bshuiban.baselibrary.view.activity;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -76,22 +70,29 @@ public class OpinionActivity extends BaseActivity<OpinionPresent> implements Opi
     }
     private void sendOpinion() {
         String content = et_content.getText().toString();
+        if(TextUtils.isEmpty(content)){
+            toast("请填写内容");
+            return;
+        }
+        startDialog();
         tPresent.sendOpinion(content);
     }
 
     @Override
     public void sendSuccess() {
+        dismissDialog();
         toast("发送成功");
+        et_content.setText("");
     }
 
     @Override
     public void startDialog() {
-
+        showLoadingDialog();
     }
 
     @Override
     public void dismissDialog() {
-
+        dismissLoadingDialog();
     }
 
     @Override

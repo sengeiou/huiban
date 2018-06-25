@@ -1,17 +1,12 @@
 package com.bshuiban.baselibrary.utils;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.content.Context;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bshuiban.baselibrary.R;
-import com.bshuiban.baselibrary.view.dialog.MoveDialog;
+import com.bshuiban.baselibrary.view.dialog.MessageDialog;
 
 /**
  * Created by xinheng on 2018/5/7.<br/>
@@ -23,13 +18,14 @@ public class DialogUtils {
      * @param dialog
      */
     public static void setDialogWithMatcherScreen(Dialog dialog){
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         Window window = dialog.getWindow();
-        window.getDecorView().setPadding(0,0,0,0);
         WindowManager.LayoutParams attributes = window.getAttributes();
-        attributes.width=WindowManager.LayoutParams.MATCH_PARENT;
-        attributes.height=WindowManager.LayoutParams.WRAP_CONTENT;
+//        attributes.width=WindowManager.LayoutParams.MATCH_PARENT;
+        attributes.width=ScreenUtils.getScreenWidth(dialog.getContext());
+        //attributes.height=ScreenUtils.getScreenHeight(dialog.getContext())/3;
+        //attributes.height=200;
         window.setAttributes(attributes);
+        window.getDecorView().setPadding(0,0,0,0);
     }
     /**
      * 设置弹窗宽充满屏幕
@@ -40,5 +36,13 @@ public class DialogUtils {
     public static void setDialogWithMatcherScreen(Dialog dialog,int gravity){
         setDialogWithMatcherScreen(dialog);
         dialog.getWindow().setGravity(gravity);
+    }
+    public static MessageDialog showMessageSureCancelDialog(Context context,String s, View.OnClickListener listener){
+        MessageDialog messageDialog=new MessageDialog(context);
+        messageDialog.setTypeMessage(s,MessageDialog.TYPE_MESSAGE_SURE_CANCEL);
+        messageDialog.setCancelable(true);
+        messageDialog.setOnClickListenerSure(listener);
+        messageDialog.show();
+        return messageDialog;
     }
 }

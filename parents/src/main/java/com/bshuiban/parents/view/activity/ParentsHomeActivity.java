@@ -61,7 +61,7 @@ public class ParentsHomeActivity extends HomePageActivity<InteractionBaseWebView
         navigationView.addView(getSlideView(R.mipmap.my_shoucang,"我的收藏","nav_gallery",navigationView));
         navigationView.addView(getSlideView(R.mipmap.about_huiban,"关于慧班","nav_about_self",navigationView));
         navigationView.addView(getSlideView(R.mipmap.yijianfankui,"意见反馈","nav_opinion",navigationView));
-        navigationView.addView(getSlideView(R.mipmap.cleancouche,"清除缓存","nav_clear_cache",navigationView));
+        navigationView.addView(getSlideView(R.mipmap.cleancouche,"清理缓存","nav_clear_cache",navigationView));
         navigationView.addView(getSlideView(R.mipmap.change_user,"切换身份","nav_change_user",navigationView));
 
 

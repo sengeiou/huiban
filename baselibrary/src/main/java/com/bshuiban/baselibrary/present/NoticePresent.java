@@ -14,7 +14,7 @@ public class NoticePresent extends ListPresent<NoticeContract.View> {
 
     @Override
     public void getInterNetData() {//{"userId":"","start":,"limit":}
-        askInternet("getClassNoticeList","{\"userId\":\""+ User.getInstance().getUserId()+"\",\"start\":"+start+",\"limit\":"+limit+"}",callHTMLJsonArray);
+        askInternet("getClassNoticeList","{\"classId\":\""+ User.getInstance().getClassId()+"\",\"start\":"+start+",\"limit\":"+limit+"}",callHTMLJsonArray);
     }
 
     @Override

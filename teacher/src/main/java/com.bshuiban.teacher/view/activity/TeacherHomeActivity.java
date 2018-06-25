@@ -21,11 +21,7 @@ import com.bshuiban.baselibrary.view.activity.HomePageActivity;
 import com.bshuiban.baselibrary.view.activity.OpinionActivity;
 import com.bshuiban.baselibrary.view.customer.BottomBar;
 import com.bshuiban.baselibrary.view.customer.BottomBarTab;
-import com.bshuiban.baselibrary.view.fragment.HomeworkFragment;
-import com.bshuiban.baselibrary.view.fragment.ReportFragment;
-import com.bshuiban.baselibrary.view.webview.webActivity.CollectionListActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.SideCollectionListWebActivity;
-import com.bshuiban.baselibrary.view.webview.webFragment.ErrorHomeworkWebFragment;
 import com.bshuiban.baselibrary.view.webview.webFragment.InteractionBaseWebViewFragment;
 import com.bshuiban.teacher.R;
 import com.bshuiban.teacher.contract.TeacherHomeContract;
@@ -67,7 +63,7 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
         navigationView.addView(getSlideView(R.mipmap.my_space,"我的空间","nav_my_space",navigationView));
         navigationView.addView(getSlideView(R.mipmap.about_huiban,"关于慧班","nav_about_self",navigationView));
         navigationView.addView(getSlideView(R.mipmap.yijianfankui,"意见反馈","nav_opinion",navigationView));
-        navigationView.addView(getSlideView(R.mipmap.cleancouche,"清除缓存","nav_clear_cache",navigationView));
+        navigationView.addView(getSlideView(R.mipmap.cleancouche,"清理缓存","nav_clear_cache",navigationView));
         navigationView.addView(getSlideView(R.mipmap.change_user,"切换身份","nav_change_user",navigationView));
 
         //头像
@@ -188,7 +184,6 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
                         .error(R.drawable.app_logo);
                 Glide.with(this).load(icoPath).apply(requestOptions).into(iv_head);
             }
-
         }
     }
 
@@ -204,7 +199,7 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
 
     @Override
     public void fail(String error) {
-
+        toast(error);
     }
 
     @Override

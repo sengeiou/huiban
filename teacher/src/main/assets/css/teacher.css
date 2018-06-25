@@ -12,11 +12,10 @@
 .mainClassList main, .classList main {
     width: 100%;
     height:100%;
-    overflow-Y:scroll;
+    overflow-Y:hidden;
     position: relative;
 }
 .mainClassList main .list, .classList main .list {
-    height: 20rem;
     position: relative;
 }
 .mainClassList main .list:before,.list:after, .classList main .list:before,.list:after {
@@ -52,8 +51,8 @@
 .stuResource main {
     width: 100%;
     height: 100%;
+    overflow-Y: hidden;
     position: relative;
-    overflow: hidden;
 }
 .stuResource main .list {
     position: relative;
@@ -364,8 +363,8 @@
     background-repeat: no-repeat;
     background-size: 100%;
     position: absolute;
-    top: 0.35rem;
-    right: 2rem;
+    top: 0.3rem;
+    right: 28%;
     background-image: url("../images/work/see@2x.png");
 }
 .classMsg header .ico, .stuResource header .ico, .sendBox header .ico {
@@ -378,7 +377,7 @@
     background-size: 100%;    
 }
 .stuResource header .ico {
-    background-image: url("../images/work/details@2x.png");
+    background-image: url("../images/work/more@2x.png");
 }
 .sendBox header .ico {
     background-image: url("../images/index/send@2x.png");
@@ -445,6 +444,10 @@
 .details .synopsis p {
     text-indent: 0.2rem;
     margin-top: 0.38rem;
+}
+
+.details .classTab {
+    padding-bottom: 1rem;
 }
 
 .details .classTab .navs {
@@ -518,12 +521,12 @@
 .notic main {
     width: 100%;
     height: 100%;
+    overflow-Y: hidden;
     position: relative;
-    overflow-y: scroll;
+    background: #F9F9F9;
 }
 .notic main .list {
     position: relative;
-    height: 16rem;
 }
 .notic main .list:before,.list:after{
     width: 100%;
@@ -548,7 +551,7 @@
     background: #F9F9F9;
     padding-top: 0.1px;
 }
-.notic main .list div {
+.notic main .listBox div {
     padding: 2%;
     width: 90%;
     margin-top: 0.35rem;
@@ -919,4 +922,13 @@ header .more {
     padding-left: 5%;
     color: #777;
     margin-top: 0.2rem;
+}
+.report .changeBtn span, .report .className span {
+    position: relative;
+}
+.report .changeBtn span img, .report .className span img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0.2rem;
 }

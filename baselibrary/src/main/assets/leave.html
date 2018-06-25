@@ -36,7 +36,9 @@
 </body>
 <script>
     var name = window.android.getName();
-    console.log(name);
+    var isSelf = window.android.isSelf();
+    var userId = window.android.getUserId();
+    console.log(isSelf);
     var recevieId = window.android.getRecevieId();
     console.log(recevieId);
     $('header span').eq(1).html(name);
@@ -48,15 +50,19 @@
         var data = JSON.parse(data);
         $('.list').html('');
         $('textarea').val('');
+        var aaa = '';
         for (var i=0; i<data.length; i++) {
             var nowMsg = $('.list').html();
+            if(isSelf || ((data[i].send).toString()==userId)){
+                aaa='<span class="remove">删除</span>';
+            }
             $('.list').html(nowMsg + `
                 <dl>
                     <dt><img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/reset/default_head.png' "/></dt>
                     <dd>
                         <h3>${data[i].sendName}</h3>
                         <p class="message">${data[i].content}</p>
-                        <p>${data[i].addTime}<span class="reply">回复</span><span class="remove">删除</span></p>
+                        <p>${data[i].addTime}<span class="reply">回复</span>${aaa}</p>
                     </dd>
                 </dl>
             `);    

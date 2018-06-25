@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.ErrorHomeworkAnalysisContract;
 import com.bshuiban.baselibrary.present.ErrorHomeworkAnalysisPresent;
 import com.bshuiban.baselibrary.view.activity.PlayerVideoActivity;
+import com.bshuiban.baselibrary.view.dialog.MessageDialog;
+import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
 
 public class ErrorHomeworkAnalysisActivity extends BaseWebActivity<ErrorHomeworkAnalysisPresent> implements ErrorHomeworkAnalysisContract.View {
     private String text;
@@ -47,7 +50,7 @@ public class ErrorHomeworkAnalysisActivity extends BaseWebActivity<ErrorHomework
         finish();
     }
 
-    class ErrorHomeworkAnalysisHtml {
+    class ErrorHomeworkAnalysisHtml extends UserTypeHtml{
         /**
          * 观看视频
          *
@@ -56,7 +59,7 @@ public class ErrorHomeworkAnalysisActivity extends BaseWebActivity<ErrorHomework
         @JavascriptInterface
         public void playVideo(String videoUrl) {
             runOnUiThread(() -> {
-                PlayerVideoActivity.startPlayerVideoActivity(getApplicationContext(),videoUrl);
+                PlayerVideoActivity.startPlayerVideoActivity(getApplicationContext(), videoUrl);
             });
         }
 

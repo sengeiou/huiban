@@ -50,7 +50,7 @@ public class WordGridView extends View {
 
     public WordGridView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.WordGridView,defStyleAttr,0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.WordGridView, defStyleAttr, 0);
         int N = a.getIndexCount();
         for (int i = 0; i < N; i++) {
             int index = a.getIndex(i);
@@ -122,10 +122,10 @@ public class WordGridView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG| Paint.FILTER_BITMAP_FLAG));
+        canvas.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG));
         mPaintLine.setColor(Color.WHITE);
         mPaintLine.setStyle(Paint.Style.FILL);
-        RectF rect = new RectF(1, 1, getMeasuredWidth()-1, getMeasuredHeight()-1);
+        RectF rect = new RectF(1, 1, getMeasuredWidth() - 1, getMeasuredHeight() - 1);
         canvas.drawRoundRect(rect, ViewData.radius, ViewData.radius, mPaintLine);
         //边框
         mPaintLine.setColor(bord_color);
@@ -144,12 +144,12 @@ public class WordGridView extends View {
         float y_head = y_space * 2;
         mPaint.setColor(Color.parseColor("#F8F8F8"));
         mPaint.setStyle(Paint.Style.FILL);
-        canvas.drawRoundRect(new RectF(2, 2, getMeasuredWidth()-2 , y_head + 12), ViewData.radius, ViewData.radius, mPaint);
+        canvas.drawRoundRect(new RectF(2, 2, getMeasuredWidth() - 2, y_head + 12), ViewData.radius, ViewData.radius, mPaint);
         mPaint.setColor(Color.WHITE);
-        canvas.drawRect(2, y_head, getMeasuredWidth()-2 , y_head + 12, mPaint);
+        canvas.drawRect(2, y_head, getMeasuredWidth() - 2, y_head + 12, mPaint);
         mPaint.setColor(bord_color);
         canvas.drawLine(0, y_head, getMeasuredWidth() - 1, y_head, mPaint);
-        Log.e(TAG, "onDraw: nav_size="+nav_size +", "+child_size);
+        Log.e(TAG, "onDraw: nav_size=" + nav_size + ", " + child_size);
         if (nav_size > 0) {
             mPaint.setTextSize(nav_size);
         } else {
@@ -216,19 +216,20 @@ public class WordGridView extends View {
             //float word7  = 0.8f;//5颗星 20% 0.2
             float baseLine = baseLine3 + y_head + y_space * i;
             for (int j = 0; j < childIngs.length; j++) {
-                if (j>0 && j < center_xs.length) {
-                    String childIng = childIngs[j];
-                    if("-1".equals(childIng)){
-                        childIng="- -";
-                    }else {
-                        if (TextUtils.isEmpty(childIng)) {
-                            childIng = " ";
-                        }else{
-                            childIng=childIng+"%";
+                String childIng = childIngs[j];
+                if ("-1".equals(childIng)) {
+                    childIng = "- -";
+                } else {
+                    if (TextUtils.isEmpty(childIng)) {
+                        childIng = " ";
+                    } else {
+                        if (j > 0) {
+                            childIng = childIng + "%";
                         }
                     }
-                    canvas.drawText(childIng, center_xs[j], baseLine, mPaint);
                 }
+                canvas.drawText(childIng, center_xs[j], baseLine, mPaint);
+
             }
             if (i < length_subject - 1) {
                 float y_line = y_head + y_space * (i + 1);

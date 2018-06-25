@@ -12,37 +12,43 @@ import java.util.List;
  * describe：
  */
 public class User {
-    public static final String path= Environment.getExternalStorageDirectory().getAbsolutePath() + "/HuiBan/";
+    public static final String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/HuiBan/";
     private SubjectBean subjectBean;
     private LoginResultBean.Data data;
     private static User user;
     private HomeworkInfBean.DataBean homeworkInfBean;
     private Homework homework;
     private String userName;
-    private String imgHeadUrl="";
+    private String imgHeadUrl = "";
+
     public int getUserType() {
         return data.getUserType();
     }
 
     public static User getInstance() {
-        if(null==user){
-            synchronized (User.class){
-                if(null==user){
-                    user=new User();
+        if (null == user) {
+            synchronized (User.class) {
+                if (null == user) {
+                    user = new User();
                 }
             }
         }
         return user;
     }
-    public String getClassId(){
+
+    public String getReallyUserId() {
+        if (User.getInstance().getUserType() == 4) {
+            return User.getInstance().getUserData().getParentsId();
+        } else {
+            return User.getInstance().getUserId();
+        }
+    }
+
+    public String getClassId() {
         return data.getClassId1();
     }
 
-    public String getUserId(){
-        if(null==data){
-            Log.e("TAG", "getUserId: 异常！！！" );
-            return "2030246";
-        }
+    public String getUserId() {
         return data.getUserId();
     }
 
@@ -54,12 +60,13 @@ public class User {
         this.imgHeadUrl = imgHeadUrl;
     }
 
-    public LoginResultBean.Data getUserData(){
+    public LoginResultBean.Data getUserData() {
         return data;
     }
-    public String getClassName(){
+
+    public String getClassName() {
         List<String> className = data.getClassName();
-        if(null!=className&&className.size()>0){
+        if (null != className && className.size() > 0) {
             return className.get(0);
         }
         return "";
@@ -70,47 +77,57 @@ public class User {
     }
 
     public void setData(LoginResultBean.Data data) {
-        if(null==data){
-            Log.e("TAG", "setData: 异常！！！" );
+        if (null == data) {
+            Log.e("TAG", "setData: 异常！！！");
             return;
         }
         this.data = data;
     }
-    public String getGradeId() { return data.getGradeId();}
-    public String getSchoolId() { return data.getSchoolId();}
+
+    public String getGradeId() {
+        return data.getGradeId();
+    }
+
+    public String getSchoolId() {
+        return data.getSchoolId();
+    }
 
     /**
      * 获取班级列表，逗号拼接
+     *
      * @return
      */
     public String getClassIdArrayString() {
         List<String> classIds = data.getClassId();
-        StringBuffer stringBuffer=new StringBuffer();
-        if(classIds!=null&&classIds.size()>0){
+        StringBuffer stringBuffer = new StringBuffer();
+        if (classIds != null && classIds.size() > 0) {
             for (int i = 0; i < classIds.size(); i++) {//3
                 String s = classIds.get(i);
                 stringBuffer.append(s);
-                if(i<classIds.size()-1) {
+                if (i < classIds.size() - 1) {
                     stringBuffer.append(",");
                 }
             }
         }
         return stringBuffer.toString();
     }
-    public boolean isTeacher(){
+
+    public boolean isTeacher() {
         int userType = User.getInstance().getUserData().getUserType();
-        if(userType!=1&&userType!=4){
+        if (userType != 1 && userType != 4) {
             return true;
         }
         return false;
     }
-    public boolean isParents(){
+
+    public boolean isParents() {
         int userType = User.getInstance().getUserData().getUserType();
-        if(userType==4){
+        if (userType == 4) {
             return true;
         }
         return false;
     }
+
     public SubjectBean getSubjectBean() {
         return subjectBean;
     }

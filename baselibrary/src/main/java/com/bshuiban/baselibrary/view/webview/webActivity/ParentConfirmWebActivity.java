@@ -55,9 +55,7 @@ public abstract class ParentConfirmWebActivity<T extends ParentConfirmPresent> e
          */
         @JavascriptInterface
         public void itemClick(int subjectId){
-            runOnUiThread(()->{
-                startActivity(new Intent(getApplicationContext(),getActivityClass()).putExtra("subjectId",subjectId));
-            });
+            runOnUiThread(()-> startActivity(new Intent(getApplicationContext(),getActivityClass()).putExtra("subjectId",subjectId)));
         }
     }
 

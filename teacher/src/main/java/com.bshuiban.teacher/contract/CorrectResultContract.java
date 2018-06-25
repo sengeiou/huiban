@@ -15,13 +15,14 @@ public interface CorrectResultContract {
     interface Present{
         /**
          * 提交批改学生答题
+         * @param classId
          * @param preId
          * @param type
          * @param workId
          * @param studentId
          * @param json
          */
-        void commitHomeworkResult(String preId, int type, int workId, String studentId, String json);
+        void commitHomeworkResult(String classId,String preId, int type, int workId, String studentId, String json);
 
         /**
          *
@@ -33,6 +34,6 @@ public interface CorrectResultContract {
          * @param scoreStr 题对错
          * @return
          */
-        Map<String,Object> getjsonMap(String userId,String preId,int type,int workId,String studentId,String scoreStr);
+        Map<String,Object> getjsonMap(String classId,String userId,String preId,int type,int workId,String studentId,String scoreStr);
     }
 }

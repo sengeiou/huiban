@@ -29,6 +29,7 @@
 </body>
 <script>
    function getContent (data) {
+        $('main').html('');
         var data = JSON.parse(data);   
         for (var i=0; i<data.length; i++) {
             var nowMsg = $('main').html();
@@ -62,7 +63,8 @@
                 $('.flag').eq(i).html(`
                     <img class="removeImg" src="./images/classMsg/add_attention@2x.png" style="width: 0.6rem;">                         
                     <span class="removeFollow add">加关注</span>
-                `);   
+                `);
+                $('.right:eq('+i+') aside:eq(0)').hide();
             }
         }
         
@@ -71,15 +73,19 @@
             if ($(this).children('span').text() == "取消关注") {
                 var ind = $(this).parents('.content').index();
                 var attUserId = data[ind].attUserId;
-                //var msg = JSON.stringify({"attUserId": attUserId});
+                if(attUserId==undefined){
+                    attUserId=data[ind].userId;
+                }
                 console.log("取消关注"+attUserId);
                 window.android.dealWithAttention(false,attUserId,ind);
             }else {
                 var ind = $(this).parents('.content').index();
                 var attUserId = data[ind].attUserId;
-                //var msg = JSON.stringify({"attUserId": attUserId});
+                if(attUserId==undefined){
+                    attUserId=data[ind].userId;
+                }
                 console.log("加关注"+attUserId);
-                window.android.dealWithAttention(true,attUserId,ind);
+                window.android.dealWithAttention(true,attUserId+"",ind);
             }
         });
         //点击跳转到去留言
@@ -87,6 +93,9 @@
             var ind = $(this).parents('.content').index();
             var name = data[ind].name;
             var userId = data[ind].attUserId;
+            if(userId==undefined){
+                userId=data[ind].userId;
+            }
             console.log('去留言'+name+", "+userId);
             window.android.goLiuYan(name,userId);
         });
@@ -99,16 +108,18 @@
         }
     })
     function addType (i) {
-$('.flag').eq(i).html(`
-<img class="removeImg" src="./images/classMsg/add_attention@2x.png" style="width: 0.6rem;">
-<span class="removeFollow add">加关注</span>
-`);
-}
+        $('.flag').eq(i).html(`
+            <img class="removeImg" src="./images/classMsg/add_attention@2x.png" style="width: 0.6rem;">
+            <span class="removeFollow add">加关注</span>
+        `);
+        $('.right:eq('+i+') aside:eq(0)').hide();
+    }
 function removeType (i) {
-$('.flag').eq(i).html(`
-<img class="addImg" src="./images/reset/ic_has_concerned.png">
-<span class="removeFollow remove">取消关注</span>
-`);
+    $('.flag').eq(i).html(`
+        <img class="addImg" src="./images/reset/ic_has_concerned.png">
+        <span class="removeFollow remove">取消关注</span>
+    `);
+    $('.right:eq('+i+') aside:eq(0)').show();
 }
 </script>
 </html>

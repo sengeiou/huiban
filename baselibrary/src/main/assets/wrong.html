@@ -10,6 +10,7 @@
 </head>
 <script src="./js/rem.js"></script>
 <script src="./js/jquery.min.js"></script>
+<script src="./js/iscroll-probe.js"></script>
 <body>
     <div class="wrap wrongPage">
     	<header>
@@ -18,25 +19,28 @@
             <span>我的错题本</span>
             <a class="more" ></a>
         </header>
-        <main>
+        <main id="wrap">
+            <div class="list" uptext="下拉刷新">
+                <div class="listBox"></div>
+            </div>
         </main>
     </div>
 </body>
 </html>
 <script>
     function getMsg (data) {
+        $('.listBox').html('');
         if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0){
-            $('main').html('');
             return;
         }
         var data = JSON.parse(data);
         var regex = /^http\.bmp|\.jpg|\.jpeg|\.png|\.tiff|\.gif|\.pcx|\.tga|\.exif|\.fpx|\.svg|\.psd|\.cdr|\.pcd|\.dxf|\.ufo|\.eps|\.ai|\.raw|\.WMF|\.webp$/;     
         for (var i=0; i<data.length; i++) {         
-            var nowMsg = $('main').html();
+            var nowMsg = $('.listBox').html();
             if(data[i].content == undefined){
                 data[i].content = '';
             }
-            $('main').html(nowMsg + `
+            $('.listBox').html(nowMsg + `
                 <div class="wrongMsg">
                     <div class="examina">${data[i].content}</div>
                     <p class="yresult">你的答案：<span></span></p>
@@ -57,6 +61,8 @@
             window.android.itemClick(ind);
         });
   		$("input").attr({disabled:"disabled"});
+        $('.list').css('height',$('.listBox').height()+100);
+        myIscroll.refresh();
     };
     $(".wrongMsg").bind('click', function () {
 	    $(this).css("border", "2px solid #00c7b5").siblings().css("border", "2px solid #fff");
@@ -66,4 +72,29 @@
         //console.log("筛选");
         window.android.clickFilter();
     });
+    var list = document.querySelector('.list');
+	var myIscroll = new IScroll('#wrap',{
+		scrollbars: true,
+		probeType: 3
+    });
+    var flag = true;
+	myIscroll.on('scroll',function(){
+		if(this.y > 100){
+			list.setAttribute('uptext','释放刷新');
+		}else if(this.y < 100 && this.y > 0){
+			list.setAttribute('uptext','下拉刷新');
+		}else if(this.y < this.maxScrollY - 40 ){
+			flag = true;
+        }
+	})
+	myIscroll.on('scrollEnd',function(){
+        list.setAttribute('text','下拉刷新');
+        if(this.y === this.maxScrollY){
+            console.log("上拉");
+            window.android.getMoreData(false);
+        }else if(this.y === 0) {
+            window.android.getMoreData(true);
+            console.log("下拉");
+        }
+    })
 </script>

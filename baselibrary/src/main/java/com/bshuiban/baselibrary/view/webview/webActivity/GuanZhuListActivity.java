@@ -92,7 +92,7 @@ public class GuanZhuListActivity extends BaseWebActivity<GuanZhuListPresent> imp
          * 关注
          */
         @JavascriptInterface
-        public void dealWithAttention(boolean tag, int id, int index) {
+        public void dealWithAttention(boolean tag, String id, int index) {
             tPresent.guanZhu(tag, id);
             GuanZhuListActivity.this.index = index;
         }

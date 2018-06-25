@@ -53,9 +53,9 @@ h3 {
 }
 
 #text {
-    width: 7rem;
-    margin-left: .22rem;
-    overflow: scroll;
+width: 96%;
+margin-left: 2%;
+overflow: scroll;
 }
 
 .list {
@@ -227,9 +227,10 @@ h3 {
     margin-bottom: .86rem;
 }
 .button{
-    height:.84rem;
-    width:100%;
-    margin-top:5rem;
+   position: absolute;
+   bottom:0;
+   height:1rem;
+   width:100%;
 }
 .button p{
     height:.84rem;
@@ -242,8 +243,8 @@ h3 {
 .button button{
     background:#ffffff;
     border:1px solid #00c7b5;
-    width:3.74rem;
-    height:.84rem;
+    width:50%;
+    height:1rem;
     float: left;
     color:#00c7b5
 }
@@ -304,16 +305,22 @@ h3 {
 .hint p:nth-of-type(3) span:first-of-type{
     color:green;
 }
-#analyze{
-    width:6.96rem;
+    #analyze{
+    width:98%;
+    margin-left: 1%;
     padding-top:.24rem;
-    padding-left: .28rem;
     padding-bottom:.2rem;
     background:rgba(0,199,181,0.1);
     border-radius:.08rem;
     margin-top:.3rem;
-}
-#analyze li{
+    }
+    .list div{
+    width: 100% !important;
+    }
+      .list>img{
+        width: 100% !important;
+        }
+    #analyze li{
     font-family:PingFangSC-Regular;
     font-size:.32rem;
     letter-spacing:-0.39px;
@@ -321,7 +328,21 @@ h3 {
     text-align:left;
     color:#606063;
     margin-bottom:.32rem;
-}
+    width:96%;
+    margin-left:2%;
+    }
+    #analyze li img{
+    width:100%;
+    }
+    #analyze li div{
+    width: 100% !important;
+    }
+    #analyze li p {
+    width:100%;
+    }
+    #analyze li p img{
+    width:100%;
+    }
 #analyze li:nth-of-type(1){
     color:#39ddb8;
 }

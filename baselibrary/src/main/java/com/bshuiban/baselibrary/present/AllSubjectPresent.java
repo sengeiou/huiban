@@ -13,7 +13,7 @@ public class AllSubjectPresent<V extends BaseView> extends BasePresent<V> {
     public AllSubjectPresent(V v) {
         super(v);
     }
-    protected void getAllSubject(){
+    public void getAllSubject(){
         SubjectBean dataBean = User.getInstance().getSubjectBean();
         if(null!=dataBean&&isEffective()){
             loadAllSubject(dataBean);

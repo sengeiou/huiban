@@ -37,7 +37,9 @@ public class LessonListPresent extends ListPresent<LessonListContract.View> impl
         if(mJson==null){
             mJson=new JsonObject();
         }
-        mJson.addProperty("keyword",search);
+        start=0;
+        mJson.addProperty("name",search);
+        //mJson.addProperty("keyword",search);
         getInterNetData();
     }
 
@@ -51,7 +53,8 @@ public class LessonListPresent extends ListPresent<LessonListContract.View> impl
     public void getInterNetData() {
         mJson.addProperty("index",start);
         mJson.addProperty("limit",limit);
-        askInternet("getHBCourseList",gson.toJson(mJson),callHTMLJsonArray);
+        askInternet("getVipCourseRcomList",gson.toJson(mJson),callHTMLJsonArray);
+        //askInternet("getHBCourseList",gson.toJson(mJson),callHTMLJsonArray);
     }
 
     @Override

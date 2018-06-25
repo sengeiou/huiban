@@ -46,7 +46,9 @@ function complately(data) {
             </div>
                 `;
     }
-    done.innerHTML = str3;
+//    done.innerHTML = str3;
+     $('.listoo').css('height',$('.done').height()+100);
+        myIscroll.refresh();
     var look = document.getElementsByClassName("looks");
     // 未完成页点击跳转到每个单元对应的试题页
     for (var i = 0; i < look.length; i++) {

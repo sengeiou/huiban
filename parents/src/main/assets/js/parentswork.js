@@ -3,7 +3,7 @@ var str="";
 // 作业提醒
 function worknotice(data) {
     res = JSON.parse(data)
-    $(".subjects").html(" ")
+    $(".subjects").html("");
     for (var i = 0; i < res.length; i++) {
         if (res[i].status == 0) {
             str+=`  <div class="subconf">

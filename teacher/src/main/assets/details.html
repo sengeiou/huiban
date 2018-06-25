@@ -44,12 +44,14 @@
 <script>
     var tab = $('.tab');
     var userType = window.android.getUserType();
-        if (userType == 4) {
-            $('.parBtn').show();
-            $('.teaBtn').hide();
-        } else if (userType == 2 || userType == 3) {
-            $('.parBtn').hide();
-            $('.teaBtn').show();
+    console.log('userType');
+    if (userType == 4 || userType == 1) {
+        $('.coll').css('background','#00c7b5');
+        $('.parBtn').show();
+        $('.teaBtn').hide();
+    } else if (userType == 2 || userType == 3) {
+        $('.parBtn').hide();
+        $('.teaBtn').show();
     }
     tab.bind('click', function () {
         $(this).addClass('index').siblings().removeClass('index');
@@ -70,7 +72,7 @@
     function getContent (data) {
         var data = JSON.parse(data);
         isCollect(data.collected);
-        $('.classImg').html(`<img src="${data.imgUrlMin}" alt="" onerror="this.src='./images/reset/default_head.png' "/>`);
+        $('.classImg').html(`<img src="${data.imgUrlMin}" alt="" onerror="this.src='./images/reset/classPic.png' "/>`);
         $('.synopsis').html(`
             <p>${data.name}</p>
             <p>科目：${data.subjectName}</p>

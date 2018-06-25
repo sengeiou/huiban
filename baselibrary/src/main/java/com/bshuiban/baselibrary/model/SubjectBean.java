@@ -13,8 +13,8 @@ public class SubjectBean extends ResultBean {
     private List<DataBean> data;
 
     public List<DataBean> getData() {
-        //Comparator<DataBean> comparator= (o1, o2) -> o1.getId()<o2.getId()?-1:1;
-        //Collections.sort(data,comparator);
+        Comparator<DataBean> comparator= (o1, o2) -> o1.getId()<o2.getId()?-1:1;
+        Collections.sort(data,comparator);
         return data;
     }
 

@@ -33,8 +33,9 @@ public class LoginResultBean extends ResultBean {
         return this.data;
     }
 
-    public class Data {
-        private String userId="2030246";
+    public static class Data {
+        private String userId;
+        private String parentsId;
         private String passWord;
         private String mobile;
         private int userType;
@@ -55,8 +56,28 @@ public class LoginResultBean extends ResultBean {
         private String otherId;
 
         private int vipDays;
-
+        private List<StuArrBean> stuArr;
         private List<String> className;
+
+        public String getParentsId() {
+            return parentsId;
+        }
+
+        public void setParentsId(String parentsId) {
+            this.parentsId = parentsId;
+        }
+
+        public void setClassId1(String classId1) {
+            this.classId1 = classId1;
+        }
+
+        public List<StuArrBean> getStuArr() {
+            return stuArr;
+        }
+
+        public void setStuArr(List<StuArrBean> stuArr) {
+            this.stuArr = stuArr;
+        }
 
         public String getMobile() {
             return mobile;
@@ -124,15 +145,15 @@ public class LoginResultBean extends ResultBean {
 
         public void setClassId(List<String> classId) {
             this.classId = classId;
-            if(null!=classId&&classId.size()>0){
-                classId1=classId.get(0);
+            if (null != classId && classId.size() > 0) {
+                classId1 = classId.get(0);
             }
         }
 
         public String getClassId1() {
-            if(null==classId1){
-                if(null!=classId&&classId.size()>0){
-                    classId1=classId.get(0);
+            if (null == classId1) {
+                if (null != classId && classId.size() > 0) {
+                    classId1 = classId.get(0);
                 }
             }
             return classId1;
@@ -191,6 +212,92 @@ public class LoginResultBean extends ResultBean {
                     ", vipDays=" + vipDays +
                     ", className=" + className +
                     '}';
+        }
+
+        public static class StuArrBean {
+            /**
+             * stuId : 2030076
+             * stuName : 沈陽
+             * schoolId : 45
+             * schoolName : 青岛实验初级中学
+             * classId : 3000153
+             * className : 八3班N
+             * gradeId : 8
+             * gradeName : 八年级
+             */
+
+            private String stuId;
+            private String stuName;
+            private int schoolId;
+            private String schoolName;
+            private int classId;
+            private String className;
+            private int gradeId;
+            private String gradeName;
+
+            public String getStuId() {
+                return stuId;
+            }
+
+            public void setStuId(String stuId) {
+                this.stuId = stuId;
+            }
+
+            public String getStuName() {
+                return stuName;
+            }
+
+            public void setStuName(String stuName) {
+                this.stuName = stuName;
+            }
+
+            public int getSchoolId() {
+                return schoolId;
+            }
+
+            public void setSchoolId(int schoolId) {
+                this.schoolId = schoolId;
+            }
+
+            public String getSchoolName() {
+                return schoolName;
+            }
+
+            public void setSchoolName(String schoolName) {
+                this.schoolName = schoolName;
+            }
+
+            public int getClassId() {
+                return classId;
+            }
+
+            public void setClassId(int classId) {
+                this.classId = classId;
+            }
+
+            public String getClassName() {
+                return className;
+            }
+
+            public void setClassName(String className) {
+                this.className = className;
+            }
+
+            public int getGradeId() {
+                return gradeId;
+            }
+
+            public void setGradeId(int gradeId) {
+                this.gradeId = gradeId;
+            }
+
+            public String getGradeName() {
+                return gradeName;
+            }
+
+            public void setGradeName(String gradeName) {
+                this.gradeName = gradeName;
+            }
         }
     }
 }

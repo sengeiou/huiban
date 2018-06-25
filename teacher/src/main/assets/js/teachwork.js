@@ -8,6 +8,7 @@ var leftMenu = $('.leftMenu'),
     }
 // 当日整时
 var hour;
+
 //获取时间
 function getNowTime() {
     function p(s) {
@@ -37,13 +38,13 @@ function getNowTime() {
 getNowTime();
 // 班级页
 var classes = document.getElementsByClassName('class')[0];
-//  课表页 
+//  课表页
 var timetable = document.getElementsByClassName('timeTable')[0];
-// 通知页 
+// 通知页
 var notice = document.getElementsByClassName('notice')[0];
-// 关注页 
+// 关注页
 var follow = document.getElementsByClassName('follow')[0];
-// 慧辅导页 
+// 慧辅导页
 var homepage = document.getElementsByClassName('looktotal')[0];
 // 留言页
 var messa = document.getElementsByClassName('messa')[0];
@@ -60,20 +61,20 @@ userimg.onclick = function () {
 classes.onclick = function () {
     window.android.toNextActivity(0)
 }
-//  课表页 
+//  课表页
 timetable.onclick = function () {
     window.android.toNextActivity(1)
 }
-// 通知页 
+// 通知页
 
 notice.onclick = function () {
     window.android.toNextActivity(2)
 }
-// 关注页 
+// 关注页
 follow.onclick = function () {
     window.android.toNextActivity(3)
 }
-// 慧辅导页 
+// 慧辅导页
 homepage.onclick = function () {
     window.android.toNextActivity(4)
 }
@@ -93,93 +94,70 @@ $(".tea2").bind("click", function () {
 $(".tea3").bind("click", function () {
      window.android.toNextActivity(9)
 })
+//个人头像点击
+    $(".userImg").click(function(){
+        console.log("111")
+    })
 //切换课表
 function switchs(list) {
-    var data = JSON.parse(list);
-    var tab = document.getElementsByClassName("tab")[0];
-    var str1 = "";
-    var str2 = "";
-    var str3 = "";
-    var res1 = [];
-    var res2 = [];
-    var res3 = [];
-    for (var pro of data) {
-        if (pro.num <= 4) {
-            res1.push(pro)
-        } else if (pro.num <= 8) {
-            res2.push(pro)
-        } else {
-            res3.push(pro)
-        }
-    }
-//    if (hour > 0 && hour < 12) {
-//        for (pro of res1) {
-//            if (pro.subjectName == "") {
-//                pro.subjectName = "无课";
-//            }
-//            str1 += `<span>${pro.subjectName} ${pro.num}</span>`;
-//            $(".teachtime").html("上午课程")
-//        }
-//        curriculum[0].innerHTML = str1;
-//    } else if (hour > 12 && hour < 18) {
-//        for (pro of res2) {
-//            if (pro.subjectName == "") {
-//                pro.subjectName = "无课";
-//            }
-//            str2 += `<span>${pro.subjectName} ${pro.num}</span>`;
-//            $(".teachtime").html("下午课程")
-//        }
-//        curriculum[0].innerHTML = str2;
-//    } else {
-//        for (pro of res3) {
-//            if (pro.subjectName == "") {
-//                pro.subjectName = "无课";
-//            }
-//            str3 += `<span>${pro.subjectName} ${pro.num}</span>`;
-//            $(".teachtime").html("晚上课程")
-//        }
-//        curriculum[0].innerHTML = str3;
-//    }
-    if (hour > 0 && hour < 12) {
-        for (pro of res1) {
-        if (pro.subjectName == "") {
-        pro.subjectName = "无课";
-        }
-        str1 += `<span>${pro.subjectName} ${pro.num}</span>`;
-        $(".teachtime").html("上午课程")
-        }
-        if(res1[0].subjectName=="无课" && res1[1].subjectName== "无课" && res1[2].subjectName== "无课" && res1[3].subjectName== "无课") {
-        str1 = `<span>上午没有课程 </span>`;
-        }
-        curriculum[0].innerHTML = str1;
-        } else if (hour > 12 && hour < 18) {
-        for (pro of res2) {
-        if (pro.subjectName == "") {
-        pro.subjectName = "无课";
-        }
-        str2 += `<span>${pro.subjectName} ${pro.num}</span>`;
-        $(".teachtime").html("下午课程")
-        }
-        if(res2[0].subjectName=="无课" && res2[1].subjectName== "无课" && res2[2].subjectName== "无课" && res2[3].subjectName== "无课") {
-        str2 = `<span>下午没有课程 </span>`;
-        }
-        curriculum[0].innerHTML = str2;
-        } else {
-        for (pro of res3) {
-        if (pro.subjectName == "") {
-        pro.subjectName = "无课";
-        }
-        str3 += `<span>${pro.subjectName} ${pro.num}</span>`;
-        $(".teachtime").html("晚上课程")
-        }
-        if(res3[0].subjectName=="无课" && res3[1].subjectName== "无课") {
-        console.log("1111")
-        str3 = `<span>今晚没有课程 </span>`;
-        }
-        curriculum[0].innerHTML = str3;
-        }
+var data = JSON.parse(list);
+var tab = document.getElementsByClassName("tab")[0];
+var str1 = "";
+var str2 = "";
+var str3 = "";
+var res1 = [];
+var res2 = [];
+var res3 = [];
+for (var pro of data) {
+if (pro.num <= 4) {
+res1.push(pro)
+} else if (pro.num <= 8) {
+res2.push(pro)
+} else {
+res3.push(pro)
 }
-
+}
+for (pro of res1) {
+if (pro.subjectName == "") {
+pro.subjectName = "无课";
+}
+str1 += `<span>${pro.subjectName}</span>`;
+}
+if (res1[0].subjectName == "无课" && res1[1].subjectName == "无课" && res1[2].subjectName == "无课" && res1[3].subjectName == "无课") {
+str1 = `<span>上午没有课程 </span>`;
+}
+for (pro of res2) {
+if (pro.subjectName == "") {
+pro.subjectName = "无课";
+}
+str2 += `<span>${pro.subjectName}</span>`;
+$(".teachtime").html("下午课程")
+}
+if (res2[0].subjectName == "无课" && res2[1].subjectName == "无课" && res2[2].subjectName == "无课" && res2[3].subjectName == "无课") {
+str2 = `<span>下午没有课程 </span>`;
+}
+for (pro of res3) {
+if (pro.subjectName == "") {
+pro.subjectName = "无课";
+}
+str3 += `<span>${pro.subjectName}</span>`;
+$(".teachtime").html("晚上课程")
+}
+if (res3[0].subjectName == "无课" && res3[1].subjectName == "无课") {
+console.log("1111")
+str3 = `<span>今晚没有课程 </span>`;
+}
+if (hour >= 1 && hour <= 12) {
+$(".teachtime").html("上午课程")
+curriculum.html(str1)
+} else if (hour > 12 && hour <= 18) {
+$(".teachtime").html("下午课程")
+curriculum.html(str2)
+} else {
+$(".teachtime").html("晚上课程")
+curriculum.html(str3)
+}
+}
 // 慧辅导导航
 function imag(list) {
     var data = JSON.parse(list)
@@ -203,7 +181,7 @@ function imag(list) {
         })(i)
      }
     }
-}
+
 var array;
 // 留言页 回复页
 function message(list) {
@@ -238,11 +216,13 @@ function message(list) {
                         </dd>
                     </dl>
                 </div>
-               </div> 
+               </div>
     `;
     }
     var xbox = document.getElementsByClassName("box")[0];
     xbox.innerHTML = attr;
+     $('.bigbox').css('height',$('.box').height());
+      myIscroll.refresh();
     var dele = document.getElementsByClassName("dele");
     var rep = document.getElementsByClassName("rep");
     var button = document.getElementsByTagName("button")[0];
@@ -271,7 +251,6 @@ function message(list) {
                 var msgid = data[i].id;
                 console.log(msgid)
                 window.android.deleteMessageItem(msgid, null)
-
             }
         })(i)
     }

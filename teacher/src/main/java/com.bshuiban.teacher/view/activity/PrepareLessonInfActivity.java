@@ -59,6 +59,12 @@ public class PrepareLessonInfActivity extends BaseActivity<PrepareLessonInfPrese
         tPresent.loadPrepareLessonInf(tagIntent,preId);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+    }
+
     private View getPagerView() {
         View view = LayoutInflater.from(this).inflate(R.layout.layout_prepare_lesson_inf_item, mLlDots,false);
         return view;

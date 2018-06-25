@@ -11,6 +11,45 @@
             text-align: center;
             line-height:.5rem
         }
+        .coachBox main {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            padding-top: 0.8rem;
+        }
+        .coachBox main .swiper-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #fff;
+            z-index: 10;
+        }
+        .coachBox #wrap {
+            overflow: hidden;
+            position: relative;
+        }
+        .coachBox #wrap .lists {
+            position: relative;
+            height: 6rem;
+        }
+        .coachBox #wrap .lists:before,.list:after{
+            width: 100%;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            position:absolute;
+            display: block;
+            left:0;
+        }
+        .coachBox #wrap .lists:before{
+            content: attr(uptext);
+            top:-40px;
+        }
+        .coachBox #wrap .lists:after{
+            content: attr(downtext);
+            bottom:-40px;
+        }
     </style>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/index.css">
@@ -19,6 +58,7 @@
 <script src="./js/rem.js"></script>
 <script src="./js/jquery.min.js"></script>
 <script src="./js/swiper.min.js"></script>
+<script src="./js/iscroll-probe.js"></script>
 <body>
     <div class="wrap coachBox">
         <header>
@@ -35,64 +75,69 @@
                 <!-- Add Pagination -->
                
               </div>
-              <div class="mainList">
-               <!-- 慧辅导精品课程 -->
-                <div class="courseList">
-                    <h3 class="title">
-                        <div class="left">
-                            <span class="boutique"></span>
-                            <span class="boutiqueClass">精品语文</span>
-                        </div>
-                        <div class="right">
-                            <span class="changeButton">换一组</span>
-                            <span class="change"></span>
-                        </div>
-                    </h3>
-                    <div class="list">
+            <div id="wrap">
+                <div class="lists">
+                  <div class="mainList">
+                   <!-- 慧辅导精品课程 -->
+                    <div class="courseList jpClass">
+                        <h3 class="title">
+                            <div class="left">
+                                <span class="boutique"></span>
+                                <span class="boutiqueClass">精品语文</span>
+                            </div>
+                            <div class="right">
+                                <span class="changeButton">换一组</span>
+                                <span class="change"></span>
+                            </div>
+                        </h3>
+                        <div class="list">
 
-                    </div>
-                </div>
-                <div class="courseList subject hide">
-                    <h3 class="title">
-                        <p class="guess">
-                            <i>猜你想选：</i>
-                        </p>
-                        <p class="screen">
-                            筛选
-                            <span></span>
-                        </p>
-                    </h3>
-                    <div class="list">
-                    </div>
-                    <div class="mask hide">
-                        <div class="main">
-                            <p>可多选(选择区域可上下移动)</p>
-                            <div class="brand changeBox">
-                                <b class="kind">品牌</b>
-                                <span class="selected">全部</span>
-                                <div class="all"></div>
-                            </div>
-                            <div class="type changeBox">
-                                <b class="kind">类型</b>
-                                <span class="selected">全部</span>
-                                <div class="all"></div>
-                            </div>
-                            <div class="grade changeBox">
-                                <b class="kind">年级</b>
-                                <span class="selected">全部</span>
-                                <div class="all"></div>
-                            </div>
-                        </div>
-                        <div class="button">
-                            <span class="no">取消</span>
-                            <span class="sure">确定</span>
                         </div>
                     </div>
-                </div>
+                    <div class="courseList subject hide">
+                        <h3 class="title">
+                            <p class="guess">
+                                <i>猜你想选：</i>
+                            </p>
+                            <p class="screen">
+                                筛选
+                                <span></span>
+                            </p>
+                        </h3>
+                        <div class="list">
+                        </div>
+                        <div class="mask hide">
+                            <div class="main">
+                                <p>可多选(选择区域可上下移动)</p>
+                                <div class="brand changeBox">
+                                    <b class="kind">品牌</b>
+                                    <span class="selected allBtn">全部</span>
+                                    <div class="all"></div>
+                                </div>
+                                <div class="type changeBox">
+                                    <b class="kind">类型</b>
+                                    <span class="selected allBtn">全部</span>
+                                    <div class="all"></div>
+                                </div>
+                                <div class="grade changeBox">
+                                    <b class="kind">年级</b>
+                                    <span class="selected allBtn">全部</span>
+                                    <div class="all"></div>
+                                </div>
+                            </div>
+                            <div class="button">
+                                <span class="no">取消</span>
+                                <span class="sure">确定</span>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
         </main>
     </div>
 </body>
 <script>
+    var flag = false;
     var subjectId, organId, classType, gradeId;
     //渲染科目列表
     function getListNav(data) {
@@ -123,15 +168,20 @@
                 $(this).addClass('active').siblings().removeClass('active');
                 var ind = $(this).index();
                 if (ind == 0) {
+                    flag = false;
                     $('.mainList .courseList').eq(0).show().siblings().hide();
                 }else {
+                    flag = true;
                     $('.mainList .courseList').eq(1).show().siblings().hide();
                     $('.courseList:eq(1) .list').html('')
                     //xr(ywList,guess);
                 }
                 if(ind!=0){
                     var msg = JSON.stringify({"subjectId":data[ind-1].id});
+                    window.android.reSetStart();
                     window.android.dealWithJson("getHBCourseList",msg);
+                }else{
+                    window.android.loadMoreJingping();
                 }
             })
             
@@ -140,6 +190,7 @@
     //(listNav);
     //渲染精品页
     function listMsg(data) {
+        $('.courseList .list').html('');
         var data = JSON.parse(data);        
         for (var i=0;i<data.length;i++) {
             var nowMsg = $('.courseList .list').html();
@@ -161,10 +212,14 @@
             //var msg = JSON.stringify({"courseId":courseId});
             window.android.itemClick(courseId);
         });
+        $('.lists').css('height',$('.mainList').height()+100);
+    myIscroll.refresh();
     }
     //listMsg(jpList);
      //渲染科目下的列表
     function xr(data,guess) {
+        $('.subject .guess').html('');
+        $('.courseList:eq(1) .list').html('');
         $('.guess').html(`<i>猜你想选：</i>`);
         if (guess == 'null' || guess == undefined || guess == ''){
 
@@ -227,6 +282,8 @@
             var subjectId = JSON.stringify({"subjectId":data[0].SubjectId});
             window.android.dealWithJson("getVipRelationEduList",subjectId);
         });
+        $('.lists').css('height',$('.mainList').height()+100);
+    myIscroll.refresh();
      }
     var dataType=0;
      //渲染筛选列表
@@ -333,8 +390,35 @@
     })
     //点击换一组
     $('.changeButton').bind('click',function () {
+        $('.jpClass .list').html('');
         //console.log('换一组')
         window.android.loadMoreJingping();
     })
+    var list = document.querySelector('.lists');
+    var myIscroll = new IScroll('#wrap',{
+        scrollbars: true,
+        probeType: 3
+});
+var flag = true;
+    myIscroll.on('scroll',function(){
+        if(this.y > 100){
+            list.setAttribute('uptext','释放刷新');
+        }else if(this.y < 100 && this.y > 0){
+            list.setAttribute('uptext','下拉刷新');
+        }else if(this.y < this.maxScrollY - 40 ){
+            flag = true;
+}
+    })
+myIscroll.on('scrollEnd',function(){
+    list.setAttribute('text','下拉刷新');
+    console.log(flag);
+    if(this.y === this.maxScrollY && flag == true){
+        console.log("上拉");
+        window.android.getMoreData(false);
+    }else if(this.y === 0 && flag == true) {
+        console.log("下拉");
+        window.android.getMoreData(true);
+    }
+})
 </script>
 </html>

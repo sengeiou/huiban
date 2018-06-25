@@ -94,6 +94,10 @@ public class HomeworkCompleteInfActivity extends BaseWebActivity{
     }
     class HomeworkCompleteInfHtml extends UserTypeHtml{
         @JavascriptInterface
+        public boolean isParentsLook(){
+            return User.getInstance().isParents();
+        }
+        @JavascriptInterface
         public void toHomeworkResultPage(){
             runOnUiThread(()->{
                 startActivity(new Intent(getApplicationContext(),HomeworkResultWebActivity.class).putExtra(HOME_Work_Id,workId).putExtra(HOME_PREPARE,prepareId).putExtra("complete",true));

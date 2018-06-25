@@ -21,6 +21,6 @@ public interface GuanZhuListContract extends ListContract{
          * @param tag true 加关注
          * @param attUserId
          */
-        void guanZhu(boolean tag, int attUserId);
+        void guanZhu(boolean tag, String attUserId);
     }
 }

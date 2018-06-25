@@ -41,23 +41,29 @@
         return string;
     }
     function getContent (data) {
-        var data = JSON.parse(data);        
+        $('.listBox').html('');
+        var data = JSON.parse(data);
+        var rec;
         for(var i=0; i<data.length; i++){
             var nowContent = $('.listBox').html();
+            if (userType != 2 && userType != 3) {
+                rec=changeString(data[i].recTeaName)+'推荐';
+            }else{
+                rec='推荐给家长';
+            }
             $('.listBox').html(nowContent + `
                 <dl>
-                    <dt class="classImg"><img src="${data[i].imgUrl}" onerror="this.src='./images/reset/default_head.png' " alt="" /></dt>
+                    <dt class="classImg"><img src="${data[i].imgUrl}" onerror="this.src='./images/reset/classPic.png' " alt="" /></dt>
                     <dd>
                         <p>${data[i].Name}</p>
                         <p>授课老师：${data[i].speakerName}</p>
-                        <span class="name">推荐给家长</span>
+                        <span class="name">${rec}</span>
                     </dd>
                 </dl>
             `);
-            if (userType == 4) {
-                $('.list .name').html(changeString(data[i].recTeaName)+'推荐');
-            }
         }
+        $('.list').css('height',$('.listBox').height()+150);
+        myIscroll.refresh();
         //点击推荐给家长
         if (userType == 2 || userType == 3) {
             $('.name').bind('click', function () {
@@ -67,8 +73,7 @@
                 window.android.recommendParent(courseId);
                 return false;
             });
-            $('.list').css('height',$('.listBox').height());
-            myIscroll.refresh();
+
         }
         //点击进入课程详情
         $('dl').bind('click', function () {
@@ -84,9 +89,9 @@
     });
     var flag = true;
 	myIscroll.on('scroll',function(){
-		if(this.y > 40){
+		if(this.y > 100){
 			list.setAttribute('uptext','释放刷新');
-		}else if(this.y < 40 && this.y > 0){
+		}else if(this.y < 100 && this.y > 0){
 			list.setAttribute('uptext','下拉刷新');
 		}else if(this.y < this.maxScrollY - 40 ){
 			flag = true;
@@ -96,8 +101,10 @@
         list.setAttribute('text','下拉刷新');
         if(this.y === this.maxScrollY){
             console.log("上拉");
+            window.android.getMoreData(false);
         }else if(this.y === 0) {
             console.log("下拉");
+            window.android.getMoreData(true);
         }
 	})
     //点击查找

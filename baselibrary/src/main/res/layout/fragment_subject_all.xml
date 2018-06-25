@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.SubjectAllFragment">
 
     <LinearLayout
@@ -29,7 +30,9 @@
         <com.bshuiban.baselibrary.view.customer.WordGridView
             android:id="@+id/wordGrid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:nav_size="@dimen/dp_10"
+            app:child_size="@dimen/dp_10"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_8"
@@ -38,7 +41,9 @@
         <com.bshuiban.baselibrary.view.customer.BarsCharView
             android:id="@+id/barsChar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:title_size="@dimen/dp_10"
+            app:x_text_size="@dimen/dp_10"/>
         <!--底部学习统计-->
         <include
             android:id="@+id/include"

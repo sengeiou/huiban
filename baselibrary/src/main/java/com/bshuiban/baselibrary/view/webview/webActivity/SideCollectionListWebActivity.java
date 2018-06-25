@@ -1,8 +1,12 @@
 package com.bshuiban.baselibrary.view.webview.webActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.webkit.JavascriptInterface;
+
 import com.bshuiban.baselibrary.contract.SideCollectionListContract;
 import com.bshuiban.baselibrary.present.SideCollectionListPresent;
+import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 
 public class SideCollectionListWebActivity extends BaseWebActivity<SideCollectionListPresent> implements SideCollectionListContract.View {
 
@@ -11,6 +15,19 @@ public class SideCollectionListWebActivity extends BaseWebActivity<SideCollectio
         super.onCreate(savedInstanceState);
         tPresent=new SideCollectionListPresent(this);
         loadFileHtml("myFavorite");
+        SideCollectionHtml object = new SideCollectionHtml();
+        object.setOnListener(new MessageList.OnMessageListListener(){
+            @Override
+            public void refresh() {
+                tPresent.refresh();
+            }
+
+            @Override
+            public void loadMore() {
+                tPresent.loadMoreData();
+            }
+        });
+        registerWebViewH5Interface(object);
     }
 
     @Override
@@ -36,5 +53,11 @@ public class SideCollectionListWebActivity extends BaseWebActivity<SideCollectio
     @Override
     public void fail(String error) {
         toast(error);
+    }
+    class SideCollectionHtml extends MessageList{
+        @JavascriptInterface
+        public void toNextHuiFuActivity(String courseId) {
+            runOnUiThread(() -> startActivity(new Intent(getApplicationContext(),LessonInfWebActivity.class).putExtra("courseId",courseId)));
+        }
     }
 }

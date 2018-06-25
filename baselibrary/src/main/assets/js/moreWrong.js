@@ -107,12 +107,7 @@ function subject (data) {
 }
 //渲染知识点
 function getKnows(data) {
-    if (type != 3) {
-         var data = JSON.parse(data);
-    }else {
-        var data = data;
-    }
-    
+    var data = JSON.parse(data);
     if (type == 1) {
         for (var i=0;i<data.length;i++) {
             var nowSub = $('.typeList').eq(1).html();
@@ -135,7 +130,8 @@ function getKnows(data) {
             }
             $(this).css({'background': '#e0f8f6', 'color': '#00c7b5'}).siblings().css({'background': '#fff', 'color': '#9b9b9b'});            
             var msg = JSON.stringify({"subjectId":subjectId});
-            window.android.dealWithJson("getFilterVersionL",msg);
+            //window.android.dealWithJson("getFilterVersionL",msg);
+            window.android.dealWithJson("getFilterStageL",msg);
         });
     } else if (type == 2) {     
         $('.typeList').eq(2).html('');   
@@ -161,7 +157,6 @@ function getKnows(data) {
             });
         }
     } else if (type == 3) {
-        console.log(data);
         if(data==undefined||data==null||data=='null'){
             return;
         }

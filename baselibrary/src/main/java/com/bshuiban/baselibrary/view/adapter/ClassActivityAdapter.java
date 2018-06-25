@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.internet.UrlManage;
 import com.bshuiban.baselibrary.model.ClassActivityBean;
+import com.bshuiban.baselibrary.model.User;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -23,8 +24,10 @@ import com.bumptech.glide.request.transition.Transition;
  */
 public class ClassActivityAdapter extends RefreshLoadAdapter<ClassActivityBean.DataBean,ClassActivityAdapter.ClassActivityHolder> {
     private Context mContext;
+    private boolean delete;
     public ClassActivityAdapter(Context context){
         mContext=context;
+        delete=User.getInstance().isTeacher();
     }
     @Override
     public ClassActivityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,6 +41,10 @@ public class ClassActivityAdapter extends RefreshLoadAdapter<ClassActivityBean.D
         dealWithText(holder.tv_text,text);
         //holder.tv_text.setText(text);
         holder.tv_date.setText(cleanString(bean.getSendName())+" "+cleanString(bean.getToNow()));
+        if(delete){
+            holder.tv_delete.setTag(position);
+            holder.tv_delete.setVisibility(View.VISIBLE);
+        }
     }
     private void dealWithText(TextView textView,String string) {
         MyImageGetter imgGetter=new MyImageGetter(textView,string);
@@ -50,10 +57,22 @@ public class ClassActivityAdapter extends RefreshLoadAdapter<ClassActivityBean.D
     class ClassActivityHolder extends RecyclerView.ViewHolder{
         private TextView tv_text;
         private TextView tv_date;
+        private TextView tv_delete;
         public ClassActivityHolder(View itemView) {
             super(itemView);
             tv_text=itemView.findViewById(R.id.tv_text);
             tv_date=itemView.findViewById(R.id.tv_date);
+            tv_delete=itemView.findViewById(R.id.tv_delete);
+            if(delete){
+                tv_delete.setOnClickListener(v->{
+                    int position= (int) v.getTag();
+                    if(null!=onDeleteListener){
+                        ClassActivityBean.DataBean dataBean = mList.get(position);
+                        String id = dataBean.getId();
+                        onDeleteListener.delete(id);
+                    }
+                });
+            }
         }
     }
     class MyImageGetter implements Html.ImageGetter {
@@ -82,5 +101,14 @@ public class ClassActivityAdapter extends RefreshLoadAdapter<ClassActivityBean.D
             Log.e("TAG", "getDrawable: dr"+(drawable!=null) );
             return drawable;
         }
+    }
+    private OnDeleteListener onDeleteListener;
+
+    public void setOnDeleteListener(OnDeleteListener onDeleteListener) {
+        this.onDeleteListener = onDeleteListener;
+    }
+
+    public interface OnDeleteListener{
+        void delete(String id);
     }
 }

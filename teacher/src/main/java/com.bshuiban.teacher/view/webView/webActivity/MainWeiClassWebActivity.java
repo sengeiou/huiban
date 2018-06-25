@@ -1,9 +1,10 @@
 package com.bshuiban.teacher.view.webView.webActivity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.webkit.JavascriptInterface;
 
+import com.bshuiban.baselibrary.view.activity.PlayerVideoActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
 import com.bshuiban.teacher.contract.MainWeiClassContract;
@@ -15,11 +16,11 @@ import com.bshuiban.teacher.present.MainWeiClassPresent;
  */
 public class MainWeiClassWebActivity extends BaseWebActivity<MainWeiClassPresent> implements MainWeiClassContract.View{
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         tPresent=new MainWeiClassPresent(this);
         loadFileHtml("mainClassList");
-        MessageList object = new MessageList();
+        MainWeiClassHtml object = new MainWeiClassHtml();
         object.setOnListener(new MessageList.OnMessageListListener(){
             @Override
             public void loadMore() {
@@ -32,6 +33,11 @@ public class MainWeiClassWebActivity extends BaseWebActivity<MainWeiClassPresent
             }
         });
         registerWebViewH5Interface(object);
+    }
+
+    @Override
+    protected void webViewLoadFinished() {
+        tPresent.loadWeiClassData();
     }
 
     @Override
@@ -57,5 +63,24 @@ public class MainWeiClassWebActivity extends BaseWebActivity<MainWeiClassPresent
     @Override
     public void fail(String error) {
         toast(error);
+    }
+    class MainWeiClassHtml extends MessageList{
+        /**
+         * 转码中
+         * @param s
+         */
+        @JavascriptInterface
+        public void toast(String s){
+            runOnUiThread(()->MainWeiClassWebActivity.this.toast(s));
+        }
+
+        /**
+         * 非转码，视频地址有效
+         * @param url
+         */
+        @JavascriptInterface
+        public void playVideo(String url){
+            runOnUiThread(()-> PlayerVideoActivity.startPlayerVideoActivity(getApplicationContext(),url));
+        }
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -45,6 +46,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
     private List<TeachClassBean.DataBean> data;
     private ClassViewPagerAdapter classViewPagerAdapter;
     private int mPosition;
+    private String className;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
         arrayList.add("学习动态");
         arrayList.add("班级活动");
         arrayList.add("班级课表");
-        String className = User.getInstance().getClassName();
+        className = User.getInstance().getClassName();
         if (TextUtils.isEmpty(className)) {
             className = "我的班级";
         }
@@ -78,7 +80,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
                     try {
                         Class<?> aClass = Class.forName("com.bshuiban.teacher.view.webView.webActivity.SendClassActivityWebActivity");
                         Intent intent = new Intent(getApplicationContext(), aClass);
-                        startActivity(intent);
+                        startActivityForResult(intent,100);
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -107,9 +109,13 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
                     mPosition=position;
                     switch (position) {
                         case 2:
+                            titleView.setTitle_text(className);
                             titleView.setRight_text("新建", Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
+                            //titleView.setCompoundDrawablesWithIntrinsicBounds(null,null, ContextCompat.getDrawable(getApplicationContext(),R.mipmap.add_activity));
+                            //titleView.invalidate();
                             break;
                         case 3:
+                            titleView.setTitle_text(className);
                             titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
                             break;
                         case 1:
@@ -117,6 +123,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
                             titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
                             break;
                         default:
+                            titleView.setTitle_text(className);
                             titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
                     }
                 }
@@ -190,8 +197,11 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
     @Override
     public void updateData(List<TeachClassBean.DataBean> data) {
         this.data = data;
-        if (HomeworkBean.isEffictive(data))
-            titleView.setTitle_text(data.get(0).getClassName());
+        if (HomeworkBean.isEffictive(data)) {
+            className = data.get(0).getClassName();
+            titleView.setTitle_text(className);
+
+        }
     }
 
     @Override
@@ -206,6 +216,18 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
 
     @Override
     public void fail(String error) {
+        toast(error);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 100:
+                Fragment fragment = classViewPagerAdapter.getFragment(mPosition);
+                if(fragment instanceof ClassActivityFragment){
+                    ((ClassActivityFragment) fragment).update(null);
+                }
+                break;
+        }
     }
 }

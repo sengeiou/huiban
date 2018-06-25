@@ -1,5 +1,6 @@
 package com.bshuiban.teacher.view.webView.webActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.webkit.JavascriptInterface;
@@ -34,6 +35,8 @@ public class SendClassActivityWebActivity extends BaseWebActivity<SendClassActiv
     @Override
     public void sendNoticeSuccess() {
         toast("发送成功");
+        Intent i = new Intent();
+        setResult(RESULT_OK, i);
         finish();
     }
 

@@ -1318,70 +1318,84 @@
   font-size: 0.2rem;
 }
 .notic {
-  position: relative;
-  padding-top: 0.9rem;
-  box-sizing: border-box;
+    position: relative;
+    padding-top: 0.9rem;
+    box-sizing: border-box;
 }
 .notic header {
-  position: absolute;
-  top: 0;
-  left: 0;  
-  z-index:10;          
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index:10;
 }
 .notic main {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    overflow-Y: hidden;
+    position: relative;
+    background: #f9f9f9;
 }
 .notic main .list {
-  position: relative;
+    position: relative;
 }
 .notic main .list:before,.list:after{
-width: 100%;
-text-align: center;
-height: 40px;
-line-height: 40px;
-font-size: 14px;
-z-index: 9;
-position:absolute;
-display: block;
-left:0;
+    width: 100%;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    z-index: 9;
+    position:absolute;
+    display: block;
+    left:0;
 }
 .notic main .list:before{
-content: attr(uptext);
-top:-40px;
+    content: attr(uptext);
+    top:-40px;
 }
 .notic main .list:after{
-content: attr(downtext);
-bottom:-40px;
+    content: attr(downtext);
+    bottom:-40px;
 }
 .notic main .list {
-  background: #F9F9F9;
-  padding-top: 0.1px;
+    background: #F9F9F9;
+    padding-top: 0.1px;
 }
-/*1*/
-.notic main .list div {
-  padding: 0.12rem;
-  width: 7.1rem;
-  margin-top: 0.35rem;
-  margin-left: 0.2rem;
-  background: #fff;
-  color: #9b9b9b;
+.notic main .listBox div {
+    padding: 2%;
+    width: 90%;
+    margin-top: 0.35rem;
+    margin-left:5%;
+    background: #fff;
+    color: #9b9b9b;
 }
 
 .notic main .list div p {
-  font-size: 0.24rem;
+    font-size: 0.24rem;
 }
 
 .notic main .list div p:last-child {
-  text-align: right;
+    text-align: right;
 }
 
 .notic main .list div span {
-  font-size: 0.26rem;
-  margin-right: 0.22rem;
-  line-height: 0.9rem;
+    font-size: 0.26rem;
+    margin-right: 0.22rem;
+    line-height: 0.9rem;
+}
+.notic header .send {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    width: 0.4rem;
+    height: 0.45rem;
+}
+.notic header .send img {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .coachBox main {
@@ -1538,7 +1552,7 @@ bottom:-40px;
   height: 9rem;
   overflow-Y:scroll;
   position: fixed;
-  top: 2.6rem;
+  top: 0;
   left: 0;
   background: #fff;
   opacity: 0.9;
@@ -1586,6 +1600,10 @@ bottom:-40px;
   width: 1.4rem;
   display: inline-block;
   line-height: 0.6rem;
+}
+
+.coachBox main .courseList .mask .main .changeBox .allBtn {
+    width: 0.8rem;
 }
 
 .coachBox main .courseList .mask .main .changeBox .selected {
@@ -1732,12 +1750,12 @@ bottom:-40px;
   display: inline-block;
   width: 4.2rem;
   float: right;
-  margin-right: 0.3rem;
+  margin-right: .5rem;
 }
 
 .courseDetails .classImg {
   width: 100%;
-  height: 3.93rem;
+  height: 5.5rem;
 }
 
 .courseDetails .classImg img {
@@ -1754,6 +1772,10 @@ bottom:-40px;
 .courseDetails .synopsis p {
   text-indent: 0.2rem;
   margin-top: 0.38rem;
+}
+
+.courseDetails .classTab {
+    padding-bottom: 1rem;
 }
 
 .courseDetails .classTab .navs {
@@ -2053,7 +2075,7 @@ bottom:-40px;
 }
 .follow header span:nth-child(2) i {
   position: absolute;
-  right: 1.9rem;
+  right: 28%;
   top: 0.15rem;
 }
 .follow header span:nth-child(2) i img {

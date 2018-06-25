@@ -19,8 +19,8 @@ public class CorrectResultPresent extends BasePresent<CorrectResultContract.View
     }
 
     @Override
-    public void commitHomeworkResult(String preId, int type, int workId, String studentId, String json) {
-        askInternet("markHBWork", getjsonMap(User.getInstance().getUserId(), preId, type, workId, studentId, json), new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
+    public void commitHomeworkResult(String classId,String preId, int type, int workId, String studentId, String json) {
+        askInternet("markHBWork", getjsonMap(classId,User.getInstance().getUserId(), preId, type, workId, studentId, json), new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
             @Override
             protected void success(ResultBean resultBean) {
                 if(isEffective()){
@@ -38,8 +38,9 @@ public class CorrectResultPresent extends BasePresent<CorrectResultContract.View
     }
 
     @Override
-    public Map<String, Object> getjsonMap(String userId, String preId, int type, int workId, String studentId, String scoreStr) {
+    public Map<String, Object> getjsonMap(String classId,String userId, String preId, int type, int workId, String studentId, String scoreStr) {
         Map<String, Object> map= new HashMap<>(6);
+        map.put("classId",classId);
         map.put("userId",userId);
         map.put("preId",preId);
         map.put("type",type);

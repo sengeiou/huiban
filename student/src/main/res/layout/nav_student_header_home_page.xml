@@ -12,7 +12,7 @@
         android:scaleType="fitXY"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/ic_menu_camera"/>
+        android:src="@mipmap/default_head"/>
 
     <TextView
         android:id="@id/tv_name"
@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/iv_head"
         android:layout_toRightOf="@+id/iv_head"
+        android:textColor="@color/white"
         android:text="加载中" />
 
     <TextView
@@ -29,6 +30,7 @@
         android:text="加载中"
         android:layout_toRightOf="@+id/iv_head"
         android:layout_marginTop="15dp"
+        android:textColor="@color/white"
         android:layout_below="@+id/tv_name"/>
 
 </RelativeLayout>

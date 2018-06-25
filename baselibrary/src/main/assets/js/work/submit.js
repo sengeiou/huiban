@@ -18,7 +18,8 @@ function answer(data) {
 
   for(let i=0; i<list.homework.length; i++) {
       if(list.homework[i].complete == true) {
-        str+=`<li class="li" style="background:#eee">${i+1}</li>`
+        str+=`<li class="li" style="background:#eee">${i+1}</li>`;
+         count++;
       } else {
         str+=`<li class="li">${i+1}</li>`
         count++;
@@ -45,6 +46,7 @@ submit.onclick = function() {
         num.innerHTML = count;
     }else{
         window.android.commitHomework(true);
+        $(".backh").attr("href","javascript:void(0)")
     }
 }
 // 继续作答
@@ -55,6 +57,7 @@ submit.onclick = function() {
 moren.onclick = function() {
     // 页面跳转
     window.android.commitHomework(true);
+    $(".backh").attr("href","javascript:void(0)")
     hint.style.display = "none";
     //judge(list)
   }
@@ -64,10 +67,10 @@ function judge() {
         var list=obj;
        var str="";
     for(var i=0; i<list.homework.length; i++) {
-        if(list.homework[i].result == '1') {
+        if(list.homework[i].result == '0') {
             str+=`<li class="wrongs" ><span class="wrongss" style="background:#d8d8d8">${i+1}</span></li>`
           }
-          if(list.homework[i].result == '0'){
+          if(list.homework[i].result == '1'){
             str+=`<li class="trues"><span class="truess">${i+1}</span></li>`
           }
           if(list.homework[i].result == '2') {
@@ -81,4 +84,7 @@ function judge() {
     backlist.onclick = function() {
       window.android.backHomeworkInf()
     }
+    $(".backh").click(function() {
+      window.android.backHomeworkInf()
+    })
 }

@@ -1,10 +1,9 @@
 package com.bshuiban.baselibrary.present;
 
-import android.util.Log;
-
 import com.bshuiban.baselibrary.contract.BaseView;
 import com.bshuiban.baselibrary.contract.ListContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
+import com.bshuiban.baselibrary.model.LogUtils;
 import com.bshuiban.baselibrary.utils.JsonUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -22,7 +21,7 @@ public abstract class ListPresent<T extends BaseView> extends BasePresent<T> imp
     protected RetrofitService.CallHTMLJsonArray callHTMLJsonArray= new RetrofitService.CallHTMLJsonArray() {
         @Override
         protected void success(JsonArray msg) {
-            Log.e("TAG", "success: "+msg);
+            LogUtils.e("TAG", "success: "+msg);
             if(isEffective()){
                 if(null==jsonArray){
                     jsonArray=msg;
@@ -32,6 +31,9 @@ public abstract class ListPresent<T extends BaseView> extends BasePresent<T> imp
                         jsonArray.addAll(msg);
                         updateView(gson.toJson(jsonArray));
                     }
+                }
+                if(jsonArray.size()==0){
+                    fail("暂无数据");
                 }
             }
         }

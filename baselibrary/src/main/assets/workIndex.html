@@ -3,11 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6, maximum-scale=0.6, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>作业单元列表</title>
     <style>
-               .noComplate,
+         .noComplate,
         .complate {
             padding-bottom: 1.2rem;
         }
@@ -27,27 +27,29 @@
         }
 
         #filte .li {
-            width: 3.2rem;
+            width: 46%;
             height: 1rem;
             line-height: 1rem;
             font-size: .28rem;
             border: 1px solid #eee;
             float: left;
-            margin-left: .27rem;
-            margin-right: .27rem;
+            margin-left: 2%;
+            margin-right: 2%;
             margin-bottom: .2rem;
         }
 
         #main {
             height: 100%;
+            overflow-Y: hidden;
             position: relative;
-            overflow-y: scroll;
         }
 
         #main .listoo {
             position: relative;
         }
-
+        main {
+            overflow: hidden;
+        }
         #main .listoo:before,
         .listoo:after {
             width: 100%;
@@ -71,15 +73,11 @@
             bottom: -40px;
         }
 
-        .nodone,done {
+        .done {
           width:100%;
-          height: 800px;
         }
-        #filte{
-        display:none;
-        }
-        .details{
-          display:none;
+        .listoo{
+        min-height: 1050px ;
         }
     </style>
     <link rel="stylesheet" href="./css/reset.css">
@@ -88,36 +86,33 @@
 <script src="./js/rem.js"></script>
 <script src="./js/jquery.min.js"></script>
 <body>
-    <ul id="filte"></ul>
-    <div class="wrap workIndex">
-        <header>
+<ul id="filte"></ul>
+<div class="wrap workIndex">
+    <header>
             <span>
-             <a href="/finish_page.html"></a>
+                <a class="back" href="finish_page.html">
+                </a>
             </span>
-            <span>作业</span>
-            <b class="details"></b>
-        </header>
-        <main>
-            <nav>
+        <span>作业</span>
+        <b class="details"></b>
+    </header>
+    <main>
+        <nav>
                 <span class="navs">
                     <i class="active">待完成</i>
                 </span>
-                <span class="navs">
+            <span class="navs">
                     <i class="active2">已完成</i>
                 </span>
-            </nav>
-            <div id="main">
-                <div class="listoo" text="下拉刷新">
-                    <div class="list noComplate">
-                        <div class="nodone">
-                        </div>
-                        <div class="done">
-                        </div>
-                    </div>
+        </nav>
+        <div id="main">
+            <div class="listoo" text="下拉刷新">
+                <div class="list noComplate done">
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+</div>
 </body>
 <script src="./js/iscroll-probe.js"></script>
 <script src="./js/workLimit.js"></script>

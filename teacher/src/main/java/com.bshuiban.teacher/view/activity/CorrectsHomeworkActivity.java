@@ -55,6 +55,7 @@ public class CorrectsHomeworkActivity extends BaseActivity<CorrectsHomeworkPrese
     private String stuName;
     private String title;
     private TitleView titleView;
+    private String classId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class CorrectsHomeworkActivity extends BaseActivity<CorrectsHomeworkPrese
         stuId = getIntent().getIntExtra("studentId", -1);
         preId = getIntent().getStringExtra("preparationId");
         stuName = getIntent().getStringExtra("stuName");
+        classId = getIntent().getStringExtra("classId");
         tPresent = new CorrectsHomeworkPresent(this);
         initViews();
     }
@@ -84,6 +86,8 @@ public class CorrectsHomeworkActivity extends BaseActivity<CorrectsHomeworkPrese
                         .putExtra("title", title)
                         .putExtra("studentId", stuId)
                         .putExtra("preparationId", preId)
+                        .putExtra("classId", classId)
+                        .putExtra(HOME_Work_Id, workId)
                         .putExtra("json", new Gson().toJson(adapter.getList())));
             }
 
@@ -197,7 +201,7 @@ public class CorrectsHomeworkActivity extends BaseActivity<CorrectsHomeworkPrese
             public void onPageFinished(WebView view, String url) {
                 if (firstLoad) {
                     firstLoad = false;
-                    tPresent.loadHomeworkInf(workId, home_type);
+                    tPresent.loadHomeworkInf(workId, home_type,stuId+"");
                 }
             }
         });

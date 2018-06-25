@@ -15,9 +15,9 @@
         app:title_color="@android:color/white"
         app:right_text="提交"
         app:right_color="@color/white"
-        app:title_size="@dimen/dp_20"
+        app:title_size="@dimen/dp_15"
         android:background="@color/guide_start_btn"
-        app:right_size="@dimen/dp_20"
+        app:right_size="@dimen/dp_13"
         app:src_left="@mipmap/iv_back"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle"

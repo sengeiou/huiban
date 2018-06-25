@@ -9,8 +9,12 @@ import com.bshuiban.baselibrary.contract.BaseView;
 public interface FilterConditionContract {
     interface View extends BaseView{
         void updateView(String json);
+
+        void loadAllSubject(String json);
     }
     interface Present{
         void loadFilterCondition(String key,String json);
+
+        void loadAllSubject();
     }
 }

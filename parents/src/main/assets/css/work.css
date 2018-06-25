@@ -148,7 +148,8 @@
   margin-top: 0.28rem;
   font-weight: normal;
   position: relative;
-  background-size: 100%;
+  background-size: 100% 1.75rem;;
+  background-repeat:no-repeat;
   background-image: url("../images/work/bj@2x.png");
 }
 
@@ -174,10 +175,12 @@
 .workIndex main .list .listMsg dl {
   display: flex;
   justify-content: space-between;
+  height:50px;
 }
 
 .workIndex main .list .listMsg dl dt {
   text-indent: 0.22rem;
+   height:50px;
 }
 
 .workIndex main .list .listMsg dl p {
@@ -187,9 +190,9 @@
 
 .workIndex main .list .listMsg .time {
   font-size: 0.18rem;
-  color: #fff;
+  color:#fff;
   position: absolute;
-  bottom: 0;
+  bottom: 10%;
   left: 0;
   text-indent: 0.22rem;
 }
@@ -323,4 +326,25 @@
   .workIndex main .noComplate dd a {
     background-image: url("../images/work/do_work@3x.png");
   }
+}
+.workIndex main .list .listMsg .looka{
+position: absolute;
+width:.6rem;
+height:.6rem;
+right:30%;
+top:1%;
+background-image: url("../images/work/see@2x.png");
+background-repeat: no-repeat;
+background-size: 100%;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+.workIndex main .list .listMsg .looka {
+background-image: url("../images/work/see@2x.png");
+}
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+.workIndex main .list .listMsg .looka {
+background-image: url("../images/work/see@2x.png");
+}
 }

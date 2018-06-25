@@ -40,7 +40,15 @@ public class LiuYanMsgListParent extends ListPresent<LiuYanMsgListContract.View>
             }.getType());
         }
     }
-
+    @Override
+    public void fail(String error) {
+        if(start>0&&error.contains("暂无数据")){
+            error="没有更多数据了";
+        }else {
+            view.updateList("[]");
+        }
+        view.fail("留言："+error);
+    }
     @Override
     public void deleteMessageItem(String messageId, String pid) {
         String key;

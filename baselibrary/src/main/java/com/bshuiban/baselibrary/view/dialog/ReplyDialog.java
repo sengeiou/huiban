@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.model.MessageBean;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.utils.TextUtils;
 import com.bshuiban.baselibrary.view.customer.TitleView;
 
@@ -29,12 +30,16 @@ public class ReplyDialog extends MoveDialog {
     private TitleView titleView;
     private String pid;
     private String recevieId;
-
+    private boolean deleteTag;
     public ReplyDialog(@NonNull Context context) {
         super(context);
         setContentView(getReplyDialogView());
     }
-
+    public ReplyDialog(@NonNull Context context,boolean deleteTag) {
+        super(context);
+        setContentView(getReplyDialogView());
+        this.deleteTag=deleteTag;
+    }
     private View getReplyDialogView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_reply_list, null);
         titleView = view.findViewById(R.id.titleView);
@@ -111,7 +116,12 @@ public class ReplyDialog extends MoveDialog {
             setText(holder.tv_name, slistBean.getSendName());
             setText(holder.tv_time, slistBean.getAddTime());
             setText(holder.tv_text, slistBean.getContent());
-            holder.tv_delete.setTag(position);
+                holder.tv_delete.setTag(position);
+            if(deleteTag||User.getInstance().getUserId().equals(slistBean.getSend())) {
+                holder.tv_delete.setVisibility(View.VISIBLE);
+            }else{
+               holder.tv_delete.setVisibility(View.GONE);
+            }
         }
 
         @Override

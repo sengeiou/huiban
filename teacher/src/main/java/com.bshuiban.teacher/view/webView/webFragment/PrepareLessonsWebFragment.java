@@ -17,13 +17,10 @@ import android.widget.TextView;
 
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.bshuiban.baselibrary.view.webview.webActivity.ErrorFilterActivity;
-import com.bshuiban.baselibrary.view.webview.webFragment.BaseWebFragment;
 import com.bshuiban.baselibrary.view.webview.webFragment.InteractionBaseWebViewFragment;
-import com.bshuiban.teacher.R;
 import com.bshuiban.teacher.contract.PrepareLessonsContract;
 import com.bshuiban.teacher.present.PrepareLessonsPresent;
 import com.bshuiban.teacher.view.activity.PrepareLessonInfActivity;
-import com.bshuiban.teacher.view.webView.webActivity.FilterConditionActivity;
 import com.google.gson.Gson;
 
 import java.util.HashMap;

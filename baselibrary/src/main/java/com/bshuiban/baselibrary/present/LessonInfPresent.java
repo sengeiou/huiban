@@ -18,7 +18,7 @@ public class LessonInfPresent extends BasePresent<LessonInfContract.View> implem
 
     @Override
     public void getLessonInf(String courseId) {
-       call = RetrofitService.getInstance().getServiceResult("getCourseDetail", "{\"userId\":\"" + User.getInstance().getUserId() + "\",\"courseId\":\"" + courseId + "\"}", new RetrofitService.CallHTML() {
+       call = RetrofitService.getInstance().getServiceResult("getCourseDetail", "{\"userId\":\"" + User.getInstance().getReallyUserId() + "\",\"courseId\":\"" + courseId + "\"}", new RetrofitService.CallHTML() {
 
             @Override
             protected void success(String msg) {
@@ -53,15 +53,22 @@ public class LessonInfPresent extends BasePresent<LessonInfContract.View> implem
         }
     };
     private int tag;
+    private String getUserId(){
+        if(User.getInstance().getUserType()==4){
+            return User.getInstance().getUserData().getParentsId();
+        }else {
+            return User.getInstance().getUserId();
+        }
+    }
     @Override
     public void addCollect(String courseId) {//{"courseId":,"userId",""}
         tag=1;
-        askInternet("addUserCollect", "{\"courseId\":" + courseId + ",\"userId\":\"" + User.getInstance().getUserId() + "\"}", callback);
+        askInternet("addUserCollect", "{\"courseId\":" + courseId + ",\"userId\":\"" + User.getInstance().getReallyUserId() + "\"}", callback);
     }
 
     @Override
     public void deleteCollect(String courseId) {
         tag=0;
-        askInternet("deleteUserCollect", "{\"courseId\":" + courseId + ",\"userId\":\"" + User.getInstance().getUserId() + "\"}", callback);
+        askInternet("deleteUserCollect", "{\"courseId\":" + courseId + ",\"userId\":\"" + User.getInstance().getReallyUserId() + "\"}", callback);
     }
 }

@@ -17,8 +17,8 @@ public class CorrectsHomeworkPresent extends HomeworkPresent<CorrectsHomeworkCon
     }
 
     @Override
-    public void loadHomeworkInf(int workId, int wtype) {
-        loadHomeworkInfData(workId,wtype);
+    public void loadHomeworkInf(int workId, int wtype, String s) {
+        loadHomeworkInfData(workId,wtype,s);
     }
 
     @Override

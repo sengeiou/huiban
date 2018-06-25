@@ -110,7 +110,7 @@ public class GradeClassDialog extends BaseDialog {
             public void onClick(View v) {
                 if (onClickListener != null) {
                     int rightId=-1;
-                    if(classList.size()>rightIndex){
+                    if(null!=classList&&classList.size()>rightIndex){
                         rightId=classList.get(rightIndex).getClassId();
                     }
                     if (!onClickListener.onSure(leftS, leftList.getData().get(leftIndex).getGradeId(), rightS, rightId)) {

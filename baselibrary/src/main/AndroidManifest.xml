@@ -93,7 +93,7 @@
         <activity
             android:name=".view.activity.PlayerVideoActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"/>
         <activity android:name=".view.activity.ChangeUserActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.webview.webActivity.TestWebViewActivity"

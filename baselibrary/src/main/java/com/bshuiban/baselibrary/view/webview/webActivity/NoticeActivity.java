@@ -27,8 +27,6 @@ public class NoticeActivity extends BaseWebActivity<NoticePresent> implements No
             loadFileHtml("notic_teacher");
         }
         NoticeHtml messageList=new NoticeHtml();
-        registerWebViewH5Interface(messageList);
-        tPresent=new NoticePresent(this);
         messageList.setOnListener(new MessageList.OnMessageListListener(){
             @Override
             public void loadMore() {
@@ -40,6 +38,8 @@ public class NoticeActivity extends BaseWebActivity<NoticePresent> implements No
                 tPresent.refresh();
             }
         });
+        registerWebViewH5Interface(messageList);
+        tPresent=new NoticePresent(this);
     }
 
     @Override
@@ -79,7 +79,16 @@ public class NoticeActivity extends BaseWebActivity<NoticePresent> implements No
     }
     private void toNextActivity(Class<?> aClass){
         runOnUiThread(()->{
-            startActivity(new Intent(getApplicationContext(),aClass));
+            startActivityForResult(new Intent(getApplicationContext(),aClass),100);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 100:
+                tPresent.refresh();
+                break;
+        }
     }
 }

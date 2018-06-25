@@ -2,6 +2,7 @@ package com.bshuiban.baselibrary.view.webview.webFragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.bshuiban.baselibrary.contract.HomePageContract;
 import com.bshuiban.baselibrary.model.MessageBean;
@@ -18,10 +19,35 @@ import com.bshuiban.baselibrary.view.dialog.ReplyDialog;
  * 3.留言列表 message
  */
 public class HomePageFragment extends InteractionBaseWebViewFragment<HomePageParent> implements HomePageContract.View {
+    private boolean tagToast=true;
+    private boolean tagResume;
+
+    @Override
+    public void onResume() {
+        if(!tagResume) {
+            tagToast = false;
+            tPresent.refresh();
+        }
+        tagResume=false;
+        super.onResume();
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        Log.e(TAG, "onHiddenChanged: "+hidden );
+        if(hidden){
+            tagToast=false;
+        }
+        super.onHiddenChanged(hidden);
+//        if(!hidden){
+//            tagToast=false;
+//            tPresent.refresh();
+//        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tagResume=true;
         tPresent=new HomePageParent(this);
     }
 
@@ -41,17 +67,21 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
 
     @Override
     public void startDialog() {
-
+        showLoadingDialog();
     }
 
     @Override
     public void dismissDialog() {
-
+        dismissLoadingDialog();
     }
 
     @Override
     public void fail(String error) {
-        toast(error);
+        if(tagToast) {
+            toast(error);
+        }else {
+            tagToast=true;
+        }
     }
 
     @Override

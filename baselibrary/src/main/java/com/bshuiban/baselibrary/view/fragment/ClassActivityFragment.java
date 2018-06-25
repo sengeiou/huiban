@@ -1,6 +1,13 @@
 package com.bshuiban.baselibrary.view.fragment;
 
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.adapter.ClassActivityAdapter;
@@ -15,10 +22,36 @@ import java.util.List;
  * describe：班级活动页面
  */
 public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean.DataBean,ClassActivityAdapter,ClassActivityPresent> implements ClassActivityContract.View {
+    private String classId;
+    private boolean creat;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        creat=true;
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+//        if(!creat){
+//            tPresent.askInternetForClassActivityData(classId,start,limit);
+//        }else {
+//            creat=false;
+//        }
+        super.onResume();
+    }
+
     @Override
     public void updateViewForData(List<ClassActivityBean.DataBean> data) {
         super.updateView(data);
     }
+
+    @Override
+    public void refresh() {
+        start=0;
+        tPresent.askInternetForClassActivityData(classId, start,limit);
+    }
+
     @Override
     public void startDialog() {
 
@@ -47,17 +80,22 @@ public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean
 
     @Override
     protected ClassActivityAdapter getAdapter() {
-        return new ClassActivityAdapter(getActivity());
+        ClassActivityAdapter classActivityAdapter = new ClassActivityAdapter(getActivity());
+        classActivityAdapter.setOnDeleteListener(id -> tPresent.deleteActivity(classId,id));
+        return classActivityAdapter;
     }
 
     @Override
     protected void startPresent() {
-        String classId = User.getInstance().getClassId();
+        classId = User.getInstance().getClassId();
         tPresent.askInternetForClassActivityData(classId, start,limit);
     }
 
     public void update(String classId) {
+        if(null!=classId) {
+            this.classId = classId;
+        }
         start=0;
-        tPresent.askInternetForClassActivityData(classId, start,limit);
+        tPresent.askInternetForClassActivityData(this.classId, start,limit);
     }
 }

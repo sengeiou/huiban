@@ -47,7 +47,7 @@ public class ErrorFilterActivity extends BaseWebActivity<ErrorFilterPresent> imp
 
     @Override
     public void fail(String error) {
-
+        toast(error);
     }
 
     class ErrorFilterHtml {

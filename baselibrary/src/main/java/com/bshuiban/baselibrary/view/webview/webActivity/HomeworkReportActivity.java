@@ -10,6 +10,7 @@ import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.HomeworkReportPresent;
 import com.bshuiban.baselibrary.utils.UserSharedPreferencesUtils;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.HomeworkInfHtml;
+import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
 import com.google.gson.Gson;
 
 import static com.bshuiban.baselibrary.view.webview.webActivity.HomeworkListWebActivity.HOME_PREPARE;
@@ -37,11 +38,11 @@ public class HomeworkReportActivity extends BaseWebActivity<HomeworkReportPresen
         tPresent=new HomeworkReportPresent(this);
         loadFileHtml("echarts");
         registerWebViewH5Interface(new HomeworkReportHtml());
-        if(User.getInstance().getUserData()==null){
-            String userResJson = UserSharedPreferencesUtils.getUserResJson(getApplicationContext());
-            LoginResultBean.Data data = new Gson().fromJson(userResJson, LoginResultBean.Data.class);
-            User.getInstance().setData(data);
-        }
+//        if(User.getInstance().getUserData()==null){
+//            String userResJson = UserSharedPreferencesUtils.getUserResJson(getApplicationContext());
+//            LoginResultBean.Data data = new Gson().fromJson(userResJson, LoginResultBean.Data.class);
+//            User.getInstance().setData(data);
+//        }
     }
 
     @Override
@@ -61,7 +62,6 @@ public class HomeworkReportActivity extends BaseWebActivity<HomeworkReportPresen
 
     @Override
     public void dismissDialog() {
-
     }
 
     @Override

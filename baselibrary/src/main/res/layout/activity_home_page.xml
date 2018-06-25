@@ -49,6 +49,7 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:padding="@dimen/dp_10"
+            android:background="@color/line_bord"
             android:layout_centerHorizontal="true"
             />
     </RelativeLayout>

@@ -22,15 +22,17 @@
 
             <ImageView
                 android:id="@+id/imageView0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/study_video" />
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@mipmap/study_video"
+                android:layout_marginRight="@dimen/dp_5"/>
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
-                android:layout_height="19dp"
+                android:layout_height="wrap_content"
                 android:text="学习视频   "
+                android:textSize="@dimen/dp_12"
                 android:layout_alignTop="@+id/imageView0"
                 android:layout_toRightOf="@id/imageView0"/>
 
@@ -39,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/imageView0"
+                android:textSize="@dimen/dp_12"
                 android:layout_alignBottom="@id/imageView0"
                 android:text="TextView" />
         </RelativeLayout>
@@ -51,15 +54,17 @@
 
             <ImageView
                 android:id="@+id/imageView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/study_time"/>
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@mipmap/study_time"
+                android:layout_marginRight="@dimen/dp_5"/>
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="学习时长"
+                android:textSize="@dimen/dp_12"
                 android:layout_alignTop="@+id/imageView1"
                 android:layout_toRightOf="@id/imageView1"/>
 
@@ -69,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/imageView1"
                 android:layout_toRightOf="@id/imageView1"
+                android:textSize="@dimen/dp_12"
                 android:text="TextView" />
         </RelativeLayout>
     </LinearLayout>
@@ -86,15 +92,17 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/jion_answer_count"/>
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@mipmap/jion_answer_count"
+                android:layout_marginRight="@dimen/dp_5"/>
 
             <TextView
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/imageView2"
+                android:textSize="@dimen/dp_12"
                 android:layout_toRightOf="@id/imageView2"
                 android:text="参与问答数" />
 
@@ -104,6 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/imageView2"
                 android:layout_toRightOf="@id/imageView2"
+                android:textSize="@dimen/dp_12"
                 android:text="TextView" />
         </RelativeLayout>
 
@@ -115,9 +124,10 @@
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/complete_test" />
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@mipmap/complete_test"
+                android:layout_marginRight="@dimen/dp_5"/>
 
             <TextView
                 android:id="@+id/textView31"
@@ -125,6 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/imageView3"
                 android:layout_toRightOf="@id/imageView3"
+                android:textSize="@dimen/dp_12"
                 android:text="完成测试" />
 
             <TextView
@@ -133,6 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/imageView3"
                 android:layout_toRightOf="@id/imageView3"
+                android:textSize="@dimen/dp_12"
                 android:text="TextView" />
         </RelativeLayout>
     </LinearLayout>

@@ -45,5 +45,10 @@ public class TeachClassBean extends ResultBean {
         public void setGradeId(String gradeId) {
             this.gradeId = gradeId;
         }
+
+        @Override
+        public String toString() {
+            return className;
+        }
     }
 }

@@ -3,7 +3,7 @@ function pconfirm(data) {
     res = JSON.parse(data);
     str = "";
     for (var i = 0; i < res.length; i++) {
-        if (res[i].isClick == 0) {
+        if (res[i].isClick == 1) {
             str += `
             <ul class="subj">
                 <li>${res[i].subName}  /  周确认报告</li>
@@ -14,8 +14,8 @@ function pconfirm(data) {
         } else {
             str += `
             <ul class="subj">
-                <li>数学作业/周确认报告</li>
-                <li>2017312312312</li>
+                <li>${res[i].subName}  /  周确认报告</li>
+                <li>${res[i].beginDay} -- ${res[i].endDay}</li>
             <span class="see2"></span>
             </ul>
         `;

@@ -11,6 +11,7 @@ import java.util.List;
 public interface ClassActivityContract {
     interface View extends BaseView{
         void updateViewForData(List<ClassActivityBean.DataBean> data);
+        void refresh();
     }
     interface Present{
         /**
@@ -29,5 +30,6 @@ public interface ClassActivityContract {
          * @return
          */
         String getJsonString(String classId, int start, int limit);
+        void deleteActivity(String classId,String activityId);
     }
 }

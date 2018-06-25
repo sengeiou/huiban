@@ -1,10 +1,11 @@
 var res;
 var text = document.getElementById("text");
 var usertype = window.android.getUserType();
+var isParentsLook = window.android.isParentsLook();
 var type;
 if(usertype == 1) {
     type = "你的答案：";
-} else {
+} else  {
     type = "孩子答案：";
 }
 function rende(data) {
@@ -26,7 +27,7 @@ function rende(data) {
          text.innerHTML = `<ul class="list">${res.content}</ul> 
                     <div id="analyze">
                     <ul>
-                    <li>${type}${res.stuAnswer}</li>
+                    <li class="dis">${type}${res.stuAnswer}</li>
                     <li><span>${res.Answer}</span></li>
                     <li>${res.analysis} </li>
                     </ul>
@@ -40,7 +41,7 @@ function rende(data) {
                         </div>
                         <div id="analyze">
                         <ul>
-                        <li>${type}${res.stuAnswer}</li>
+                        <li class="dis">${type}${res.stuAnswer}</li>
                          <li>正确答案：<span>${res.Answer}</span></li>
                         <li>${res.analysis} </li>
                         </ul>
@@ -59,7 +60,7 @@ function rende(data) {
         text.innerHTML = `<ul class="list">${res.content}</ul> 
                     <div id="analyze">
                     <ul>
-                    <li>${type}${res.stuAnswer}</li>
+                    <li class="dis">${type}${res.stuAnswer}</li>
                     <li><span>${res.Answer}</span></li>
                     <li>${res.analysis} </li>
                     </ul>
@@ -90,7 +91,7 @@ function rende(data) {
                  </div>
                 <div id="analyze">
                 <ul>
-                <li>${type}${res.stuAnswer}</li>
+                <li class="dis">${type}${res.stuAnswer}</li>
                 <li>正确答案：<span>${res.Answer}</span></li>
                 <li>${res.analysis} </li>
                 </ul>
@@ -113,7 +114,7 @@ function rende(data) {
                      </div>
                     <div id="analyze">
                     <ul>
-                    <li>${type}${res.stuAnswer}</li>
+                    <li class="dis">${type}${res.stuAnswer}</li>
                     <li>正确答案：<span>${res.Answer}</span></li>
                     <li>${res.analysis} </li>
                     </ul>
@@ -128,4 +129,14 @@ function rende(data) {
             }
         }
     }
+
+    console.log(isParentsLook);
+    if(isParentsLook) {
+        console.log("aaaaaa")
+        $(".dis").html('');
+    }
+
 }
+
+
+

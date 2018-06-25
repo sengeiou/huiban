@@ -17,7 +17,7 @@ public class PatentsParentConfirmWebActivity extends ParentConfirmWebActivity<Pa
 
     @Override
     protected Class<?> getActivityClass() {
-        return null;
+        return ParentsParentConfirmSubjectWebActivity.class;
     }
 
     @Override

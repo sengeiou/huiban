@@ -5,6 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>我的收藏</title>
+    <style>
+        #main {
+            height: 100%;
+            overflow-Y: hidden;
+            position: relative;
+            }
+
+            #main .listoo {
+            position: relative;
+            }
+
+            main {
+            overflow: hidden;
+            }
+
+            #main .listoo:before,
+            .listoo:after {
+            width: 100%;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            z-index: 9;
+            position: absolute;
+            display: block;
+            left: 0;
+            }
+
+            #main .listoo:before {
+            content: attr(uptext);
+            top: -40px;
+            }
+
+            #main .listoo:after {
+            content: attr(downtext);
+            bottom: -40px;
+            }
+            dd{
+            width: 70%;
+            }
+      .listoo{
+        min-height: 650px ;
+        }
+        .img1{
+        display: inline-block;
+        width:.35rem;
+        height:.4rem;
+        background-image: url("./images/reset/praise@2x.png");
+        background-size:.27rem .27rem;
+        background-repeat: no-repeat;
+        vertical-align: top;
+        background-position: center 30%;
+        }
+        @media only screen and (-webkit-min-device-pixel-ratio:2){
+        .img1{background-image: url("./images/reset/praise@2x.png");}
+        }
+        @media only screen and (-webkit-min-device-pixel-ratio:3){
+        .img1{background-image: url("./images/reset/praise@3x.png");}
+        }
+        .img2{
+        display: inline-block;
+        width:.35rem;
+        height:.4rem;
+        background-image: url("./images/reset/browse@2x.png");
+        background-size:.3rem .27rem;
+        background-repeat: no-repeat;
+        vertical-align: top;
+        background-position: center 30%;
+        }
+        @media only screen and (-webkit-min-device-pixel-ratio:2){
+        .img2{background-image: url("./images/reset/browse@2x.png");}
+        }
+        @media only screen and (-webkit-min-device-pixel-ratio:3){
+        .img2{background-image: url("./images/reset/browse@3x.png");}
+        }
+        .p2{
+        color:gray;
+        font-size: .28rem;
+        height: 30px;
+        line-height: 30px;
+        }
+        .p3{
+        font-size: .26rem;
+        color:gray;
+        }
+        .img11{
+        display: inline-block;
+        width:.35rem;
+        height:.4rem;
+        vertical-align: top;
+        }
+        .list{
+        padding: .2rem !important;
+        border-bottom: 1px solid #eee;
+        }
+    </style>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/index.css">
 </head>
@@ -19,8 +115,11 @@
             <span>我的收藏</span>
         </header>
         <main>
+            <div id="main">
+                <div class="listoo" text="下拉刷新">
+                    <div class="room">
             <dl class="list">
-                <dt><img src="../../images/reset/class_overview_pic.png" alt=""></dt>
+                <dt><img src="./images/reset/class_overview_pic.png" alt=""></dt>
                 <dd>
                     <p>麻辣词汇系列</p>
                     <p>授课教师：<span>洪然</span></p>
@@ -28,7 +127,7 @@
                 </dd>
             </dl>
             <dl class="list">
-                <dt><img src="../../images/reset/class_overview_pic.png" alt=""></dt>
+                <dt><img src="./images/reset/class_overview_pic.png" alt=""></dt>
                 <dd>
                     <p>麻辣词汇系列</p>
                     <p>授课教师：<span>洪然</span></p>
@@ -36,36 +135,75 @@
                 </dd>
             </dl>
             <dl class="list">
-                <dt><img src="../../images/reset/class_overview_pic.png" alt=""></dt>
+                <dt><img src="./images/reset/class_overview_pic.png" alt=""></dt>
                 <dd>
                     <p>麻辣词汇系列</p>
                     <p>授课教师：<span>洪然</span></p>
                      <p><span class="img1"></span><span>36</span><span class="img2"></span><span>600</span></p>
                 </dd>
             </dl>
+                    </div>
+                </div>
+              </div>
         </main>
     </div>
 </body>
+<script src="./js/iscroll-probe.js"></script>
 <script>
      var res;
      function rend(data) {
         res = JSON.parse(data)
-         var main = document.getElementsByTagName("main")[0];
+         var main = document.getElementsByClassName("room")[0];
          var str='';
          for(var i=0; i<res.length; i++) {
              console.log(res[i])
              str+=`
-             <dl class="list">
-                <dt><img src=${res[i].imgUrl} onerror="this.src='./images/reset/classPic.png'" alt=""></dt>
-                <dd>
-                    <p>${res[i].name}</p>
-                    <p>授课教师：<span>${res[i].gradeName}  ${res[i].subjectName}</span></p>
-                     <p><span class="img1"></span><span>${res[i].praiseCnt}</span><span class="img2"></span><span>${res[i].browseCnt}</span></p>
-                </dd>
+            <dl class="list">
+            <dt><img src=${res[i].imgUrl} onerror="this.src='./images/reset/classPic.png'" alt=""></dt>
+            <dd>
+            <p class="p1">${res[i].name}</p >
+            <p class="p2">授课教师：<span>${res[i].gradeName} ${res[i].subjectName}</span></p >
+            <p class="p3"><span class="img1"></span><span class="img11">${res[i].praiseCnt}</span><span class="img2"></span><span class="img11">${res[i].browseCnt}</span></p >
+            </dd>
             </dl>
              `;
          }
          main.innerHTML = str;
-     } 
+       $('.listoo').css('height',$('.room').height()+10);
+        myIscroll.refresh();
+         var button = document.getElementsByClassName("list");
+            for(var i=0; i<button.length; i++) {
+            (function(i){
+            button[i].onclick = function() {
+            window.android.toNextHuiFuActivity(res[i].resId)
+            }
+            })(i)
+            }
+     }
+        var list = document.querySelector('.listoo');
+        var myIscroll = new IScroll('#main', {
+        scrollbars: true,
+        probeType: 3
+        });
+        var flag = true;
+        myIscroll.on('scroll', function () {
+        if (this.y > 40) {
+        list.setAttribute('uptext', '释放刷新');
+        } else if (this.y < 40 && this.y > 0) {
+        list.setAttribute('uptext', '下拉刷新');
+        } else if (this.y < this.maxScrollY - 40) {
+        flag = true;
+        }
+        })
+        myIscroll.on('scrollEnd', function () {
+        list.setAttribute('text', '下拉刷新');
+        if (this.y === this.maxScrollY) {
+            console.log("上拉");
+            window.android.getMoreData(true);
+        } else if (this.y === 0) {
+            console.log("下拉");
+            window.android.getMoreData(false);
+        }
+        })
 </script>
 </html>

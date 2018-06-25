@@ -53,7 +53,7 @@ public abstract class RecycleViewFragment<T, A extends RefreshLoadAdapter, P ext
 
     @Nullable
     @Override
-    public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutResourcesId(), container, false);
         recyclerView = getRecycleView(view);
         initView(view);

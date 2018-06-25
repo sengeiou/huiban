@@ -23,7 +23,7 @@
         </header>
         <main id="wrap">
             <div class="list" uptext="下拉刷新">
-
+                <div class="listBox"></div>
             </div>
         </main>
     </div>
@@ -31,12 +31,12 @@
 <script>
     function getContent (data) {
         var data = JSON.parse(data);
-        var nowMsg;
+        $('.listBox').html('');
         for (var i=0; i<data.length; i++) {
-            nowMsg = $('.list').html();
-            $('.list').html(nowMsg + `
+            var nowMsg = $('.listBox').html();
+            $('.listBox').html(nowMsg + `
                 <dl>
-                    <dt class="classImg"></dt>
+                    <dt class="classImg"><img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/reset/classPic.png' "/></dt>
                     <dd>
                         <h3>${data[i].Name}</h3>
                         <p>授课老师：${data[i].speakerName}</p>
@@ -53,12 +53,17 @@
                     </dd>
                 </dl>
             `);
-            if (data[i].imgUrl == '') {
-                $('.classImg').eq(i).html(`<img src="./images/index/tube_class@2x.png" alt="">`);
-            }else {
-                $('.classImg').eq(i).html(`<img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/index/tube_class@2x.png' "/>`);
-            } 
         }
+        $('.listBox dl').bind('click', function () {
+            var ind = $(this).index();
+            if (data[ind].isTrans == 0) {
+                window.android.toast("转码中");
+            }else {
+                window.android.playVideo(data[ind].flv_url);
+            }
+        });
+        $('.list').css('height',$('.listBox').height()+50);
+        myIscroll.refresh();
     }
     $('.back').bind('click', function () {
         console.log('返回上级');
@@ -70,11 +75,11 @@
     });
     var flag = true;
 	myIscroll.on('scroll',function(){
-		if(this.y > 40){
+		if(this.y > 100){
 			list.setAttribute('uptext','释放刷新');
 		}else if(this.y < 40 && this.y > 0){
 			list.setAttribute('uptext','下拉刷新');
-		}else if(this.y < this.maxScrollY - 40 ){
+		}else if(this.y < this.maxScrollY - 100 ){
 			flag = true;
         }
 	})

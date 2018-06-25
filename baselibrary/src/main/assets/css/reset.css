@@ -275,7 +275,6 @@ html, body, .wrap {
 .hide {
   display: none;
 }
-
 .show {
   display: block;
   overflow-y: scroll;
@@ -284,3 +283,7 @@ html, body, .wrap {
   flex:1;
   overflow-y:scroll;
 }
+
+#wrap .list {
+    min-height:650px
+ }

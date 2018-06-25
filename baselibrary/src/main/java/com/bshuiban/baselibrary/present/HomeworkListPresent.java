@@ -78,7 +78,7 @@ public class HomeworkListPresent extends BasePresent<HomeworkListContract.View> 
     @Override
     public void setTag(int subjectId) {
         Log.e("TAG", "setTag: "+subjectId+", old="+this.subjectId );
-        if(this.subjectId!=subjectId) {
+        if(this.subjectId!=subjectId||subjectId==0) {
             this.tag = subjectId != 0;
             this.subjectId = subjectId;
             refresh();
