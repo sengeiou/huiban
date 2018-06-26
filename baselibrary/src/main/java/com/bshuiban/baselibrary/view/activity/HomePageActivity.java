@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.internet.RetrofitDownload;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.baselibrary.present.ImageUploadHeadPresent;
 import com.bshuiban.baselibrary.utils.DialogUtils;

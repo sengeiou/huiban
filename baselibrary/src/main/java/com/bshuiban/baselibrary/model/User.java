@@ -3,6 +3,7 @@ package com.bshuiban.baselibrary.model;
 import android.os.Environment;
 import android.util.Log;
 
+import com.bshuiban.baselibrary.utils.CrashHandler;
 import com.bshuiban.baselibrary.utils.UserSharedPreferencesUtils;
 
 import java.util.List;
@@ -82,6 +83,7 @@ public class User {
             return;
         }
         this.data = data;
+        CrashHandler.getInstance().setNameString(getReallyUserId());
     }
 
     public String getGradeId() {

@@ -2,7 +2,10 @@ package com.bshuiban.baselibrary.utils.aes;
 
 import android.util.Log;
 
+import com.bshuiban.baselibrary.model.LogUtils;
+
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -27,13 +30,23 @@ public class AESUtils {
             int blockSize = cipher.getBlockSize();
             byte[] dataBytes = data.getBytes();
             int plaintextLength = dataBytes.length;
-            Log.e("TAG", "encrypt: "+blockSize+"， "+plaintextLength );
-            if (blockSize>0 && plaintextLength % blockSize != 0) {
+            LogUtils.e("TAG", "encrypt: "+blockSize+"， "+plaintextLength );
+            boolean num16 = blockSize > 0 && plaintextLength % blockSize != 0;//不能被16整除
+            if (num16) {
                 plaintextLength = plaintextLength + (blockSize - (plaintextLength % blockSize));
+                //byte b = " ".getBytes()[1];
+
             }
             byte[] plaintext = new byte[plaintextLength];
+
             System.arraycopy(dataBytes, 0, plaintext, 0, dataBytes.length);
-            SecretKeySpec keyspec = new SecretKeySpec(key.getBytes(), "AES");
+            if(num16){
+                for (int i=dataBytes.length;i<plaintextLength;i++){
+                    plaintext[i]= 32;
+                }
+            }
+            byte[] bytes = key.getBytes();
+            SecretKeySpec keyspec = new SecretKeySpec(bytes, "AES");
             IvParameterSpec ivspec = new IvParameterSpec(iv.getBytes());
 
             cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);

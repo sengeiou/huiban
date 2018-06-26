@@ -1,5 +1,7 @@
 package com.bshuiban.student.view.fragment;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +17,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.bshuiban.baselibrary.internet.ProgressResponseBody;
+import com.bshuiban.baselibrary.internet.RetrofitDownload;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.activity.ClassActivity;
 import com.bshuiban.baselibrary.view.activity.ClassScheduleActivity;
@@ -43,6 +47,8 @@ import com.bshuiban.baselibrary.view.webview.webFragment.HomePageFragment;
  * 加载更多--
  */
 public class StudentHomePageFragment extends HomePageFragment {
+
+    private RetrofitDownload retrofitDownload;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -142,7 +148,27 @@ public class StudentHomePageFragment extends HomePageFragment {
         @JavascriptInterface
         public void toggleSlide(){
             getActivity().runOnUiThread(()->{
-                mListener.transportData("toggleSlide");
+                //mListener.transportData("toggleSlide");
+                String url="http://dz.80txt.com/71356/%E7%8E%84%E7%95%8C%E6%97%85%E8%A1%8C%E7%A4%BE.zip";
+                String name="l2l.zip";
+                String path= User.path+"app/"+name;
+                ProgressResponseBody.ProgressListener progressListener = new ProgressResponseBody.ProgressListener() {
+                    @Override
+                    public void onProgress(int progress, int total, boolean done) {
+                        //Log.e(TAG, "onProgress: "+progress +", "+(int) (progress*100f/total));
+                        getActivity().runOnUiThread(()-> {
+                            ProgressDialog dialog = retrofitDownload.showDialog(null, getActivity());
+                            //dialog.setMax(total);
+                            int value = (int) (progress * 100f / total);
+                            dialog.setProgress(value);
+                            if(value>=100){
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                };
+                retrofitDownload = new RetrofitDownload(progressListener);
+                retrofitDownload.downloadFile(url,path);
             });
         }
         @JavascriptInterface

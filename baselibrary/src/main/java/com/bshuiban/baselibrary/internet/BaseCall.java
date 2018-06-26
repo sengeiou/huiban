@@ -9,13 +9,14 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface BaseCall {
     //key param
     @GET("interface/HuiBanApi.php")
     Call<ResponseBody> getCipherText(@Query("key") String module, @Query("param") String cipherText);
-    @POST("interface/HuiBanApi.php")
-    Call<ResponseBody> getCipherTextPost();
+//    @POST("interface/HuiBanApi.php")
+//    Call<ResponseBody> getCipherTextPost();
     /**
      * 单文件上传
      * @param description
@@ -25,4 +26,12 @@ public interface BaseCall {
     @Multipart
     @POST("upload")
     Call<ResponseBody> uploadFile(@Part("description") RequestBody description, @Part MultipartBody.Part file);
+
+    /**
+     * 文件下载
+     * @param fileUrl 地址
+     * @return
+     */
+    @GET
+    Call<ResponseBody> downloadFile(@Url String fileUrl);
 }

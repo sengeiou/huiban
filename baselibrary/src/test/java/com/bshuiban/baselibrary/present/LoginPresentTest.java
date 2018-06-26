@@ -28,16 +28,32 @@ public class LoginPresentTest {
 //                "Wp5mo5DLg0cWJyuxTE654mtFOL+kLOSL6WQ67PUQRUwzmCmw1A==";
 //        String data = "bzasOy2lURJECjTg9Xe8hi/yyN5F249ToeSOwHPMqPLc9Ut8wClP0xvNWk8RhKwPyaIQYh5F70xf\n" +
 //                "qv8zZjDLnA==";
-        String data1="B+OQYpIJCzNvYR3sTPuOqWE9DeoNww2qswpocyJzYuHnwWLOYmKHo5aTxxB0 cfOFYy+qqSBggUANazuWOdqJgX728GUjdJz9OHvpC3Dg3LwRHe6HzcSEBjH4 Yamgr6Vz+twmdqmOFq/H+XB7/rc20ZIgTEku7ob3u/F8+mj86S0Qd0A8FMDf NJizGw5oqGnk558pzcBUzt7hehzQ6sAFzmaWg7eJoqGm6dWcWp5mo5DLg0cW JyuxTE654mtFOL+kLOSL6WQ67PUQRUwzmCmw1A==";
+        //String data1="B+OQYpIJCzNvYR3sTPuOqWE9DeoNww2qswpocyJzYuHnwWLOYmKHo5aTxxB0 cfOFYy+qqSBggUANazuWOdqJgX728GUjdJz9OHvpC3Dg3LwRHe6HzcSEBjH4 Yamgr6Vz+twmdqmOFq/H+XB7/rc20ZIgTEku7ob3u/F8+mj86S0Qd0A8FMDf NJizGw5oqGnk558pzcBUzt7hehzQ6sAFzmaWg7eJoqGm6dWcWp5mo5DLg0cW JyuxTE654mtFOL+kLOSL6WQ67PUQRUwzmCmw1A==";
         //String data="C4zM/Z8Fq5xkIaDZg0Ts1BCtIYnjDNao+E6fNq+10d5KzdUidMLkd9mzsFco U2ytu1u33G2g";
         //String data="6F36AC3B2DA55112440A34E0F577BC862FF2C8DE45DB8F53A1E48EC073CCA8F2DCF54B7CC0294FD31BCD5A4F1184AC0F74E1BA9F762CDCB285532D2F8B4A4A0B";
-        String data="bEZQqtO9wRGRnoE3BOgY9x5F6dNWWeGrwY2glQ2s5v+V4o8NoiU1cMkkySTSF3KhDVlUOih4Jr/l0RBXupLAZmUvG4sQulUTW5zKKwz5jq8=";
-        String s = AESUtils.desEncrypt(data);
+
+        String data1="qiE3uNYA8NNlyOPVtNhBtbO3FMuQx8fL6OpVWYLLnDKThSNCXTGbCcu6OT645xIC";
+        String s = AESUtils.desEncrypt(data1);
         System.out.print(s+"\n");
     }
     @Test
     public void des(){//aes加密
-        String data="{\"userPwd\":\"111111\",\"terminal\":\"7\",\"userId\":\"2030246\"}";
+        //String data="{\"userPwd\":\"111111\",\"terminal\":\"7\",\"userId\":\"2030246\"}";
+        String empty=" ";
+        System.out.print(empty.getBytes());
+        //String data="{\"code\":\"2002\",\"msg\":\"success\",\"data\":[{\"id\":\"5b2cc826f5ddaf74632209eb\",\"imgUrl\":\"\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u4f60\\u597d\",\"addTime\":\"2018-06-22 17:57\",\"count\":0},{\"id\":\"5b2c48c2f5ddaf74632208d8\",\"imgUrl\":\"\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u8df3\\u821e\\u6bef\",\"addTime\":\"2018-06-22 08:54\",\"slist\":[{\"id\":\"5b2cc8a2f5ddaf74632209ed\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"receive\":\"2030246\",\"receiveName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u554a\\u554a\\u554a\",\"addTime\":\"2018-06-22 18:00\"},{\"id\":\"5b2cc763f5ddaf74632209e9\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"receive\":\"2030246\",\"receiveName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u554a\\u554a\\u554a\",\"addTime\":\"2018-06-22 17:54\"},{\"id\":\"5b2cc6eaf5ddaf74632209e7\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"receive\":\"2030246\",\"receiveName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u54c8\\u54c8\\u54c8\\u54c8\\u54c8\",\"addTime\":\"2018-06-22 17:52\"},{\"id\":\"5b2cc6d1f5ddaf74632209e5\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"receive\":\"2030246\",\"receiveName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u60a8\\u9ed8\\u9ed8\",\"addTime\":\"2018-06-22 17:52\"}],\"count\":4}]}            ";
+        String date="";
+        String data="{\"code\":\"2002\",\"msg\":\"success\",\"data\":[{\"id\":\"5b2cc826f5ddaf74632209eb\",\"imgUrl\":\"\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u4f60\\u597d\",\"addTime\":\"2018-06-22 17:57\",\"count\":0},{\"id\":\"5b2c48c2f5ddaf74632208d8\",\"imgUrl\":\"\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u8df3\\u821e\\u6bef\",\"addTime\":\"2018-06-22 08:54\",\"slist\":[{\"id\":\"5b2cc8a2f5ddaf74632209ed\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"receive\":\"2030246\",\"receiveName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u554a\\u554a\\u554a\",\"addTime\":\"2018-06-22 18:00\"},{\"id\":\"5b2cc763f5ddaf74632209e9\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"receive\":\"2030246\",\"receiveName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u554a\\u554a\\u554a\",\"addTime\":\"2018-06-22 17:54\"},{\"id\":\"5b2cc6eaf5ddaf74632209e7\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"receive\":\"2030246\",\"receiveName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u54c8\\u54c8\\u54c8\\u54c8\\u54c8\",\"addTime\":\"2018-06-22 17:52\"},{\"id\":\"5b2cc6d1f5ddaf74632209e5\",\"send\":\"2030246\",\"sendRoleId\":1,\"sendName\":\"\\u6234\\u5e05\\u5e05\",\"receive\":\"2030246\",\"receiveName\":\"\\u6234\\u5e05\\u5e05\",\"content\":\"\\u60a8\\u9ed8\\u9ed8\",\"addTime\":\"2018-06-22 17:52\"}],\"count\":4}]}";
+        //int i = data.indexOf(empty);//12
+        System.out.print(1268 + (16 - (1268 % 16)));
+        for (int i=data.length()-1;i>0;i--){
+            if(String.valueOf(data.charAt(i)).equals(empty)){
+
+            }else {
+                System.out.print(i+"\n");
+                break;
+            }
+        }
         String s = AESUtils.encrypt(data);
         System.out.print(s+"\n");
     }

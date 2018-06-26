@@ -23,9 +23,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class RetrofitService {
+public class RetrofitService extends BaseRetrofit{
     private static RetrofitService retrofitService;
-    private Retrofit retrofit;
     public static RetrofitService getInstance() {
         if (retrofitService == null) {
             synchronized (RetrofitService.class) {
@@ -38,16 +37,7 @@ public class RetrofitService {
     }
 
     private RetrofitService() {
-        retrofit=getRetrofit();
-    }
-
-    private static Gson gson = new Gson();
-
-    private Retrofit getRetrofit() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(UrlManage.getInstance().getBASE_URL())
-                .build();
-        return retrofit;
+        retrofit=getRetrofit(UrlManage.getInstance().getBASE_URL());
     }
 
     private BaseCall getResponseBodyCall() {
@@ -267,7 +257,7 @@ public class RetrofitService {
         @Override
         public void onResponse(retrofit2.Call<ResponseBody> call, Response<ResponseBody> response) {
             Request request = call.request();
-            String string = null;
+            String string ;
             HttpUrl url = request.url();
             String key = url.queryParameter("key");
             String param = url.queryParameter("param");
