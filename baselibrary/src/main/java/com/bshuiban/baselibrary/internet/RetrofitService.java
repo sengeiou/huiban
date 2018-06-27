@@ -262,8 +262,8 @@ public class RetrofitService extends BaseRetrofit{
             String key = url.queryParameter("key");
             String param = url.queryParameter("param");
             //String host = url.host();
-            Log.e(TAG, "onResponse: url=" + url.toString());
-            Log.e(TAG, "onResponse: key=" + key + ", param=" + AESUtils.desEncrypt(param));
+            LogUtils.e(TAG, "onResponse: url=" + url.toString());
+            LogUtils.e(TAG, "onResponse: key=" + key + ", param=" + AESUtils.desEncrypt(param));
             try {
                 string = response.body().string();
                 String s = AESUtils.desEncrypt(string);
