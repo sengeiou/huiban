@@ -13,7 +13,7 @@ function answer(data) {
   time.innerHTML = list.time;
   title.innerHTML = list.title;
   totalcount = list.homework.length;
-  totals.innerHTML = totalcount;
+  totals.innerHTML = "共"+totalcount+"题";
   var str ="";
 
   for(let i=0; i<list.homework.length; i++) {

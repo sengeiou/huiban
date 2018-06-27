@@ -4,7 +4,12 @@
         <activity
             android:name=".view.activity.ParentsHomeActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="com.bshuiban.parents.ParentsHomeActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".view.webView.webActivity.TodayHomeworkWebActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.webView.webActivity.PatentsParentConfirmWebActivity"

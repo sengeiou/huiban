@@ -11,23 +11,24 @@
 <script src="./js/rem.js"></script>
 <script src="./js/jquery.min.js"></script>
 <script src="./js/iscroll-probe.js"></script>
+<script src="./js/zepto.js"></script>
 <body>
-    <div class="wrap notic">
-        <header>
+<div class="wrap notic">
+    <header>
             <span>
                 <a href="/finish_page.html"></a>
-            </span>	
-            <span>发通知</span>
-            <span class="send">
+            </span>
+        <span>发通知</span>
+        <span class="send">
                 <img src="./images/index/add@2x.png" alt="">
             </span>
-        </header>
-        <main id="wrap">
-            <div class="list" uptext="下拉刷新" style="min-height:650px">
-                <div class="listBox"></div>
-            </div>
-        </main>
-    </div>
+    </header>
+    <main id="wrap">
+        <div class="list" uptext="下拉刷新" style="min-height:650px">
+            <div class="listBox"></div>
+        </div>
+    </main>
+</div>
 </body>
 <script>
     function getContent (data) {
@@ -36,7 +37,7 @@
         for (var i=0; i<data.length;i++) {
             var nowMsg = $('.listBox').html();
             $('.listBox').html(nowMsg+`
-                <div>
+                <div class="boxs">
                     <p>${data[i].content}</p>
                     <p>
                         <span>${data[i].name}</span>
@@ -55,13 +56,29 @@
     var list = document.querySelector('.list');
 	var myIscroll = new IScroll('#wrap',{
 		scrollbars: true,
-		probeType: 3
+		probeType: 3,
+		click:true
     });
     var flag = true;
+    var y,y2,y3;
+    var list = document.getElementsByClassName("list")[0];
+    list.ontouchstart = function(e) {
+        y = 0;
+    e=e || window.event;
+        y2=e.touches[0].pageY;
+        list.ontouchmove = function(e) {
+      e = e|| window.event
+    }
+  }
+  list.ontouchend = function(e) {
+        e=e || window.event;
+        y3=e.changedTouches[0].pageY;
+        y = y3-y2;
+  }
 	myIscroll.on('scroll',function(){
-		if(this.y > 40){
+		if(this.y > 100){
 			list.setAttribute('uptext','释放刷新');
-		}else if(this.y < 40 && this.y > 0){
+		}else if(this.y < 100 && this.y > 0){
 			list.setAttribute('uptext','下拉刷新');
 		}else if(this.y < this.maxScrollY - 40 ){
 			flag = true;
@@ -69,15 +86,20 @@
 	})
 	myIscroll.on('scrollEnd',function(){
         list.setAttribute('text','下拉刷新');
-        if(this.y === this.maxScrollY){
+        if(y<-300 && this.y === this.maxScrollY){
             console.log("上拉");
             window.android.getMoreData(false);
-        }else if(this.y === 0) {
+            this.y = this.maxScrollY +1;
+        }else if(y >300  && this.y === 0) {
             console.log("下拉");
             window.android.getMoreData(true);
-
+            this.y = -1;
         }
 	})
-
+    var box = $('.boxs');
+    // 长按
+	box.longTap(function () {
+		console.log('----longTap----')
+	});
 </script>
 </html>

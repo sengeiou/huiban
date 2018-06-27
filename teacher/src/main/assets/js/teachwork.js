@@ -258,7 +258,8 @@ function message(list) {
 var list = document.querySelector('.listoo');
 var myIscroll = new IScroll('#main', {
     scrollbars: true,
-    probeType: 3
+    probeType: 3,
+    click: true
 });
 var flag = true;
 myIscroll.on('scroll', function () {

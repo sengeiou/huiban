@@ -100,8 +100,9 @@ public class SplashActivity extends BaseActivity<LoginPresent> implements LoginC
                 startActivity(new Intent(SplashActivity.this,Class.forName("com.bshuiban.view.webActivity.WebLoginActivity")));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+            }finally {
+                finish();
             }
-            finish();
         },2000);
     }
 

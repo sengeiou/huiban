@@ -16,11 +16,13 @@ import java.util.List;
  * describe：
  */
 public class HomePageParent extends ListPresent<HomePageContract.View> implements HomePageContract.Parent {
-    private static final String userId = User.getInstance().getUserId();
+    private String userId ;
     private List<MessageBean.DataBean> dataBeans;
 
     public HomePageParent(HomePageContract.View view) {
         super(view);
+
+        userId=User.getInstance().getUserId();
     }
 
     private String getJsonString(String userId) {

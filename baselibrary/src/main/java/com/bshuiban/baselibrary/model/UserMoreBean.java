@@ -92,5 +92,6 @@ public class UserMoreBean extends ResultBean {
         public void setTypeId(int typeId) {
             this.typeId = typeId;
         }
+
     }
 }

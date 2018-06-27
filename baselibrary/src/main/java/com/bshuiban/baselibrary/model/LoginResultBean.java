@@ -32,7 +32,6 @@ public class LoginResultBean extends ResultBean {
     public Data getData() {
         return this.data;
     }
-
     public static class Data {
         private String userId;
         private String parentsId;
@@ -58,7 +57,24 @@ public class LoginResultBean extends ResultBean {
         private int vipDays;
         private List<StuArrBean> stuArr;
         private List<String> className;
-
+        public void clean(){
+            userId=null;
+            parentsId=null;
+            passWord=null;
+            mobile=null;
+            userType=-1;
+            realName=null;
+            icoPath=null;
+            schoolId=null;
+            schoolName=null;
+            classId=null;
+            classId1=null;
+            gradeId=null;
+            otherId=null;
+            vipDays=0;
+            stuArr=null;
+            className=null;
+        }
         public String getParentsId() {
             return parentsId;
         }

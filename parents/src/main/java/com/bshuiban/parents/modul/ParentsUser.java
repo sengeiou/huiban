@@ -1,5 +1,6 @@
 package com.bshuiban.parents.modul;
 
+import com.bshuiban.baselibrary.model.LoginResultBean;
 import com.bshuiban.baselibrary.model.ResultBean;
 
 import java.util.List;
@@ -70,10 +71,10 @@ public class ParentsUser extends ResultBean {
         private String cityName;
         private String parentPhone;
         private int isHeader;
-        private List<Integer> classId;
+        private List<String> classId;
         private List<?> interest;
         private List<String> className;
-        private List<ChildrenList> stuArr;
+        private List<LoginResultBean.Data.StuArrBean> stuArr;
 
         public String getUserId() {
             return userId;
@@ -235,11 +236,11 @@ public class ParentsUser extends ResultBean {
             this.isHeader = isHeader;
         }
 
-        public List<Integer> getClassId() {
+        public List<String> getClassId() {
             return classId;
         }
 
-        public void setClassId(List<Integer> classId) {
+        public void setClassId(List<String> classId) {
             this.classId = classId;
         }
 
@@ -259,59 +260,70 @@ public class ParentsUser extends ResultBean {
             this.className = className;
         }
 
-        public List<ChildrenList> getStuArr() {
+        public List<LoginResultBean.Data.StuArrBean> getStuArr() {
             return stuArr;
         }
 
-        public void setStuArr(List<ChildrenList> stuArr) {
+        public void setStuArr(List<LoginResultBean.Data.StuArrBean> stuArr) {
             this.stuArr = stuArr;
         }
-    }
-    public static class ChildrenList{
-        private String stuId;
-        private String stuName;
-        private String schoolId;
-        private String classId;
-        private String gradeId;
 
-        public String getStuId() {
-            return stuId;
-        }
-
-        public void setStuId(String stuId) {
-            this.stuId = stuId;
-        }
-
-        public String getStuName() {
-            return stuName;
-        }
-
-        public void setStuName(String stuName) {
-            this.stuName = stuName;
-        }
-
-        public String getSchoolId() {
-            return schoolId;
-        }
-
-        public void setSchoolId(String schoolId) {
-            this.schoolId = schoolId;
-        }
-
-        public String getClassId() {
-            return classId;
-        }
-
-        public void setClassId(String classId) {
-            this.classId = classId;
-        }
-
-        public String getGradeId() {
-            return gradeId;
-        }
-
-        public void setGradeId(String gradeId) {
-            this.gradeId = gradeId;
+        public void setDataContent(LoginResultBean.Data dataContent) {
+            dataContent.setRealName(realName);
+            dataContent.setIcoPath(icoPath);
+            dataContent.setSchoolId(schoolId+"");
+            dataContent.setSchoolName(schoolName);
+            dataContent.setGradeId(gradeId+"");
+            dataContent.setClassId(classId);
+            dataContent.setStuArr(stuArr);
+            dataContent.setClassName(className);
         }
     }
+//    public static class ChildrenList{
+//        private String stuId;
+//        private String stuName;
+//        private String schoolId;
+//        private String classId;
+//        private String gradeId;
+//
+//        public String getStuId() {
+//            return stuId;
+//        }
+//
+//        public void setStuId(String stuId) {
+//            this.stuId = stuId;
+//        }
+//
+//        public String getStuName() {
+//            return stuName;
+//        }
+//
+//        public void setStuName(String stuName) {
+//            this.stuName = stuName;
+//        }
+//
+//        public String getSchoolId() {
+//            return schoolId;
+//        }
+//
+//        public void setSchoolId(String schoolId) {
+//            this.schoolId = schoolId;
+//        }
+//
+//        public String getClassId() {
+//            return classId;
+//        }
+//
+//        public void setClassId(String classId) {
+//            this.classId = classId;
+//        }
+//
+//        public String getGradeId() {
+//            return gradeId;
+//        }
+//
+//        public void setGradeId(String gradeId) {
+//            this.gradeId = gradeId;
+//        }
+//    }
 }

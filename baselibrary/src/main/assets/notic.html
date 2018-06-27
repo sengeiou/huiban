@@ -11,6 +11,7 @@
 <script src="./js/rem.js"></script>
 <script src="./js/jquery.min.js"></script>
 <script src="./js/iscroll-probe.js"></script>
+<script src="./js/zepto.js"></script>
 <body>
 <div class="wrap notic">
     <header>
@@ -19,8 +20,8 @@
             </span>
         <span>通知</span>
         <!--<span class="send">-->
-                <!--<img src="./images/index/add@2x.png" alt="">-->
-            <!--</span>-->
+        <!--<img src="./images/index/add@2x.png" alt="">-->
+        <!--</span>-->
     </header>
     <main id="wrap">
         <div class="list" uptext="下拉刷新" style="height:800px">
@@ -55,9 +56,25 @@
     var list = document.querySelector('.list');
 	var myIscroll = new IScroll('#wrap',{
 		scrollbars: true,
-		probeType: 3
+		probeType: 3,
+		click:true
     });
     var flag = true;
+    var y,y2,y3;
+    var list = document.getElementsByClassName("list")[0];
+    list.ontouchstart = function(e) {
+        y = 0;
+    e=e || window.event;
+        y2=e.touches[0].pageY;
+        list.ontouchmove = function(e) {
+      e = e|| window.event
+    }
+  }
+  list.ontouchend = function(e) {
+        e=e || window.event;
+        y3=e.changedTouches[0].pageY;
+        y = y3-y2;
+  }
 	myIscroll.on('scroll',function(){
 		if(this.y > 40){
 			list.setAttribute('uptext','释放刷新');
@@ -69,17 +86,18 @@
 	})
 	myIscroll.on('scrollEnd',function(){
         list.setAttribute('text','下拉刷新');
-        if(this.y === this.maxScrollY){
+        if(y<-300 && this.y === this.maxScrollY){
             console.log("上拉");
             window.android.getMoreData(false);
-        }else if(this.y === 0) {
+        }else if(y >300  && this.y === 0) {
             console.log("下拉");
             window.android.getMoreData(true);
         }
 	})
-    //点击返回上个页面
-    $('.back').bind('click', function () {
-
-    })
+    var box = $('.boxs');
+    // 长按
+	box.longTap(function () {
+		console.log('----longTap----')
+	});
 </script>
 </html>

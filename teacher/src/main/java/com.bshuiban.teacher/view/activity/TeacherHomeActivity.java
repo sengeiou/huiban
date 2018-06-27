@@ -53,7 +53,15 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
         tPresent = new TeacherHomePresent(this);
         tPresent.getUserDataForInternet();
     }
-
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if(intent.getBooleanExtra("change",false)) {
+            if (null == tPresent)
+                tPresent = new TeacherHomePresent(this);
+            tPresent.getUserDataForInternet();
+        }
+        super.onNewIntent(intent);
+    }
     @Override
     protected void initNavigationView(FrameLayout rl, LinearLayout navigationView) {
         View view = LayoutInflater.from(this).inflate(R.layout.nav_teacher_header_home_page,rl,false);

@@ -87,6 +87,15 @@
 .wrongPage main .wrongMsg .yresult span {
   color: red;
 }
+
+.yourAnswer img {
+    vertical-align: text-top;
+}
+
+.wrongPage main .wrongMsg .yresult span img {
+    vertical-align: text-top;
+}
+
 .wrongPage img {
   max-width: 40%;
 }
@@ -322,4 +331,11 @@ width: 98%!important;
 }
 .answerMsg div {
   width: 100%!important;
+}
+.question ol li, .wrongPage ol li {
+    width: 100%!important;
+    list-style-position: inside;
+}
+.question ol li p, .wrongPage ol li p {
+    display: inline;
 }

@@ -64,7 +64,7 @@
         <header>
             <span>
                 <a href="/finish_page.html"></a>
-            </span>	
+            </span>
             <span>慧辅导</span>
         </header>
         <main>
@@ -73,7 +73,7 @@
                     <div class="swiper-slide active">精品</div>
                 </div>
                 <!-- Add Pagination -->
-               
+
               </div>
             <div id="wrap">
                 <div class="lists">
@@ -138,7 +138,7 @@
 </body>
 <script>
     var flag = false;
-    var subjectId, organId, classType, gradeId;
+    var subjectId, organId, classType, gradeId,organN,classTN,gradeN;
     //渲染科目列表
     function getListNav(data) {
         var data = JSON.parse(data);
@@ -165,6 +165,7 @@
             });
             //点击切换样式
             $('.swiper-slide').bind('click', function () {
+                $('.guess').html('猜你想选：');
                 $(this).addClass('active').siblings().removeClass('active');
                 var ind = $(this).index();
                 if (ind == 0) {
@@ -184,14 +185,14 @@
                     window.android.loadMoreJingping();
                 }
             })
-            
+
         }
     };
     //(listNav);
     //渲染精品页
     function listMsg(data) {
         $('.courseList .list').html('');
-        var data = JSON.parse(data);        
+        var data = JSON.parse(data);
         for (var i=0;i<data.length;i++) {
             var nowMsg = $('.courseList .list').html();
             $('.courseList .list:eq(0)').html(nowMsg + `
@@ -204,7 +205,7 @@
                         </dd>
                     </dl>
             `);
-        }    
+        }
         //点击进入详情
         $('.courseList .list dl').bind('click', function () {
             var ind = $(this).index();
@@ -212,21 +213,20 @@
             //var msg = JSON.stringify({"courseId":courseId});
             window.android.itemClick(courseId);
         });
-        $('.lists').css('height',$('.mainList').height()+100);
+        $('.lists').css('height',$('.mainList').height()+20);
     myIscroll.refresh();
     }
     //listMsg(jpList);
      //渲染科目下的列表
     function xr(data,guess) {
-        $('.subject .guess').html('');
+        var nowGuess = $('.subject .guess').html();
         $('.courseList:eq(1) .list').html('');
-        $('.guess').html(`<i>猜你想选：</i>`);
+        $('.guess').html(nowGuess);
         if (guess == 'null' || guess == undefined || guess == ''){
 
         }else {
             var guess = JSON.parse(guess);
-            var nowGuess = $('.subject .guess').html();
-            $('.guess').html(nowGuess + `
+            $('.guess').html('猜你想选：' + `
                 <span>${guess.organName}</span>
                 <span>${guess.vipTypeName}</span>
                 <span>${guess.gradeName}</span>
@@ -282,38 +282,40 @@
             var subjectId = JSON.stringify({"subjectId":data[0].SubjectId});
             window.android.dealWithJson("getVipRelationEduList",subjectId);
         });
-        $('.lists').css('height',$('.mainList').height()+100);
+        $('.lists').css('height',$('.mainList').height()+20);
     myIscroll.refresh();
      }
     var dataType=0;
      //渲染筛选列表
      function sxContent(data) {
-         var data = JSON.parse(data);         
+         var data = JSON.parse(data);
          if(dataType == 0){
            $('.mask .type .all').html('');
            $('.mask .grade .all').html('');
-            //渲染品牌            
+            //渲染品牌
             for (var i=0;i<data.length;i++) {
                 var nowMsg = $('.mask .brand .all').html();
                 $('.mask .brand .all').html(nowMsg + `<span>${data[i].organName}</span>`);
-            };  
-            $('.mask .brand span').bind('click', function () {                
+            };
+            $('.mask .brand span').bind('click', function () {
                 $('.mask .brand span').removeClass('selected');
                 $(this).addClass('selected');
                 if ($(this).text() == "全部") {
                     $('.mask .type .all').html('');
                     $('.mask .grade .all').html('');
+                    organN = "全部品牌";
                 }else {
                     $('.mask .grade .all').html('');
                     var val = $(this).text();
+                    organN = val;
                     for (var i=0;i<data.length;i++) {
                         if (data[i].organName === val) {
                             organId = data[i].orgId;
                             subjectId = data[i].subjectId;
                         }
-                    } 
+                    }
                     var msg = JSON.stringify({"organId": organId,"subjectId": subjectId});
-                    window.android.dealWithJson("getVipRelationEduList",msg);                    
+                    window.android.dealWithJson("getVipRelationEduList",msg);
                 }
                 dataType = 1;
             });
@@ -324,21 +326,23 @@
             for (var i=0;i<data.length;i++) {
                 var nowMsg = $('.mask .type .all').html();
                 $('.mask .type .all').html(nowMsg + `<span>${data[i].typeName}</span>`);
-            }; 
+            };
             $('.mask .type span').bind('click', function () {
                 $('.mask .type span').removeClass('selected');
                 $(this).addClass('selected');
                 if ($(this).text() == "全部") {
                     $('.mask .grade .all').html('');
+                    classTN = "全部类型";
                 }else {
                     var val = $(this).text();
+                    classTN = val;
                     for (var i=0;i<data.length;i++) {
                         if (data[i].typeName === val) {
                             organId = data[i].orgId;
                             subjectId = data[i].subjectId;
                             classType = data[i].vipTypeId;
                         }
-                    } 
+                    }
                     var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType});
                     window.android.dealWithJson("getVipRelationEduList",msg);
                     dataType = 2;
@@ -350,14 +354,16 @@
             for (var i=0;i<data.length;i++) {
                 var nowMsg = $('.mask .grade .all').html();
                 $('.mask .grade .all').html(nowMsg + `<span>${data[i].gradeName}</span>`);
-            }; 
+            };
             $('.mask .grade span').bind('click', function () {
                 $('.mask .grade span').removeClass('selected');
                 $(this).addClass('selected');
                 if ($(this).text() == "全部") {
+                    gradeN = "全部年级";
                     return;
                 }else {
                     var val = $(this).text();
+                    gradeN = val;
                     for (var i=0;i<data.length;i++) {
                         if (data[i].gradeName === val) {
                             organId = data[i].orgId;
@@ -365,13 +371,13 @@
                             classType = data[i].vipTypeId;
                             gradeId = data[i].gradeId;
                         }
-                    } 
+                    }
                     //var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId});
                     //window.android.dealWithJson("getVipRelationEduList",msg);
                 }
             });
          }
-        
+
      }
      //sxContent(ywsx);
 
@@ -387,6 +393,14 @@
         $('.mask').hide();
         var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId});
         window.android.dealWithJson("getHBCourseList",msg);
+        $('.guess').html(`
+            <i>
+                猜你所选：
+                <span>${organN}</span>
+                <span>${classTN}</span>
+                <span>${gradeN}</span>
+            </i>
+        `);
     })
     //点击换一组
     $('.changeButton').bind('click',function () {
@@ -397,28 +411,43 @@
     var list = document.querySelector('.lists');
     var myIscroll = new IScroll('#wrap',{
         scrollbars: true,
-        probeType: 3
+        probeType: 3,
+        click: true
 });
 var flag = true;
-    myIscroll.on('scroll',function(){
-        if(this.y > 100){
-            list.setAttribute('uptext','释放刷新');
-        }else if(this.y < 100 && this.y > 0){
-            list.setAttribute('uptext','下拉刷新');
-        }else if(this.y < this.maxScrollY - 40 ){
-            flag = true;
+var y,y2,y3;
+var list = document.getElementsByClassName("lists")[0];
+list.ontouchstart = function(e) {
+    y = 0;
+  e=e || window.event;
+    y2=e.touches[0].pageY;
+    list.ontouchmove = function(e) {
+       e = e|| window.event
+    }
 }
-    })
-myIscroll.on('scrollEnd',function(){
-    list.setAttribute('text','下拉刷新');
-    console.log(flag);
-    if(this.y === this.maxScrollY && flag == true){
-        console.log("上拉");
-        window.android.getMoreData(false);
-    }else if(this.y === 0 && flag == true) {
-        console.log("下拉");
-        window.android.getMoreData(true);
+list.ontouchend = function(e) {
+    e=e || window.event;
+    y3=e.changedTouches[0].pageY;
+    y = y3-y2;
+}
+myIscroll.on('scroll',function(){
+  if(this.y > 100){
+    list.setAttribute('uptext','释放刷新');
+  }else if(this.y < 100 && this.y > 0){
+    list.setAttribute('uptext','下拉刷新');
+  }else if(this.y < this.maxScrollY - 40 ){
+    flag = true;
     }
 })
+myIscroll.on('scrollEnd', function () {
+        list.setAttribute('text', '下拉刷新');
+        if ( y<-300 && this.y === this.maxScrollY) {
+            console.log("上拉");
+            window.android.getMoreData(false);
+        } else if (this.y === 0 && y>300) {
+            console.log("下拉");
+            window.android.getMoreData(true);
+        }
+ })
 </script>
 </html>

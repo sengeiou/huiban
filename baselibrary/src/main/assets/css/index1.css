@@ -185,7 +185,7 @@
 .indexWrap main .topBox .head .nowTime {
   display: inline-block;
   color: #fff;
-  margin-left: 0.6rem;
+  margin-left:13%;
   height: 0.72rem;
   line-height: 0.72rem;
   margin-top: 0.24rem;
@@ -384,7 +384,8 @@
 .indexWrap main .coach .resources span:nth-of-type(4) {
   width:.5rem;
   padding-top:3%;
-  margin-left: 2%;
+  float:right;
+  margin-right: 3%;
 }
 .indexWrap main .coach .resources span:nth-of-type(4) img {
   width: .18rem;

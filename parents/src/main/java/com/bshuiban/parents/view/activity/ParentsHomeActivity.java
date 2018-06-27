@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.activity.AboutSelfActivity;
 import com.bshuiban.baselibrary.view.activity.ChangeUserActivity;
 import com.bshuiban.baselibrary.view.activity.CleanCacheActivity;
@@ -37,7 +38,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.List;
 
 /**
- * 学生端首页
+ * 家长端首页
  */
 public class ParentsHomeActivity extends HomePageActivity<InteractionBaseWebViewFragment, ParentsHomePresent> implements ParentsHomeContract.View {
     private static final String BOTTOM1 = "homepage";
@@ -50,8 +51,20 @@ public class ParentsHomeActivity extends HomePageActivity<InteractionBaseWebView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tPresent = new ParentsHomePresent(this);
-        tPresent.getUserDataForInternet();
+        if(null!=User.getInstance().getUserData()) {
+            tPresent = new ParentsHomePresent(this);
+            tPresent.getUserDataForInternet();
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if(intent.getBooleanExtra("change",false)) {
+            if (null == tPresent)
+                tPresent = new ParentsHomePresent(this);
+            tPresent.getUserDataForInternet();
+        }
+        super.onNewIntent(intent);
     }
 
     @Override

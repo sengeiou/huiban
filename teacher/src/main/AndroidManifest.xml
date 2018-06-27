@@ -7,7 +7,12 @@
             android:name=".view.activity.TeacherHomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <intent-filter>
+                <action android:name="com.bshuiban.teacher.TeacherHomeActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.webView.webActivity.MySpaceWebActivity"
             android:screenOrientation="portrait" />

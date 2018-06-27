@@ -24,8 +24,7 @@
         <p class="time">3分18秒</p>
         <p class="titles">
             <span class="total">第六单元 化学方程式</span>
-            共
-            <span class="totals">12</span>道
+            <span class="totals">12</span>
         </p>
         <ul class="answerList">
             <li>1</li>
@@ -62,7 +61,7 @@
                 time.innerHTML = list.time;
                 title.innerHTML = list.title;
                 totalcount = list.homework.length;
-                totals.innerHTML = totalcount;
+               totals.innerHTML = "共"+totalcount+"题";
                 var str = "";
 
                 for (let i = 0; i < list.homework.length; i++) {

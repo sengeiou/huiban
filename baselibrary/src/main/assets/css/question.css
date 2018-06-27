@@ -71,7 +71,7 @@ overflow: scroll;
 
 .list li {
     height: .4rem;
-    width: 100%;
+    width: 85%!important;
     margin-bottom: .48rem;
     color: #00c7b5;
     clear: both;
@@ -203,13 +203,11 @@ overflow: scroll;
     letter-spacing:-0.39px;
     margin-bottom:.44rem;
 }
-.total {
-    margin-right: 3.8rem;
-}
+
+
 .answerList{
     width:100%;
-    padding-left: .28rem;
-    padding-right: .32rem;
+    padding-left:4%;
 }
 .answerList .li {
     width:.74rem;
@@ -233,11 +231,11 @@ overflow: scroll;
    width:100%;
 }
 .button p{
-    height:.84rem;
+    height:.1rem;
     width:100%;
     text-align:center;
     border:1px solid #00c7b5;
-    line-height: .84rem;
+    line-height: 1rem;
     color:#00c7b5
 }
 .button button{
@@ -252,15 +250,19 @@ overflow: scroll;
     background:#00c7b5;
     color:white;
 }
+    html,body {
+    width:100%;
+    height:100%;
+    }
 .hint{
     background:#ffffff;
     box-shadow:0 0 .08rem 0 rgba(175,175,175,0.50);
     border-radius:.04rem;
-    width:6.04rem;
+    width:70%;
     height:3.64rem;
     position:fixed;
     top:5.06rem;
-    left:.78rem;
+    left:15%;
     display: none;
 }
 .hint p:nth-of-type(1) {
@@ -345,11 +347,6 @@ overflow: scroll;
     }
 #analyze li:nth-of-type(1){
     color:#39ddb8;
-}
-.answerList{
-    width:100%;
-    padding-left: .28rem;
-    padding-right: .32rem;
 }
 .answerList li {
     width:1.14rem;
@@ -449,12 +446,12 @@ overflow: scroll;
     z-index: 9999;
 }
 .list div p{
-  width: 7.1rem !important;
+  width: 100% !important;
   font-size: .32rem !important;
   line-height: .5rem;
 }
 .list div div p{
-    width: 7.1rem !important;
+    width: 100% !important;
     font-size: .32rem !important;
     line-height: .5rem;
 }
@@ -584,4 +581,10 @@ overflow: scroll;
     height:100%;
     overflow: scroll;
     padding-bottom:1rem;
+}
+.total{
+float:left;
+}
+.totals{
+float: right;
 }

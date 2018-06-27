@@ -18,6 +18,7 @@ import com.bshuiban.baselibrary.model.LogUtils;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.HomeworkPendingInfPresent;
 import com.bshuiban.baselibrary.utils.BitMapUtils;
+import com.bshuiban.baselibrary.utils.DialogUtils;
 import com.bshuiban.baselibrary.utils.FileUtils;
 import com.bshuiban.baselibrary.utils.SpaceItemDecoration;
 import com.bshuiban.baselibrary.view.activity.CameraActivity;
@@ -242,6 +243,13 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
         public void updateStuAnswer(String stuAnswer) {
             Log.e(TAG, "setStuAnswer: " + stuAnswer);
             changeHomeworkStuAnswer(shouldBean, stuAnswer);
+        }
+        @JavascriptInterface
+        public void openImage(String src){
+            Log.e(TAG, "openImage: "+src );
+            runOnUiThread(()->{
+                DialogUtils.showImageDialog(HomeworkPendingInfActivity.this,src);
+            });
         }
     }
 

@@ -44,12 +44,23 @@ public class User {
             return User.getInstance().getUserId();
         }
     }
-
+    public void changeUser(UserMoreBean.DataBean dataBean){
+        int userId = dataBean.getUserId();
+        String mobile = dataBean.getMobile();
+        //String email = dataBean.getEmail();
+        data.clean();
+        data.setMobile(mobile);
+        data.setUserId(userId+"");
+        data.setUserType(dataBean.getTypeId());
+    }
     public String getClassId() {
         return data.getClassId1();
     }
 
     public String getUserId() {
+        if(data==null){
+            return null;
+        }
         return data.getUserId();
     }
 

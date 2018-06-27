@@ -250,7 +250,7 @@
     // 通知页 
     var notice = document.getElementsByClassName('notice')[0];
     // 学习资源
-    var stusource = document.getElementsByClassName("stusource")[0];
+    var stusource = document.getElementsByClassName("resources")[0];
     // 关注页 
     var follow = document.getElementsByClassName('follow')[0];
     // 慧辅导页 
@@ -487,7 +487,8 @@
     var list = document.querySelector('.listoo');
     var myIscroll = new IScroll('#wrap', {
         scrollbars: true,
-        probeType: 3
+        probeType: 3,
+        click:true
     });
     var flag = true;
     myIscroll.on('scroll', function () {

@@ -30,6 +30,7 @@ public class StudentHomePresent extends BasePresent<StudentHomeContract.View> im
             protected void success(StudentUser studentUser) {
                 if(isEffective()) {
                     StudentUser.DataBean data = studentUser.getData();
+                    data.setDataContent(User.getInstance().getUserData());
                     view.updateSlideView(data);
                 }
             }

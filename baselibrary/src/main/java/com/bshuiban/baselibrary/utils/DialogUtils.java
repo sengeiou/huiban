@@ -3,10 +3,13 @@ package com.bshuiban.baselibrary.utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.bshuiban.baselibrary.view.dialog.MessageDialog;
+import com.bumptech.glide.Glide;
 
 /**
  * Created by xinheng on 2018/5/7.<br/>
@@ -44,5 +47,18 @@ public class DialogUtils {
         messageDialog.setOnClickListenerSure(listener);
         messageDialog.show();
         return messageDialog;
+    }
+    public static Dialog showImageDialog(Context context,String src){
+        Dialog dialog=new Dialog(context);
+        ImageView view = new ImageView(context);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        view.setScaleType(ImageView.ScaleType.FIT_XY);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(view);
+        Glide.with(context).load(src).into(view);
+        dialog.show();
+        dialog.setCancelable(true);
+        setDialogWithMatcherScreen(dialog);
+        return dialog;
     }
 }

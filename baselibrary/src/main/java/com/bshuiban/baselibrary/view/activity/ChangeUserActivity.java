@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.ChangeUserContract;
@@ -26,7 +27,7 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 
-public class ChangeUserActivity extends BaseActivity<ChangeUserPresent> implements ChangeUserContract.View,LoginContract.View{
+public class ChangeUserActivity extends BaseActivity<ChangeUserPresent> implements ChangeUserContract.View, LoginContract.View {
 
     private RecyclerView recyclerView;
 
@@ -43,11 +44,11 @@ public class ChangeUserActivity extends BaseActivity<ChangeUserPresent> implemen
 
     @Override
     public void updateView(List<UserMoreBean.DataBean> data) {
-        if(data!=null){
+        if (data != null) {
             Iterator<UserMoreBean.DataBean> iterator = data.iterator();
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 UserMoreBean.DataBean next = iterator.next();
-                if(next!=null&&next.getTypeId()==User.getInstance().getUserType()){
+                if (next != null && next.getTypeId() == User.getInstance().getUserType()) {
                     iterator.remove();
                 }
             }
@@ -74,7 +75,7 @@ public class ChangeUserActivity extends BaseActivity<ChangeUserPresent> implemen
     @Override
     public void loginSuccessToNextActivity(Class<?> cls, LoginResultBean.Data loginData) {
         User.getInstance().setData(loginData);
-        UserSharedPreferencesUtils.saveUserData(getApplicationContext(),new Gson().toJson(loginData));
+        UserSharedPreferencesUtils.saveUserData(getApplicationContext(), new Gson().toJson(loginData));
         dismissDialog();
         startActivity(new Intent(getApplicationContext(), cls));
         finish();
@@ -99,10 +100,27 @@ public class ChangeUserActivity extends BaseActivity<ChangeUserPresent> implemen
             UserMoreBean.DataBean dataBean = list.get(position);
             int typeId = dataBean.getTypeId();
             holder.textView.setText(getType(typeId));
-            holder.textView.setOnClickListener(v->{
-                String userId = dataBean.getUserId()+"";
-                String password = dataBean.getPassword();
-                try {
+            holder.textView.setOnClickListener(v -> {
+                //String userId = dataBean.getUserId()+"";
+                User.getInstance().changeUser(dataBean);
+                String action = getNextActivityAction(dataBean.getTypeId());
+                if (null != action) {
+                    //startActivity(new Intent(getApplicationContext(), nextActivity).putExtra("change",true));
+                    //String action="com.bshuiban.student.ParentsHomeActivity";
+                    Intent intent = new Intent(action);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        ChangeUserActivity.this.finish();
+                    }
+                }else {
+                    toast("账号类型错误");
+                }
+                //String password = dataBean.getPassword();
+                /*try {
                     Class clazz=Class.forName("com.bshuiban.present.LoginPresent");
                     Constructor constructor = clazz.getConstructor(LoginContract.View.class);
                     Object obj = constructor.newInstance(ChangeUserActivity.this);
@@ -110,14 +128,14 @@ public class ChangeUserActivity extends BaseActivity<ChangeUserPresent> implemen
                     method.invoke(obj, userId,password);
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
             });
 
         }
 
         @Override
         public int getItemCount() {
-            return list==null?0:list.size();
+            return list == null ? 0 : list.size();
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
@@ -140,5 +158,24 @@ public class ChangeUserActivity extends BaseActivity<ChangeUserPresent> implemen
             default:
                 return "家长";
         }
+    }
+
+    public String getNextActivityAction(int userType) {
+        String classes;
+        switch (userType) {//1学生、2老师、3管理者、4家长，
+            case 1:
+                classes = "com.bshuiban.student.StudentHomeActivity";
+                break;
+            case 2:
+            case 3:
+                classes = "com.bshuiban.teacher.TeacherHomeActivity";
+                break;
+            case 4:
+                classes = "com.bshuiban.parents.ParentsHomeActivity";
+                break;
+            default:
+                classes = null;
+        }
+        return classes;
     }
 }

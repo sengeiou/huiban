@@ -1,5 +1,6 @@
 package com.bshuiban.student.model;
 
+import com.bshuiban.baselibrary.model.LoginResultBean;
 import com.bshuiban.baselibrary.model.ResultBean;
 
 import java.util.List;
@@ -70,7 +71,7 @@ public class StudentUser extends ResultBean {
         private String cityName;
         private String parentPhone;
         private int isHeader;
-        private List<Integer> classId;
+        private List<String> classId;
         private List<?> interest;
         private List<String> className;
 
@@ -234,11 +235,11 @@ public class StudentUser extends ResultBean {
             this.isHeader = isHeader;
         }
 
-        public List<Integer> getClassId() {
+        public List<String> getClassId() {
             return classId;
         }
 
-        public void setClassId(List<Integer> classId) {
+        public void setClassId(List<String> classId) {
             this.classId = classId;
         }
 
@@ -256,6 +257,16 @@ public class StudentUser extends ResultBean {
 
         public void setClassName(List<String> className) {
             this.className = className;
+        }
+
+        public void setDataContent(LoginResultBean.Data dataContent){
+            dataContent.setRealName(realName);
+            dataContent.setIcoPath(icoPath);
+            dataContent.setSchoolId(schoolId+"");
+            dataContent.setSchoolName(schoolName);
+            dataContent.setGradeId(gradeId+"");
+            dataContent.setClassId(classId);
+            dataContent.setClassName(className);
         }
     }
 }

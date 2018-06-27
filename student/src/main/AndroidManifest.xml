@@ -7,7 +7,12 @@
             android:name=".view.activity.StudentHomeActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <intent-filter>
+                <action android:name="com.bshuiban.student.StudentHomeActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -77,7 +77,7 @@
 		if(data.myAnswer === undefined){
 			$('.yourAnswer').html(`你的答案：<b>暂无答案</b>`);
 		}else if (regex.test(data.myAnswer)) {
-			$('.yourAnswer').html(`你的答案：<img src="${data.myAnswer}" style="max-width:2rem;vertical-align:text-top;"/>`);
+			$('.yourAnswer').html(`你的答案：${data.myAnswer}`);
 		}else {
 			$('.yourAnswer').html(`你的答案：<b>${data.myAnswer}</b>`);
 		}
