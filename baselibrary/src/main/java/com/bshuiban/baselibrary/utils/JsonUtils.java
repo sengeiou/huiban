@@ -6,9 +6,14 @@ import com.google.gson.JsonParser;
 
 /**
  * Created by xinheng on 2018/5/30.<br/>
- * describe：
+ * describe：json工具
  */
 public class JsonUtils {
+    /**
+     * 解析为jsonObject
+     * @param json json字符串
+     * @return
+     */
     public static JsonObject parseJsonObjetNotNull(String json) {
         JsonObject mJson;
         if (android.text.TextUtils.isEmpty(json)) {
