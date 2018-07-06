@@ -5,19 +5,21 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.model.LogUtils;
+import com.bshuiban.baselibrary.view.customer.ScaleTextView;
 
 /**
  * Created by xinheng on 2018/6/3.<br/>
  * describe：
  */
-public class SortHomewrokAdapter extends RecyclerView.Adapter<SortHomewrokAdapter.SortHomeworkHolder>{
+public class SortHomeworkAdapter extends RecyclerView.Adapter<SortHomeworkAdapter.SortHomeworkHolder>{
     private int mPosition=0;
     private int count;
     private int dp1;
@@ -39,7 +41,7 @@ public class SortHomewrokAdapter extends RecyclerView.Adapter<SortHomewrokAdapte
             colorUnselectedBg=parent.getResources().getColor(R.color.line_bord);
         }
         int dimension = (int) parent.getResources().getDimension(R.dimen.dp_30);
-        TextView textView = new TextView(parent.getContext());
+        ScaleTextView textView = new ScaleTextView(parent.getContext());
         textView.setLayoutParams(new ViewGroup.LayoutParams(dimension, dimension));
         textView.setGravity(Gravity.CENTER);
         return new SortHomeworkHolder(textView);
@@ -52,9 +54,11 @@ public class SortHomewrokAdapter extends RecyclerView.Adapter<SortHomewrokAdapte
         if(mPosition ==position){
             holder.textView.setTextColor(Color.WHITE);
             holder.textView.setBackground(getGradientDrawable(colorSelected,colorSelected));
+            holder.textView.setScallTag(true);
         }else{
             holder.textView.setTextColor(colorUnselected);
             holder.textView.setBackground(getGradientDrawable(colorUnselectedBg,colorUnselected));
+            holder.textView.setScallTag(false);
         }
     }
     private Drawable getGradientDrawable(int colorBG, int colorSlide){
@@ -71,16 +75,17 @@ public class SortHomewrokAdapter extends RecyclerView.Adapter<SortHomewrokAdapte
     }
 
     class SortHomeworkHolder extends RecyclerView.ViewHolder{
-        TextView textView;
+        ScaleTextView textView;
         public SortHomeworkHolder(View itemView) {
             super(itemView);
-            textView= (TextView) itemView;
+            textView= (ScaleTextView) itemView;
             textView.setOnClickListener(v->{
                 if(null!=onItemClickListener){
                     int tag = (int) v.getTag();
                     if(mPosition!=tag) {
                         int position=mPosition;
                         mPosition=tag;
+                        LogUtils.e("TAG", "SortHomeworkHolder: "+position+", selected="+mPosition );
                         notifyItemChanged(position);
                         notifyItemChanged(mPosition);
                         onItemClickListener.itemClick(tag);

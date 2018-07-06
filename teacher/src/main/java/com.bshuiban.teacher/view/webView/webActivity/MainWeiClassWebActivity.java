@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.webkit.JavascriptInterface;
 
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.view.activity.PlayerVideoActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
@@ -15,10 +16,16 @@ import com.bshuiban.teacher.present.MainWeiClassPresent;
  * describe：主讲微课
  */
 public class MainWeiClassWebActivity extends BaseWebActivity<MainWeiClassPresent> implements MainWeiClassContract.View{
+    private String userId;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tPresent=new MainWeiClassPresent(this);
+        userId = getIntent().getStringExtra("userId");
+        if(android.text.TextUtils.isEmpty(userId)){
+            userId = User.getInstance().getUserId();
+        }
+        tPresent=new MainWeiClassPresent(this,userId);
         loadFileHtml("mainClassList");
         MainWeiClassHtml object = new MainWeiClassHtml();
         object.setOnListener(new MessageList.OnMessageListListener(){

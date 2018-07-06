@@ -1,8 +1,13 @@
 package com.bshuiban.baselibrary.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,6 +15,7 @@ import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.StatisticalChartContract;
 import com.bshuiban.baselibrary.model.StatisticalChartBean;
 import com.bshuiban.baselibrary.present.StatisticalChartPresent;
+import com.bshuiban.baselibrary.utils.DensityUtil;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
@@ -33,6 +39,10 @@ public class StatisticalChartActivity extends BaseActivity<StatisticalChartPrese
 
     private LineChart lineChart;
     private boolean data;
+    private TextView tv_front;
+    private TextView tv_middle;
+    private TextView tv_after;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +53,9 @@ public class StatisticalChartActivity extends BaseActivity<StatisticalChartPrese
         lineChart = findViewById(R.id.lineChart);
         tPresent=new StatisticalChartPresent(this);
         tPresent.getStatisticalData(subjectId,time);
-        TextView tv_front=findViewById(R.id.tv_front);
-        TextView tv_middle=findViewById(R.id.tv_middle);
-        TextView tv_after=findViewById(R.id.tv_after);
+        tv_front = findViewById(R.id.tv_front);
+        tv_middle = findViewById(R.id.tv_middle);
+        tv_after = findViewById(R.id.tv_after);
         initLineChart(lineChart);
         tv_front.setOnClickListener(onClickListener);
         tv_middle.setOnClickListener(onClickListener);
@@ -57,20 +67,42 @@ public class StatisticalChartActivity extends BaseActivity<StatisticalChartPrese
             toast("数据加载中");
             return;
         }
+        int colorSelect = ContextCompat.getColor(getApplicationContext(), R.color.guide_start_btn);
+        int colorUnSelect = ContextCompat.getColor(getApplicationContext(), R.color.guide_start_btn3);
+        float dp3 = DensityUtil.dip2px(getApplicationContext(), 3);
         int i = v.getId();
         if (i == R.id.tv_front) {
+            tv_front.setBackground(getDrawable(colorSelect, colorSelect,new float[]{dp3,dp3,0,0,0,0,dp3,dp3}));
+            tv_middle.setBackground(new ColorDrawable(colorUnSelect));
+            tv_after.setBackground(getDrawable(colorUnSelect,colorUnSelect,new float[]{0,0,dp3,dp3,dp3,dp3,0,0}));
             updateChartView(tPresent.getList(1));
         } else if (i == R.id.tv_middle) {
+            tv_front.setBackground(getDrawable(colorUnSelect, colorUnSelect,new float[]{dp3,dp3,0,0,0,0,dp3,dp3}));
+            tv_middle.setBackground(new ColorDrawable(colorSelect));
+            tv_after.setBackground(getDrawable(colorUnSelect,colorUnSelect,new float[]{0,0,dp3,dp3,dp3,dp3,0,0}));
             updateChartView(tPresent.getList(2));
         } else if (i == R.id.tv_after) {
+            tv_front.setBackground(getDrawable(colorUnSelect, colorUnSelect,new float[]{dp3,dp3,0,0,0,0,dp3,dp3}));
+            tv_middle.setBackground(new ColorDrawable(colorUnSelect));
+            tv_after.setBackground(getDrawable(colorSelect,colorSelect,new float[]{0,0,dp3,dp3,dp3,dp3,0,0}));
             updateChartView(tPresent.getList(3));
         }
     };
-
+    private GradientDrawable getDrawable(int colorStroke,int colorBg,float array[]){
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setColor(colorBg);
+        float dp1 = DensityUtil.dip2px(getApplicationContext(), 1);
+        //左上角xy半径，右上角，右下角，左下角
+        //drawable.setCornerRadii(new float[]{dp3,dp3,0,0,0,0,dp3,dp3});
+        drawable.setCornerRadii(array);
+        drawable.setStroke((int) dp1,colorStroke);
+        return drawable;
+    }
     @Override
     public void updateStatisticalChartView(List<StatisticalChartBean.DataBean.ListBean> listBeans) {
         data=true;
-        updateChartView(listBeans);
+        //updateChartView(listBeans);
+        onClickListener.onClick(tv_front);
     }
 
     private void updateChartView(List<StatisticalChartBean.DataBean.ListBean> preList) {
@@ -87,12 +119,7 @@ public class StatisticalChartActivity extends BaseActivity<StatisticalChartPrese
         setLineChart(lineChart, list_nime, list_class);
     }
     private void sort(List<StatisticalChartBean.DataBean.ListBean> list) {
-        Collections.sort(list, new Comparator<StatisticalChartBean.DataBean.ListBean>() {
-            @Override
-            public int compare(StatisticalChartBean.DataBean.ListBean o1, StatisticalChartBean.DataBean.ListBean o2) {
-                return o1.getDay() - o2.getDay();
-            }
-        });
+        Collections.sort(list, (o1, o2) -> o1.getDay() - o2.getDay());
     }
     @Override
     public void startDialog() {

@@ -10,12 +10,13 @@ import com.bshuiban.baselibrary.contract.LoginContract;
 import com.bshuiban.baselibrary.model.LoginResultBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.utils.UserSharedPreferencesUtils;
+import com.bshuiban.baselibrary.view.activity.ForgetPasswordActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
 import com.bshuiban.present.LoginPresent;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-public class WebLoginActivity extends BaseWebActivity<LoginPresent> implements LoginContract.View {
+public class LoginWebActivity extends BaseWebActivity<LoginPresent> implements LoginContract.View {
     private final String TAG = "HTML5";
     private Gson gson = new Gson();
     private final static String HTML_NAME="login";
@@ -42,6 +43,10 @@ public class WebLoginActivity extends BaseWebActivity<LoginPresent> implements L
                     tPresent.login(userId,passwrod);
                 }
             });
+        }
+        @JavascriptInterface
+        public void forgetPassword(){
+            runOnUiThread(()->startActivity(new Intent(getApplicationContext(), ForgetPasswordActivity.class)));
         }
     }
     private void init() {

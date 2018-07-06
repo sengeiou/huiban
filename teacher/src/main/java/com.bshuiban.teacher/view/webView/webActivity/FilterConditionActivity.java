@@ -15,9 +15,12 @@ import com.bshuiban.teacher.present.FilterConditionPresent;
  */
 public class FilterConditionActivity extends BaseWebActivity<FilterConditionPresent> implements FilterConditionContract.View {
 
+    private String jsonSubject;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        jsonSubject = getIntent().getStringExtra("json");
         tPresent=new FilterConditionPresent(this);
         loadFileHtml(getFileHtmlName());
         registerWebViewH5Interface(new FilterConditionHtml());
@@ -25,7 +28,11 @@ public class FilterConditionActivity extends BaseWebActivity<FilterConditionPres
 
     @Override
     protected void webViewLoadFinished() {
-        tPresent.loadAllSubject();
+        if(null==jsonSubject) {
+            tPresent.loadAllSubject();
+        }else {
+            loadJavascriptMethod("getListNav",jsonSubject);
+        }
     }
 
     protected String getFileHtmlName(){

@@ -53,7 +53,7 @@
 .more{
     width: 2rem;
     height:1rem;
-    font-size:.28rem;
+    font-size:.4rem;
     color:#747474;
     letter-spacing:0.17px;
     text-align:center;
@@ -238,21 +238,22 @@
         color:black;
         line-height: 1rem;
         text-align: center;
+        font-size:.4rem;
       }
     .date p:nth-of-type(1) {
         width:100%;
         height:.8rem;
     }
     .date h4{
-        width:7.5rem;
+        width:100%;
         height: 1rem;
         line-height: 1rem;
         text-align: center;
         color:white;
-        font-size: .28rem;
+        font-size: .34rem;
     }
     .teachlist{
-        height:2rem;
+        height:1.8rem;
         width: 100%;
         border-top: .12rem solid #fafafa;
         background:#fafafa;
@@ -266,42 +267,44 @@
     .teachtime{
         color:white;
         width: 100%;
-        height: 1rem;
-        padding-left: 43%;
-        line-height: 1rem;
-        font-size: .32rem;
+        height: 1.5rem;
+        padding-left: 38%;
+        line-height: 1.5rem;
+        font-size: .5rem;
     }
-    .teachlist li{
-        float: left;
-        width:30.5%;
-        height:1.88rem;
-        border-radius: .16rem;
-    }
+   .teachlist li{
+   float: left;
+   width:44%;
+   height:1.68rem;
+   border-radius: .16rem;
+   }
     .teachlist1{
-        margin-right:2%;
-        margin-left:2%;
+        margin-right:4%;
+        margin-left:4%;
     }
     .teachlist2{
-        margin-right: 2%;
+        margin-right: 4%;
     }
     .tea1 {
-      background-image: url("../images/reset/12x.png");
+      background-image: url("../images/reset/xgkc.png");
       background-repeat: no-repeat;
       background-size: .8rem .6rem;
       background-position: center 35%;
       padding-top:0.1px;
     }
     .tea1 p{
-        width: 100%;
-        text-align: center;
-        margin-top: 50%;
-        color:#82edc3;
+    width: 100%;
+    text-align: center;
+    margin-top: 33%;
+    color:#67b8f6;
+    font-size:.4rem
     }
     .tea2 p{
-        width: 100%;
-        text-align: center;
-        margin-top: 50%;
-        color:#ffdc81;
+    width: 100%;
+    text-align: center;
+    margin-top: 33%;
+    color:#fc9797;
+    font-size:.4rem
     }
     .tea3 p{
         width: 100%;
@@ -311,17 +314,17 @@
     }
     @media only screen and (-webkit-min-device-pixel-ratio: 2) {
         .tea1 {
-          background-image: url("../images/reset/12x.png");
+          background-image: url("../images/reset/xgkc.png");
         }
       }
       
       @media only screen and (-webkit-min-device-pixel-ratio: 3) {
         .tea1 {
-          background-image:  url("../images/reset/13x.png");
+          background-image: url("../images/reset/xgkc.png");
         }
       }
     .tea2 {
-    background-image: url("../images/reset/2x.png");
+   background-image: url("../images/reset/jrzy.png");
     background-repeat: no-repeat;
     background-size: .8rem .6rem;
     background-position: center 35%;
@@ -329,13 +332,13 @@
     }
     @media only screen and (-webkit-min-device-pixel-ratio: 2) {
     .tea2 {
-    background-image: url("../images/reset/2x.png");
+    background-image: url("../images/reset/jrzy.png");
     }
     }
 
     @media only screen and (-webkit-min-device-pixel-ratio: 3) {
     .tea2 {
-    background-image:  url("../images/reset/3x.png");
+    background-image: url("../images/reset/jrzy.png");
     }
     }
     .tea3 {

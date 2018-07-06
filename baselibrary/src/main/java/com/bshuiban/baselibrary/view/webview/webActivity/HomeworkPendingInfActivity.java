@@ -24,10 +24,11 @@ import com.bshuiban.baselibrary.utils.SpaceItemDecoration;
 import com.bshuiban.baselibrary.view.activity.CameraActivity;
 import com.bshuiban.baselibrary.view.activity.SelectImgActivity;
 import com.bshuiban.baselibrary.view.activity.TextActivity;
-import com.bshuiban.baselibrary.view.adapter.SortHomewrokAdapter;
+import com.bshuiban.baselibrary.view.adapter.HomeworkCountAdapter;
+import com.bshuiban.baselibrary.view.adapter.SortHomeworkAdapter;
 import com.bshuiban.baselibrary.view.customer.TitleView;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.HomeworkInfHtml;
-import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.List;
@@ -48,7 +49,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
     /**
      * 当前题目
      */
-    private HomeworkBean bean, lastBean,shouldBean;
+    private HomeworkBean bean,shouldBean;
     private long startTime;
 
     @Override
@@ -104,22 +105,25 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
         this.homeworkBean = list;
         startTime -= time;
         if (HomeworkBean.isEffictive(list)) {
-            SortHomewrokAdapter adapter = new SortHomewrokAdapter();
-            adapter.setCount(list.size());
+            LogUtils.e(TAG, "updateHomeworkTitleList: "+new Gson().toJson(list));
+            HomeworkCountAdapter adapter = new HomeworkCountAdapter(0);
+            adapter.setList(list);
             recycleView.setAdapter(adapter);
-            adapter.setOnItemClickListener(position -> loadHtmlData(position));
-            loadHtmlData(0);
+            adapter.setOnItemClickListener(this::loadHtmlData);
+            loadHtmlData(list.get(0));
+        }else {
+            TitleView titleView=findViewById(R.id.titleView);
+            titleView.setRight_text(null,-1,1);
         }
     }
 
-    private void loadHtmlData(int position) {
-        lastBean = this.bean;
-        shouldBean=lastBean;
-        this.bean = this.homeworkBean.get(position);
-        String type = bean.getType();
-        int pageIndex = bean.getPageIndex();
-        int typeIndex = bean.getTypeIndex();
-        int problemIndex = bean.getProblemIndex();
+    private void loadHtmlData(HomeworkBean bean1) {
+        shouldBean=this.bean;
+        this.bean = bean1;
+        String type = this.bean.getType();
+        int pageIndex = this.bean.getPageIndex();
+        int typeIndex = this.bean.getTypeIndex();
+        int problemIndex = this.bean.getProblemIndex();
         String json = HomeworkBean.getProblemContent(User.getInstance().getHomeworkInfBean(), type, pageIndex, typeIndex, problemIndex);
         loadJavascriptMethod("rende", json);
     }
@@ -137,6 +141,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
         int typeIndex = bean.getTypeIndex();
         int problemIndex = bean.getProblemIndex();
         HomeworkBean.setProblemAnswer(bean, answer, 0, User.getInstance().getHomeworkInfBean(), type, pageIndex, typeIndex, problemIndex);
+
     }
 
     @Override
@@ -152,6 +157,8 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
     @Override
     public void fail(String error) {
         toast(error);
+        TitleView titleView=findViewById(R.id.titleView);
+        titleView.setRight_text(null,-1,1);
     }
 
     private File imageFile;
@@ -247,9 +254,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
         @JavascriptInterface
         public void openImage(String src){
             Log.e(TAG, "openImage: "+src );
-            runOnUiThread(()->{
-                DialogUtils.showImageDialog(HomeworkPendingInfActivity.this,src);
-            });
+            runOnUiThread(()-> DialogUtils.showImageDialog(HomeworkPendingInfActivity.this,src));
         }
     }
 
@@ -261,14 +266,11 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
             shouldBean=bean;
             loadJavascriptMethod("updateStudentAnswer");
             User.getInstance().getHomeworkInfBean().setTimes(time + "");
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startActivity(new Intent(getApplicationContext(), HomeworkResultWebActivity.class).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId)
-                            .putExtra("complete", false)
-                            .putExtra("time", time));
-                    check = false;
-                }
+            new Handler().postDelayed(() -> {
+                startActivity(new Intent(getApplicationContext(), HomeworkResultWebActivity.class).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId)
+                        .putExtra("complete", false)
+                        .putExtra("time", time));
+                check = false;
             }, 500);
         }
     }

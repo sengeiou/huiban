@@ -14,6 +14,8 @@
         app:src_left="@mipmap/iv_back"
         app:title_color="@android:color/white"
         app:title_size="@dimen/dp_15"
+        app:right_color="@color/white"
+        app:right_size="@dimen/dp_13"
         app:title_text="切换身份" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"

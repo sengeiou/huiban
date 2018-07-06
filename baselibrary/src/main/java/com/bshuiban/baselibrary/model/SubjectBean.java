@@ -30,6 +30,7 @@ public class SubjectBean extends ResultBean {
 
         private int id;
         private String subjectName;
+        private int isSelect;//是否选中，1选中0否
 
         public int getId() {
             return id;
@@ -45,6 +46,14 @@ public class SubjectBean extends ResultBean {
 
         public void setSubjectName(String subjectName) {
             this.subjectName = subjectName;
+        }
+
+        public int getIsSelect() {
+            return isSelect;
+        }
+
+        public void setIsSelect(int isSelect) {
+            this.isSelect = isSelect;
         }
     }
 }

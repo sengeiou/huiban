@@ -40,11 +40,12 @@ public abstract class HomePageActivity<T extends Fragment, P extends BasePresent
         setContentView(R.layout.activity_home_page);
         BottomBar rg_container = (BottomBar) findViewById(R.id.rg_container);
         FrameLayout head = (FrameLayout) findViewById(R.id.head);
+        head.setOnClickListener(v -> {});
         LinearLayout ll_parent = (LinearLayout) findViewById(R.id.ll_parent);
         TextView tv_login_out = (TextView) findViewById(R.id.tv_login_out);
         tv_login_out.setOnClickListener(v -> DialogUtils.showMessageSureCancelDialog(this, "确定退出登录？", v1 -> {
             try {
-                Class<?> cls = Class.forName("com.bshuiban.view.webActivity.WebLoginActivity");
+                Class<?> cls = Class.forName("com.bshuiban.view.webActivity.LoginWebActivity");
                 UserSharedPreferencesUtils.cleanUserData(getApplicationContext());
                 startActivity(new Intent(getApplicationContext(), cls));
                 finish();

@@ -4,14 +4,19 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Environment;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bshuiban.baselibrary.R;
-import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.view.customer.LineView;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -35,13 +40,14 @@ import static com.bshuiban.baselibrary.model.LogUtils.TAG;
 public class RetrofitDownload {
     private final Retrofit retrofit;
     private ProgressResponseBody.ProgressListener mProgressListener;
-    private ProgressDialog dialog;
+    private Dialog dialog;
+    private Call<ResponseBody> responseBodyCall;
 
     public RetrofitDownload() {
         retrofit = getRetrofit();
-        mProgressListener=(progress, total, done) -> {
-            Log.e(TAG, (Looper.myLooper())+ "");
-            Log.e(TAG, "onProgress: " + "total ---->" + total + " done ---->" + progress+", 进度："+progress*100f/total+"%");
+        mProgressListener = (progress, total, done) -> {
+            Log.e(TAG, (Looper.myLooper()) + "");
+            Log.e(TAG, "onProgress: " + "total ---->" + total + " done ---->" + progress + ", 进度：" + progress * 100f / total + "%");
         };
     }
 
@@ -69,7 +75,7 @@ public class RetrofitDownload {
     }
 
     public void downloadFile(String dowunloadUrl, String saveFilePath) {
-        Call<ResponseBody> responseBodyCall = downloadFile(dowunloadUrl);
+        responseBodyCall = downloadFile(dowunloadUrl);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
@@ -79,7 +85,7 @@ public class RetrofitDownload {
                 File file = new File(saveFilePath);
                 if (file.exists()) {
                     file.getAbsoluteFile().delete();
-                }else{
+                } else {
                     file.getParentFile().mkdirs();
                 }
                 try {
@@ -108,6 +114,13 @@ public class RetrofitDownload {
                     }
                     if (file.length() > 0) {
                         Log.e(TAG, "success");
+                        if (null != downloadListener) {
+                            downloadListener.loadFinish(file.getAbsolutePath());
+                        }
+                    } else {
+                        if (null != downloadListener) {
+                            downloadListener.loadFail("下载失败");
+                        }
                     }
                 }
                 Log.e(TAG, "finish");
@@ -115,43 +128,71 @@ public class RetrofitDownload {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                String error;
                 if (null != t) {
                     t.printStackTrace();
+                    error = t.getMessage();
+                } else {
+                    error = "下载更新失败";
+                }
+                if (null != downloadListener) {
+                    downloadListener.loadFail(error);
                 }
             }
         });
     }
-    public ProgressDialog showDialog(View view, Context mContext){
-        if(null==dialog) {
-            dialog = new ProgressDialog(mContext);
-            // 设置对话框参数
-            dialog.setIcon(R.mipmap.app_logo);
-            dialog.setTitle("软件下载");
-            dialog.setMessage("软件下载进度：");
-            dialog.setCancelable(false);
-            // 设置进度条参数
-            dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            dialog.setMax(100);
-//            dialog.incrementProgressBy(20);
-            dialog.setIndeterminate(false); // 填false表示是明确显示进度的 填true表示不是明确显示进度的
-            dialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Toast.makeText(mContext, "确定", Toast.LENGTH_SHORT).show();
-                }
-            });
 
-            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
+    private DownloadListener downloadListener;
+
+    public void setDownloadListener(DownloadListener downloadListener) {
+        this.downloadListener = downloadListener;
+    }
+
+    public interface DownloadListener {
+        void loadFinish(String downLoadPath);
+
+        void loadFail(String error);
+    }
+
+    public Dialog showDialog(Context mContext,float progress) {
+        if(null==dialog){
+            dialog=new Dialog(mContext);
+            Window window = dialog.getWindow();
+            window.requestFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.layout_update_progress);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            window.getDecorView().setPadding(0,0,0,0);
+            TextView tv_sure = dialog.findViewById(R.id.tv_sure);
+            TextView tv_cancel = dialog.findViewById(R.id.tv_cancel);
+            View.OnClickListener onClickListener=v -> {
+                int i = v.getId();
+                if (i == R.id.tv_sure) {
+                    if(null!=responseBodyCall&&responseBodyCall.isCanceled()){
+                        responseBodyCall.cancel();
+                        dialog.dismiss();
+                    }
+                } else if (i == R.id.tv_cancel) {
+                    if(null!=dialog&&dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                 }
-            });
+            };
+            tv_cancel.setOnClickListener(onClickListener);
+            tv_sure.setOnClickListener(onClickListener);
         }
-        if(dialog.isShowing()){
+        LineView lineView = dialog.findViewById(R.id.lineView);
+        TextView tv_progress = dialog.findViewById(R.id.tv_progress);
+        tv_progress.setText((int)(progress*100)+"%");
+        lineView.setProgress(progress);
+        if (dialog.isShowing()) {
 
-        }else {
+        } else {
             dialog.show();
+            Window window = dialog.getWindow();
+            WindowManager.LayoutParams attributes = window.getAttributes();
+            attributes.width= (int) mContext.getResources().getDimension(R.dimen.dp_258);
+            window.setAttributes(attributes);
+            window.setGravity(Gravity.CENTER);
         }
         return dialog;
     }

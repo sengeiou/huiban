@@ -52,8 +52,8 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
     }
 
     @Override
-    public void getScreeningData(String json) {
-        RetrofitService.getInstance().getServiceResult("getVipRelationEduList", json, new RetrofitService.CallHTMLJsonArray() {
+    public void getScreeningData(String key, String json) {
+        RetrofitService.getInstance().getServiceResult(/*"getVipRelationEduList"*/key, json, new RetrofitService.CallHTMLJsonArray() {
             @Override
             protected void success(JsonArray msg) {
                 if (isEffective()) {
@@ -86,7 +86,7 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
             protected void fail(String error) {
                 if (isEffective()) {
                     if(error!=null&&error.contains("暂无数据")) {
-                        view.fail("猜你所想："+error);
+                        //view.fail("猜你所想："+error);
                     }
                     view.addTag();
                 }
@@ -102,6 +102,7 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
             JsonElement subjectId1 = asJsonObject.get("subjectId");
             if (null != subjectId1) {
                 subjectId = subjectId1.getAsInt();
+                //TODO 第一版废除，因逻辑关系，暂未去除访问，但UI不显示
                 guessWhatYouThink(String.valueOf(subjectId));
             } else {//精品
                 subjectId = -1;

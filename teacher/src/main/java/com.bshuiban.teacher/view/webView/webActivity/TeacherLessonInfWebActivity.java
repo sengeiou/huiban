@@ -24,13 +24,17 @@ public class TeacherLessonInfWebActivity extends LessonInfWebActivity<TeacherLes
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        teachClassPresent = new TeachClassPresent(this);
     }
 
     @Override
     protected void webViewLoadFinished() {
         super.webViewLoadFinished();
-        teachClassPresent.loadTeachClass();
+        if(null==User.getInstance().getTeachClassData()) {
+            teachClassPresent = new TeachClassPresent(this);
+            teachClassPresent.loadTeachClass();
+        }else {
+            data=User.getInstance().getTeachClassData();
+        }
     }
 
     @Override

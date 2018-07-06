@@ -246,14 +246,14 @@ public class HomeworkBean extends Homework.Data {
                     for (int j = 0; j < next.size(); j++) {
                         HomeworkBean homeworkBean = getHomeworkBean(ONLINE, i, 0, j);
                         HomeworkInfBean.DataBean.OnLineBean.NextBean nextBean = next.get(j);
-                        if (null != next) {
+                        if (null != nextBean) {
                             String optionName = nextBean.getOptionName();
                             homeworkBean.setProblemId("5___0___"+nextBean.getExamId());
                             if (isSelect(optionName)) {
                                 homeworkBean.setCorrect(true);
                                 homeworkBean.setObjective(true);
                                 String stuAnswer = (String) nextBean.getStuAnswer();
-                                homeworkBean.setComplete(TextUtils.isEmpty(stuAnswer));
+                                homeworkBean.setComplete(!TextUtils.isEmpty(stuAnswer));
                                 homeworkBean.setResult(isRight((String) nextBean.getAnswer(), stuAnswer) ? 1 : 0);
                             }
                         }
@@ -281,7 +281,7 @@ public class HomeworkBean extends Homework.Data {
                                         homeworkBean.setCorrect(true);
                                         homeworkBean.setObjective(true);
                                         String stuAnswer = (String) nextBeanX.getStuAnswer();
-                                        homeworkBean.setComplete(TextUtils.isEmpty(stuAnswer));
+                                        homeworkBean.setComplete(!TextUtils.isEmpty(stuAnswer));
                                         homeworkBean.setResult(isRight((String) nextBeanX.getAnswer(), stuAnswer) ? 1 : 0);
                                     }
                                 }
@@ -306,7 +306,7 @@ public class HomeworkBean extends Homework.Data {
                             homeworkBean.setCorrect(true);
                             homeworkBean.setObjective(true);
                             String stuAnswer = exam1.getStuAnswer();
-                            homeworkBean.setComplete(TextUtils.isEmpty(stuAnswer));
+                            homeworkBean.setComplete(!TextUtils.isEmpty(stuAnswer));
                             homeworkBean.setResult(isRight(exam1.getAnswer(), stuAnswer) ? 1 : 0);
                         }
                     }

@@ -21,6 +21,7 @@ public class User {
     private Homework homework;
     private String userName;
     private String imgHeadUrl = "";
+    private List<TeachClassBean.DataBean> teachClassData;
 
     public int getUserType() {
         return data.getUserType();
@@ -45,7 +46,7 @@ public class User {
         }
     }
     public void changeUser(UserMoreBean.DataBean dataBean){
-        int userId = dataBean.getUserId();
+        String userId = dataBean.getUserId();
         String mobile = dataBean.getMobile();
         //String email = dataBean.getEmail();
         data.clean();
@@ -163,5 +164,13 @@ public class User {
 
     public void setHomework(Homework homework) {
         this.homework = homework;
+    }
+
+    public void setTeachClassData(List<TeachClassBean.DataBean> data) {
+        this.teachClassData=data;
+    }
+
+    public List<TeachClassBean.DataBean> getTeachClassData() {
+        return teachClassData;
     }
 }

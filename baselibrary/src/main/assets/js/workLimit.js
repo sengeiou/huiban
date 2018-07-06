@@ -176,11 +176,26 @@ window.onload = function () {
 // 下拉刷新上拉加载
 var list = document.querySelector('.list');
 var myIscroll = new IScroll('#main', {
-    scrollbars: true,
+     scrollbars: false,
     probeType: 3,
     click:true
 });
 var flag = true;
+var y,y2,y3;
+        var listoo = document.getElementsByClassName("listoo")[0];
+        listoo.ontouchstart = function(e) {
+                         y = 0;
+                e=e || window.event;
+                        y2=e.touches[0].pageY;
+        listoo.ontouchmove = function(e) {
+                e = e|| window.event
+                }
+            }
+        listoo.ontouchend = function(e) {
+                e=e || window.event;
+                y3=e.changedTouches[0].pageY;
+                y = y3-y2;
+        }
 myIscroll.on('scroll', function () {
     if (this.y > 40) {
         list.setAttribute('uptext', '释放刷新');
@@ -192,14 +207,14 @@ myIscroll.on('scroll', function () {
 })
 myIscroll.on('scrollEnd', function () {
     list.setAttribute('text', '下拉刷新');
-    if (this.y === this.maxScrollY) {
+     if ( y<-300 && this.y === this.maxScrollY){
         if(num == 0) {
             console.log("上拉1");
         } else {
             console.log("上拉2");
         }
        
-    } else if (this.y === 0) {
+    } else if (this.y === 0 && y>300) {
         if(num == 0) {
             console.log("下拉1");
         } else {

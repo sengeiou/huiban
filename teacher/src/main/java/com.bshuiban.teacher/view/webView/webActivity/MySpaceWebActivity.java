@@ -3,7 +3,10 @@ package com.bshuiban.teacher.view.webView.webActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
+import android.widget.TextView;
 
+import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.utils.TextUtils;
 import com.bshuiban.baselibrary.view.activity.PlayerVideoActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
@@ -16,11 +19,17 @@ import com.bshuiban.teacher.present.MySpacePresent;
  */
 public class MySpaceWebActivity extends BaseWebActivity<MySpacePresent>implements MySpaceContract.View {
 
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userId = getIntent().getStringExtra("userId");
+        if(android.text.TextUtils.isEmpty(userId)){
+            userId = User.getInstance().getUserId();
+        }
         loadFileHtml("mySpace");
-        tPresent=new MySpacePresent(this);
+        tPresent=new MySpacePresent(this,userId);
         registerWebViewH5Interface(new MySpaceHtml());
     }
 
@@ -60,13 +69,14 @@ public class MySpaceWebActivity extends BaseWebActivity<MySpacePresent>implement
          * @param tag 0 主讲微课-查看全部；1 留言查看全部
          */
         @JavascriptInterface
-        public void toNextPage(int tag){
+        public void toNextPage(int tag,String userName){
             switch (tag){
                 case 0:
-                    toNextActivity(MainWeiClassWebActivity.class);
+                    toNextActivity(MainWeiClassWebActivity.class,userName);
                     break;
                 default:
-                    toNextActivity(LiuYanMsgListActivity.class);
+                    //goLiuYan();
+                    toNextActivity(LiuYanMsgListActivity.class,userName);
             }
         }
         /**
@@ -87,7 +97,7 @@ public class MySpaceWebActivity extends BaseWebActivity<MySpacePresent>implement
             runOnUiThread(()-> PlayerVideoActivity.startPlayerVideoActivity(getApplicationContext(),url));
         }
     }
-    private void toNextActivity(Class<?> cls){
-        runOnUiThread(()-> startActivity(new Intent(getApplicationContext(),cls)));
+    private void toNextActivity(Class<?> cls,String s){
+        runOnUiThread(()-> startActivity(new Intent(getApplicationContext(),cls).putExtra("userId",userId).putExtra("name",s)));
     }
 }

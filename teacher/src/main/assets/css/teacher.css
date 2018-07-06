@@ -85,8 +85,9 @@
 .mySpace .myMsg {
     width: 100%;
     padding: 0.2rem 0.4rem;
-    border-top: solid 0.1rem #f2fdfb;
     border-bottom: solid 0.1rem #f2fdfb;
+    background:url("../images/teacher/tbackground.png");
+    background-size:100% 100%;
 }
 .mySpace .leaveMsg h3 , .mySpace .mainClass h3{
     width: 100%;
@@ -339,23 +340,22 @@
 }
 .mySpace .myMsg dl dd p {
     font-size: 0.28rem;
-    color: #9a9a9a;
+    color: white;
     line-height: 0.5rem;
 }
-.mySpace .myMsg dl dt {
-    padding-left: 10%;
-}
+
 .mySpace .myMsg dl dt img{
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     border-radius: 50%;
 }
 .mySpace .myMsg dl dd {
     margin-left: 0.5rem;
 }
-.mySpace .myMsg .text {
+ .text {
     color: #9a9a9a;
     font-size: 0.3rem;
+    padding:3% 6%;
 }
 .stuResource header span:nth-child(2) {
     position: relative;
@@ -837,8 +837,8 @@ header .more {
 .classMsg main .msg span {
     display: inline-block;
     height: 0.8rem;
-    width: 30%;
-    padding-left: 10%;
+    width: 32%;
+    padding-left: 6%;
     padding-top: 1px;
 }
 .classMsg main .msg span img {
@@ -848,6 +848,11 @@ header .more {
 }
 .classMsg main .msg span i {
     margin-left: 0.1rem;
+    display:inline-block;
+    width:64%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 .classMsg main .msg .ends {
     color: #00c7b5;

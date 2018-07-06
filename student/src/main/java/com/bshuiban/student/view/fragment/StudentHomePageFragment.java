@@ -148,27 +148,7 @@ public class StudentHomePageFragment extends HomePageFragment {
         @JavascriptInterface
         public void toggleSlide(){
             getActivity().runOnUiThread(()->{
-                //mListener.transportData("toggleSlide");
-                String url="http://dz.80txt.com/71356/%E7%8E%84%E7%95%8C%E6%97%85%E8%A1%8C%E7%A4%BE.zip";
-                String name="l2l.zip";
-                String path= User.path+"app/"+name;
-                ProgressResponseBody.ProgressListener progressListener = new ProgressResponseBody.ProgressListener() {
-                    @Override
-                    public void onProgress(int progress, int total, boolean done) {
-                        //Log.e(TAG, "onProgress: "+progress +", "+(int) (progress*100f/total));
-                        getActivity().runOnUiThread(()-> {
-                            ProgressDialog dialog = retrofitDownload.showDialog(null, getActivity());
-                            //dialog.setMax(total);
-                            int value = (int) (progress * 100f / total);
-                            dialog.setProgress(value);
-                            if(value>=100){
-                                dialog.dismiss();
-                            }
-                        });
-                    }
-                };
-                retrofitDownload = new RetrofitDownload(progressListener);
-                retrofitDownload.downloadFile(url,path);
+                mListener.transportData("toggleSlide");
             });
         }
         @JavascriptInterface

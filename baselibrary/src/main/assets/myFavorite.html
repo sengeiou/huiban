@@ -43,7 +43,7 @@
             bottom: -40px;
             }
             dd{
-            width: 70%;
+            width: 57%;
             }
       .listoo{
         min-height: 650px ;
@@ -85,7 +85,7 @@
         .p1{
         font-size: .32rem;
         height: .6rem;
-        line-height: .4rem;
+        line-height: .6rem;
        overflow:hidden;
         text-overflow:ellipsis;
         white-space:nowrap;
@@ -132,30 +132,8 @@
             <div id="main">
                 <div class="listoo" text="下拉刷新">
                     <div class="room">
-            <dl class="list">
-                <dt><img src="./images/reset/class_overview_pic.png" alt=""></dt>
-                <dd>
-                    <p>麻辣词汇系列</p>
-                    <p>授课教师：<span>洪然</span></p>
-                     <p><span class="img1"></span><span>36</span><span class="img2"></span><span>600</span></p>
-                </dd>
-            </dl>
-            <dl class="list">
-                <dt><img src="./images/reset/class_overview_pic.png" alt=""></dt>
-                <dd>
-                    <p>麻辣词汇系列</p>
-                    <p>授课教师：<span>洪然</span></p>
-                     <p><span class="img1"></span><span>36</span><span class="img2"></span><span>600</span></p>
-                </dd>
-            </dl>
-            <dl class="list">
-                <dt><img src="./images/reset/class_overview_pic.png" alt=""></dt>
-                <dd>
-                    <p>麻辣词汇系列</p>
-                    <p>授课教师：<span>洪然</span></p>
-                     <p><span class="img1"></span><span>36</span><span class="img2"></span><span>600</span></p>
-                </dd>
-            </dl>
+
+
                     </div>
                 </div>
               </div>
@@ -196,26 +174,26 @@
      }
         var list = document.querySelector('.listoo');
         var myIscroll = new IScroll('#main', {
-        scrollbars: true,
+         scrollbars: false,
         probeType: 3,
         click:true
         });
         var flag = true;
         var y,y2,y3;
-    var listoo = document.getElementsByClassName("listoo")[0];
-    listoo.ontouchstart = function(e) {
-                     y = 0;
-            e=e || window.event;
-                    y2=e.touches[0].pageY;
-    listoo.ontouchmove = function(e) {
-            e = e|| window.event
-            }
-        }
-    listoo.ontouchend = function(e) {
-            e=e || window.event;
-            y3=e.changedTouches[0].pageY;
-            y = y3-y2;
-    }
+        var listoo = document.getElementsByClassName("listoo")[0];
+        listoo.ontouchstart = function(e) {
+                         y = 0;
+                e=e || window.event;
+                        y2=e.touches[0].pageY;
+        listoo.ontouchmove = function(e) {
+                e = e|| window.event
+                }
+            }
+        listoo.ontouchend = function(e) {
+                e=e || window.event;
+                y3=e.changedTouches[0].pageY;
+                y = y3-y2;
+        }
         myIscroll.on('scroll', function () {
         if (this.y > 40) {
         list.setAttribute('uptext', '释放刷新');

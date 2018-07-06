@@ -34,6 +34,10 @@
 </body>
 <script>
     var userType = window.android.getUserType();
+    //隐藏筛选
+    function hideChange () {
+        $('.ico').hide();
+    }
     function changeString(string){
         if(string==undefined||string=='null'||string==null){
             return '';
@@ -43,12 +47,13 @@
     function getContent (data) {
         $('.listBox').html('');
         var data = JSON.parse(data);
-        var rec;
+        var rec,flag;
         for(var i=0; i<data.length; i++){
             var nowContent = $('.listBox').html();
             if (userType != 2 && userType != 3) {
-                rec=changeString(data[i].recTeaName)+'推荐';
+                flag = true;
             }else{
+                flag = false;
                 rec='推荐给家长';
             }
             $('.listBox').html(nowContent + `
@@ -61,6 +66,9 @@
                     </dd>
                 </dl>
             `);
+        }
+        if(flag == true){
+            $('.name').hide();
         }
         $('.list').css('height',$('.listBox').height()+20);
         myIscroll.refresh();
@@ -84,7 +92,7 @@
     }
     var list = document.querySelector('.list');
 	var myIscroll = new IScroll('#wrap',{
-		scrollbars: true,
+		scrollbars: false,
 		probeType: 3,
 		click:true
     });

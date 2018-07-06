@@ -46,20 +46,20 @@ import java.util.Locale;
  * Created by xinheng on 2018/5/21.<br/>
  * describe：报告
  */
-public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent> implements ReportContract.View,OnReportDateListener {
+public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent> implements ReportContract.View, OnReportDateListener {
     private List<StuLearnReportBean.DataBean.ContrastBean> arrayList;
     private ReportViewPagerAdapter classViewPagerAdapter;
     private MagicIndicator magicIndicator;
     private ViewPager viewPager;
     private TextView tv_date;
-    private int mYear,mMonth;
+    private int mYear, mMonth;
     private CommonNavigatorAdapter commonNavigatorAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tPresent=new ReportPresent(this);
-        arrayList=new ArrayList<>();
+        tPresent = new ReportPresent(this);
+        arrayList = new ArrayList<>();
     }
 
     @Override
@@ -71,15 +71,14 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_report, container, false);
-        magicIndicator=view.findViewById(R.id.magic);
-        viewPager=view.findViewById(R.id.viewPager);
-        tv_date=view.findViewById(R.id.tv_date);
-        tv_date.setOnClickListener(v->{
+        magicIndicator = view.findViewById(R.id.magic);
+        viewPager = view.findViewById(R.id.viewPager);
+        tv_date = view.findViewById(R.id.tv_date);
+        tv_date.setOnClickListener(v -> {
             SelectDateDialog selectDateDialog = new SelectDateDialog(getActivity(), new SelectDateDialog.OnClickListener() {
                 @Override
                 public boolean onSure(int year, int month, int day, long time) {
-                    month+=1;
-                    if(year>nowYear||(year==nowYear&&month>nowMonth)){
+                    if (year > nowYear || (year == nowYear && month > nowMonth)) {
                         toast("日期超了。。。");
                         return false;
                     }
@@ -97,40 +96,45 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
                 }
             });
             selectDateDialog.setDateType(SelectDateDialog.YEAR_MONTH);
-            selectDateDialog.show(mYear,mMonth-1,1);
+            selectDateDialog.show(mYear, mMonth , 1);
         });
         updateTitleData();
         setDate();
         //tPresent.getTitleBarData();
         return view;
     }
-    private int nowMonth,nowYear;
-    private void setDate(){
-        Calendar calendar=Calendar.getInstance(Locale.CHINA);
-        nowYear=mYear=calendar.get(Calendar.YEAR);
-        nowMonth=mMonth=calendar.get(Calendar.MONTH)+1;
+
+    private int nowMonth, nowYear;
+
+    private void setDate() {
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        nowYear = mYear = calendar.get(Calendar.YEAR);
+        nowMonth = mMonth = calendar.get(Calendar.MONTH) + 1;
         updateTVDate(false);
     }
-    private void updateTVDate(boolean tag){
 
-        tv_date.setText(String.format("%d年%02d月统计报告",mYear,mMonth));
-        if(tag){
-            if(nowFragment instanceof SubjectAllFragment){
+    private void updateTVDate(boolean tag) {
+
+        tv_date.setText(String.format("%d年%02d月统计报告", mYear, mMonth));
+        if (tag) {
+            if (nowFragment instanceof SubjectAllFragment) {
                 ((SubjectAllFragment) nowFragment).updateDataForDate();
-            }else {
+            } else {
                 ((SubjectChildFragment) nowFragment).updateDataForDate();
             }
         }
     }
+
     public void updateTitleBar1(List<StuLearnReportBean.DataBean.ContrastBean> contrastBeans) {
-        if(null!=contrastBeans&&contrastBeans.size()>0) {
-            if(arrayList.size()<2) {
+        if (null != contrastBeans && contrastBeans.size() > 0) {
+            if (arrayList.size() < 2) {
                 arrayList.addAll(contrastBeans);
                 commonNavigatorAdapter.notifyDataSetChanged();
                 classViewPagerAdapter.notifyDataSetChanged();
             }
         }
     }
+
     public void updateTitleBar(List<SubjectBean.DataBean> data) {
 //        if(null!=data&&data.size()>0) {
 //            arrayList.addAll(data);
@@ -144,9 +148,9 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
         e.setSubjectName("总览");
         //e.setId(-1);
         arrayList.add(e);
-        classViewPagerAdapter=new ReportViewPagerAdapter(getChildFragmentManager());
+        classViewPagerAdapter = new ReportViewPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(classViewPagerAdapter);
-        magicIndicator.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.guide_start_btn));
+        magicIndicator.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.guide_start_btn));
         CommonNavigator commonNavigator = new CommonNavigator(getActivity());
         commonNavigatorAdapter = new CommonNavigatorAdapter() {
 
@@ -158,12 +162,10 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(getActivity());
-                simplePagerTitleView.setNormalColor(ContextCompat.getColor(getActivity(),R.color.guide_light));
-                simplePagerTitleView.setPadding(15,0,15,0);
+                simplePagerTitleView.setNormalColor(ContextCompat.getColor(getActivity(), R.color.guide_light));
+                simplePagerTitleView.setPadding(15, 0, 15, 0);
                 simplePagerTitleView.setSelectedColor(Color.WHITE);
-                simplePagerTitleView.setOnClickListener((v)->{
-                    viewPager.setCurrentItem(index,false);
-                });
+                simplePagerTitleView.setOnClickListener((v) -> viewPager.setCurrentItem(index, false));
                 simplePagerTitleView.setText(arrayList.get(index).getSubjectName());
                 return simplePagerTitleView;
             }
@@ -178,7 +180,7 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
         };
         commonNavigator.setAdapter(commonNavigatorAdapter);
         magicIndicator.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicator,viewPager);
+        ViewPagerHelper.bind(magicIndicator, viewPager);
     }
 
     @Override
@@ -203,10 +205,12 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
 
     @Override
     public String getDate() {
-        return String.format("%d%02d",mYear,mMonth);
+        return String.format("%d%02d", mYear, mMonth);
     }
+
     private Fragment nowFragment;
-    private class ReportViewPagerAdapter extends FragmentPagerAdapter{
+
+    private class ReportViewPagerAdapter extends FragmentPagerAdapter {
 
         public ReportViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -214,32 +218,29 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
 
         @Override
         public Fragment getItem(int position) {
-            if(position==0) {
+            if (position == 0) {
                 SubjectAllFragment subjectAllFragment = new SubjectAllFragment();
-                subjectAllFragment.setOnContrastData(new SubjectAllFragment.OnContrastData() {
-                    @Override
-                    public void setContrasts(List<StuLearnReportBean.DataBean.ContrastBean> contrastBeans) {
-                        //List<StuLearnReportBean.DataBean.ContrastBean> contrastBeans;
-                        updateTitleBar1(contrastBeans);
-                    }
+                subjectAllFragment.setOnContrastData(contrastBeans -> {
+                    //List<StuLearnReportBean.DataBean.ContrastBean> contrastBeans;
+                    updateTitleBar1(contrastBeans);
                 });
                 subjectAllFragment.setOnReportDateListener(ReportFragment.this);
-                nowFragment=subjectAllFragment;
+                nowFragment = subjectAllFragment;
                 return subjectAllFragment;
-            }else {
+            } else {
                 Bundle bundle = new Bundle();
                 bundle.putInt("subjectId", arrayList.get(position).getSubjectId());
                 SubjectChildFragment subjectChildFragment = new SubjectChildFragment();
                 subjectChildFragment.update(bundle);
                 subjectChildFragment.setOnReportDateListener(ReportFragment.this);
-                nowFragment=subjectChildFragment;
+                nowFragment = subjectChildFragment;
                 return subjectChildFragment;
             }
         }
 
         @Override
         public int getCount() {
-            return arrayList==null?0:arrayList.size();
+            return arrayList == null ? 0 : arrayList.size();
         }
     }
 

@@ -23,6 +23,7 @@ import com.bshuiban.baselibrary.view.adapter.GeneralSituationAdapter;
 import com.bshuiban.baselibrary.view.customer.LineTextView;
 import com.bshuiban.baselibrary.view.webview.webActivity.LiuYanMsgListActivity;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -91,7 +92,8 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
         if(TextUtils.isEmpty(ipImgUrl)){
             iv.setImageResource(R.mipmap.default_class);
         }else{
-            Glide.with(getActivity()).load(ipImgUrl).into(iv);
+            RequestOptions requestOptions = new RequestOptions().error(R.mipmap.default_class);
+            Glide.with(getActivity()).applyDefaultRequestOptions(requestOptions).load(ipImgUrl).into(iv);
         }
         tv_text.setText(data.getSummary());
         updateTextSet();

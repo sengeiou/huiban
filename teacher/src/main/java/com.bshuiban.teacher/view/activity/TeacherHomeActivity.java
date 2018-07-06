@@ -55,11 +55,11 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
     }
     @Override
     protected void onNewIntent(Intent intent) {
-        if(intent.getBooleanExtra("change",false)) {
-            if (null == tPresent)
-                tPresent = new TeacherHomePresent(this);
-            tPresent.getUserDataForInternet();
-        }
+//        if(intent.getBooleanExtra("change",false)) {
+//            if (null == tPresent)
+//                tPresent = new TeacherHomePresent(this);
+//            //tPresent.getUserDataForInternet();
+//        }
         super.onNewIntent(intent);
     }
     @Override
@@ -174,7 +174,7 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
     public void updateSlideView(TeacherUser.DataBean data) {
         if (null != data) {
             String realName = data.getRealName();
-            tv_name.setText(com.bshuiban.baselibrary.utils.TextUtils.cleanNull(realName));
+            tv_name.setText(com.bshuiban.baselibrary.utils.TextUtils.cleanNull(realName)+"老师");
             String schoolName = com.bshuiban.baselibrary.utils.TextUtils.cleanNull(data.getSchoolName());
             String gradleName = com.bshuiban.baselibrary.utils.TextUtils.cleanNull(data.getGradeName());
             List<String> classNames = data.getClassName();

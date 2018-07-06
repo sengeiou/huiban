@@ -2,6 +2,7 @@ package com.xinheng.date_dialog.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import com.xinheng.date_dialog.view.WheelView;
 import org.w3c.dom.ProcessingInstruction;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 日期选择对话框
@@ -69,7 +71,7 @@ public class SelectDateDialog extends BaseDialog {
         yearWheel = (WheelView) dialogView.findViewById(R.id.select_date_wheel_year_wheel);
         monthWheel = (WheelView) dialogView.findViewById(R.id.select_date_month_wheel);
         dayWheel = (WheelView) dialogView.findViewById(R.id.select_date_day_wheel);
-        yearWheel.setWheelStyle(WheelStyle.STYLE_YEAR);
+        yearWheel.setWheelStyle(WheelStyle.STYLE_YEAR);//[min,max]
         yearWheel.setOnSelectListener(new WheelView.SelectListener() {
             @Override
             public void onSelect(int index, String text) {
@@ -78,7 +80,7 @@ public class SelectDateDialog extends BaseDialog {
             }
         });
 
-        monthWheel.setWheelStyle(WheelStyle.STYLE_MONTH);
+        monthWheel.setWheelStyle(WheelStyle.STYLE_MONTH);//[1,12]
         monthWheel.setOnSelectListener(new WheelView.SelectListener() {
             @Override
             public void onSelect(int index, String text) {
@@ -107,7 +109,7 @@ public class SelectDateDialog extends BaseDialog {
             @Override
             public void onClick(View v) {
                 int year = yearWheel.getCurrentItem() + WheelStyle.minYear;
-                int month = monthWheel.getCurrentItem();
+                int month = monthWheel.getCurrentItem()+1;
                 int day = dayWheel.getCurrentItem() + 1;
                 int daySize = dayWheel.getItemCount();
                 if (day > daySize) {
@@ -115,12 +117,14 @@ public class SelectDateDialog extends BaseDialog {
                 }
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.MONTH, month-1);
                 calendar.set(Calendar.DATE, day);
-                long setTime = calendar.getTimeInMillis();
-
+                //long setTime = calendar.getTimeInMillis();
+//                int month1 = new Date(setTime).getMonth();
+//                int month2 = calendar.get(Calendar.MONTH);
+//                Log.e("TAG", "onClick: "+month1+", "+month2 );
                 if (onClickListener != null) {
-                    if (!onClickListener.onSure(year, month, day, setTime)) {
+                    if (!onClickListener.onSure(year, month, day, 0)) {
                         dialog.dismiss();
                     }
                 } else {
@@ -155,10 +159,10 @@ public class SelectDateDialog extends BaseDialog {
         if (dialog == null || dialog.isShowing()) {
             return;
         }
-        dayWheel.setWheelItemList(WheelStyle.createDayString(year - WheelStyle.minYear, month + 1));
+        dayWheel.setWheelItemList(WheelStyle.createDayString(year /*- WheelStyle.minYear*/, month));
         yearWheel.setCurrentItem(year - WheelStyle.minYear);
-        monthWheel.setCurrentItem(month);
-        dayWheel.setCurrentItem(day - 1);
+        monthWheel.setCurrentItem(month-1);
+        //dayWheel.setCurrentItem(day - 1);
         dialog.show();
     }
 

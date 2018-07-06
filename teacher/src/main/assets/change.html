@@ -11,35 +11,35 @@
     <script src="./js/rem.js"></script>
 </head>
 <body>
-    <div class="wrap change">
-        <header>
+<div class="wrap change">
+    <header>
             <span>
                 <a href="/finish_page.html"></a>
-            </span>	
-            <span></span>
-        </header>
-        <main>
-            <div class="subject">
-                <p>科目</p>
-                <div class="subjectBox"></div>
-            </div>
-            <div class="brand hide">
-                <p>品牌</p>
-                <div class="brandBox"></div>
-            </div>
-            <div class="type hide">
-                <p>类型</p>
-                <div class="typeBox"></div>
-            </div>
-            <div class="grade hide">
-                <p>年级</p>
-                <div class="gradeBox"></div>
-            </div>
-            <div id="sure">
-                确定
-            </div>
-        </main>
-    </div>
+            </span>
+        <span></span>
+    </header>
+    <main>
+        <div class="subject">
+            <p>科目</p>
+            <div class="subjectBox"></div>
+        </div>
+        <div class="brand hide">
+            <p>品牌</p>
+            <div class="brandBox"></div>
+        </div>
+        <div class="type hide">
+            <p>类型</p>
+            <div class="typeBox"></div>
+        </div>
+        <div class="grade hide">
+            <p>年级</p>
+            <div class="gradeBox"></div>
+        </div>
+        <div id="sure">
+            确定
+        </div>
+    </main>
+</div>
 </body>
 <script>
     var type = 0;
@@ -56,9 +56,27 @@
         $('.type').hide();
         $('.grade').hide();
         var data = JSON.parse(data);
-        for (var i=0; i<data.length; i++) {
-            var nowMsg = $('.subjectBox').html();
-            $('.subjectBox').html(nowMsg + `<span>${data[i].subjectName}</span>`);
+     console.log(data);
+     for (var i=0; i<data.length; i++) {
+        var nowMsg = $('.subjectBox').html();
+        $('.subjectBox').html(nowMsg + `<span>${data[i].subjectName}</span>`);
+        if(subjectId==undefined && data[i].isSelect != undefined && data[i].isSelect == 1) {
+            $('.subjectBox span').eq(i).addClass("selected");
+            subjectId = data[i].id;
+        }
+     }
+        if(subjectId!=undefined){
+            var msg = JSON.stringify({"subjectId": subjectId});
+            type = 0;
+            $('.brand').html(brandMsg);
+            $('.type').html(typeMsg);
+            $('.grade').html(gradeMsg);
+            $('.type').hide();
+            $('.grade').hide();
+            window.android.dealWithJson("getVipRelationEduList",msg);
+            //$('.subjectBox span').removeClass('selected');
+            //$(this).addClass('selected');
+            $('.brand').show();
         }
         $('.subjectBox span').bind('click', function () {
             var ind = $(this).index();
@@ -158,5 +176,6 @@
     $('.back').bind('click', function () {
         console.log('back');
     });
+
 </script>
 </html>

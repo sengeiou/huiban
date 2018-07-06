@@ -30,10 +30,17 @@ public class ParentsHomePresent extends BasePresent<ParentsHomeContract.View> im
             if(null!=stuArrBean){
                 userData.setUserId(stuArrBean.getStuId());
                 userData.setClassId1(stuArrBean.getClassId()+"");
+                userData.setGradeId(stuArrBean.getGradeId()+"");
+                userData.setSchoolId(stuArrBean.getSchoolId()+"");
+                userData.setSchoolName(stuArrBean.getSchoolName()+"");
                 ArrayList<String> className = new ArrayList<>(1);
                 className.add(stuArrBean.getClassName());
                 userData.setClassName(className);
+            }else {
+                userData.setUserId(null);
             }
+        }else{
+            userData.setUserId(null);
         }
     }
 

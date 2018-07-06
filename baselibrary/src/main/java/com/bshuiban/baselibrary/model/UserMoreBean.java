@@ -30,12 +30,48 @@ public class UserMoreBean extends ResultBean {
          */
 
         private int Id;
-        private int UserId;
+        private String UserId;
         private String Email;
         private String Mobile;
         private String Password;
         private int IsPass;
         private int typeId;
+        private String childName="";
+        private String classId;
+        private String gradeId;
+        private String schoolId;
+
+        public String getGradeId() {
+            return gradeId;
+        }
+
+        public void setGradeId(String gradeId) {
+            this.gradeId = gradeId;
+        }
+
+        public String getSchoolId() {
+            return schoolId;
+        }
+
+        public void setSchoolId(String schoolId) {
+            this.schoolId = schoolId;
+        }
+
+        public String getClassId() {
+            return classId;
+        }
+
+        public void setClassId(String classId) {
+            this.classId = classId;
+        }
+
+        public String getChildName() {
+            return childName;
+        }
+
+        public void setChildName(String childName) {
+            this.childName = childName;
+        }
 
         public int getId() {
             return Id;
@@ -45,11 +81,11 @@ public class UserMoreBean extends ResultBean {
             this.Id = Id;
         }
 
-        public int getUserId() {
+        public String getUserId() {
             return UserId;
         }
 
-        public void setUserId(int UserId) {
+        public void setUserId(String UserId) {
             this.UserId = UserId;
         }
 

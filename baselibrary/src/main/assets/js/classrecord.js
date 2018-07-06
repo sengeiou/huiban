@@ -69,3 +69,44 @@ window.onload = function() {
     //complatelist(res)
     $("#filte").hide()
 }
+    var list = document.querySelector('.listoo');
+           var myIscroll = new IScroll('#main', {
+            scrollbars: false,
+           probeType: 3,
+           click:true
+           });
+           var flag = true;
+           var y,y2,y3;
+           var listoo = document.getElementsByClassName("listoo")[0];
+           listoo.ontouchstart = function(e) {
+                            y = 0;
+                   e=e || window.event;
+                           y2=e.touches[0].pageY;
+           listoo.ontouchmove = function(e) {
+                   e = e|| window.event
+                   }
+               }
+           listoo.ontouchend = function(e) {
+                   e=e || window.event;
+                   y3=e.changedTouches[0].pageY;
+                   y = y3-y2;
+           }
+           myIscroll.on('scroll', function () {
+           if (this.y > 40) {
+           list.setAttribute('uptext', '释放刷新');
+           } else if (this.y < 40 && this.y > 0) {
+           list.setAttribute('uptext', '下拉刷新');
+           } else if (this.y < this.maxScrollY - 40) {
+           flag = true;
+           }
+           })
+           myIscroll.on('scrollEnd', function () {
+           list.setAttribute('text', '下拉刷新');
+           if ( y<-300 && this.y === this.maxScrollY) {
+               console.log("上拉");
+               window.android.getMoreData(false);
+           } else if (this.y === 0 && y>300) {
+               console.log("下拉");
+               window.android.getMoreData(true);
+           }
+           })

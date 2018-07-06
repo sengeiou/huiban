@@ -183,7 +183,9 @@ public class TitleView extends View {
             }
         }
     }
-
+    public boolean isRightTextEffic(){
+        return right_text!=null;
+    }
     public void setRight_text(String right_text, int color, int right_text_size) {
         if (right_text == null && this.right_text != null) {
             this.right_text = null;

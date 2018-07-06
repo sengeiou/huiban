@@ -91,12 +91,12 @@ $(".tea2").bind("click", function () {
     window.android.toNextActivity(8)
 })
 // 家长确认
-$(".tea3").bind("click", function () {
-     window.android.toNextActivity(9)
-})
+//$(".tea3").bind("click", function () {
+//     window.android.toNextActivity(9)
+//})
 //个人头像点击
     $(".userImg").click(function(){
-        console.log("111")
+        window.android.toggleSlide();
     })
 //切换课表
 function switchs(list) {
@@ -257,7 +257,7 @@ function message(list) {
 }
 var list = document.querySelector('.listoo');
 var myIscroll = new IScroll('#main', {
-    scrollbars: true,
+     scrollbars: false,
     probeType: 3,
     click: true
 });

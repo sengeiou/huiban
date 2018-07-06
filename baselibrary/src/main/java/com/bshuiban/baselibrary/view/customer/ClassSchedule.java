@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Layout;
@@ -205,7 +206,7 @@ public class ClassSchedule extends View {
                 dataBeans = null;
             }
             canvas.drawLine(everyLength, top, getMeasuredWidth(), top, paintLine);
-            int size=0;
+            int size=0;//每周几节课。。。暂且不用2018年6月28日13:47:02
             if (null != dataBeans) {
                 //x = 2 * everyLength;
                 for (int j = 2; j < xCenter.length; j++) {
@@ -217,19 +218,21 @@ public class ClassSchedule extends View {
                             if(teachTag){
                                 String sub = TextUtils.cleanNull(dataBean.getSubName());
                                 if(sub.length()>0){
-                                    sub="("+sub+")";
+                                    sub="\n("+sub+")";
                                 }
                                 subjectName=TextUtils.cleanNull(dataBean.getClassName())+ sub;
                             }
                             //Log.e("TAG", "drawDateArea: "+subjectName );
                             if(!android.text.TextUtils.isEmpty(subjectName)){
-                                StaticLayout layout = new StaticLayout(subjectName, textPaint, (int)everyLength, Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
                                 //canvas.drawText(subjectName, xCenter[j], baseLine + top, mPaint);
-                                //Log.e("TAG", "drawDateArea: x = "+ xCenter[j] +", top = "+top );
-                                canvas.save();
-                                canvas.translate(xCenter[j],top);
-                                layout.draw(canvas);
-                                canvas.restore();
+//                                StaticLayout layout = new StaticLayout(subjectName, textPaint, (int)everyLength, Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
+//                                canvas.save();
+//                                canvas.translate(xCenter[j],top);
+//                                layout.draw(canvas);
+//                                canvas.restore();
+                                //TextPaint tp = new TextPaint();textPaint.setStyle(Paint.Style.FILL);textPaint.setTextSize(50);
+                                Point point = new Point((int) (xCenter[j]-everyLength/2),(int)top);
+                                textCenter(subjectName,textPaint,canvas,point,(int)everyLength,Layout.Alignment.ALIGN_NORMAL,1f,0,false);
                                 size++;
                             }
                         }
@@ -237,12 +240,18 @@ public class ClassSchedule extends View {
                    // x=+everyLength;
                 }
             }
-            canvas.drawText(String.valueOf(size),xCenter[1],baseLine+top,mPaint);
+            canvas.drawText(String.valueOf(i+1),xCenter[1],baseLine+top,mPaint);
             top += this.gridHeight;
         }
         return top;
     }
-
+    private void textCenter(String string, TextPaint textPaint, Canvas canvas, Point point, int width, Layout.Alignment align, float spacingmult, float spacingadd, boolean includepad){
+        StaticLayout staticLayout = new StaticLayout(string,textPaint,width, align,spacingmult,spacingadd,includepad);
+        canvas.save();
+        canvas.translate(staticLayout.getWidth()/2+point.x,(gridHeight-staticLayout.getHeight())/2+point.y);
+        staticLayout.draw(canvas);
+        canvas.restore();
+    }
     public void setData(List<List<ClassScheduleBean.DataBean>> data) {
         this.data = data;
         invalidate();

@@ -2,6 +2,7 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.GuanZhuListContract;
@@ -96,10 +97,23 @@ public class GuanZhuListActivity extends BaseWebActivity<GuanZhuListPresent> imp
             tPresent.guanZhu(tag, id);
             GuanZhuListActivity.this.index = index;
         }
-
+        @JavascriptInterface
+        public void logResult(String typeId){
+            //if("")
+            Log.e(TAG, "logResult: "+typeId );
+        }
         @JavascriptInterface
         public void search(String msg) {
             tPresent.getSearchData(msg);
+        }
+
+        @JavascriptInterface
+        public void toSpacePage(String userId){
+            runOnUiThread(()->{
+                Intent intent = new Intent("com.bshuiban.teacher.webView.webActivity.MySpaceWebActivity")
+                        .putExtra("userId",userId);
+                startActivity(intent);
+            });
         }
     }
 }
