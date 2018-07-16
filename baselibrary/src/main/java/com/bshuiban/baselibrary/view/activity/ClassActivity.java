@@ -17,6 +17,7 @@ import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.TeachClassPresent;
+import com.bshuiban.baselibrary.utils.ClassChange;
 import com.bshuiban.baselibrary.view.adapter.ClassViewPagerAdapter;
 import com.bshuiban.baselibrary.view.customer.TitleView;
 import com.bshuiban.baselibrary.view.fragment.ClassActivityFragment;
@@ -47,6 +48,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
     private ClassViewPagerAdapter classViewPagerAdapter;
     private int mPosition;
     private String className;
+    private ClassChange classChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +99,8 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
         });
         MagicIndicator magicIndicator = findViewById(R.id.magic);
         ViewPager viewPager = findViewById(R.id.viewPager);
-        classViewPagerAdapter = new ClassViewPagerAdapter(getSupportFragmentManager(), arrayList);
+        classChange = new ClassChange();
+        classViewPagerAdapter = new ClassViewPagerAdapter(getSupportFragmentManager(), arrayList, classChange);
         viewPager.setAdapter(classViewPagerAdapter);
         magicIndicator.setBackgroundColor(Color.WHITE);
 
@@ -175,14 +178,15 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             public boolean onSure(String left, int leftIndex, String right, int rightIndex) {
                 TeachClassBean.DataBean dataBean = data.get(leftIndex);
                 String classId = dataBean.getClassId();
-                Fragment fragment = classViewPagerAdapter.getFragment(mPosition);
-                if(fragment instanceof ClassScheduleFragment) {
-                    ((ClassScheduleFragment) fragment).updateSchedule(classId);
-                }else if(fragment instanceof GeneralSituationFragment){
-                    ((GeneralSituationFragment) fragment).update(classId);
-                }else if(fragment instanceof ClassActivityFragment){
-                    ((ClassActivityFragment) fragment).update(classId);
-                }
+//                Fragment fragment = classViewPagerAdapter.getFragment(mPosition);
+//                if(fragment instanceof ClassScheduleFragment) {
+//                    ((ClassScheduleFragment) fragment).updateSchedule(classId);
+//                }else if(fragment instanceof GeneralSituationFragment){
+//                    ((GeneralSituationFragment) fragment).update(classId);
+//                }else if(fragment instanceof ClassActivityFragment){
+//                    ((ClassActivityFragment) fragment).update(classId);
+//                }
+                classChange.setDataBean(dataBean);
                 titleView.setTitle_text(dataBean.getClassName());
                 return false;
             }
@@ -200,7 +204,6 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
         if (HomeworkBean.isEffictive(data)) {
             className = data.get(0).getClassName();
             titleView.setTitle_text(className);
-
         }
     }
 
@@ -229,5 +232,14 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(classChange!=null){
+            classChange.clear();
+            classChange=null;
+        }
+        super.onDestroy();
     }
 }

@@ -51,11 +51,6 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
         tPresent=new HomePageParent(this);
     }
 
-    @Override
-    protected void delete(String messageId, String pid) {
-        tPresent.delete(messageId,pid);
-    }
-
     protected void addRecevier(String json){
         tPresent.addRecevier(json);
     }

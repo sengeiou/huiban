@@ -7,7 +7,7 @@ import com.bshuiban.baselibrary.model.User;
 
 /**
  * Created by xinheng on 2018/6/8.<br/>
- * describe：
+ * describe：图片上传后图片地址域名
  */
 public class ImageUploadHeadPresent extends BasePresent{
 

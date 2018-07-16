@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.utils.ClassChange;
 import com.bshuiban.baselibrary.view.adapter.ClassActivityAdapter;
 import com.bshuiban.baselibrary.contract.ClassActivityContract;
 import com.bshuiban.baselibrary.model.ClassActivityBean;
@@ -21,7 +23,7 @@ import java.util.List;
  * Created by xinheng on 2018/5/9.<br/>
  * describe：班级活动页面
  */
-public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean.DataBean,ClassActivityAdapter,ClassActivityPresent> implements ClassActivityContract.View {
+public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean.DataBean,ClassActivityAdapter,ClassActivityPresent> implements ClassActivityContract.View,ClassChange.OnChangeListener {
     private String classId;
     private boolean creat;
     @Nullable
@@ -97,5 +99,10 @@ public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean
         }
         start=0;
         tPresent.askInternetForClassActivityData(this.classId, start,limit);
+    }
+
+    @Override
+    public void changeClass(TeachClassBean.DataBean dataBean) {
+        update(dataBean.getClassId());
     }
 }

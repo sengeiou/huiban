@@ -5,7 +5,7 @@ import android.util.TypedValue;
 
 /**
  * Created by xinheng on 2018/5/19.<br/>
- * describe：
+ * describe：dp，px,sp 转换
  */
 public class DensityUtil {
     public static float dip2px(Context context,int dp){

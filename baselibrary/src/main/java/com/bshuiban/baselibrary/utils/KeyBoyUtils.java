@@ -6,7 +6,7 @@ import android.view.inputmethod.InputMethodManager;
 
 /**
  * Created by xinheng on 2018/5/19.<br/>
- * describe：
+ * describe：按键显隐
  */
 public class KeyBoyUtils {
     public static void hideSoftKeyBoard(Activity activity){

@@ -17,8 +17,10 @@ import android.widget.TextView;
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.GeneralSituationContract;
 import com.bshuiban.baselibrary.model.GeneralBean;
+import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.GeneralSituationPresent;
+import com.bshuiban.baselibrary.utils.ClassChange;
 import com.bshuiban.baselibrary.view.adapter.GeneralSituationAdapter;
 import com.bshuiban.baselibrary.view.customer.LineTextView;
 import com.bshuiban.baselibrary.view.webview.webActivity.LiuYanMsgListActivity;
@@ -30,7 +32,7 @@ import java.util.List;
  * Created by xinheng on 2018/5/4.<br/>
  * describe：概况
  */
-public class GeneralSituationFragment extends BaseFragment<GeneralSituationPresent> implements GeneralSituationContract.View{
+public class GeneralSituationFragment extends BaseFragment<GeneralSituationPresent> implements GeneralSituationContract.View,ClassChange.OnChangeListener{
 
     private TextView tv_text,tv_show;
     private LineTextView tv_teacher,tv_student;
@@ -247,5 +249,10 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
     public void update(String classId) {
         this.classId=classId;
         tPresent.askInterNetForData();
+    }
+
+    @Override
+    public void changeClass(TeachClassBean.DataBean dataBean) {
+        update(dataBean.getClassId());
     }
 }
