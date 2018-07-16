@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.webkit.JavascriptInterface;
 
+import com.bshuiban.baselibrary.contract.FilterHuiFuDaoContract;
 import com.bshuiban.baselibrary.contract.HuiFuDaoListContract;
 import com.bshuiban.baselibrary.present.HuiFuDaoListPresent;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import javax.sql.StatementEvent;
 
 /**
  * Created by xinheng on 2018/5/18.<br/>
@@ -23,6 +26,7 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
     private boolean jingPin;
     private String jsonListData;
     private String jsonGuessData;
+    private String subjectId;
     /**
      * 列表数据与猜你所想结果标识
      * tag >= 2 全部返回
@@ -33,7 +37,6 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         tPresent = new HuiFuDaoListPresent(this);
         loadFileHtml(HTML_FILE_NAME);
         HuiFuDaoHtml messageList = new HuiFuDaoHtml();
@@ -53,6 +56,7 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
 
     @Override
     protected void webViewLoadFinished() {
+        startDialog();
         tPresent.getAllSubject();
         loadJingPing();
     }
@@ -66,6 +70,7 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
 
     @Override
     public void updateList(String json) {
+        dismissDialog();
         if (jingPin) {
             loadJavascriptMethod("listMsg", json);
         } else {
@@ -82,12 +87,12 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
 
     @Override
     public void startDialog() {
-
+        showLoadingDialog();
     }
 
     @Override
     public void dismissDialog() {
-
+        dismissLoadingDialog();
     }
 
     @Override
@@ -145,14 +150,33 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
                 jingPin = false;
                 tPresent.screeningLesson("getHBCourseList", json);
             } else {//获取筛选条件
-                tPresent.getScreeningData(json);
+                tPresent.getScreeningData(key,json);
             }
         }
-
+        @JavascriptInterface
+        public void updateSubjectId(String subjectId){
+            HuiFuDaoListActivity.this.subjectId=subjectId;
+            jingPin=false;
+            startFilterPage();
+        }
         @JavascriptInterface
         public void itemClick(String courseId) {
             startActivity(new Intent(getApplicationContext(), LessonInfWebActivity.class).putExtra("courseId", courseId));
         }
+        private void startFilterPage(){
+            startActivityForResult(new Intent(getApplicationContext(), FilterHuiFuDaoWebActivity.class).putExtra("subjectId",subjectId),100);
+        }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 100:
+                if(null!=data){
+                    String json = data.getStringExtra("json");
+                    tPresent.getScreeningData("getHBCourseList",json);
+                }
+                break;
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.bshuiban.teacher.present;
 
-import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.ListPresent;
 import com.bshuiban.teacher.contract.MainWeiClassContract;
 
@@ -9,8 +8,11 @@ import com.bshuiban.teacher.contract.MainWeiClassContract;
  * describe：
  */
 public class MainWeiClassPresent extends ListPresent<MainWeiClassContract.View> implements  MainWeiClassContract.Present{
-    public MainWeiClassPresent(MainWeiClassContract.View view) {
+    private String userId;
+
+    public MainWeiClassPresent(MainWeiClassContract.View view,String userId) {
         super(view);
+        this.userId=userId;
     }
 
     @Override
@@ -20,7 +22,7 @@ public class MainWeiClassPresent extends ListPresent<MainWeiClassContract.View> 
 
     @Override
     public void getInterNetData() {//{"userId":"","index":,"limit":}
-        askInternet("getTeacherCourseList","{\"userId\":\""+ User.getInstance().getUserId()+"\",\"index\":"+start+",\"limit\":"+limit+"}",callHTMLJsonArray);
+        askInternet("getTeacherCourseList","{\"userId\":\""+ userId+"\",\"index\":"+start+",\"limit\":"+limit+"}",callHTMLJsonArray);
     }
 
     @Override

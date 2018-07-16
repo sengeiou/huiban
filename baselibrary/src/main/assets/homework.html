@@ -294,11 +294,11 @@
     }
     // 留言页
     messa.onclick = function () {
-        window.android.toNextActivity(6)
+        window.android.toNextActivity(6);
     }
     //个人头像点击
     $(".userImg").click(function(){
-        console.log("111")
+        window.android.toggleSlide();
     })
 
     //切换课表
@@ -362,6 +362,19 @@
     weather.bind('click', function () {
         console.log($(this))
         var ind = $(this).index();
+        if(ind == 0) {
+        $(this).removeClass("morning").addClass("mornings");
+        $('.weatherImg').eq(1).removeClass("afternoons").addClass("afternoon");
+        $('.weatherImg').eq(2).removeClass("evenings").addClass("evening");
+        } else if(ind == 1) {
+        $(this).removeClass("afternoon").addClass("afternoons");
+        $('.weatherImg').eq(0).removeClass("mornings").addClass("morning");
+        $('.weatherImg').eq(2).removeClass("evenings").addClass("evening");
+        } else {
+        $(this).removeClass("evening").addClass("evenings");
+        $('.weatherImg').eq(0).removeClass("mornings").addClass("morning");
+        $('.weatherImg').eq(1).removeClass("afternoons").addClass("afternoon");
+        }
         console.log(ind)
         $(this).parent().siblings().eq(ind).show().siblings().hide();
         $(this).parent().show();
@@ -486,7 +499,7 @@
     }
     var list = document.querySelector('.listoo');
     var myIscroll = new IScroll('#wrap', {
-        scrollbars: true,
+         scrollbars: false,
         probeType: 3,
         click:true
     });

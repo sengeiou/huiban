@@ -6,22 +6,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.model.Homework;
 import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.model.HomeworkInfBean;
-import com.bshuiban.baselibrary.model.HomeworkListData;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.utils.SpaceItemDecoration;
-import com.bshuiban.baselibrary.view.adapter.HomeworkCountAdapter;
-import com.bshuiban.baselibrary.view.adapter.SortHomewrokAdapter;
+import com.bshuiban.baselibrary.view.adapter.SortHomeworkAdapter;
 import com.bshuiban.baselibrary.view.customer.TitleView;
-import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.HomeworkInfHtml;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
-import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -76,7 +71,7 @@ public class HomeworkCompleteInfActivity extends BaseWebActivity{
         homework.setHomework(homeworkBean);
         User.getInstance().setHomework(homework);
         if(HomeworkBean.isEffictive(homeworkBean)) {
-            SortHomewrokAdapter adapter = new SortHomewrokAdapter();
+            SortHomeworkAdapter adapter = new SortHomeworkAdapter();
             adapter.setCount(homeworkBean.size());
             recycleView.setAdapter(adapter);
             adapter.setOnItemClickListener(position -> loadHtmlData(position));

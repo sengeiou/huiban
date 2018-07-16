@@ -98,10 +98,8 @@ public class CorrectsHomeworkActivity extends BaseActivity<CorrectsHomeworkPrese
         });
         RecyclerView recyclerView = findViewById(R.id.recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        adapter = new HomeworkCountAdapter();
-        adapter.setOnItemClickListener(homeworkBean -> {
-            loadHtmlContent(homeworkBean);
-        });
+        adapter = new HomeworkCountAdapter(1);
+        adapter.setOnItemClickListener(homeworkBean -> loadHtmlContent(homeworkBean));
         recyclerView.setAdapter(adapter);
         int dimension = (int) getResources().getDimension(R.dimen.dp_10);
         int dimension5 = (int) getResources().getDimension(R.dimen.dp_5);

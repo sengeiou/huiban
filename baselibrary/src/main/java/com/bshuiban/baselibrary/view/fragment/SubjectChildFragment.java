@@ -18,11 +18,8 @@ import com.bshuiban.baselibrary.present.SubjectChildPresent;
 import com.bshuiban.baselibrary.utils.TextUtils;
 import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.activity.StatisticalChartActivity;
-import com.bshuiban.baselibrary.view.customer.CircleProgressView;
+import com.bshuiban.baselibrary.view.customer.CircleColorProgressView;
 import com.bshuiban.baselibrary.view.interfaces.OnReportDateListener;
-
-import java.util.List;
-import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,10 +30,9 @@ public class SubjectChildFragment extends InteractionBaseFragment<SubjectChildPr
     private TextView tv_class_ranking;
     private TextView tv_class_progress;
     private TextView tv_gradle_ranking;
-    private CircleProgressView circleProgressView;
+    private CircleColorProgressView circleProgressView;
     private View tv_look_statistical_inf;
     private View include;
-    private TextView tv_rate;
     private int subjectId;
 
     @Override
@@ -67,7 +63,6 @@ public class SubjectChildFragment extends InteractionBaseFragment<SubjectChildPr
                     .putExtra("subjectId", subjectId+""));
         });
         include = view.findViewById(R.id.include);
-        tv_rate = view.findViewById(R.id.tv_rate);
         updateDataForDate();
         return view;
     }
@@ -83,14 +78,13 @@ public class SubjectChildFragment extends InteractionBaseFragment<SubjectChildPr
             if (null != mine) {
                 String ss;
                 String rate = mine.getRate();//我的正确率
-                if ("-1".equals(rate)) {
-                    rate = "0";
-                    ss = "- -";
-                } else {
-                    ss = rate + "%";
+                float v=-1;
+                try {
+                    v = Float.parseFloat(rate);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
-                circleProgressView.setProgressValue(rate);
-                tv_rate.setText(ss);
+                circleProgressView.setProgress(v);
                 tv_class_ranking.setText(TextUtils.cleanNull(mine.getCrank()));
                 tv_class_progress.setText(TextUtils.cleanNull(mine.getProgress() + ""));
                 tv_gradle_ranking.setText(TextUtils.cleanNull(mine.getGrank()));

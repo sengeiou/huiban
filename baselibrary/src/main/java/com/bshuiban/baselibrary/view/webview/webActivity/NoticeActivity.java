@@ -7,6 +7,7 @@ import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 
 import com.bshuiban.baselibrary.contract.NoticeContract;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.NoticePresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
@@ -75,6 +76,10 @@ public class NoticeActivity extends BaseWebActivity<NoticePresent> implements No
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+        @JavascriptInterface
+        public String getUserId(){
+            return User.getInstance().getUserId();
         }
     }
     private void toNextActivity(Class<?> aClass){

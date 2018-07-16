@@ -6,12 +6,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>关注</title>
+    <style>
+        .hint{
+        background:#ffffff;
+        box-shadow:0 0 .08rem 0 rgba(175,175,175,0.50);
+        border-radius:.04rem;
+        width:6.04rem;
+        height:3.64rem;
+        position:fixed;
+        top:5.06rem;
+        left:.78rem;
+        display: none;
+        z-index: 100;
+        }
+        .hint p:nth-of-type(1) {
+        width:100%;
+        height:.8rem;
+        margin: 0 auto;
+        font-family:PingFangSC-Regular;
+        font-size:.4rem;
+        color:#f49d0a;
+        letter-spacing:-0.48px;
+        text-align:center;
+        line-height: .8rem;
+        border-bottom:1px solid rgba(175,175,175,0.50);
+        }
+        .hint p:nth-of-type(2) {
+        height: 2rem;
+        font-family:PingFangSC-Regular;
+        font-size:.32rem;
+        color:#9b9b9b;
+        letter-spacing:-0.39px;
+        text-align:center;
+        line-height: 2rem;
+        }
+        .hint p:nth-of-type(2) span{
+        font-size: .4rem;
+        color:#00c7b5;
+        }
+        .hint p:nth-of-type(3) span{
+        display: inline-block;
+        width:50%;
+        height: .8rem;
+        text-align:center;
+        line-height: .8rem;
+        color:#9b9b9b;
+        font-family:PingFangSC-Regular;
+        font-size:.32rem;
+        color:#9b9b9b;
+        letter-spacing:-0.39px;
+        background:#ffffff;
+        box-shadow:0 0 4px 0 rgba(175,175,175,0.50);
+        }
+        .hint p:nth-of-type(3) span:first-of-type{
+        color:green;
+        }
+       #graybackg{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 99;
+        left: 0;
+        top:0;
+        background:rgba(175,175,175,0.7);
+        display:none;
+    }
+    </style>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/index.css">
 </head>
 <script src="./js/rem.js"></script>
 <script src="./js/jquery.min.js"></script>
 <body>
+        <div id="graybackg"></div>
+        <div class="hint">
+            <p>提示</p >
+            <p><span class="num">确认取消关注？</span></p >
+            <p><span class="span">取消</span><span class="span">确定</span></p >
+        </div>
     <div class="wrap follow">
         <header>
             <span>
@@ -66,18 +138,57 @@
                 `);
                 $('.right:eq('+i+') aside:eq(0)').hide();
             }
+
+
         }
-        
-        //取消关注
-        $('.flag').bind('click', function () {
-            if ($(this).children('span').text() == "取消关注") {
-                var ind = $(this).parents('.content').index();
+        $('.content dl dt').bind('click', function () {
+            var ind = $(this).index();
+            console.log(ind);
+            console.log(data[ind].roleId);
+            if(data[ind].roleId == 2 || data[ind].roleId == 3){
                 var attUserId = data[ind].attUserId;
                 if(attUserId==undefined){
                     attUserId=data[ind].userId;
                 }
-                console.log("取消关注"+attUserId);
-                window.android.dealWithAttention(false,attUserId,ind);
+                window.android.toSpacePage(attUserId);
+            }else {
+                window.android.logResult(data[ind].roleId+'');
+            }
+         })
+        //取消关注
+        $('.flag').bind('click', function () {
+            if ($(this).children('span').text() == "取消关注") {
+                var ind = $(this).parents('.content').index();
+                $(".hint").css({
+                    "display":"block"
+                })
+                   $("#graybackg").css({
+                    "display":"block"
+                    })
+                $(".span").eq(0).click(function() {
+                    $(".hint").css({
+                        "display":"none"
+                    })
+                       $("#graybackg").css({
+                    "display":"none"
+                    })
+
+                })
+                $(".span").eq(1).click(function() {
+                    $(".hint").css({
+                        "display":"none"
+                    })
+                       $("#graybackg").css({
+                    "display":"none"
+                    })
+
+                    var attUserId = data[ind].attUserId;
+                    if(attUserId==undefined){
+                        attUserId=data[ind].userId;
+                    }
+                    console.log("取消关注"+attUserId);
+                    window.android.dealWithAttention(false,attUserId,ind);
+                })
             }else {
                 var ind = $(this).parents('.content').index();
                 var attUserId = data[ind].attUserId;

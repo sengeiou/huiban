@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/dp_40"
-        android:background="@color/guide_start_btn">
+        android:background="@color/guide_start_btn3">
         <ImageView
             android:id="@+id/iv"
             android:layout_width="@dimen/dp_40"
@@ -20,39 +20,45 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_transport_full_radius_blue_slide"
+            android:padding="1dp">
             <TextView
                 android:id="@+id/tv_front"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_20"
                 android:textColor="@android:color/white"
                 android:text="课前练习"
+                android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
             <View
                 android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:background="@android:color/white"
+                android:layout_height="@dimen/dp_20"
+                android:background="@color/blue1"
                 />
             <TextView
                 android:id="@+id/tv_middle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_20"
                 android:textColor="@android:color/white"
                 android:text="课中练习"
+                android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
             <View
                 android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:background="@android:color/white"
+                android:layout_height="@dimen/dp_20"
+                android:background="@color/blue1"
                 />
             <TextView
                 android:id="@+id/tv_after"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_20"
                 android:textColor="@android:color/white"
                 android:text="课后作业"
+                android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
         </LinearLayout>

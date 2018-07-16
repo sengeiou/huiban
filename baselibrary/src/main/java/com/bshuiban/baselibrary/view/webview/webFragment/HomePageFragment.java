@@ -26,6 +26,7 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
     public void onResume() {
         if(!tagResume) {
             tagToast = false;
+            tPresent.getTodaySchedule(User.getInstance().getUserId());
             tPresent.refresh();
         }
         tagResume=false;

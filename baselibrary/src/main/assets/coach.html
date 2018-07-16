@@ -50,6 +50,28 @@
             content: attr(downtext);
             bottom:-40px;
         }
+        .details {
+        display:none;
+        width: 0.39rem;
+        height: 0.5rem;
+        position: absolute;
+        right: 0.27rem;
+        top: 0.25rem;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-image: url("images/work/more@2x.png");
+        }
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+        .details {
+        background-image: url("images/work/more@2x.png");
+        }
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 3) {
+        .details {
+         background-image: url("images/work/more@3x.png");
+        }
+        }
     </style>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/index.css">
@@ -66,6 +88,7 @@
                 <a href="/finish_page.html"></a>
             </span>
             <span>慧辅导</span>
+            <b class="details"></b>
         </header>
         <main>
             <div class="swiper-container">
@@ -95,15 +118,15 @@
                         </div>
                     </div>
                     <div class="courseList subject hide">
-                        <h3 class="title">
-                            <p class="guess">
-                                <i>猜你想选：</i>
-                            </p>
-                            <p class="screen">
-                                筛选
-                                <span></span>
-                            </p>
-                        </h3>
+                        <!--<h3 class="title">-->
+                            <!--<p class="guess">-->
+                                <!--<i>猜你想选：</i>-->
+                            <!--</p>-->
+                            <!--<p class="screen">-->
+                                <!--筛选-->
+                                <!--<span></span>-->
+                            <!--</p>-->
+                        <!--</h3>-->
                         <div class="list">
                         </div>
                         <div class="mask hide">
@@ -124,6 +147,11 @@
                                     <span class="selected allBtn">全部</span>
                                     <div class="all"></div>
                                 </div>
+                                <div class="classes changeBox">
+                                    <b class="kind">年级</b>
+                                    <span class="selected allBtn">全部</span>
+                                    <div class="all"></div>
+                                </div>
                             </div>
                             <div class="button">
                                 <span class="no">取消</span>
@@ -138,8 +166,7 @@
 </body>
 <script>
     var flag = false;
-    var subjectId, organId, classType, gradeId,organN,classTN,gradeN;
-    //渲染科目列表
+    var subjectId, organId, classType, gradeId,classesId,organN="全部品牌",classTN="全部类型",gradeN="全部年级",classesN="全部班型";
     function getListNav(data) {
         var data = JSON.parse(data);
         for (var i=0; i<data.length; i++) {
@@ -165,13 +192,24 @@
             });
             //点击切换样式
             $('.swiper-slide').bind('click', function () {
-                $('.guess').html('猜你想选：');
                 $(this).addClass('active').siblings().removeClass('active');
                 var ind = $(this).index();
                 if (ind == 0) {
                     flag = false;
                     $('.mainList .courseList').eq(0).show().siblings().hide();
+                    $(".details").css({
+                    "display":"none"
+                    })
+                      $(".courseList").css({
+                     "paddingTop":"0.83rem"
+                    })
                 }else {
+                    $(".details").css({
+                    "display":"block"
+                    })
+                    $(".courseList").css({
+                     "paddingTop":0
+                    })
                     flag = true;
                     $('.mainList .courseList').eq(1).show().siblings().hide();
                     $('.courseList:eq(1) .list').html('')
@@ -185,7 +223,6 @@
                     window.android.loadMoreJingping();
                 }
             })
-
         }
     };
     //(listNav);
@@ -268,19 +305,20 @@
             window.android.itemClick(courseId);
         });
         //点击筛选
-        $(".subject .title .screen").unbind("click");
-        $(".subject .title .screen").bind('click', function () {
+        $(".details").unbind("click");
+         $(".details").bind('click', function () {
             subjectId = '';
             organId = '';
             classType = '';
             gradeId = '';
             dataType=0;
-            $('.mask .brand .all').html('');
-            $('.mask .type .all').html('');
-            $('.mask .grade .all').html('');
-            $('.mask').show();
-            var subjectId = JSON.stringify({"subjectId":data[0].SubjectId});
-            window.android.dealWithJson("getVipRelationEduList",subjectId);
+            //$('.mask .brand .all').html('');
+            //$('.mask .type .all').html('');
+            //$('.mask .grade .all').html('');
+            //$('.mask').show();
+            //var subjectId = JSON.stringify({"subjectId":data[0].SubjectId});
+            //window.android.dealWithJson("getVipRelationEduList",subjectId);
+            window.android.updateSubjectId(data[0].SubjectId+"");
         });
         $('.lists').css('height',$('.mainList').height()+20);
     myIscroll.refresh();
@@ -290,8 +328,10 @@
      function sxContent(data) {
          var data = JSON.parse(data);
          if(dataType == 0){
+          $('.mask .brand .all').html('');
            $('.mask .type .all').html('');
            $('.mask .grade .all').html('');
+           $('.mask .classes .all').html('');
             //渲染品牌
             for (var i=0;i<data.length;i++) {
                 var nowMsg = $('.mask .brand .all').html();
@@ -303,6 +343,7 @@
                 if ($(this).text() == "全部") {
                     $('.mask .type .all').html('');
                     $('.mask .grade .all').html('');
+                    $('.mask .classes .all').html('');
                     organN = "全部品牌";
                 }else {
                     $('.mask .grade .all').html('');
@@ -321,7 +362,8 @@
             });
          }else if (dataType==1) {
             $('.mask .type .all').html('');
-            $('.mask .grade .all').html('');
+           $('.mask .grade .all').html('');
+           $('.mask .classes .all').html('');
             //渲染类型
             for (var i=0;i<data.length;i++) {
                 var nowMsg = $('.mask .type .all').html();
@@ -349,7 +391,8 @@
                 }
             });
          }else if (dataType==2) {
-            $('.mask .grade .all').html('');
+           $('.mask .grade .all').html('');
+           $('.mask .classes .all').html('');
              //渲染年级
             for (var i=0;i<data.length;i++) {
                 var nowMsg = $('.mask .grade .all').html();
@@ -372,12 +415,42 @@
                             gradeId = data[i].gradeId;
                         }
                     }
-                    //var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId});
-                    //window.android.dealWithJson("getVipRelationEduList",msg);
+                    var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId});
+                    window.android.dealWithJson("getClassTypeUse",'');
+                    dataType=3;
                 }
             });
-         }
-
+         }else if (dataType==3) {
+                //渲染班型
+                for (var i=0;i<data.length;i++) {
+                var nowMsg = $('.mask .classes .all').html();
+                console.log(data[i].name)
+                $('.mask .classes .all').html(nowMsg + `<span>${data[i].name}</span>`);
+                };
+                $('.mask .classes span').bind('click', function () {
+                $('.mask .classes span').removeClass('selected');
+                $(this).addClass('selected');
+                if ($(this).text() == "全部") {
+                    classesN='全部班型';
+                    return false;
+                }else {
+                    var val = $(this).text();
+                    classesN=val;
+                    var orgId,subjectId,classType;
+                    for (var i=0;i<data.length;i++) {
+                        if (data[i].name === val) {
+                            <!--orgId = data[i].orgId;-->
+                            <!--subjectId = data[i].subjectId;-->
+                            <!--classType = data[i].vipTypeId;-->
+                            <!--gradeId = data[i].gradeId;-->
+                            classesId = data[i].id;
+                        }
+                    }
+                // var msg = JSON.stringify({"organId": orgId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId,"clType":cltype});
+                // window.android.dealWithJson("getHBCourseList",msg);
+                }
+                });
+                }
      }
      //sxContent(ywsx);
 
@@ -391,7 +464,7 @@
     //点击确定
     $('.sure').bind('click', function () {
         $('.mask').hide();
-        var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId});
+        var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId,"clType":classesId});
         window.android.dealWithJson("getHBCourseList",msg);
         $('.guess').html(`
             <i>
@@ -410,9 +483,9 @@
     })
     var list = document.querySelector('.lists');
     var myIscroll = new IScroll('#wrap',{
-        scrollbars: true,
-        probeType: 3,
-        click: true
+      scrollbars: false,
+      probeType: 3,
+            click: true
 });
 var flag = true;
 var y,y2,y3;

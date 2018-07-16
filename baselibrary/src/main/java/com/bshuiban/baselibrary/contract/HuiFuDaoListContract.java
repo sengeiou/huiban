@@ -26,9 +26,10 @@ public interface HuiFuDaoListContract {
 
         /**
          * 获取筛选的数据
+         * @param key
          * @param json
          */
-        void getScreeningData(String json);
+        void getScreeningData(String key, String json);
 
         /**
          * 猜你所想

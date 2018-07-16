@@ -3,7 +3,6 @@ package com.bshuiban.view.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -31,13 +30,11 @@ import java.util.List;
 public class SplashActivity extends BaseActivity<LoginPresent> implements LoginContract.View {
     Handler mHandler = new Handler(Looper.getMainLooper());
     ImageView ivSplash;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         initData();
-
     }
 
     @PermissionYes(100)
@@ -97,7 +94,7 @@ public class SplashActivity extends BaseActivity<LoginPresent> implements LoginC
     private void toNext() {
         mHandler.postDelayed(() -> {
             try {
-                startActivity(new Intent(SplashActivity.this,Class.forName("com.bshuiban.view.webActivity.WebLoginActivity")));
+                startActivity(new Intent(SplashActivity.this,Class.forName("com.bshuiban.view.webActivity.LoginWebActivity")));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }finally {
@@ -123,16 +120,14 @@ public class SplashActivity extends BaseActivity<LoginPresent> implements LoginC
 
     @Override
     public void startDialog() {
-
     }
 
     @Override
     public void dismissDialog() {
-
     }
 
     @Override
     public void fail(String error) {
-
+        toNext();
     }
 }

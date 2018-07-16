@@ -1,3 +1,4 @@
+/*
 package com.bshuiban.baselibrary.view.activity;
 
 import android.Manifest;
@@ -67,7 +68,7 @@ public class SplashActivity extends BaseActivity {
                 //}else{
                 try {
                     //startActivity(new Intent(SplashActivity.this,Class.forName("com.bshuiban.student.view.activity.StudentHomeActivity")));
-                    startActivity(new Intent(SplashActivity.this,Class.forName("com.bshuiban.view.webActivity.WebLoginActivity")));
+                    startActivity(new Intent(SplashActivity.this,Class.forName("com.bshuiban.view.webActivity.LoginWebActivity")));
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -85,3 +86,4 @@ public class SplashActivity extends BaseActivity {
         }
     }
 }
+*/

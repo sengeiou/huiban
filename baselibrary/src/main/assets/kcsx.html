@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>慧辅导</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <style>
+        .button{
+            width: 100%;
+           position: fixed;
+           left:0;
+           bottom:0;
+           background: #2ACABA;
+           color:white; 
+           height: 1rem;
+           line-height: 1rem;
+           text-align: center;
+        }
+        .kind{
+            display:block;
+            font-size: .3rem;
+            margin-top:.1rem;
+            margin-bottom:.1rem;
+            color:#808080;
+            font-weight: normal;
+        }
+        #wrap{
+            width:100%;
+            padding:3% 0 3% 5%;
+        }
+        .allBtn{
+            font-size: .28rem;
+            color:#40cfbf;
+            float:left;
+            width: 20%;
+            height: .5rem;
+            background:#e0f9f6;
+            line-height:.5rem;
+            text-align: center;
+        }
+        .all{
+            float:right;
+            width:80%;
+        }
+        .all span{
+            float: left;
+            height:.5rem;
+            line-height: .46rem;
+            padding-left: 3%;
+            padding-right: 3%;
+            font-size: .28rem;
+            margin-left: 3%;
+            margin-right: 3%;
+            margin-bottom:5%;
+            color:#a2a2a2;
+            border:1px solid #f5f5f5;
+        }
+        #wrap .selected{
+            color:#40cfbf;
+            border:1px #40cfbf solid;
+        }
+    </style>
+   
+</head>
+<script src="./js/rem.js"></script>
+<script src="./js/jquery.min.js"></script>
+<body>
+    <div class="wrap coachBox">
+        <header>
+            <span>
+                    <a class="back" href="/finish_page.html"></a>
+            </span>	
+            <span>课程筛选</span>
+           
+        </header>
+        <main id="wrap">
+            <div class="brand changeBox">
+                <b class="kind">品牌</b>
+                <span class="selected allBtn">全部</span>
+                <div class="all"></div>
+            </div>
+            <div class="type changeBox">
+                <b class="kind">类型</b>
+                <span class="selected allBtn">全部</span>
+                <div class="all"></div>
+            </div>
+            <div class="grade changeBox">
+                <b class="kind">年级</b>
+                <span class="selected allBtn">全部</span>
+                <div class="all"></div>
+            </div>
+            <div class="classes changeBox">
+                <b class="kind">班型</b>
+                <span class="selected allBtn">全部</span>
+                <div class="all"></div>
+            </div>
+                <div class="button">
+                    <span class="sure">确定</span>
+                </div>
+        </main>
+    </div>
+</body>
+<script>
+    var subjectId, organId, classType, gradeId,classesId,organN="全部品牌",classTN="全部类型",gradeN="全部年级",classesN="全部班型";
+    var  dataType = 0;
+     //渲染筛选列表
+     function sxContent(data) {
+         var data = JSON.parse(data);     
+         console.log(data)  
+        //  dataType = 1;
+         if(dataType == 0){ 
+            $('.type .all').html('');
+           $(' .grade .all').html('');
+           $('.classes .all').html('');
+            //渲染品牌            
+            for (var i=0;i<data.length;i++) {
+                var nowMsg = $(' .brand .all').html();
+                $(' .brand .all').html(nowMsg + `<span>${data[i].organName}</span>`);
+            };
+            dataType = 1;
+            $(' .brand span').bind('click', function () {
+                $(' .brand span').removeClass('selected');
+                $(this).addClass('selected');
+                if ($(this).text() == "全部") {
+                    $(' .type .all').html('');
+                    $(' .grade .all').html('');
+                    $(' .classes .all').html('');
+                }else {
+                    var val = $(this).text();
+                    var orgId,subjectId;
+                    for (var i=0;i<data.length;i++) {
+                        if (data[i].organName === val) {
+                            orgId = data[i].orgId;
+                            console.log(orgId)
+                            subjectId = data[i].subjectId;
+                        }
+                    } 
+                    var msg = JSON.stringify({"organId": orgId,"subjectId": subjectId});
+                    window.android.loadScreeningData(msg);
+                }
+            });
+         }else if (dataType==1) {
+            $('.type .all').html('');
+            $(' .grade .all').html('');
+            $('.classes .all').html('');
+            //渲染类型
+            for (var i=0;i<data.length;i++) {
+
+                var nowMsg = $(' .type .all').html();
+                $(' .type .all').html(nowMsg + `<span>${data[i].typeName}</span>`);
+            };
+            dataType = 2;
+            $(' .type span').bind('click', function () {
+                $(' .type span').removeClass('selected');
+                $(this).addClass('selected');
+                if ($(this).text() == "全部") {
+                    $(' .grade .all').html('');
+                    $(' .classes .all').html('');
+                }else {
+                    var val = $(this).text();
+                    classTN = val;
+                    for (var i=0;i<data.length;i++) {
+                        if (data[i].typeName === val) {
+                            organId = data[i].orgId;
+                            subjectId = data[i].subjectId;
+                            classType = data[i].vipTypeId;
+                        }
+                    }
+                    var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType});
+                    window.android.loadScreeningData(msg);
+                }
+            });
+         }else if (dataType==2) {
+           $(' .grade .all').html('');
+           $('.classes .all').html('');
+             //渲染年级
+            for (var i=0;i<data.length;i++) {
+                var nowMsg = $(' .grade .all').html();
+                $(' .grade .all').html(nowMsg + `<span>${data[i].gradeName}</span>`);
+            }; 
+            $(' .grade span').bind('click', function () {
+                $(' .grade span').removeClass('selected');
+                $(this).addClass('selected');
+                if ($(this).text() == "全部") {
+                    $(' .classes .all').html('');
+                }else {
+                    var val = $(this).text();
+                    gradeN = val;
+                    for (var i=0;i<data.length;i++) {
+                        if (data[i].gradeName === val) {
+                            organId = data[i].orgId;
+                            subjectId = data[i].subjectId;
+                            classType = data[i].vipTypeId;
+                            gradeId = data[i].gradeId;
+                        }
+                    }
+                    var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId});
+                    window.android.loadClassTypeUse(msg);
+                }
+            });
+            dataType=3;
+         } 
+         else if (dataType==3) {
+            $('.classes .all').html('');
+            //渲染班型
+            for (var i=0;i<data.length;i++) {
+              
+                var nowMsg = $(' .classes .all').html();
+                console.log(data[i].name)
+                $(' .classes .all').html(nowMsg + `<span>${data[i].name}</span>`);
+            };
+            $('.classes span').bind('click', function () {
+                $('.classes span').removeClass('selected');
+                console.log("213123")
+                $(this).addClass('selected');
+                if ($(this).text() == "全部") {
+                    return false;
+                }else {
+                    var val = $(this).text();
+                    var orgId,subjectId,classType;
+                    for (var i=0;i<data.length;i++) {
+                        if (data[i].name === val) {
+                            classesId = data[i].id;
+                        }
+                    } 
+                    // var msg = JSON.stringify({"organId": orgId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId,"clType":cltype});
+                    // window.android.dealWithJson("getHBCourseList",msg);
+                }
+            });
+         }
+     }
+    // sxContent(banx);
+    //点击确定
+    $('.sure').bind('click', function () {
+        var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId,"clType":classesId});
+        window.android.sureFilter(msg);
+    })
+ 
+    
+   
+</script>
+</html>

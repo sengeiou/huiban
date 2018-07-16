@@ -41,13 +41,13 @@ function setLoginData(userId, password) {
             </label>
             <button id="submit" class="submit">登录</button>
             <br/>
-            <a class="forget" href="./forget.html">忘记密码</a>
+            <span class="forget">忘记密码</span>
         </div>
-        <div class="loginBotton">
+        <!--<div class="loginBotton">
             <p class="agree">
                 登录即代表阅读并同意用户<a href="./agreement.html">服务协议</a>
             </p>
-        </div>
+        </div>-->
     </div>
 </body>
 <script>
@@ -58,17 +58,21 @@ submit.onclick = function () {
          pwd = document.getElementById('userPwd').value;
     if (phone == '') {
         phone = null;
-        window.android.login("请输入账号");
+        window.android.log("请输入账号");
         return;
     }
     if (pwd == '') {
         pwd = null;
-        window.android.login("请输入密码");
+        window.android.log("请输入密码");
         return;
     }
     //var msg = JSON.stringify({"userId": phone, "userPwd": pwd,"terminal":7});
     window.android.login(phone, pwd);
 };
+// 忘记密码
+$(".forget").click(function(){
+    window.android.forgetPassword();
+})
 
 </script>
 </html>

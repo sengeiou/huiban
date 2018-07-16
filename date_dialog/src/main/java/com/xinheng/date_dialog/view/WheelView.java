@@ -60,6 +60,7 @@ public class WheelView extends View {
 
     /**
      * 选中的位置，这个位置是mDataList的中心位置，一直不变
+     * 注意：这个只是下标
      */
     private int currentItem;
 
@@ -171,7 +172,9 @@ public class WheelView extends View {
     public int getCurrentItem() {
         return currentItem;
     }
-
+    public String getCurrentItemValue(){
+        return itemList.get(currentItem);
+    }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);

@@ -14,10 +14,17 @@
         android:scaleType="fitCenter"/>
     <TextView
         android:id="@+id/tv"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="加载中"
         android:layout_marginLeft="@dimen/dp_25"
         android:textSize="@dimen/dp_15"
         android:textColor="@color/black"/>
+    <ImageView
+        android:id="@+id/iv_select"
+        android:layout_width="@dimen/dp_22"
+        android:layout_height="@dimen/dp_22"
+        android:src="@mipmap/select"
+        android:visibility="gone"/>
 </LinearLayout>

@@ -16,33 +16,38 @@ import java.io.File;
  * describe：app升级安装
  */
 public class AppUpdate {
-    private static void installApk(Context appContext, String downloadApkPath) {
+
+    public static Boolean installApk(Context appContext, String downloadApkPath) {
         if (TextUtils.isEmpty(downloadApkPath)) {
             Toast.makeText(appContext, "APP安装文件不存在或已损坏", Toast.LENGTH_LONG).show();
-            return;
+            return null;
         }
         File apkFile = new File(Uri.parse(downloadApkPath).getPath());
         if (!apkFile.exists()) {
             Toast.makeText(appContext, "APP安装文件不存在或已损坏", Toast.LENGTH_LONG).show();
-            return;
+            return null;
         }
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){//8.0
             boolean haveInstallPermission = appContext.getPackageManager().canRequestPackageInstalls();
             if(haveInstallPermission){//先获取是否有安装未知来源应用的权限
+                /*intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 Uri contentUri = FileProvider.getUriForFile(appContext, "com.bshuiban.fileprovider", apkFile);
-                intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+                intent.setDataAndType(contentUri, "application/vnd.android.package-archive");*/
+                install26(appContext,apkFile);
+                return true;
             }else{
                 Toast.makeText(appContext, "请允许安装未知来源", Toast.LENGTH_SHORT).show();
-
+                return false;
             }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//7.0
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             Uri contentUri = FileProvider.getUriForFile(appContext, "com.bshuiban.fileprovider", apkFile);
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
+        } /*else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
             //Intent intent = new Intent();
             //intent.addFlags(268435456);
             //intent.setAction("android.intent.action.VIEW");
@@ -56,10 +61,20 @@ public class AppUpdate {
                 var5.printStackTrace();
                 Toast.makeText(appContext, "没有找到打开此类文件的程序", Toast.LENGTH_SHORT).show();
             }
-        } else {
+        } */else {
             intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
+        appContext.startActivity(intent);
+        return true;
+    }
+
+    public static void install26(Context appContext,File apkFile){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Uri contentUri = FileProvider.getUriForFile(appContext, "com.bshuiban.fileprovider", apkFile);
+        intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
         appContext.startActivity(intent);
     }
 }

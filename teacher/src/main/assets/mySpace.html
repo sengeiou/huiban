@@ -26,20 +26,21 @@
             </span>
         </header>
         <main>
-            <div class="myId">
-            </div>
+            <!--<div class="myId">-->
+            <!--</div>-->
             <div class="myMsg">
                 <dl>
-                    <dt><img src="../../../images/index/tube_class@2x.png" alt="" /></dt>
+                    <dt><img src="./images/reset/default_head.png" alt="" onerror="./images/reset/default_head.png"/></dt>
                     <dd>
                         <h3>刘红豆</h3>
                         <p>主讲科目: <span class="mainSub"></span></p>
-                        <p>代课班级：<span class="class"></span>个</p>
-                        <p>微课数：<span class="classNum"></span></p>
+                        <p>代课班级：<span class="class"></span></p>
+                        <!--<p>微课数：<span class="classNum"></span></p>-->
                     </dd>
                 </dl>
-                <div class="text"></div>
+
             </div>
+            <div class="text"></div>
             <div class="mainClass">
                 <h3>主讲微课<span class="all">查看全部></span></h3>
                 <div class="list"></div>
@@ -63,6 +64,7 @@
     </div>
 </body>
 <script>
+    var userName="";
     function getMsg (data) {
         var data = JSON.parse(data);
         for (var i =0; i< data.graSub.length; i++) {
@@ -74,16 +76,23 @@
             }            
         }
         if (data.ipIco == '') {
-            $('.myMsg dl dt').html(`<img src="../../../images/index/tube_class@2x.png" alt="" onerror="this.src='../../../images/index/tube_class@2x.png' " />`);
+            $('.myMsg dl dt').html(`<img src="./images/reset/default_head.png" alt="" />`);
         }else {
-            $('.myMsg dl dt').html(`<img src="${data.ipIco}"  alt=""/>`);
+            $('.myMsg dl dt').html(`<img src="${data.ipIco}"  onerror="./images/reset/default_head.png" alt=""/>`);
         }
         $('.myMsg dl dd h3').html(`${data.teaName}`);
+        userName=data.teaName;
         $('.myMsg dl dd .mainSub').html(`${data.subjectName}`);
-        $('.myMsg dl dd .class').html(`${data.classCnt}`);
         $('.myMsg dl dd .classNum').html(`${data.videoCnt}`);
-        $('.myMsg .text').html(`${data.summary}`);
+        $('.text').html(`${data.summary}`);
         getClassList(data.video);
+        var str ="";
+        for(var i=0; i<data.classList.length; i++) {
+        str+=`
+        ${data.classList[i]} 、
+        `;
+        }
+        $('.myMsg dl dd .class').html(str);
     }
     //渲染微课
     function getClassList (data) {
@@ -134,9 +143,9 @@
                 </dl>
             `);
             if (data[i].imgUrl == '') {
-                $('.leaveMsg .list dl:eq('+i+') dt').html(`<img src="../../../images/index/tube_class@2x.png" alt="" />`);
+                $('.leaveMsg .list dl:eq('+i+') dt').html(`<img src="./images/reset/default_head.png" alt="" />`);
             }else {
-                $('.leaveMsg .list dl:eq('+i+') dt').html(`<img src="${data[i].imgUrl}" alt="" onerror="this.src='../../../images/index/tube_class@2x.png' "/>`);
+                $('.leaveMsg .list dl:eq('+i+') dt').html(`<img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/reset/default_head.png' "/>`);
             }
         }
         //点击删除留言
@@ -173,12 +182,12 @@
     //点击查看主讲微课
     $('.all').bind('click', function () {
         //console.log('主讲微课');
-        window.android.toNextPage(0);
+        window.android.toNextPage(0,userName);
     });
     //点击查看留言
     $('.allLeave').bind('click', function () {
         //console.log('去留言');0 主讲微课-查看全部；1 留言查看全部 replayMessage
-        window.android.toNextPage(1);
+        window.android.toNextPage(1,userName);
     });
     //点击文本框取消默认值
     $('.content').bind('click', function () {

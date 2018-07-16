@@ -126,8 +126,10 @@
 #}
 
 # webView处理，项目中没有使用到webView忽略即可
--keepclassmembers class fqcn.of.javascript.interface.for.webview {
-    public *;
+-keepattributes *JavascriptInterface*
+#保留JavascriptInterface中的方法
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
 }
 -keepclassmembers class * extends android.webkit.webViewClient {
     public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);
@@ -137,7 +139,7 @@
     public void *(android.webkit.webView, jav.lang.String);
 }
 # 反射
--keep public class com.bshuiban.present.LoginPresent{ *; }
+#-keep public class com.bshuiban.present.LoginPresent{ *; }
 
 # gilde
 -keep public class * implements com.bumptech.glide.module.GlideModule

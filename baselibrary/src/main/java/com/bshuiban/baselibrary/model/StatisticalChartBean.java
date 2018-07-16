@@ -58,8 +58,8 @@ public class StatisticalChartBean extends ResultBean {
              */
 
             private int day;
-            private int mineRate;
-            private int classRate;
+            private float mineRate;
+            private float classRate;
 
             public int getDay() {
                 return day;
@@ -69,19 +69,19 @@ public class StatisticalChartBean extends ResultBean {
                 this.day = day;
             }
 
-            public int getMineRate() {
+            public float getMineRate() {
                 return mineRate;
             }
 
-            public void setMineRate(int mineRate) {
+            public void setMineRate(float mineRate) {
                 this.mineRate = mineRate;
             }
 
-            public int getClassRate() {
+            public float getClassRate() {
                 return classRate;
             }
 
-            public void setClassRate(int classRate) {
+            public void setClassRate(float classRate) {
                 this.classRate = classRate;
             }
         }

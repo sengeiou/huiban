@@ -7,9 +7,64 @@
     <title>通知</title>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/index.css">
+    <style>
+        .hint{
+        background:#ffffff;
+        box-shadow:0 0 .08rem 0 rgba(175,175,175,0.50);
+        border-radius:.04rem;
+        width:70%;
+        height:3.64rem;
+        position:fixed;
+        top:5.06rem;
+        left:15%;
+        display: none;
+    }
+    .hint p:nth-of-type(1) {
+        width:100%;
+        height:.8rem;
+        margin: 0 auto;
+        font-family:PingFangSC-Regular;
+        font-size:.4rem;
+        color:#f49d0a;
+        letter-spacing:-0.48px;
+        text-align:center;
+        line-height: .8rem;
+        border-bottom:1px solid rgba(175,175,175,0.50);
+    }
+    .hint p:nth-of-type(2) {
+        height: 2rem;
+        font-family:PingFangSC-Regular;
+        font-size:.32rem;
+        color:#9b9b9b;
+        letter-spacing:-0.39px;
+        text-align:center;
+        line-height: 2rem;
+    }
+    .hint p:nth-of-type(2) span{
+        font-size: .4rem;
+        color:#00c7b5;
+    }
+    .hint p:nth-of-type(3) span{
+        display: inline-block;
+        width:50%;
+        height: .8rem;
+        text-align:center;
+        line-height: .8rem;
+        color:#9b9b9b;
+        font-family:PingFangSC-Regular;
+        font-size:.26rem;
+        color:#9b9b9b;
+        letter-spacing:-0.39px;
+        background:#ffffff;
+        box-shadow:0 0 4px 0 rgba(175,175,175,0.50);
+    }
+    .hint p:nth-of-type(3) span:first-of-type{
+        color:green;
+    }
+    </style>
 </head>
 <script src="./js/rem.js"></script>
-<script src="./js/jquery.min.js"></script>
+<!--<script src="./js/jquery.min.js"></script>-->
 <script src="./js/iscroll-probe.js"></script>
 <script src="./js/zepto.js"></script>
 <body>
@@ -29,6 +84,11 @@
         </div>
     </main>
 </div>
+<div class="hint">
+    <p>提示</p>
+    <p><span class="num">确定删除吗？</p>
+    <p><span class="span">取消</span><span class="span">删除</span></p>
+</div>
 </body>
 <script>
     function getContent (data) {
@@ -37,7 +97,7 @@
         for (var i=0; i<data.length;i++) {
             var nowMsg = $('.listBox').html();
             $('.listBox').html(nowMsg+`
-                <div>
+                <div class="divs">
                     <p>${data[i].content}</p>
                     <p>
                         <span>${data[i].name}</span>
@@ -46,7 +106,31 @@
                 </div>
             `);
         }
-        $('.list').css('height',$('.listBox').height()+50);
+        <!--// 获取 用户ID-->
+        <!--// var userid = window.android.getUserId();-->
+        <!--// 新增功能-->
+        <!--$(".divs").longTap(function () {-->
+        <!--var index = $(this).index();-->
+        <!--// 判断userid跟send是否相等，相等长按出弹框-->
+        <!--if(userid == data[index].send) {-->
+        <!--        $(".hint").css({-->
+        <!--"display":"block"-->
+        <!--})-->
+        <!--}-->
+        <!--})-->
+        <!--// 取消删除-->
+        <!--$(".span")[0].onclick = function() {-->
+        <!--$(".hint").css({-->
+        <!--"display":"none"-->
+        <!--})-->
+        <!--}-->
+        <!--//删除-->
+        <!--$(".span")[1].onclick = function() {-->
+        <!--$(".hint").css({-->
+        <!--"display":"none"-->
+        <!--})-->
+        <!--}-->
+    $('.list').css('height',$('.listBox').height()+50);
         myIscroll.refresh();
     }
     $('.send').bind('click', function () {
@@ -55,7 +139,7 @@
     })
     var list = document.querySelector('.list');
 	var myIscroll = new IScroll('#wrap',{
-		scrollbars: true,
+		scrollbars: false,
 		probeType: 3,
 		click:true
     });
@@ -94,10 +178,6 @@
             window.android.getMoreData(true);
         }
 	})
-    var box = $('.boxs');
-    // 长按
-	box.longTap(function () {
-		console.log('----longTap----')
-	});
+
 </script>
 </html>

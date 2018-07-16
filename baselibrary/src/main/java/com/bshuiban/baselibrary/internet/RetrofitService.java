@@ -132,7 +132,7 @@ public class RetrofitService extends BaseRetrofit{
                 String string = response.body().string();
                 //Log.e(TAG, "onResponse: " + string);
                 String s = AESUtils.desEncrypt(string);
-                LogUtils.e(TAG, "onResponse: " + s);
+                LogUtils.e(TAG, "onResponse: " + s.trim());
                 T t = gson.fromJson(s, tClass);
                 result(t);
             } catch (Exception e) {

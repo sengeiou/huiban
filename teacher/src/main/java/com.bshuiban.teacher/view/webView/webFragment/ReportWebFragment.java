@@ -106,7 +106,7 @@ public class ReportWebFragment extends InteractionBaseWebViewFragment<ReportPres
     }
     private void startStatisticalChartActivity(){
         if(subjectId==-1){
-            toast("想选择学科");
+            toast("请选择学科");
             return;
         }
         startActivity(new Intent(getActivity(), StatisticalChartActivity.class)

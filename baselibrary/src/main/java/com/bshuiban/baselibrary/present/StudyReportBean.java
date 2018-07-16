@@ -150,7 +150,7 @@ public class StudyReportBean extends ResultBean {
 
             private int knowId;
             private String knowName;
-            private int classRate;
+            private float classRate;
             private String mineRate;
 
             public int getKnowId() {
@@ -169,11 +169,11 @@ public class StudyReportBean extends ResultBean {
                 this.knowName = knowName;
             }
 
-            public int getClassRate() {
+            public float getClassRate() {
                 return classRate;
             }
 
-            public void setClassRate(int classRate) {
+            public void setClassRate(float classRate) {
                 this.classRate = classRate;
             }
 

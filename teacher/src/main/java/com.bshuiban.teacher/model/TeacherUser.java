@@ -266,7 +266,7 @@ public class TeacherUser extends ResultBean {
             dataContent.setSchoolName(schoolName);
             dataContent.setGradeId(gradeId+"");
             dataContent.setClassId(classId);
-            //dataContent.setStuArr(stuArr);
+            dataContent.setStuArr(null);
             dataContent.setClassName(className);
         }
     }

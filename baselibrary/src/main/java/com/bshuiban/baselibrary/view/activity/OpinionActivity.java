@@ -6,6 +6,7 @@ import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.OpinionContract;
 import com.bshuiban.baselibrary.present.OpinionPresent;
+import com.bshuiban.baselibrary.utils.KeyBoyUtils;
 
 import java.io.File;
 
@@ -116,4 +118,10 @@ public class OpinionActivity extends BaseActivity<OpinionPresent> implements Opi
 
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }*/
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        KeyBoyUtils.hideSoftKeyBoard(this);
+    }
 }

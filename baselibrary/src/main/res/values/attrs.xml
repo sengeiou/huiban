@@ -5,6 +5,9 @@
     <attr name="title_color" format="color" />
     <attr name="right_size" format="dimension"/>
     <attr name="right_color" format="color"/>
+    <attr name="start_color" format="color"/>
+    <attr name="end_color" format="color"/>
+    <attr name="default_color" format="color"/>
     <declare-styleable name="LineTextView">
         <attr name="lineType" format="enum">
             <enum name="left" value="0"/>
@@ -67,5 +70,26 @@
         <attr name="view_error" format="reference" />
         <attr name="view_empty" format="reference" />
         <attr name="view_loading" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="LineView">
+        <attr name="start_color"/>
+        <attr name="end_color"/>
+        <attr name="default_color"/>
+    </declare-styleable>
+    <declare-styleable name="SelectStatueView">
+        <attr name="title_size"/>
+        <attr name="select_bg_color" format="color"/>
+        <attr name="unselect_bg_color" format="color"/>
+        <attr name="select_text_color" format="color"/>
+        <attr name="unselect_text_color" format="color"/>
+        <attr name="padding_length" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="CircleColorProgressView">
+        <attr name="start_color"/>
+        <attr name="end_color"/>
+        <attr name="default_color"/>
+        <attr name="title_color"/>
+        <attr name="text_num_size" format="dimension"/>
+        <attr name="text_next_size" format="dimension"/>
     </declare-styleable>
 </resources>

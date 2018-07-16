@@ -12,7 +12,7 @@ import android.webkit.WebViewClient;
 
 import com.bshuiban.baselibrary.utils.SpaceItemDecoration;
 import com.bshuiban.baselibrary.view.activity.BaseActivity;
-import com.bshuiban.baselibrary.view.adapter.SortHomewrokAdapter;
+import com.bshuiban.baselibrary.view.adapter.SortHomeworkAdapter;
 import com.bshuiban.baselibrary.view.customer.TitleView;
 import com.bshuiban.teacher.R;
 import com.bshuiban.teacher.contract.HomeworkAnswerInfContract;
@@ -29,7 +29,7 @@ public class HomeworkAnswerInfActivity extends BaseActivity<HomeworkAnswerInfPre
     private String preId;
     private int home_type=2,workId;
     private String classId;
-    private SortHomewrokAdapter adapter;
+    private SortHomeworkAdapter adapter;
     private WebView mWebView;
 
     @Override
@@ -57,7 +57,7 @@ public class HomeworkAnswerInfActivity extends BaseActivity<HomeworkAnswerInfPre
             }
         });
         RecyclerView recyclerView = findViewById(R.id.recycle);
-        adapter = new SortHomewrokAdapter();
+        adapter = new SortHomeworkAdapter();
         adapter.setOnItemClickListener(position -> {
             tPresent.loadProblemContent(position);
         });

@@ -59,11 +59,11 @@ public class ParentsHomeActivity extends HomePageActivity<InteractionBaseWebView
 
     @Override
     protected void onNewIntent(Intent intent) {
-        if(intent.getBooleanExtra("change",false)) {
-            if (null == tPresent)
-                tPresent = new ParentsHomePresent(this);
-            tPresent.getUserDataForInternet();
-        }
+//        if(intent.getBooleanExtra("change",false)) {
+//            if (null == tPresent)
+//                tPresent = new ParentsHomePresent(this);
+//            tPresent.getUserDataForInternet();
+//        }
         super.onNewIntent(intent);
     }
 
@@ -177,7 +177,7 @@ public class ParentsHomeActivity extends HomePageActivity<InteractionBaseWebView
     public void updateSlideView(ParentsUser.DataBean data) {
         if (null != data) {
             String realName = data.getRealName();
-            tv_name.setText(com.bshuiban.baselibrary.utils.TextUtils.cleanNull(realName));
+            tv_name.setText(com.bshuiban.baselibrary.utils.TextUtils.cleanNull(realName)+"家长");
             String schoolName = com.bshuiban.baselibrary.utils.TextUtils.cleanNull(data.getSchoolName());
             String gradleName = com.bshuiban.baselibrary.utils.TextUtils.cleanNull(data.getGradeName());
             List<String> classNames = data.getClassName();

@@ -1,8 +1,10 @@
 package com.bshuiban.parents.modul;
 
+import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.model.LoginResultBean;
 import com.bshuiban.baselibrary.model.ResultBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -271,12 +273,26 @@ public class ParentsUser extends ResultBean {
         public void setDataContent(LoginResultBean.Data dataContent) {
             dataContent.setRealName(realName);
             dataContent.setIcoPath(icoPath);
-            dataContent.setSchoolId(schoolId+"");
-            dataContent.setSchoolName(schoolName);
-            dataContent.setGradeId(gradeId+"");
-            dataContent.setClassId(classId);
-            dataContent.setStuArr(stuArr);
-            dataContent.setClassName(className);
+//            dataContent.setSchoolId(schoolId+"");
+//            dataContent.setSchoolName(schoolName);
+//            dataContent.setGradeId(gradeId+"");
+//            dataContent.setClassId(classId);
+//            dataContent.setClassName(className);
+
+            if (HomeworkBean.isEffictive(stuArr) && null == dataContent.getUserId()) {
+                dataContent.setStuArr(stuArr);
+                LoginResultBean.Data.StuArrBean stuArrBean = stuArr.get(0);
+                if (null != stuArrBean) {
+                    dataContent.setUserId(stuArrBean.getStuId());
+                    dataContent.setClassId1(stuArrBean.getClassId() + "");
+                    dataContent.setGradeId(stuArrBean.getGradeId() + "");
+                    dataContent.setSchoolId(stuArrBean.getSchoolId() + "");
+                    dataContent.setSchoolName(stuArrBean.getSchoolName() + "");
+                    ArrayList<String> className = new ArrayList<>(1);
+                    className.add(stuArrBean.getClassName());
+                    dataContent.setClassName(className);
+                }
+            }
         }
     }
 //    public static class ChildrenList{
