@@ -14,13 +14,119 @@
         渲染主讲微课: getClassList
         渲染留言: getLeaveList
      -->
+    <style>
+        .leaveWord {
+            width: 100%;
+        }
+
+        .box {
+            width: 100%;
+            font-family: PingFangSC-Regular;
+            font-size: .28rem;
+            color: #747474;
+            letter-spacing: 0.17px;
+            /* height: 9.36rem; */
+        }
+        .content{
+        color:#9c9c9c;
+        line-height:.45rem;
+        }
+        .button span {
+            display: inline-block;
+            color: #ffffff;
+            letter-spacing: 0.17px;
+            text-align: center;
+            width: .7rem;
+            height: .4rem;
+            font-size: .32rem;
+            background: #bbb;
+            line-height: .39rem;
+            float: right;
+            border-radius: 5%;
+        }
+
+        .button span:nth-of-type(2) {
+            margin-right: .32rem;
+        }
+
+        .leaveWord .left dl {
+            display: flex;
+        }
+
+        .indexWrap main .leave h3 span:nth-child(2) {
+            font-size: 0.32rem;
+        }
+
+        .indexWrap main .leave h3 span:nth-child(2) a {
+            width: 100%;
+            height: 100%;
+            display: block;
+            margin-right: .6rem;
+            position: relative;
+        }
+
+        .left dl {
+            padding-right: .36rem;
+            border: none;
+            margin-bottom: .2rem;
+        }
+
+        .leaveWord .left dl dd {
+            line-height: 0.6rem;
+            font-size: .34rem;
+            color: #1ED2BC;
+        }
+
+        .left dd {
+            width: 100%;
+        }
+
+        .button {
+            width: 100%;
+        }
+
+        .leaveWord .left dl dd .name {
+            color: #1ED2BC;
+            line-height: 0.6rem;
+        }
+
+        .left .content {
+            width: 6rem;
+            font-size: .32rem;
+        }
+
+        .leaveWord .left dl dt img {
+            width: 0.7rem;
+            height: 0.7rem;
+            margin: 0.2rem;
+            margin-top: .14rem;
+            border-radius: 100%;
+        }
+
+        .leaveWord .left dl dd .time {
+            font-size: 0.32rem;
+            color: #aaa;
+            line-height: 0.2rem;
+        }
+
+        .time {
+            float: right;
+            margin-top: 3.5%;
+        }
+
+        .name span {
+            color: #747474;
+            margin-left: .12rem;
+        }
+    </style>
 </head>
+
 <body>
     <div class="wrap mySpace">
         <header>
             <span>
                 <a href="/finish_page.html"></a>
-            </span>	
+            </span>
             <span>
                 我的空间
             </span>
@@ -30,11 +136,17 @@
             <!--</div>-->
             <div class="myMsg">
                 <dl>
-                    <dt><img src="./images/reset/default_head.png" alt="" onerror="./images/reset/default_head.png"/></dt>
+                    <dt>
+                        <img src="./images/reset/default_head.png" alt="" onerror="./images/reset/default_head.png" />
+                    </dt>
                     <dd>
                         <h3>刘红豆</h3>
-                        <p>主讲科目: <span class="mainSub"></span></p>
-                        <p>代课班级：<span class="class"></span></p>
+                        <p>主讲科目:
+                            <span class="mainSub"></span>
+                        </p>
+                        <p>代课班级：
+                            <span class="class"></span>
+                        </p>
                         <!--<p>微课数：<span class="classNum"></span></p>-->
                     </dd>
                 </dl>
@@ -42,60 +154,54 @@
             </div>
             <div class="text"></div>
             <div class="mainClass">
-                <h3>主讲微课<span class="all">查看全部></span></h3>
+                <h3>主讲微课
+                    <span class="all">查看全部></span>
+                </h3>
                 <div class="list"></div>
             </div>
             <div class="leaveMsg">
                 <h3>
-                   留言<span class="allLeave">查看全部></span>
+                    留言
+                    <span class="allLeave">查看全部></span>
                 </h3>
-                <!--<div class="leave">-->
-                    <!--<div class="content">-->
-                        <!--<textarea name="" id="inputMsg" cols="30" rows="10"></textarea>-->
-                        <!--<div class="note">-->
-                            <!--留言......-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<button class="inputMsg">发布</button>-->
-                    <!--<div class="list"></div>-->
-                <!--</div>-->
+                <div class="box"></div>
             </div>
         </main>
     </div>
 </body>
 <script>
-    var userName="";
-    function getMsg (data) {
+    var userName = "";
+    function getMsg(data) {
         var data = JSON.parse(data);
-        for (var i =0; i< data.graSub.length; i++) {
+        for (var i = 0; i < data.graSub.length; i++) {
             var nowMsg = $('.myId').html();
             if (i == 0) {
                 $('.myId').html(nowMsg + `${data.graSub[i]}老师`);
-            }else {
+            } else {
                 $('.myId').html(nowMsg + `/${data.graSub[i]}老师`);
-            }            
+            }
         }
         if (data.ipIco == '') {
             $('.myMsg dl dt').html(`<img src="./images/reset/default_head.png" alt="" />`);
-        }else {
+        } else {
             $('.myMsg dl dt').html(`<img src="${data.ipIco}"  onerror="./images/reset/default_head.png" alt=""/>`);
         }
         $('.myMsg dl dd h3').html(`${data.teaName}`);
-        userName=data.teaName;
+        userName = data.teaName;
         $('.myMsg dl dd .mainSub').html(`${data.subjectName}`);
         $('.myMsg dl dd .classNum').html(`${data.videoCnt}`);
         $('.text').html(`${data.summary}`);
         getClassList(data.video);
-        var str ="";
-        for(var i=0; i<data.classList.length; i++) {
-        str+=`
+        var str = "";
+        for (var i = 0; i < data.classList.length; i++) {
+            str += `
         ${data.classList[i]} 、
         `;
         }
         $('.myMsg dl dd .class').html(str);
     }
     //渲染微课
-    function getClassList (data) {
+    function getClassList(data) {
         for (var i = 0; i < data.length; i++) {
             var nowMsg = $('.mainClass .list').html();
             $('.mainClass .list').html(nowMsg + `
@@ -122,76 +228,90 @@
             var ind = $(this).index();
             if (data[ind].isTrans == 0) {
                 window.android.toast("转码中");
-            }else {
+            } else {
                 window.android.playVideo(data[ind].flv_url);
             }
         });
     }
     //渲染留言
-    function getLeaveList (data) {
-        var data = JSON.parse(data);
-        for (var i = 0; i < data.length; i++) {
-            var nowMsg = $('.leaveMsg .list').html();
-            $('.leaveMsg .list').html(nowMsg + `
-                <dl>
-                    <dt></dt>
-                    <dd>
-                        <h2>${data[i].sendName}</h2>
-                        <p class="message">${data[i].content}</p>
-                        <p>${data[i].addTime}<span class="remove">删除</span><span class="reply">回复</span></p>
-                    </dd>
-                </dl>
-            `);
-            if (data[i].imgUrl == '') {
-                $('.leaveMsg .list dl:eq('+i+') dt').html(`<img src="./images/reset/default_head.png" alt="" />`);
-            }else {
-                $('.leaveMsg .list dl:eq('+i+') dt').html(`<img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/reset/default_head.png' "/>`);
+    // 留言页 回复页
+    function message(list) {
+        var data = JSON.parse(list)
+        console.log(data)
+        var attr = "";
+        var attr2 = "";
+        // var attr;
+        array = data;
+        for (var pro of data) {
+
+            console.log(pro.imgUrl)
+            if (pro.imgUrl == " ") {
+                pro.imgUrl = './images/reset/default_head.png';
             }
+            attr += `
+            <div class="leaveWord">
+                        <div class="left">
+                            <dl>
+                                <dt>
+                                    <img src=${pro.imgUrl} class="userImg" onerror="this.src='./images/reset/default_head.png'">
+                                </dt>
+                                <dd>
+                                    <p class="name">${pro.sendName}
+                                        <span class="time">${pro.addTime}</span></p>
+                                    <p class="content">${pro.content}</p>
+                                    <p class="button">
+                                        <span class="rep">回复</span>
+                                        <span class="dele">删除</span>
+                                    </p>
+                                </dd>
+                            </dl>
+                        </div>
+                       </div> 
+            `;
         }
-        //点击删除留言
-        $('.leaveMsg .list .remove').bind('click', function () {
-            var ind = $(this).parents('dl').index();
-            console.log(data[ind].id);
-            // window.android.dealWithJson(data[ind].id);
-        });
-        //点击回复留言
-        $('.leaveMsg .list .reply').bind('click', function () {            
-            var ind = $(this).parents('dl').index();
-            console.log(data[ind].id);
-            // window.android.dealWithJson(data[ind].id);
-        })
+        var xbox = document.getElementsByClassName("box")[0];
+        xbox.innerHTML = attr;
+        var dele = document.getElementsByClassName("dele");
+        var rep = document.getElementsByClassName("rep");
+        var button = document.getElementsByTagName("button")[0];
+
+        // 回复
+        for (var i = 0; i < rep.length; i++) {
+            var conten1 = "";
+            var conten2 = "";
+            (function (i) {
+                rep[i].onclick = function () {
+                    console.log(i);
+                    window.android.reply(i);
+                }
+            })(i)
+        }
+        // 删除留言
+        for (var i = 0; i < dele.length; i++) {
+            (function (i) {
+                dele[i].onclick = function () {
+                    var msgid = data[i].id;
+                    console.log(msgid)
+                    window.android.deleteMessageItem(msgid, null)
+                }
+            })(i)
+        }
+
     }
-    //点击发布
-    $('.inputMsg').bind('click', function () {
-        var textMsg = $('#inputMsg').val();
-        var data = null;
-        if (textMsg == '') {
-            //data = JSON.stringify({"content":data});
-            //window.android.dealWithJson("addLeaveMessage",data);
-        }else {
-            //data = JSON.stringify({"content":textMsg});
-            window.android.replayMessage(textMsg);
-        }
-        $('#inputMsg').val('');
-        $('.note').show();
-    });
-    //点击返回上级页面
-    $('.back').bind('click', function () {
-        console.log('返回上级');
-    });
     //点击查看主讲微课
     $('.all').bind('click', function () {
         //console.log('主讲微课');
-        window.android.toNextPage(0,userName);
+        window.android.toNextPage(0, userName);
     });
     //点击查看留言
     $('.allLeave').bind('click', function () {
         //console.log('去留言');0 主讲微课-查看全部；1 留言查看全部 replayMessage
-        window.android.toNextPage(1,userName);
+        window.android.toNextPage(1, userName);
     });
     //点击文本框取消默认值
     $('.content').bind('click', function () {
         $('.note').hide();
     })
 </script>
+
 </html>

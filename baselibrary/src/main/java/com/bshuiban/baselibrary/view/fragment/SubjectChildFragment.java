@@ -12,8 +12,9 @@ import android.widget.TextView;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.SubjectChildContract;
-import com.bshuiban.baselibrary.present.StudyBottomBean;
-import com.bshuiban.baselibrary.present.StudyReportBean;
+
+import com.bshuiban.baselibrary.model.StudyBottomBean;
+import com.bshuiban.baselibrary.model.StudyReportBean;
 import com.bshuiban.baselibrary.present.SubjectChildPresent;
 import com.bshuiban.baselibrary.utils.TextUtils;
 import com.bshuiban.baselibrary.utils.ViewUtils;
@@ -110,7 +111,7 @@ public class SubjectChildFragment extends InteractionBaseFragment<SubjectChildPr
 
     @Override
     public void fail(String error) {
-        toast(error);
+        toast("child-"+error);
     }
     private OnReportDateListener onReportDateListener;
     public void setOnReportDateListener(OnReportDateListener l){

@@ -37,13 +37,13 @@ function getNowTime() {
 }
 getNowTime();
 // 班级页
-var classes = document.getElementsByClassName('class')[0];
+var classes = document.getElementsByClassName('classimg')[0];
 //  课表页
-var timetable = document.getElementsByClassName('timeTable')[0];
+var timetable = document.getElementsByClassName('timeTableimg')[0];
 // 通知页
-var notice = document.getElementsByClassName('notice')[0];
+var notice = document.getElementsByClassName('noticeimg')[0];
 // 关注页
-var follow = document.getElementsByClassName('follow')[0];
+var follow = document.getElementsByClassName('followimg')[0];
 // 慧辅导页
 var homepage = document.getElementsByClassName('looktotal')[0];
 // 留言页
@@ -182,15 +182,16 @@ function imag(list) {
      }
     }
 
-var array;
 // 留言页 回复页
 function message(list) {
     var data = JSON.parse(list)
-    console.log(data)
+     if(data.length == 0) {
+            $(".more").html("暂无数据")
+        } else {
+            $(".more").html("查看全部")
+        }
     var attr = "";
     var attr2 = "";
-    // var attr;
-    array = data;
     for (var pro of data) {
         console.log(pro.imgUrl)
         // if(pro.imgUrl == "") {
@@ -206,8 +207,7 @@ function message(list) {
                         </dt>
                         <dd>
                             <p class="name">${pro.sendName}
-                                <span> 五年级二班</span></p>
-                            <p class="time">${pro.addTime}</p>
+                           <span class="time">${pro.addTime}</span></p>
                             <p class="content">${pro.content}</p>
                             <p class="button">
                                 <span class="rep">回复</span>
@@ -230,7 +230,8 @@ function message(list) {
 
     // 点击加载更多
     mores.onclick = function () {
-        window.android.getMoreData(false)
+        //window.android.getMoreData(false)
+        window.android.toNextActivity(6)
     }
     // 回复
     for (var i = 0; i < rep.length; i++) {

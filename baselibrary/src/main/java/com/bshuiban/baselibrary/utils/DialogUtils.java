@@ -2,6 +2,9 @@ package com.bshuiban.baselibrary.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.StringDef;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -25,10 +28,11 @@ public class DialogUtils {
         WindowManager.LayoutParams attributes = window.getAttributes();
 //        attributes.width=WindowManager.LayoutParams.MATCH_PARENT;
         attributes.width=ScreenUtils.getScreenWidth(dialog.getContext());
-        //attributes.height=ScreenUtils.getScreenHeight(dialog.getContext())/3;
+        attributes.height=ScreenUtils.getScreenHeight(dialog.getContext())/3;
         //attributes.height=200;
         window.setAttributes(attributes);
         window.getDecorView().setPadding(0,0,0,0);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
     /**
      * 设置弹窗宽充满屏幕
@@ -48,6 +52,14 @@ public class DialogUtils {
         messageDialog.show();
         return messageDialog;
     }
+    public static MessageDialog showMessageSureCancelDialog(Context context, String s, String sure,String cancel, View.OnClickListener listener){
+        MessageDialog messageDialog=new MessageDialog(context);
+        messageDialog.setTypeMessage(s,MessageDialog.TYPE_MESSAGE_SURE_CANCEL,sure,cancel);
+        messageDialog.setCancelable(true);
+        messageDialog.setOnClickListenerSure(listener);
+        messageDialog.show();
+        return messageDialog;
+    }
     public static Dialog showImageDialog(Context context,String src){
         Dialog dialog=new Dialog(context);
         ImageView view = new ImageView(context);
@@ -61,4 +73,5 @@ public class DialogUtils {
         setDialogWithMatcherScreen(dialog);
         return dialog;
     }
+    //public static Dialog show
 }

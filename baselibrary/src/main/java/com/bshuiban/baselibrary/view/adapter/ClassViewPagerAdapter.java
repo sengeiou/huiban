@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.bshuiban.baselibrary.view.fragment.ClassActivityFragment;
 import com.bshuiban.baselibrary.view.fragment.ClassScheduleFragment;
-import com.bshuiban.baselibrary.view.fragment.ClassScheduleFragment1;
 import com.bshuiban.baselibrary.view.fragment.GeneralSituationFragment;
 import com.bshuiban.baselibrary.view.fragment.LearningDynamicFragment;
 

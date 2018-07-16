@@ -13,10 +13,11 @@ public class SideCollectionListWebActivity extends BaseWebActivity<SideCollectio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tPresent=new SideCollectionListPresent(this);
+        tPresent = new SideCollectionListPresent(this);
         loadFileHtml("myFavorite");
+        //loadFileHtml("stuResource");
         SideCollectionHtml object = new SideCollectionHtml();
-        object.setOnListener(new MessageList.OnMessageListListener(){
+        object.setOnListener(new MessageList.OnMessageListListener() {
             @Override
             public void refresh() {
                 tPresent.refresh();
@@ -36,8 +37,15 @@ public class SideCollectionListWebActivity extends BaseWebActivity<SideCollectio
     }
 
     @Override
+    protected void onResume() {
+        tPresent.loadCollectionListData();
+        super.onResume();
+    }
+
+    @Override
     public void updateList(String json) {
-        loadJavascriptMethod("rend",(json));
+        loadJavascriptMethod("rend", (json));
+        //loadJavascriptMethod("getContent", json);
     }
 
     @Override
@@ -54,10 +62,39 @@ public class SideCollectionListWebActivity extends BaseWebActivity<SideCollectio
     public void fail(String error) {
         toast(error);
     }
-    class SideCollectionHtml extends MessageList{
+
+    class SideCollectionHtml extends MessageList {
+        /**
+         * 推荐给家长
+         *
+         * @param courseId 教学资源标识
+         */
+        @JavascriptInterface
+        public void recommendParent(String courseId) {
+            //tPresent.loadRecommendParent(courseId);
+            runOnUiThread(() -> {
+                Class<?> cls = null;
+                try {
+                    cls = Class.forName("com.bshuiban.teacher.view.webView.webActivity.TeacherLessonInfWebActivity");
+                    startActivity(new Intent(getApplicationContext(), cls).putExtra("courseId", courseId).putExtra("send",true));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
         @JavascriptInterface
         public void toNextHuiFuActivity(String courseId) {
-            runOnUiThread(() -> startActivity(new Intent(getApplicationContext(),LessonInfWebActivity.class).putExtra("courseId",courseId)));
+            //startActivity(new Intent(getApplicationContext(), TeacherLessonInfWebActivity.class).putExtra("courseId", courseId));
+            runOnUiThread(() -> {
+                //Class<LessonInfWebActivity> cls = LessonInfWebActivity.class;
+                Class<?> cls = null;
+                try {
+                    cls = Class.forName("com.bshuiban.teacher.view.webView.webActivity.TeacherLessonInfWebActivity");
+                    startActivity(new Intent(getApplicationContext(), cls).putExtra("courseId", courseId));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 }

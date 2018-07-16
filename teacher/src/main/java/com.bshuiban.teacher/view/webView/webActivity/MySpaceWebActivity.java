@@ -1,11 +1,16 @@
 package com.bshuiban.teacher.view.webView.webActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 import android.widget.TextView;
 
+import com.bshuiban.baselibrary.contract.ListContract;
+import com.bshuiban.baselibrary.contract.LiuYanMsgListContract;
+import com.bshuiban.baselibrary.model.MessageBean;
 import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.present.LiuYanMsgListParent;
 import com.bshuiban.baselibrary.utils.TextUtils;
 import com.bshuiban.baselibrary.view.activity.PlayerVideoActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
@@ -17,10 +22,12 @@ import com.bshuiban.teacher.present.MySpacePresent;
 /**
  * 我的空间
  */
-public class MySpaceWebActivity extends BaseWebActivity<MySpacePresent>implements MySpaceContract.View {
+public class MySpaceWebActivity extends BaseWebActivity<MySpacePresent>implements MySpaceContract.View,LiuYanMsgListContract.View {
 
     private String userId;
-
+    private LiuYanMsgListParent liuYanMsgListParent;
+    private boolean isSelf;
+    private boolean oncreat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,13 +37,24 @@ public class MySpaceWebActivity extends BaseWebActivity<MySpacePresent>implement
         }
         loadFileHtml("mySpace");
         tPresent=new MySpacePresent(this,userId);
-        registerWebViewH5Interface(new MySpaceHtml());
+        liuYanMsgListParent = new LiuYanMsgListParent(this,userId);
+        liuYanMsgListParent.setLimit(3);
+        isSelf = userId == User.getInstance().getUserId();
+        MySpaceHtml object = new MySpaceHtml("", isSelf,liuYanMsgListParent);
+        object.setOnListener(liuYanMsgListParent.getMessageListListener());
+        registerWebViewH5Interface(object);
     }
 
     @Override
     protected void webViewLoadFinished() {
         tPresent.loadSpaceHeadData();
-        //tPresent.loadMessageListInf();
+        liuYanMsgListParent.getInterNetData();
+    }
+
+    @Override
+    protected void onResume() {
+        tPresent.loadMessageListInf(userId);
+        super.onResume();
     }
 
     @Override
@@ -46,7 +64,7 @@ public class MySpaceWebActivity extends BaseWebActivity<MySpacePresent>implement
 
     @Override
     public void updateList(String json) {
-        //loadJavascriptMethod("",json);
+        loadJavascriptMethod("message",json);
     }
 
     @Override
@@ -63,7 +81,22 @@ public class MySpaceWebActivity extends BaseWebActivity<MySpacePresent>implement
     public void fail(String error) {
         toast(error);
     }
-    class MySpaceHtml extends MessageList{
+
+    @Override
+    public void startReplyDialog(MessageBean.DataBean dataBean) {
+        liuYanMsgListParent.startReplyDialog(getSupportFragmentManager(),this,dataBean,isSelf);
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
+    }
+
+    class MySpaceHtml extends LiuYanMsgListParent.LiuYanMsgListHtml{
+        public MySpaceHtml(String name, boolean isSelf, LiuYanMsgListParent liuYanMsgListParent) {
+            super(name, isSelf, liuYanMsgListParent);
+        }
+
         /**
          * 跳转页面
          * @param tag 0 主讲微课-查看全部；1 留言查看全部

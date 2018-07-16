@@ -6,7 +6,9 @@ var nodo = document.getElementsByClassName("navs")[0];
 var todo = document.getElementsByClassName("navs")[1];
 var filte = document.getElementById("filte");
 var res=[];
+var ind=0;
 var num=0;
+ var res2;
  $(".details").hide();
   $("#filte").hide();
 todo.onclick = function () {
@@ -14,21 +16,24 @@ todo.onclick = function () {
     //complatelist(res2)
      $(".done").html(" ")
     window.android.changeDataType(true)
-    active.style.borderBottom = "none";
-    active.style.color = "#E7E7E7";
-    active2.style.borderBottom = "solid 0.08rem #00CFBF";
-    active2.style.color = "#747474";
-    details.style.display = "block";
-    num = 1;
+      active.style.borderBottom = "none";
+       active.style.color = "black";
+       active2.style.borderBottom = "solid 0.08rem #00CFBF";
+       active2.style.color = "#00CFBF";
+       details.style.display = "block";
+       num = 1;
+    if(res2 != undefined) {
+        window.android.changeSubjectId(res2[ind].id)
+    }
 }
 nodo.onclick = function () {
      $(".done").html('');
     active2.style.borderBottom = "none";
     window.android.changeDataType(false)
-    active2.style.color = "#E7E7E7";
-    active.style.borderBottom = "solid 0.08rem #00CFBF";
-    active.style.color = "#747474";
-    details.style.display = "none";
+       active2.style.color = "black";
+       active.style.borderBottom = "solid 0.08rem #00CFBF";
+       active.style.color = "#00CFBF";
+       details.style.display = "none";
     num = 0;
     window.android.changeSubjectId(0)
 }
@@ -83,7 +88,7 @@ function nocomplate(data) {
         //window.android.log("点击"+jump.length);
         for (var i = 0; i < jump.length; i++) {
             (function (i) {
-                jump[i].onclick = function () {
+                jump[i].parentNode.parentNode.onclick = function () {
                     //window.android.log("点击");
                     window.android.toNextPage(res[i].workId, res[i].prepareId);
                 }
@@ -95,7 +100,7 @@ function nocomplate(data) {
         //window.android.log("点击"+jump.length);
         for (var i = 0; i < jump.length; i++) {
             (function (i) {
-                jump[i].onclick = function () {
+                jump[i].parentNode.parentNode.onclick = function () {
                     //window.android.log("点击");
                     window.android.toNextPage(res[i].workId, res[i].prepareId);
                 }
@@ -104,9 +109,10 @@ function nocomplate(data) {
     }
 
 }
+
 // 完成页
 function complatelist(data) {
-     var res2 = JSON.parse(data);
+    res2 = JSON.parse(data);
     var str2 = "";
     for (var i = 0; i < res2.length; i++) {
         str2 += `<li class="li">${res2[i].name}</li>`;
@@ -118,6 +124,7 @@ function complatelist(data) {
             lis[j].onclick = function () {
                 $("#filte").hide();
                 //获取对应科目完成列表
+                ind = j;
                  //window.android.changeDataType(res2[j].id)
                  window.android.changeSubjectId(res2[j].id)
                 // 渲染完成页
@@ -156,7 +163,7 @@ function complately(data) {
     // 未完成页点击跳转到每个单元对应的试题页
     for (var i = 0; i < look.length; i++) {
         (function (i) {
-            look[i].onclick = function () {
+            look[i].parentNode.parentNode.onclick = function () {
                 window.android.toNextPage(res3[i].workId, res3[i].prepareId)
             }
         })(i)
@@ -174,7 +181,7 @@ window.onload = function () {
 }
 
 // 下拉刷新上拉加载
-var list = document.querySelector('.list');
+var list = document.querySelector('.listoo');
 var myIscroll = new IScroll('#main', {
      scrollbars: false,
     probeType: 3,

@@ -41,8 +41,8 @@ function rende(data) {
                         </div>
                         <div id="analyze">
                         <ul>
-                        <li class="dis">${type}${res.stuAnswer}</li>
-                         <li>正确答案：<span>${res.Answer}</span></li>
+                          <li>正确答案：<span>${res.Answer}</span></li>
+                            <li class="dis">${type}${res.stuAnswer}</li>
                         <li>${res.analysis} </li>
                         </ul>
                         </div>`;
@@ -91,8 +91,8 @@ function rende(data) {
                  </div>
                 <div id="analyze">
                 <ul>
-                <li class="dis">${type}${res.stuAnswer}</li>
-                <li>正确答案：<span>${res.Answer}</span></li>
+              <li>正确答案：<span>${res.Answer}</span></li>
+               <li class="dis">${type}${res.stuAnswer}</li>
                 <li>${res.analysis} </li>
                 </ul>
                 </div>`;
@@ -114,8 +114,8 @@ function rende(data) {
                      </div>
                     <div id="analyze">
                     <ul>
-                    <li class="dis">${type}${res.stuAnswer}</li>
                     <li>正确答案：<span>${res.Answer}</span></li>
+                    <li class="dis">${type}${res.stuAnswer}</li>
                     <li>${res.analysis} </li>
                     </ul>
                     </div>`;

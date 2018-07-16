@@ -1078,7 +1078,6 @@
   flex: 1;
   text-align: center;
   line-height: 0.88rem;
-  color: #bebebe;
 }
 
 .class main .survey img {
@@ -1140,7 +1139,7 @@
 }
 
 .class main .survey .list .content dl {
-  padding-left: 0.52rem;
+  padding-left: 0.18rem;
   display: flex;
   padding-top: 0.43rem;
 }
@@ -1525,14 +1524,14 @@
 }
 
 .coachBox main .courseList .list dl dd {
+  width: 56%;
   margin: 0.16rem;
   float: left;
 }
 
 .coachBox main .courseList .list dl dd h3 {
-  width: 4rem;
-  line-height: 0.4rem;
-  font-size: 0.3rem;
+  width:100%;
+  font-size:.32rem;
   font-weight: bold;
   margin-bottom: 0.2rem;
   font-weight: normal;
@@ -1545,8 +1544,8 @@
 .coachBox main .courseList .list dl dd p {
   font-size: 0.28rem;
   color: #9A9A9A;
-  line-height: 0.4rem;
-  padding-right:5%;
+  font-size:.32rem;
+  padding-right:3%;
 }
 
 .coachBox main .courseList .mask {
@@ -1692,7 +1691,7 @@
 .coachBox main .subject .list dl dd h4 {
   text-align: right;
   font-weight: normal;
-  padding-right: 5%;
+  padding-right: 1%;
 }
 
 .coachBox main .subject .list dl dd h4 span b {
@@ -2067,25 +2066,31 @@ html,body{
   }
 }
 .follow header input {
-  border: solid 1px #fff;
-  border-radius: 0.15rem;
+  border: solid 0.01rem #fff;
+  width: 4.2rem;
+  height: 0.6rem;
+  border-radius: 1.2rem;
   outline: none;
-  width: 4rem;
-  height: 0.4rem;
-  text-indent: 0.15rem;
+  text-indent: 0.3rem;
+  position: absolute;
+  left: 23%;
+  top: 18%;
+}
+.follow header span:nth-child(2) i img {
+  width: 0.5rem;
+  height: 0.5rem;
 }
 .follow header span:nth-child(2) {
   position: relative;
 }
 .follow header span:nth-child(2) i {
   position: absolute;
-  right: 28%;
-  top: 0.15rem;
+     width: 0.5rem;
+     right: 32%;
+     top: 17%;
+     height: 0.5rem;
 }
-.follow header span:nth-child(2) i img {
-  width: 0.4rem;
-  height: auto;
-}
+
 .follow main .content {
   width: 100%;
   height: 2rem;
@@ -2132,4 +2137,10 @@ html,body{
   width: 0.7rem;
   margin-bottom: 0.1rem;
   margin-left: 0.15rem;
+}
+.follow main .content p{
+  font-size: .32rem;
+}
+.follow main .content p:nth-of-type(1){
+  margin-bottom:.1rem;
 }

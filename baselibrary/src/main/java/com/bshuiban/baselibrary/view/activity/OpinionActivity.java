@@ -71,7 +71,7 @@ public class OpinionActivity extends BaseActivity<OpinionPresent> implements Opi
         });
     }
     private void sendOpinion() {
-        String content = et_content.getText().toString();
+        String content = et_content.getText().toString().replace(" ","");
         if(TextUtils.isEmpty(content)){
             toast("请填写内容");
             return;

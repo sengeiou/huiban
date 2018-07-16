@@ -9,11 +9,88 @@
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/teacher_index1.css">
     <link rel="stylesheet" href="./css/teacher_index2.css">
+    <style>
+        .hint{
+        background:#ffffff;
+        box-shadow:0 0 .08rem 0 rgba(175,175,175,0.50);
+        border-radius:.04rem;
+        width:6.04rem;
+        height:3.64rem;
+        position:fixed;
+        top:5.06rem;
+        left:.78rem;
+        display: none;
+        z-index: 100;
+        }
+        .hint p:nth-of-type(1) {
+        width:100%;
+        height:.8rem;
+        margin: 0 auto;
+        font-family:PingFangSC-Regular;
+        font-size:.4rem;
+        color:#f49d0a;
+        letter-spacing:-0.48px;
+        text-align:center;
+        line-height: .8rem;
+        border-bottom:1px solid rgba(175,175,175,0.50);
+        }
+        .hint p:nth-of-type(2) {
+        height: 2rem;
+        font-family:PingFangSC-Regular;
+        font-size:.32rem;
+        color:#9b9b9b;
+        letter-spacing:-0.39px;
+        text-align:center;
+        line-height: 2rem;
+        }
+        .hint p:nth-of-type(2) span{
+        font-size: .4rem;
+        color:#00c7b5;
+        }
+        .hint p:nth-of-type(3) span{
+        display: inline-block;
+        width:50%;
+        height: .8rem;
+        text-align:center;
+        line-height: .8rem;
+        color:#9b9b9b;
+        font-family:PingFangSC-Regular;
+        font-size:.32rem;
+        color:#9b9b9b;
+        letter-spacing:-0.39px;
+        background:#ffffff;
+        }
+        .hint p:nth-of-type(3) span:first-of-type{
+        color:green;
+        border-top:1px solid rgba(175,175,175,0.50);
+        border-right:1px solid rgba(175,175,175,0.50);
+        }
+        .hint p:nth-of-type(3) span:last-of-type{
+        color:green;
+        border-top:1px solid rgba(175,175,175,0.50);
+        }
+        #graybackg{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 99;
+        left: 0;
+        top:0;
+        background:rgba(175,175,175,0.7);
+        display:none;
+        }
+    </style>
 </head>
 <script src="./js/rem.js"></script>
 <script src="./js/jquery.min.js"></script>
 
 <body>
+        <div id="graybackg"></div>
+        <div class="hint">
+            <p>提示</p >
+            <p><span class="num">确认删除此留言？</span></p >
+            <p><span class="span">取消</span><span class="span">确定</span></p >
+        </div>
     <div class="wrap indexWrap">
         <main>
             <div id="main">
@@ -40,25 +117,25 @@
                             </div>
                         </div>
                         <div class="tabList">
-                            <a href="javascript:void(0)">
+                            <a href="javascript:void(0)" class="classimg">
                                 <span class="listImg class"></span>
                                 <span>
                                     管班级
                                 </span>
                             </a>
-                            <a href="javascript:void(0)">
+                            <a href="javascript:void(0)" class="timeTableimg">
                                 <span class="listImg timeTable"></span>
                                 <span>
                                     查课表
                                 </span>
                             </a>
-                            <a href="javascript:void(0)">
+                            <a href="javascript:void(0)" class="noticeimg">
                                 <span class="listImg notice"></span>
                                 <span>
                                     发通知
                                 </span>
                             </a>
-                            <a href="javascript:void(0)">
+                            <a href="javascript:void(0)" class="followimg">
                                 <span class="listImg follow"></span>
                                 <span>
                                     加关注
@@ -93,10 +170,10 @@
                         <h3 class="title">慧辅导</h3>
                         <div class="list">
                             <div class="course">
-                                <img src="./images/reset/class_overview_pic.png" alt="">
+                                <img src="" alt="">
                             </div>
                             <div class="course">
-                                <img src="./images/reset/class_overview_pic.png" alt="">
+                                <img src="" alt="">
                             </div>
                         </div>
                         <p class="looktotal">

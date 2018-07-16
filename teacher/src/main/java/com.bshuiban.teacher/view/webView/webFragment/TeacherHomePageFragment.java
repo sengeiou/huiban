@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.utils.DialogUtils;
 import com.bshuiban.baselibrary.view.activity.ClassActivity;
 import com.bshuiban.baselibrary.view.activity.ClassScheduleActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
@@ -48,7 +49,7 @@ public class TeacherHomePageFragment extends HomePageFragment {
         stuHomePageHtml.setOnListener(new MessageList.MessageListListener() {
             @Override
             public void deleteMessageItem(String messageId, String pid) {
-                tPresent.delete(messageId,pid);
+                DialogUtils.showMessageSureCancelDialog(getActivity(),"确认删除此留言？",v -> tPresent.delete(messageId,pid));
             }
 
             @Override

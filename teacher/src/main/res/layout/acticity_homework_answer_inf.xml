@@ -15,11 +15,13 @@
         app:src_left="@mipmap/iv_back"
         app:title_color="@android:color/white"
         app:title_size="@dimen/dp_15"
-        app:title_text="个题测试详情" />
+        app:title_text="各题测试详情" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:clipChildren="false"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         android:orientation="horizontal"
         />

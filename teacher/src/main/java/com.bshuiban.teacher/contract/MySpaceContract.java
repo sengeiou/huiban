@@ -11,6 +11,6 @@ public interface MySpaceContract {
     }
     interface Present{
         void loadSpaceHeadData();
-        void loadMessageListInf();
+        void loadMessageListInf(String userId);
     }
 }

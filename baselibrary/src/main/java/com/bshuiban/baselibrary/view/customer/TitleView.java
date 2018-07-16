@@ -5,17 +5,22 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.bshuiban.baselibrary.R;
+
+import java.io.File;
 
 /**
  * Created by xinheng on 2018/1/31.<br/>
@@ -23,6 +28,7 @@ import com.bshuiban.baselibrary.R;
  */
 
 public class TitleView extends View {
+    private boolean middleShow;
     private boolean have_line;
     private String title_text;
     private int title_text_color = Color.BLACK;
@@ -39,6 +45,8 @@ public class TitleView extends View {
     private Rect left_rect, right_rect,center_rect;
     private String TAG = getClass().getSimpleName();
     private boolean left_click_intercept = true;
+    private Paint mPaintMiddle;
+
     /**
      * 图片距离边框的距离 上下
      */
@@ -69,13 +77,12 @@ public class TitleView extends View {
 
             } else if (index == R.styleable.TitleView_right_text) {
                 right_text = array.getString(index);
-
             } else if (index == R.styleable.TitleView_title_size) {
-                title_text_size = array.getDimensionPixelSize(index, title_text_size);
-
+                //title_text_size = array.getDimensionPixelSize(index, title_text_size);
+                //Log.e(TAG, "TitleView: "+title_text_size+", "+getResources().getDimensionPixelSize(R.dimen.dp_15) );
+                title_text_size=getResources().getDimensionPixelSize(R.dimen.dp_16);
             } else if (index == R.styleable.TitleView_right_size) {
                 right_text_size = array.getDimensionPixelSize(index, right_text_size);
-
             } else if (index == R.styleable.TitleView_title_color) {
                 title_text_color = array.getColor(index, title_text_color);
 
@@ -97,6 +104,8 @@ public class TitleView extends View {
             } else if (index == R.styleable.TitleView_src_right) {
                 drawableRight = array.getDrawable(index);
 
+            }else if(index == R.styleable.TitleView_middle_show){
+                middleShow = array.getBoolean(index,middleShow);
             }
         }
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -105,6 +114,13 @@ public class TitleView extends View {
         int leftP = getPaddingLeft();
         if (leftP == 0) {
             leftP = (int) TypedValue.applyDimension(1, 10, getResources().getDisplayMetrics());
+        }
+        if(middleShow){
+            mPaintMiddle=new Paint();
+            mPaintMiddle.setDither(true);
+            mPaintMiddle.setAntiAlias(true);
+            mPaintMiddle.setColor(Color.WHITE);
+            mPaintMiddle.setStyle(Paint.Style.FILL);
         }
         setPadding(leftP, getPaddingTop(), getPaddingRight(), getPaddingBottom());
         setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableCenter, drawableRight);
@@ -307,7 +323,7 @@ public class TitleView extends View {
             paint.setColor(title_text_color);
             text_width = com.bshuiban.baselibrary.utils.TextUtils.getTextWidth(title_text, paint);
         }
-        if (drawables.mDrawableCenter != null) {
+        if (!middleShow&&drawables.mDrawableCenter != null) {
             int saveCount = canvas.getSaveCount();
             canvas.save();
             Rect bounds = drawables.mDrawableCenter.getBounds();
@@ -327,12 +343,34 @@ public class TitleView extends View {
             if (text_width > 0) {
                 float x = (getMeasuredWidth() - text_width) / 2f;
                 if (center_rect == null) center_rect = new Rect();
-                center_rect.set((int) x - 5, 0, (int) (x-5+text_width), getMeasuredHeight());
+                center_rect.set((int) x - 5, 0, (int) (x-5+text_width), getMeasuredHeight());//10*24
                 canvas.drawText(title_text, x, com.bshuiban.baselibrary.utils.TextUtils.getTextBaseLine(getMeasuredHeight() / 2f, paint), paint);
+                if(middleShow){
+                    int heightR = com.bshuiban.baselibrary.utils.TextUtils.getTextHeightR(title_text, paint);
+                    int widthR = heightR*10/24;//三角形 高=宽
+                    Path path = new Path();
+                    float left = x + text_width + 15;
+                    float top = (getMeasuredHeight() - heightR) / 2f;
+                    float middleX = left + widthR / 2f;
+                    path.moveTo(middleX, top);//起始点
+                    float bottom1 = top + heightR / 2f;
+                    path.lineTo(left, bottom1);
+                    float right = left + widthR;
+                    center_rect.right= (int) (center_rect.right+right)+1;
+                    path.lineTo(right,bottom1);
+                    canvas.drawPath(path,mPaintMiddle);
+                    path.close();
+                    Path path1 = new Path();
+                    float top1=bottom1+(heightR-widthR)/2f;
+                    path1.moveTo(left,top1);
+                    path1.lineTo(right,top1);
+                    path1.lineTo(middleX,top1+widthR);
+                    canvas.drawPath(path1,mPaintMiddle);
+                    path1.close();
+                }
             }
         }
     }
-
     private void drawLine(Canvas canvas) {
         if (have_line) {
             int strokeWidth = (int) TypedValue.applyDimension(1, 1, getResources().getDisplayMetrics());

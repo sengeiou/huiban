@@ -28,6 +28,7 @@
         <attr name="src_right" format="reference"/>
         <attr name="have_line" format="boolean"/>
         <attr name="line_color" />
+        <attr name="middle_show" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="BarsCharView">
         <attr name="title" />

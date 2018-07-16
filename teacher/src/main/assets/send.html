@@ -17,7 +17,7 @@
                 <a href="/finish_page.html"></a>
             </span>	
             <span></span>
-            <!--<span class="ico"></span>-->
+            <span class="ico"></span>
         </header>
         <main>
             <textarea name="" id="" cols="30" rows="10"></textarea>
@@ -55,11 +55,19 @@
                 content = $('textarea').val();
             }
             var classIds = [];
+            var classId;
             for (var i = 0; i < $('.classes h3 span').length; i++) {
                 if ($('.classes h3 span').eq(i).attr('class')=='check') {
                     classIds.push(data[i].classId);
                 }
-                var classId = classIds.toString(',');
+                 classId = classIds.toString(',');
+            }
+            if(!isEffective(content)){
+                window.android.toast("请输入内容","");
+                return;
+            }else if(!isEffective(classId)){
+                window.android.toast("请选择班级","");
+                return;
             }
             window.android.sendNotice(classId,content);
             $('textarea').val('')
@@ -71,5 +79,11 @@
     $('.ico').bind('click', function () {
         console.log("发送");
     });
+    function isEffective(string){
+        if(string==undefined||string==null||string.length==0){
+            return false;
+        }
+        return true;
+    }
 </script>
 </html>

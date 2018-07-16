@@ -352,6 +352,9 @@
 .mySpace .myMsg dl dd {
     margin-left: 0.5rem;
 }
+.mySpace .myMsg dl dd h3{
+    color:white;
+}
  .text {
     color: #9a9a9a;
     font-size: 0.3rem;
@@ -363,21 +366,24 @@
 
 .stuResource header span:nth-child(2) input {
     border: solid 0.01rem #fff;
-    width: 50%;
-    height: 0.4rem;
-    border-radius: 0.2rem;
+    width: 4.2rem;
+    height: 0.6rem;
+    border-radius: 1.2rem;
     outline: none;
     text-indent: 0.3rem;
+    position: absolute;
+    left: 24%;
+    top: 20%;
 }
 
 .stuResource header span:nth-child(2) .search {
-    width: 0.3rem;
-    height: 0.3rem;
+    width: 0.4rem;
+    height: 0.4rem;
     background-repeat: no-repeat;
     background-size: 100%;
     position: absolute;
     top: 0.3rem;
-    right: 28%;
+    right: 30%;
     background-image: url("../images/work/see@2x.png");
 }
 .classMsg header .ico, .stuResource header .ico, .sendBox header .ico {
@@ -456,6 +462,7 @@
 }
 .details .classImg {
     width: 100%;
+
 }
   
 .details .classImg img {
@@ -619,9 +626,13 @@
     background: #f9f9f9;
 }
 .sendBox main textarea {
-    width: 100%;
+    width: 96%;
     height: 5rem;
     border: none;
+    margin-left:2%;
+    margin-top:2%;
+    line-height:.4rem;
+    padding:2%;
 }
 .sendBox main .changeClass {
     width: 100%;
@@ -727,7 +738,7 @@ header .more {
 }
 .classList main .list ul li:nth-child(2) {
     color: #9a9a9a;
-    font-size: 0.28rem;
+    font-size: 0.32rem;
 }
 .report main nav {
     width: 100%;
@@ -813,7 +824,7 @@ header .more {
 }
 .classMsg nav {
     width: 35%;
-    height: 3rem;
+    height: 4.3rem;
     border: solid 1px #eee;
     box-shadow: 0 0 4px 0 rgba(175,175,175,0.50);
     position: fixed;
@@ -964,4 +975,7 @@ header .more {
     bottom: 0;
     right: 0;
     width: 0.2rem;
+}
+.hide p{
+    margin-top:.3rem;
 }

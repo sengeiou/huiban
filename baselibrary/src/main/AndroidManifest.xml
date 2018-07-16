@@ -9,10 +9,7 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application>
-        <activity
-            android:name=".view.activity.SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".view.activity.ClassActivity"
             android:screenOrientation="portrait" />
@@ -100,6 +97,8 @@
         <activity android:name=".view.webview.webActivity.FilterHuiFuDaoWebActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.webview.webActivity.TestWebViewActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.SendNoticeActivity"
             android:screenOrientation="portrait"/>
     </application>
 

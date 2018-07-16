@@ -77,7 +77,10 @@ public class MiddleReportInfWebActivity extends BaseWebActivity<MiddleReportInfP
 //            if (type == 1) {
 //            }
 //        }
-
+        @JavascriptInterface
+        public String getClassName(){
+            return className;
+        }
         @JavascriptInterface
         public void toNextPage() {
             runOnUiThread(()->{

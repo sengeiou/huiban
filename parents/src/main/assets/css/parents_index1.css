@@ -142,7 +142,7 @@
   height: 1.3rem;
   line-height: 1.3rem;
   text-align: center;
-  border: solid 0.01rem #fff;
+  border: solid 0.01rem #94ffe7;
   border-right: 0;
   margin-left:20px;
   display: flex;
@@ -150,7 +150,7 @@
 
 .indexWrap main .topBox .tab .content span {
   flex: 1;
-  border-right: solid 0.01rem #fff;
+  border-right: solid 0.01rem #94ffe7;
 }
 
 .indexWrap main .topBox .head {

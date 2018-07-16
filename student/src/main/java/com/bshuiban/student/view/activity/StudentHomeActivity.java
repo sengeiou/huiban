@@ -175,7 +175,7 @@ public class StudentHomeActivity extends HomePageActivity<InteractionBaseWebView
             String realName = data.getRealName();
             tv_name.setText(com.bshuiban.baselibrary.utils.TextUtils.cleanNull(realName)+"学生");
             String schoolName = com.bshuiban.baselibrary.utils.TextUtils.cleanNull(data.getSchoolName());
-            String gradleName = com.bshuiban.baselibrary.utils.TextUtils.cleanNull(data.getGradeName());
+            String gradleName = "";//com.bshuiban.baselibrary.utils.TextUtils.cleanNull(data.getGradeName());
             List<String> classNames = data.getClassName();
             String className = "";
             if (null != classNames && classNames.size() > 0) {

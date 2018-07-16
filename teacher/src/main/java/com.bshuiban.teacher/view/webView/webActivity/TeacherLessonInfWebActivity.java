@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.model.HomeworkBean;
+import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.TeachClassPresent;
 import com.bshuiban.baselibrary.utils.TextUtils;
+import com.bshuiban.baselibrary.view.dialog.TeachClassDialog;
 import com.bshuiban.baselibrary.view.webview.webActivity.LessonInfWebActivity;
 import com.bshuiban.teacher.present.TeacherLessonInfPresent;
 import com.xinheng.date_dialog.dialog.SeleTwoDialog;
@@ -20,10 +22,16 @@ import java.util.List;
  */
 public class TeacherLessonInfWebActivity extends LessonInfWebActivity<TeacherLessonInfPresent> {
     private TeachClassPresent teachClassPresent;
+    private TeachClassDialog teachClassDialog;
+    private boolean isSend;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isSend = getIntent().getBooleanExtra("send", false);
+        if(isSend){
+            startDialog();
+        }
     }
 
     @Override
@@ -34,6 +42,9 @@ public class TeacherLessonInfWebActivity extends LessonInfWebActivity<TeacherLes
             teachClassPresent.loadTeachClass();
         }else {
             data=User.getInstance().getTeachClassData();
+            if(isSend){
+                startClassDialog();
+            }
         }
     }
 
@@ -50,6 +61,14 @@ public class TeacherLessonInfWebActivity extends LessonInfWebActivity<TeacherLes
     @Override
     protected TeacherLessonInfPresent getPresent() {
         return new TeacherLessonInfPresent(this);
+    }
+
+    @Override
+    public void updateData(List<TeachClassBean.DataBean> data) {
+        super.updateData(data);
+        if(isSend){
+            startClassDialog();
+        }
     }
 
     @Override
@@ -70,21 +89,17 @@ public class TeacherLessonInfWebActivity extends LessonInfWebActivity<TeacherLes
         }
     }
     private void startClassDialog(){
+        dismissDialog();
         if(HomeworkBean.isEffictive(data)) {
-            List<String> listString = TextUtils.getListString(data);
-            SeleTwoDialog twoDialog = new SeleTwoDialog(this, new SeleTwoDialog.OnClickListener() {
-                @Override
-                public boolean onSure(String left, int leftIndex, String right, int rightIndex) {
-                    tPresent.loadRecommendParent(courseId, data.get(leftIndex).getClassId());
-                    return false;
-                }
-
-                @Override
-                public boolean onCancel() {
-                    return false;
-                }
-            }, listString, null);
-            twoDialog.show();
+            if (null == teachClassDialog) {
+                teachClassDialog = new TeachClassDialog(this);
+                teachClassDialog.setSendClickListener(v1 -> {
+                    tPresent.loadRecommendParent(courseId, teachClassDialog.getSelectClass());
+                    teachClassDialog.dismiss();
+                });
+            }
+            teachClassDialog.setTexts(data);
+            teachClassDialog.show();
         }else {
             toast("暂无所属班级");
         }

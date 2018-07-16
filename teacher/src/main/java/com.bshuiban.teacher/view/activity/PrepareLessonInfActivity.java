@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.model.LogUtils;
 import com.bshuiban.baselibrary.utils.TextUtils;
 import com.bshuiban.baselibrary.utils.ZoominPagerTransFormer;
@@ -84,6 +85,7 @@ public class PrepareLessonInfActivity extends BaseActivity<PrepareLessonInfPrese
     private void setViewPagerData(View view, PrepareLessonBean prepareLessonBean) {
         TextView tv_title = view.findViewById(R.id.tv_title);
         TextView tv_text = view.findViewById(R.id.tv_text);
+        ImageView no_data = view.findViewById(R.id.no_data);
         PrepareLessonBean.DataBean data = prepareLessonBean.getData();
         tv_title.setText(TextUtils.cleanNull(data.getTitle()));
         tv_text.setText(TextUtils.cleanNull(data.getInfo()));
@@ -93,7 +95,16 @@ public class PrepareLessonInfActivity extends BaseActivity<PrepareLessonInfPrese
         PrepareLessonInfAdapter adapterList=new PrepareLessonInfAdapter();
         recycleView.setLayoutManager(new LinearLayoutManager(this));
         adapterList.setOnItemClickListener(listener);
-        adapterList.setList(data.getClassArr());
+        List<PrepareLessonBean.DataBean.ClassArrBean> classArr = data.getClassArr();
+        adapterList.setList(classArr);
+        if(!HomeworkBean.isEffictive(classArr)){
+            no_data.setVisibility(View.VISIBLE);
+            if(tagIntent==2){
+                no_data.setImageResource(R.mipmap.class_middle);
+            }else {
+                no_data.setImageResource(R.mipmap.class_front_after);
+            }
+        }
         recycleView.setAdapter(adapterList);
     }
     private PrepareLessonInfAdapter.OnItemClickListener listener = position -> {

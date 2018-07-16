@@ -2,6 +2,7 @@ package com.bshuiban.baselibrary.view.adapter;
 
 import android.arch.lifecycle.GeneratedAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,11 +27,16 @@ public abstract class GeneralSituationAdapter<T> extends RecyclerView.Adapter<Ge
     protected List<T> mList;
     private Context mContext;
     private boolean tag;
+    private boolean isTeacher;
     public GeneralSituationAdapter(){
         tag= User.getInstance().isParents();
     }
     public void setContext(Context context) {
         mContext = context;
+    }
+
+    public void setTeacher(boolean teacher) {
+        isTeacher = teacher;
     }
 
     public void setList(List<T> list) {
@@ -55,6 +61,11 @@ public abstract class GeneralSituationAdapter<T> extends RecyclerView.Adapter<Ge
         holder.tv_subject_name.setText(getSubjectName(position));
         holder.iv_guan_zhu.setTag(position);
         holder.iv_liu_yan.setTag(position);
+        if(isTeacher){
+            holder.iv.setOnClickListener(v -> {
+                toPeopleSpace(position);
+            });
+        }
         if(tag){
             holder.iv_liu_yan.setVisibility(View.GONE);
             holder.iv_guan_zhu.setVisibility(View.GONE);
@@ -119,4 +130,5 @@ public abstract class GeneralSituationAdapter<T> extends RecyclerView.Adapter<Ge
     protected abstract void toNextPageGuanZhu(int position);
 
     protected abstract void toNextPageLiuYan(int position);
+    protected void toPeopleSpace(int position){}
 }

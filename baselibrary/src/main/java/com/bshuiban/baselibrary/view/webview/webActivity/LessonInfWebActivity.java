@@ -67,12 +67,12 @@ public class LessonInfWebActivity<T extends LessonInfPresent> extends BaseWebAct
 
     @Override
     public void startDialog() {
-
+        showLoadingDialog();
     }
 
     @Override
     public void dismissDialog() {
-
+        dismissLoadingDialog();
     }
 
     @Override

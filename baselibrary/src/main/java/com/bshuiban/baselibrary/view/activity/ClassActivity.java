@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -77,20 +78,15 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             public void rightClick(View v) {
                 if (User.getInstance().isTeacher()) {
                     //SendClassActivityWebActivity
-                    try {
-                        Class<?> aClass = Class.forName("com.bshuiban.teacher.view.webView.webActivity.SendClassActivityWebActivity");
-                        Intent intent = new Intent(getApplicationContext(), aClass);
-                        startActivityForResult(intent,100);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-
+                    Intent intent = new Intent(getApplicationContext(), SendNoticeActivity.class)
+                            .putExtra("send_type", 1);
+                    startActivityForResult(intent, 100);
                 }
             }
 
             @Override
             public void centerClick(View v) {
-                if (User.getInstance().isTeacher()&&HomeworkBean.isEffictive(data)) {
+                if (User.getInstance().isTeacher() && HomeworkBean.isEffictive(data)) {
                     startClassDialog();
                 }
             }
@@ -106,7 +102,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if (User.getInstance().isTeacher()) {
-                    mPosition=position;
+                    mPosition = position;
                     switch (position) {
                         case 2:
                             titleView.setTitle_text(className);
@@ -140,9 +136,13 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(getApplication());
                 simplePagerTitleView.setNormalColor(Color.BLACK);
-                simplePagerTitleView.setPadding(15, 0, 15, 0);
+                int dp = getResources().getDimensionPixelSize(R.dimen.dp_2);
+                simplePagerTitleView.setPadding(dp, 0, dp, 0);
                 simplePagerTitleView.setSelectedColor(getResources().getColor(R.color.guide_start_btn));
-                simplePagerTitleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, getResources().getDimension(R.dimen.dp_4));
+                int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.dp_15);
+                float dimension = getResources().getDimension(R.dimen.dp_15);
+                Log.e("TAG", "getTitleView: "+dimensionPixelSize+", "+dimension );
+                simplePagerTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimensionPixelSize);
                 simplePagerTitleView.setText(arrayList.get(index));
                 simplePagerTitleView.setOnClickListener((v) -> {
                     viewPager.setCurrentItem(index, false);
@@ -165,7 +165,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
     }
 
     private void startClassDialog() {
-        List<String> list=new ArrayList<>();
+        List<String> list = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
             String className = data.get(i).getClassName();
             list.add(className);
@@ -176,11 +176,11 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
                 TeachClassBean.DataBean dataBean = data.get(leftIndex);
                 String classId = dataBean.getClassId();
                 Fragment fragment = classViewPagerAdapter.getFragment(mPosition);
-                if(fragment instanceof ClassScheduleFragment) {
+                if (fragment instanceof ClassScheduleFragment) {
                     ((ClassScheduleFragment) fragment).updateSchedule(classId);
-                }else if(fragment instanceof GeneralSituationFragment){
+                } else if (fragment instanceof GeneralSituationFragment) {
                     ((GeneralSituationFragment) fragment).update(classId);
-                }else if(fragment instanceof ClassActivityFragment){
+                } else if (fragment instanceof ClassActivityFragment) {
                     ((ClassActivityFragment) fragment).update(classId);
                 }
                 titleView.setTitle_text(dataBean.getClassName());
@@ -221,10 +221,10 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case 100:
                 Fragment fragment = classViewPagerAdapter.getFragment(mPosition);
-                if(fragment instanceof ClassActivityFragment){
+                if (fragment instanceof ClassActivityFragment) {
                     ((ClassActivityFragment) fragment).update(null);
                 }
                 break;

@@ -145,7 +145,7 @@ public class ReplyDialog extends MoveDialog {
                         int tag = (int) v.getTag();
                         MessageBean.DataBean.SlistBean slistBean = mSlistBeans.get(tag);
                         messageListListener.deleteMessageItem(slistBean.getId(),pid);
-                        dismiss();
+                        //dismiss();
                     }
                 });
             }

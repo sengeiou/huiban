@@ -59,6 +59,15 @@ public class BaseActivity<T extends BasePresent> extends AppCompatActivity {
         toast.setText(s);
         toast.show();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(null!=toast){
+            toast.cancel();
+        }
+    }
+
     @Override
     protected void onDestroy() {
         if(null!=tPresent) {

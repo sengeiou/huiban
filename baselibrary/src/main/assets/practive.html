@@ -32,7 +32,7 @@
 		if(data[0].knowName==null||data[0].knowName==undefined||data[0].knowName==''){
 			$('.title').hide();
 		}else{
-			$('.title').html(data[0].knowName);
+			$('.title').html("测试知识点："+data[0].knowName);
 		}
 		var que_id = [];
 		for (var i=0; i<data.length; i++) {

@@ -235,6 +235,10 @@ width: 98%!important;
   line-height: 1.1rem;
   text-align: center;
   font-size: 0.28rem;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+
 }
 .practive main .msgBox {
   background: #fff;

@@ -13,7 +13,7 @@
         android:layout_height="@dimen/dp_40"
         app:title_text=""
         app:title_color="@android:color/white"
-        app:right_text="提交"
+        app:right_text="下一步"
         app:right_color="@color/white"
         app:title_size="@dimen/dp_15"
         android:background="@color/guide_start_btn"

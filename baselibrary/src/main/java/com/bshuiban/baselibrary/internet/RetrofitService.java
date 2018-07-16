@@ -6,7 +6,6 @@ import android.util.Log;
 import com.bshuiban.baselibrary.model.LogUtils;
 import com.bshuiban.baselibrary.model.ResultBean;
 import com.bshuiban.baselibrary.utils.aes.AESUtils;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,13 +17,12 @@ import java.util.Map;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
-public class RetrofitService extends BaseRetrofit{
+public class RetrofitService extends BaseRetrofit {
     private static RetrofitService retrofitService;
+
     public static RetrofitService getInstance() {
         if (retrofitService == null) {
             synchronized (RetrofitService.class) {
@@ -37,7 +35,7 @@ public class RetrofitService extends BaseRetrofit{
     }
 
     private RetrofitService() {
-        retrofit=getRetrofit(UrlManage.getInstance().getBASE_URL());
+        retrofit = getRetrofit(UrlManage.getInstance().getBASE_URL());
     }
 
     private BaseCall getResponseBodyCall() {
@@ -81,6 +79,7 @@ public class RetrofitService extends BaseRetrofit{
 
     /**
      * 明文
+     *
      * @param <T>
      */
     public abstract static class CallPlaintext<T> implements Callback<ResponseBody> {
@@ -89,14 +88,15 @@ public class RetrofitService extends BaseRetrofit{
         public CallPlaintext(Class<T> tClass) {
             this.tClass = tClass;
         }
+
         @Override
         public void onResponse(retrofit2.Call<ResponseBody> call, Response<ResponseBody> response) {
             try {
                 String s = response.body().string();
                 //Log.e(TAG, "onResponse: " + string);
-                if(null!=s&&s.length()>0){
-                    if(";".equals(String.valueOf(s.charAt(s.length()-1)))){
-                        s=s.substring(0,s.length()-1);
+                if (null != s && s.length() > 0) {
+                    if (";".equals(String.valueOf(s.charAt(s.length() - 1)))) {
+                        s = s.substring(0, s.length() - 1);
                     }
                 }
                 LogUtils.e(TAG, "onResponse: " + s);
@@ -114,13 +114,14 @@ public class RetrofitService extends BaseRetrofit{
 
         @Override
         public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
-            if(null!=t){
+            if (null != t) {
                 error(t.getMessage());
             }
         }
     }
+
     public static abstract class Call<T> implements Callback<ResponseBody> {
-        private Class<T> tClass;
+        protected Class<T> tClass;
 
         public Call(Class<T> tClass) {
             this.tClass = tClass;
@@ -131,8 +132,15 @@ public class RetrofitService extends BaseRetrofit{
             try {
                 String string = response.body().string();
                 //Log.e(TAG, "onResponse: " + string);
-                String s = AESUtils.desEncrypt(string);
-                LogUtils.e(TAG, "onResponse: " + s.trim());
+                String s = AESUtils.desEncrypt(string).trim();
+                HttpUrl url = call.request().url();
+                String key = url.queryParameter("key");
+                String param = url.queryParameter("param");
+                if (!TextUtils.isEmpty(param)) {
+                    param = AESUtils.desEncrypt(param);
+                }
+                Log.e(TAG, "参数: key=" + key + ", param=" + param);
+                LogUtils.e(TAG, "结果: " + s);
                 T t = gson.fromJson(s, tClass);
                 result(t);
             } catch (Exception e) {
@@ -168,15 +176,34 @@ public class RetrofitService extends BaseRetrofit{
                 if (t.isSuccess()) {
                     success(t);
                 } else {
-                    error(t.getMsg());
+                    String msg = t.getMsg();
+                    if(msg.contains("暂无")){
+                        createEmptyTClass();
+                    }else {
+                        error(msg);
+                    }
                 }
             } else {
-                error("暂无数据");
+                //error("暂无数据");
+                createEmptyTClass();
+            }
+        }
+
+        private void createEmptyTClass() {
+            T t;
+            try {
+                t = tClass.newInstance();
+                success(t);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
         }
 
         /**
          * 成功结果
+         *
          * @param t 不肯能为null
          */
         protected abstract void success(T t);
@@ -193,15 +220,16 @@ public class RetrofitService extends BaseRetrofit{
         public void onResponse(retrofit2.Call<ResponseBody> call, Response<ResponseBody> response) {
             Request request = call.request();
             String string = null;
-            HttpUrl url = request.url();
-            String key = url.queryParameter("key");
-            String param = url.queryParameter("param");
-            //String host = url.host();
-            Log.e(TAG, "onResponse: url=" + url.toString());
-            if (!TextUtils.isEmpty(param)) {
-                param = AESUtils.desEncrypt(param);
+            if (LogUtils.mTag) {
+                HttpUrl url = request.url();
+                String key = url.queryParameter("key");
+                String param = url.queryParameter("param");
+                //String host = url.host();
+                if (!TextUtils.isEmpty(param)) {
+                    param = AESUtils.desEncrypt(param);
+                }
+                Log.e(TAG, "onResponse: key=" + key + ", param=" + param);
             }
-            Log.e(TAG, "onResponse: key=" + key + ", param=" + param);
             try {
                 string = response.body().string();
                 String s = AESUtils.desEncrypt(string);
@@ -220,6 +248,10 @@ public class RetrofitService extends BaseRetrofit{
                         }
                     } else {
                         String error = jsonObject.get("msg").getAsString();
+                        if(null!=error&&error.contains("暂无")){
+                            success(null);
+                            return;
+                        }
                         fail(error);
                     }
                 } else {
@@ -257,12 +289,12 @@ public class RetrofitService extends BaseRetrofit{
         @Override
         public void onResponse(retrofit2.Call<ResponseBody> call, Response<ResponseBody> response) {
             Request request = call.request();
-            String string ;
+            String string;
             HttpUrl url = request.url();
             String key = url.queryParameter("key");
             String param = url.queryParameter("param");
             //String host = url.host();
-            LogUtils.e(TAG, "onResponse: url=" + url.toString());
+            //LogUtils.e(TAG, "onResponse: url=" + url.toString());
             LogUtils.e(TAG, "onResponse: key=" + key + ", param=" + AESUtils.desEncrypt(param));
             try {
                 string = response.body().string();
@@ -290,6 +322,10 @@ public class RetrofitService extends BaseRetrofit{
                         }
                     } else {
                         String error = jsonObject.get("msg").getAsString();
+                        if(null!=error&&error.contains("暂无")){
+                            success(null);
+                            return;
+                        }
                         fail(error);
                     }
                 } else {
@@ -301,7 +337,6 @@ public class RetrofitService extends BaseRetrofit{
                 fail(e.getMessage());
             }
         }
-
         /**
          * 接口数据提示成功
          *

@@ -36,6 +36,7 @@
     </div>
 </body>
 <script>
+    $('header span').eq(1).html(window.android.getClassName());
     //知识点
     function getData (data) {
         var data = JSON.parse(data);        

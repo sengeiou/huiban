@@ -17,7 +17,7 @@
             <span>
                 <a href="/finish_page.html"></a>
             </span>	
-            <span></span>
+            <span>留言</span>
         </header>
         <main>
             <div class="content">
@@ -41,7 +41,7 @@
     console.log(isSelf);
     var recevieId = window.android.getRecevieId();
     console.log(recevieId);
-    $('header span').eq(1).html(name);
+    //$('header span').eq(1).html(name);
     $('#inputMsg').bind('focus', function () {
         $('.note').hide();
     });

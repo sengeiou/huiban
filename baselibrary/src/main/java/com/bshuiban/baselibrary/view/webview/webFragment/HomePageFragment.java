@@ -8,6 +8,7 @@ import com.bshuiban.baselibrary.contract.HomePageContract;
 import com.bshuiban.baselibrary.model.MessageBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.HomePageParent;
+import com.bshuiban.baselibrary.utils.DialogUtils;
 import com.bshuiban.baselibrary.view.dialog.CommentDialog;
 import com.bshuiban.baselibrary.view.dialog.ReplyDialog;
 
@@ -97,6 +98,7 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
 
     @Override
     public void updateMessageList(String json) {
+
         loadJavascriptMethod("message",json);
     }
     @Override
@@ -107,7 +109,10 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
         replyDialog.setMessageListListener(new ReplyDialog.MessageListListener() {
             @Override
             public void deleteMessageItem(String messageId, String pid) {
-                tPresent.delete(messageId,pid);
+                DialogUtils.showMessageSureCancelDialog(getActivity(), "确认删除此留言？", v -> {
+                    tPresent.delete(messageId, pid);
+                    replyDialog.dismiss();
+                });
             }
 
             @Override

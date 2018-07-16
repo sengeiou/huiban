@@ -1,6 +1,4 @@
-package com.bshuiban.baselibrary.present;
-
-import com.bshuiban.baselibrary.model.ResultBean;
+package com.bshuiban.baselibrary.model;
 
 /**
  * Created by xinheng on 2018/5/22.<br/>
@@ -64,6 +62,16 @@ public class StudyBottomBean extends ResultBean {
 
         public void setExamCnt(String examCnt) {
             this.examCnt = examCnt;
+        }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "videoCnt='" + videoCnt + '\'' +
+                    ", length='" + length + '\'' +
+                    ", answerCnt='" + answerCnt + '\'' +
+                    ", examCnt='" + examCnt + '\'' +
+                    '}';
         }
     }
 }

@@ -89,25 +89,25 @@
                     </div>
                 </div>
                 <div class="tabList">
-                    <a href="javascript:void(0)">
+                    <a href="javascript:void(0)" class="classimg">
                         <span class="listImg class"></span>
                         <span>
                             班级
                         </span>
                     </a>
-                    <a href="javascript:void(0)">
+                    <a href="javascript:void(0)" class="timeTableimg">
                         <span class="listImg timeTable"></span>
                         <span>
                             课表
                         </span>
                     </a>
-                    <a href="javascript:void(0)">
+                    <a href="javascript:void(0)" class="noticeimg">
                         <span class="listImg notice"></span>
                         <span>
                             通知
                         </span>
                     </a>
-                    <a href="javascript:void(0)">
+                    <a href="javascript:void(0)" class="followimg">
                         <span class="listImg follow"></span>
                         <span>
                             关注
@@ -120,10 +120,10 @@
                 <h3 class="title">慧辅导</h3>
                 <div class="listlo">
                     <div class="course">
-                        <img src="./images/reset/class_overview_pic.png" alt="" onerror="this.src='./images/reset/classPic.png' ">
+                        <img src="" alt="" onerror="this.src='./images/reset/classPic.png' ">
                     </div>
                     <div class="course">
-                        <img src="./images/reset/class_overview_pic.png" alt="" onerror="this.src='./images/reset/classPic.png' ">
+                        <img src="" alt="" onerror="this.src='./images/reset/classPic.png' ">
                     </div>
                 </div>
                 <p class="lookAll">
@@ -244,15 +244,15 @@
     }
     getNowTime();
     // 班级页
-    var classes = document.getElementsByClassName('class')[0];
+    var classes = document.getElementsByClassName('classimg')[0];
     //  课表页 
-    var timetable = document.getElementsByClassName('timeTable')[0];
+    var timetable = document.getElementsByClassName('timeTableimg')[0];
     // 通知页 
-    var notice = document.getElementsByClassName('notice')[0];
+    var notice = document.getElementsByClassName('noticeimg')[0];
     // 学习资源
     var stusource = document.getElementsByClassName("resources")[0];
     // 关注页 
-    var follow = document.getElementsByClassName('follow')[0];
+    var follow = document.getElementsByClassName('followimg')[0];
     // 慧辅导页 
     var homepage = document.getElementsByClassName('lookAll')[0];
     // 留言页
@@ -429,6 +429,11 @@
         }
         var data = JSON.parse(list)
         console.log(data)
+         if(data.length == 0) {
+            $(".more").html("暂无数据")
+        } else {
+            $(".more").html("查看全部")
+        }
         var attr = "";
         var attr2 = "";
         // var attr;
@@ -447,9 +452,8 @@
                                      <img src=${pro.imgUrl} class="userImg" onerror="this.src='./images/reset/default_head.png'">
                                 </dt>
                                 <dd>
-                                    <p class="name">${pro.sendName}
-                                        <span> 五年级二班</span></p>
-                                    <p class="time">${pro.addTime}</p>
+                                  <p class="name">${pro.sendName}
+                                     <span class="time">${pro.addTime}</span></p>
                                     <p class="content">${pro.content}</p>
                                     <p class="button">
                                         <span class="rep">回复</span>

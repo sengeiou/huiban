@@ -12,6 +12,7 @@ import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.TeachClassPresent;
 import com.bshuiban.baselibrary.utils.TextUtils;
+import com.bshuiban.baselibrary.view.dialog.TeachClassDialog;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
 import com.bshuiban.baselibrary.view.webview.webActivity.LessonInfWebActivity;
@@ -29,6 +30,7 @@ import java.util.List;
 public class LessonListActivity extends BaseWebActivity<LessonListPresent> implements LessonListContract.View, TeachClassContract.View {
     private List<TeachClassBean.DataBean> data;
     private String mJsonSubject;
+    private TeachClassDialog teachClassDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class LessonListActivity extends BaseWebActivity<LessonListPresent> imple
 
     @Override
     public void loadAllSubject(SubjectBean dataBean) {
-        if(null!=dataBean&&null!=dataBean.getData())
+        if (null != dataBean && null != dataBean.getData())
             mJsonSubject = new Gson().toJson(dataBean.getData());
     }
 
@@ -99,20 +101,15 @@ public class LessonListActivity extends BaseWebActivity<LessonListPresent> imple
 
     private void startClassDialog(String courseId) {
         if (HomeworkBean.isEffictive(data)) {
-            List<String> listString = TextUtils.getListString(data);
-            SeleTwoDialog twoDialog = new SeleTwoDialog(this, new SeleTwoDialog.OnClickListener() {
-                @Override
-                public boolean onSure(String left, int leftIndex, String right, int rightIndex) {
-                    tPresent.loadRecommendParent(courseId, data.get(leftIndex).getClassId());
-                    return false;
-                }
-
-                @Override
-                public boolean onCancel() {
-                    return false;
-                }
-            }, listString, null);
-            twoDialog.show();
+            if (null == teachClassDialog) {
+                teachClassDialog = new TeachClassDialog(this);
+                teachClassDialog.setSendClickListener(v1 -> {
+                    tPresent.loadRecommendParent(courseId, teachClassDialog.getSelectClass());
+                    teachClassDialog.dismiss();
+                });
+            }
+            teachClassDialog.setTexts(data);
+            teachClassDialog.show();
         } else {
             toast("暂无所属班级");
         }
@@ -128,11 +125,13 @@ public class LessonListActivity extends BaseWebActivity<LessonListPresent> imple
         public void recommendParent(String courseId) {
             //tPresent.loadRecommendParent(courseId);
             runOnUiThread(() -> {
-                if (null != data) {
+                /*if (null != data) {
                     startClassDialog(courseId);
-                }else {
+                } else {
                     toast("暂无班级");
-                }
+                }*/
+                startActivity(new Intent(getApplicationContext(), TeacherLessonInfWebActivity.class).putExtra("courseId", courseId).putExtra("send",true));
+
             });
         }
 
@@ -157,7 +156,7 @@ public class LessonListActivity extends BaseWebActivity<LessonListPresent> imple
         public void toSearchPage() {
             runOnUiThread(() -> {
                 Intent intent = new Intent(getApplicationContext(), FilterConditionActivity.class);
-                intent.putExtra("json",mJsonSubject);
+                intent.putExtra("json", mJsonSubject);
                 startActivityForResult(intent, 100);
             });
         }

@@ -18,10 +18,15 @@ public abstract class ListPresent<T extends BaseView> extends BasePresent<T> imp
     protected int start;
     protected JsonArray jsonArray;
     protected Gson gson=new Gson();
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
     protected RetrofitService.CallHTMLJsonArray callHTMLJsonArray= new RetrofitService.CallHTMLJsonArray() {
         @Override
         protected void success(JsonArray msg) {
-            LogUtils.e("TAG", "success: "+msg);
+            LogUtils.e("TAG", "success: "+msg+", \n"+(null==jsonArray?0:jsonArray.size()));
             if(isEffective()){
                 if(null==jsonArray){
                     jsonArray=msg;
@@ -32,7 +37,7 @@ public abstract class ListPresent<T extends BaseView> extends BasePresent<T> imp
                         updateView(gson.toJson(jsonArray));
                     }
                 }
-                if(jsonArray.size()==0){
+                if(null==jsonArray||jsonArray.size()==0){
                     fail("暂无数据");
                 }
             }

@@ -84,7 +84,6 @@ public class LoginPresent extends BasePresent<LoginContract.View> implements Log
         });
 
     }
-
     @Override
     public Class<?> getNextActivity(int userType) {
         Class<?> classes=null;

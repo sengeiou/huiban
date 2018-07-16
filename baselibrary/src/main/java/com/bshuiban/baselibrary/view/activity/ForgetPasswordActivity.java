@@ -97,7 +97,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresent> 
             finish();
         } else if (i == R.id.tv_send_code) {
             String phone1 = et_phone.getText().toString();
-            String phoneError = getPhoneError(phone);
+            String phoneError = getPhoneError(phone1);
             if (null != phoneError) {
                 toast(phoneError);
                 return;
@@ -131,8 +131,6 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresent> 
             tPresent.loadChangePassword(phone, code, password);
         }
     }
-
-    ;
 
     @Override
     public void changeSuccess() {

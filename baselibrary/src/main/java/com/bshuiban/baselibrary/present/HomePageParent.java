@@ -1,6 +1,7 @@
 package com.bshuiban.baselibrary.present;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.bshuiban.baselibrary.contract.HomePageContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
@@ -21,8 +22,8 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
 
     public HomePageParent(HomePageContract.View view) {
         super(view);
-
         userId=User.getInstance().getUserId();
+        setLimit(3);
     }
 
     private String getJsonString(String userId) {
@@ -56,7 +57,7 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
     /**
      * 获取慧辅导数据
      */
-    public void getHuiFuDaoTwoData() {//{"index":0,"limit":2}
+    public void getHuiFuDaoTwoData() {//{"index":0,"limit":2}，
         askInternet("getHBCourseList", "{\"index\":0,\"limit\":2}", new RetrofitService.CallHTML() {
             @Override
             protected void success(String msg) {
@@ -75,7 +76,8 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
     }
 
     @Override
-    public void getMessageList(String userId) {//{"userId":""."start":,"limit":10}
+    public void getMessageList(String userId) {//{"userId":""."start":,"limit":10} 限制3条
+        Log.e("TAG", "getMessageList: "+start+", "+limit );
         askInternet("getUserLeaveList", "{\"userId\":\"" + userId + "\",\"start\":" + start + ",\"limit\":" + limit + "}",callHTMLJsonArray);
     }
 
@@ -85,6 +87,7 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
         if (!TextUtils.isEmpty(json)) {
             dataBeans = gson.fromJson(json, new TypeToken<List<MessageBean.DataBean>>() {
             }.getType());
+            //Log.e("TAG", "updateView: "+dataBeans.size() );
         }
     }
 

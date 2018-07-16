@@ -91,11 +91,20 @@ public class MessageDialog {
 //            dialog.getWindow().getDecorView().setPadding(0,0,0,0);
         }
     }
+    public MessageDialog setTypeMessage(String text, @MessageDialogType int type,String sure,String cancel) {
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(getContentViewId(text, type));
+        TextView tv_sure = dialog.findViewById(R.id.tv_sure);
+        TextView tv_cancel = dialog.findViewById(R.id.tv_cancel);
+        tv_cancel.setText(cancel);
+        tv_sure.setText(sure);
+        return this;
+    }
     public MessageDialog setTypeMessage(String text, @MessageDialogType int type) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(getContentViewId(text, type));
-        TextView tv_text = dialog.findViewById(R.id.tv_text);
-        tv_text.setMinHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,mContext.getResources().getDimension(R.dimen.dp_40),mContext.getResources().getDisplayMetrics()));
+        //TextView tv_text = dialog.findViewById(R.id.tv_text);
+        //tv_text.setMinHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,mContext.getResources().getDimension(R.dimen.dp_40),mContext.getResources().getDisplayMetrics()));
         return this;
     }
     public MessageDialog setTypeMessage(String text, @MessageDialogType int type,int gravity) {

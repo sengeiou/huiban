@@ -54,7 +54,7 @@ public abstract class HomePageActivity<T extends Fragment, P extends BasePresent
             }
         }));
         initNavigationView(head, ll_parent);
-        //ll_parent.addView(getSlideView(R.mipmap.app_logo,"H5测试","test",ll_parent));
+        ll_parent.addView(getSlideView(R.mipmap.app_logo,"H5测试","test",ll_parent));
         initBottomBar(rg_container);
         new ImageUploadHeadPresent(null).loadImageHead();
     }

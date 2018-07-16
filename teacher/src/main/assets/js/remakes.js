@@ -39,13 +39,9 @@ function remakes(data) {
 
 // 批改完成啊按钮
 $(".button").click(function(){
-  if (count != 0) {
-      $(".hint").css({
-      "display": "block"
-      })
-  }else{
-      window.android.commit();
-  }
+            console.log(count);
+      window.android.commit(count);
+
 })
 // 继续作答
 $(".span2").click(function(){

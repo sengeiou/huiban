@@ -1,6 +1,4 @@
-package com.bshuiban.baselibrary.present;
-
-import com.bshuiban.baselibrary.model.ResultBean;
+package com.bshuiban.baselibrary.model;
 
 import java.util.List;
 

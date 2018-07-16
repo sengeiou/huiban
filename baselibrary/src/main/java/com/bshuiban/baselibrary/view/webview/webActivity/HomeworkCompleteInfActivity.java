@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.R;
@@ -45,8 +46,18 @@ public class HomeworkCompleteInfActivity extends BaseWebActivity{
         recycleView=findViewById(R.id.recycleView);
 
         TitleView titleView = findViewById(R.id.titleView);
-        titleView.setOnClickListener(v-> finish());
-        titleView.setRight_text(null, Color.WHITE,14);
+        titleView.setOnClickListener(new TitleView.OnClickListener() {
+            @Override
+            public void leftClick(View v) {
+                finish();
+            }
+
+            @Override
+            public void rightClick(View v) {
+                startActivity(new Intent(getApplicationContext(),HomeworkResultWebActivity.class).putExtra(HOME_Work_Id,workId).putExtra(HOME_PREPARE,prepareId).putExtra("complete",true));
+            }
+        });
+        //titleView.setRight_text("结果", Color.WHITE,14);
         loadFileHtml("homework_details");
         registerWebViewH5Interface(new HomeworkCompleteInfHtml());
         int dimension = (int) getResources().getDimension(R.dimen.dp_10);

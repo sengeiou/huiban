@@ -37,6 +37,7 @@
 </body>
 <script>
     var noCount = 0, count = 0, endCount = 0;
+    var total = "";
     function getContent (data) {
         var data = JSON.parse(data);
         $('.time').html(data.releaseTime + '&nbsp; - &nbsp;' + data.endTime);
@@ -64,6 +65,7 @@
         $('.con').html($('.con').html()+`(${count})`);
         $('.end').html($('.end').html()+`(${endCount})`);
         $('.no').html($('.no').html()+`(${noCount})`);
+        total = $('.msg').html();
         $('nav p').bind('click', function () {
             $('.msg').html('');
             var nowCon;
@@ -82,7 +84,7 @@
                         <span class="answer"><img src="./images/teacher/end_answer@2x.png" /><i>${data.list[i].name}</i></span>
                     `);
                 } else if ($(this).attr('class')=="all") {
-                    $('.msg').html(nowMsg);
+                    $('.msg').html(total);
                 }
             }
             $('nav').hide();

@@ -67,6 +67,7 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
         recycle = view.findViewById(R.id.recycle);
         recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
         teaInfoBeanGeneralSituationAdapter.setContext(getActivity());
+        teaInfoBeanGeneralSituationAdapter.setTeacher(true);
         stuInfoBeanGeneralSituationAdapter.setContext(getActivity());
         recycle.setAdapter(teaInfoBeanGeneralSituationAdapter);
         color=getResources().getColor(R.color.guide_start_btn);
@@ -142,6 +143,14 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
 
     private GeneralBean.DataBean.TeaInfoBean teaInfoBean;
     private GeneralSituationAdapter<GeneralBean.DataBean.TeaInfoBean> teaInfoBeanGeneralSituationAdapter=new GeneralSituationAdapter<GeneralBean.DataBean.TeaInfoBean>() {
+        @Override
+        protected void toPeopleSpace(int position) {
+            int userId = mList.get(position).getTeacherId();
+            Intent intent = new Intent("com.bshuiban.teacher.webView.webActivity.MySpaceWebActivity")
+                    .putExtra("userId", userId);
+            startActivity(intent);
+        }
+
         @Override
         protected String getImagePath(int position) {
             return mList.get(position).getImgUrl();

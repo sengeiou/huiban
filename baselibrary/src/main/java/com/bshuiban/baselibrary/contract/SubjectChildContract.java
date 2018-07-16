@@ -1,7 +1,8 @@
 package com.bshuiban.baselibrary.contract;
 
-import com.bshuiban.baselibrary.present.StudyBottomBean;
-import com.bshuiban.baselibrary.present.StudyReportBean;
+
+import com.bshuiban.baselibrary.model.StudyBottomBean;
+import com.bshuiban.baselibrary.model.StudyReportBean;
 
 /**
  * Created by xinheng on 2018/5/21.<br/>

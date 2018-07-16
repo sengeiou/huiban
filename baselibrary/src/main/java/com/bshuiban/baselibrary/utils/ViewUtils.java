@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.bshuiban.baselibrary.R;
-import com.bshuiban.baselibrary.present.StudyBottomBean;
+import com.bshuiban.baselibrary.model.StudyBottomBean;
 
 /**
  * Created by xinheng on 2018/4/26.<br/>
@@ -43,11 +43,17 @@ public class ViewUtils {
         TextView tv_time=view.findViewById(R.id.textView12);
         TextView tv_count=view.findViewById(R.id.textView22);
         TextView tv_complete=view.findViewById(R.id.textView32);
-
-        setText(tv_video,data.getVideoCnt());
-        setText(tv_time,data.getLength());
-        setText(tv_count,data.getAnswerCnt());
-        setText(tv_complete,data.getExamCnt());
+        if(null!=data) {
+            setText(tv_video, data.getVideoCnt());
+            setText(tv_time, data.getLength());
+            setText(tv_count, data.getAnswerCnt());
+            setText(tv_complete, data.getExamCnt());
+        }else {
+            setText(tv_video, null);
+            setText(tv_time, null);
+            setText(tv_count,null);
+            setText(tv_complete, null);
+        }
 
     }
     public static void setText(TextView tv,String s){

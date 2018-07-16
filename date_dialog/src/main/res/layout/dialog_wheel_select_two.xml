@@ -27,11 +27,16 @@
 
 
     </LinearLayout>
-
+    <View
+        android:id="@+id/line"
+        android:layout_below="@+id/select_time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cutting_line"/>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/select_time_layout"
+        android:layout_below="@id/line"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:orientation="horizontal">

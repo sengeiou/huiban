@@ -1,6 +1,8 @@
 package com.bshuiban.baselibrary.view.webview.webActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -12,7 +14,7 @@ import com.bshuiban.baselibrary.R;
 
 public class TestWebViewActivity extends BaseWebActivity {
 
-    private EditText et_content;
+    private TextView et_content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +24,11 @@ public class TestWebViewActivity extends BaseWebActivity {
         setWebViewSetting(mWebView);
         TextView tv_sure=findViewById(R.id.tv_sure);
         et_content=findViewById(R.id.et_content);
-        et_content.setText("http://192.168.0.3:90/");
-
+        et_content.setText("字体大小");
+        et_content.setTextColor(Color.BLACK);
+        et_content.setBackgroundColor(Color.WHITE);
+        et_content.setPadding(10,10,10,10);
+        et_content.setTextSize(TypedValue.COMPLEX_UNIT_PX,44);
         mWebView.setWebChromeClient(new WebChromeClient(){
         });
         mWebView.setWebViewClient(new WebViewClient(){
@@ -33,6 +38,7 @@ public class TestWebViewActivity extends BaseWebActivity {
             }
         });
         tv_sure.setOnClickListener(v-> mWebView.loadUrl(et_content.getText().toString().trim()));
+        loadFileHtml("testTextSize");
     }
 
     @Override

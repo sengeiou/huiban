@@ -2,13 +2,11 @@ package com.bshuiban.baselibrary.view.activity;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.view.customer.TitleView;
 import com.bshuiban.baselibrary.view.fragment.ClassScheduleFragment;
-import com.bshuiban.baselibrary.view.fragment.ClassScheduleFragment1;
 
 public class ClassScheduleActivity extends BaseActivity {
 

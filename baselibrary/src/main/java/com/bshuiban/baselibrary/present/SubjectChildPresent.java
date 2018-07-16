@@ -2,6 +2,8 @@ package com.bshuiban.baselibrary.present;
 
 import com.bshuiban.baselibrary.contract.SubjectChildContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
+import com.bshuiban.baselibrary.model.StudyBottomBean;
+import com.bshuiban.baselibrary.model.StudyReportBean;
 import com.bshuiban.baselibrary.model.User;
 
 /**

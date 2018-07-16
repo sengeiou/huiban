@@ -19,11 +19,11 @@ function answer(data) {
   for(let i=0; i<list.homework.length; i++) {
       if(list.homework[i].complete == true) {
         str+=`<li class="li" style="background:#eee">${i+1}</li>`;
-         count++;
+
       } else {
         str+=`<li class="li">${i+1}</li>`
-        count++;
         console.log(count)
+        count++;
       }
   }
   ul.innerHTML=str;
@@ -36,18 +36,21 @@ var moren = document.getElementsByClassName("span")[1];
 var hint = document.getElementsByClassName("hint")[0];
 // 保存作业
     save.onclick = function () {
-      window.android.commitHomework(false)
-        hint.style.display = "none"
+    window.android.commitHomework(count,false);
+//      window.android.commitHomework(false)
+//        hint.style.display = "none"
     }
 // 提交作业
 submit.onclick = function() {
-    if( count != 0) {
-        hint.style.display = "block";
-        num.innerHTML = count;
-    }else{
-        window.android.commitHomework(true);
-        $(".backh").attr("href","javascript:void(0)")
-    }
+    console.log(count)
+    window.android.commitHomework(count,true);
+//    if( count != 0) {
+//        hint.style.display = "block";
+//        num.innerHTML = count;
+//    }else{
+//        window.android.commitHomework(true);
+//        $(".backh").attr("href","javascript:void(0)")
+//    }
 }
 // 继续作答
     continu.onclick = function () {
@@ -78,7 +81,7 @@ function judge() {
           }
     }
     ul.innerHTML = str;
-    but.innerHTML = `<p class="backhomelist">返回作业力列表</p>`;
+    but.innerHTML = `<p class="backhomelist">返回作业列表</p>`;
     var backlist = document.getElementsByClassName('backhomelist')[0];
     // 返回作业列表
     backlist.onclick = function() {

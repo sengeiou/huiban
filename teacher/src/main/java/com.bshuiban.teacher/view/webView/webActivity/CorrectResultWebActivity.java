@@ -9,6 +9,7 @@ import android.webkit.JavascriptInterface;
 import com.bshuiban.baselibrary.model.Homework;
 import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.model.LogUtils;
+import com.bshuiban.baselibrary.utils.DialogUtils;
 import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
 import com.bshuiban.teacher.contract.CorrectResultContract;
 import com.bshuiban.teacher.present.CorrectResultPresent;
@@ -31,7 +32,7 @@ import static com.bshuiban.baselibrary.view.webview.webActivity.HomeworkListWebA
  */
 public class CorrectResultWebActivity extends BaseWebActivity<CorrectResultPresent> implements CorrectResultContract.View {
     private String jsonObjectS;
-    private int workId,home_type;
+    private int workId, home_type;
     private String studentId;
     private String preId;
     private List<HomeworkBean> homeworkBeans;
@@ -43,29 +44,29 @@ public class CorrectResultWebActivity extends BaseWebActivity<CorrectResultPrese
         Intent intent = getIntent();
         String json = intent.getStringExtra("json");
         preId = intent.getStringExtra("preparationId");
-        studentId = intent.getIntExtra("studentId",-1)+"";
+        studentId = intent.getIntExtra("studentId", -1) + "";
         String stuName = intent.getStringExtra("stuName");
         String title = intent.getStringExtra("title");
         Type type1 = new TypeToken<List<HomeworkBean>>() {
         }.getType();
         homeworkBeans = new Gson().fromJson(json, type1);
         JsonArray asJsonArray = new JsonParser().parse(json).getAsJsonArray();
-        JsonObject jsonObject=new JsonObject();
-        jsonObject.addProperty("title",title);
-        jsonObject.addProperty("stuName",stuName);
-        jsonObject.add("homework",asJsonArray);
-        jsonObjectS=new Gson().toJson(jsonObject);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("title", title);
+        jsonObject.addProperty("stuName", stuName);
+        jsonObject.add("homework", asJsonArray);
+        jsonObjectS = new Gson().toJson(jsonObject);
         loadFileHtml("remakes");
         registerWebViewH5Interface(new CorrectResultHtml());
         this.workId = getIntent().getIntExtra(HOME_Work_Id, -1);
         home_type = getIntent().getIntExtra(HOME_TYPE, 1);
         classId = getIntent().getStringExtra("classId");
-        tPresent=new CorrectResultPresent(this);
+        tPresent = new CorrectResultPresent(this);
     }
 
     @Override
     protected void webViewLoadFinished() {
-        loadJavascriptMethod("remakes",jsonObjectS);
+        loadJavascriptMethod("remakes", jsonObjectS);
     }
 
     private String changeForMarkHBWork(List<HomeworkBean> homeworkBeans) {
@@ -73,7 +74,7 @@ public class CorrectResultWebActivity extends BaseWebActivity<CorrectResultPrese
             StringBuffer stringBuffer = new StringBuffer();
             for (int i = 0; i < homeworkBeans.size(); i++) {
                 HomeworkBean homeworkBean = homeworkBeans.get(i);
-                if(homeworkBean.getCorrect()) {
+                if (homeworkBean.getCorrect()) {
                     stringBuffer.append(homeworkBean.getProblemId());
                     stringBuffer.append("___");
                     stringBuffer.append(getAnswerResult(homeworkBean.getResult()));
@@ -83,7 +84,7 @@ public class CorrectResultWebActivity extends BaseWebActivity<CorrectResultPrese
             }
             int length = stringBuffer.length();
             String s = stringBuffer.delete(length - 3, length).toString();
-            LogUtils.e(TAG, "changeForMarkHBWork: "+s );
+            LogUtils.e(TAG, "changeForMarkHBWork: " + s);
             return s;
         }
         return null;
@@ -102,7 +103,7 @@ public class CorrectResultWebActivity extends BaseWebActivity<CorrectResultPrese
 
     @Override
     public void commitSuccess() {
-        startActivity(new Intent(getApplicationContext(),PrepareLessonInfActivity.class));
+        startActivity(new Intent(getApplicationContext(), PrepareLessonInfActivity.class));
         finish();
     }
 
@@ -120,10 +121,19 @@ public class CorrectResultWebActivity extends BaseWebActivity<CorrectResultPrese
     public void fail(String error) {
         toast(error);
     }
-    class CorrectResultHtml{
+
+    class CorrectResultHtml {
         @JavascriptInterface
-        public void commit(){
-            tPresent.commitHomeworkResult(classId,preId,home_type,workId,studentId,changeForMarkHBWork(homeworkBeans));
+        public void commit(int size) {
+            if (size > 0) {
+                runOnUiThread(() ->
+                        DialogUtils.showMessageSureCancelDialog(CorrectResultWebActivity.this, "还有" + size + "未批阅，确认提交吗？","确认完成","放弃批改", v ->
+                                tPresent.commitHomeworkResult(classId, preId, home_type, workId, studentId, changeForMarkHBWork(homeworkBeans))
+                        )
+                );
+            } else {
+                tPresent.commitHomeworkResult(classId, preId, home_type, workId, studentId, changeForMarkHBWork(homeworkBeans));
+            }
         }
     }
 }

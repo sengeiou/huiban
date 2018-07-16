@@ -98,9 +98,9 @@ public class AboutSelfActivity extends BaseActivity<UpdateAppPresent> implements
         String name = "huiban" + versionName + ".apk";
         String path = User.path + "app/" + name;
         if(new File(path).exists()){
-            //AppUpdate.installApk(getApplicationContext(),path);
-            //installApp(path);
-            //return;
+            AppUpdate.installApk(getApplicationContext(),path);
+            installApp(path);
+            return;
         }
         ProgressResponseBody.ProgressListener progressListener = (progress, total, done) -> {
             //Log.e(TAG, "onProgress: "+progress +", "+(int) (progress*100f/total));
@@ -134,7 +134,7 @@ public class AboutSelfActivity extends BaseActivity<UpdateAppPresent> implements
         int verNum = dataBean.getVerNum();
         version = dataBean.getVersion();
         dismissDialog();
-        if (verNum <= versionCode) {
+        if (verNum > versionCode) {
             //detectionUpdate(downUrl,version);
             updateDialogPrompt(version, describe);
         } else {

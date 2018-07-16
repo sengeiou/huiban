@@ -179,7 +179,8 @@ public class ParentsHomeActivity extends HomePageActivity<InteractionBaseWebView
             String realName = data.getRealName();
             tv_name.setText(com.bshuiban.baselibrary.utils.TextUtils.cleanNull(realName)+"家长");
             String schoolName = com.bshuiban.baselibrary.utils.TextUtils.cleanNull(data.getSchoolName());
-            String gradleName = com.bshuiban.baselibrary.utils.TextUtils.cleanNull(data.getGradeName());
+            //2018年7月12日应产品要求，去除年级
+            String gradleName = "";//com.bshuiban.baselibrary.utils.TextUtils.cleanNull(data.getGradeName());
             List<String> classNames = data.getClassName();
             String className = "";
             if (null != classNames && classNames.size() > 0) {

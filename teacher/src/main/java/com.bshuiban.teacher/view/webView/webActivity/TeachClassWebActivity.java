@@ -3,9 +3,13 @@ package com.bshuiban.teacher.view.webView.webActivity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.bshuiban.baselibrary.contract.SendNoticeContract;
+import com.bshuiban.baselibrary.model.TeachClassBean;
+import com.bshuiban.baselibrary.present.SendNoticePresent;
 import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
-import com.bshuiban.teacher.contract.SendNoticeContract;
-import com.bshuiban.teacher.present.SendNoticePresent;
+import com.google.gson.Gson;
+
+import java.util.List;
 
 /**
  * Created by xinheng on 2018/5/31.<br/>
@@ -24,9 +28,10 @@ public class TeachClassWebActivity extends BaseWebActivity<SendNoticePresent>imp
         tPresent.loadClassList();
     }
 
+
     @Override
-    public void updateClassList(String msg) {
-        loadJavascriptMethod("rend",msg);
+    public void updateClassList(List<TeachClassBean.DataBean> dataBeanList) {
+        loadJavascriptMethod("rend",new Gson().toJson(dataBeanList));
     }
 
     @Override

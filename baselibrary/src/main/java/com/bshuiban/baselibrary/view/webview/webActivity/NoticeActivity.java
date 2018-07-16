@@ -10,6 +10,7 @@ import com.bshuiban.baselibrary.contract.NoticeContract;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.NoticePresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
+import com.bshuiban.baselibrary.view.activity.SendNoticeActivity;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 
 /**
@@ -70,22 +71,12 @@ public class NoticeActivity extends BaseWebActivity<NoticePresent> implements No
     class NoticeHtml extends MessageList{
         @JavascriptInterface
         public void send(){
-            try {
-                Class<?> aClass = Class.forName("com.bshuiban.teacher.view.webView.webActivity.SendNoticeWebActivity");
-                toNextActivity(aClass);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            runOnUiThread(()-> startActivityForResult(new Intent(getApplicationContext(), SendNoticeActivity.class).putExtra("send_type",0),100));
         }
         @JavascriptInterface
         public String getUserId(){
             return User.getInstance().getUserId();
         }
-    }
-    private void toNextActivity(Class<?> aClass){
-        runOnUiThread(()->{
-            startActivityForResult(new Intent(getApplicationContext(),aClass),100);
-        });
     }
 
     @Override

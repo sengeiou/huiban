@@ -59,17 +59,17 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 webViewLoadFinished();
-                mWebView.loadUrl("javascript:(function(){" +
-                        "var objs = document.getElementsByTagName(\"img\"); " +
-                        "for (var i = 0; i < dele.length; i++) {" +
-                        "(function (i) {" +
-                        "dele[i].onclick = function () {" +
-                        "window.android.openImage(this.src)" +
-                        "}" +
-                        "})(i)" +
-                        "}" +
-                        "})"
-                );
+//                mWebView.loadUrl("javascript:(function(){" +
+//                        "var objs = document.getElementsByTagName(\"img\"); " +
+//                        "for (var i = 0; i < dele.length; i++) {" +
+//                        "(function (i) {" +
+//                        "dele[i].onclick = function () {" +
+//                        "window.android.openImage(this.src)" +
+//                        "}" +
+//                        "})(i)" +
+//                        "}" +
+//                        "})"
+//                );
 
             }
 

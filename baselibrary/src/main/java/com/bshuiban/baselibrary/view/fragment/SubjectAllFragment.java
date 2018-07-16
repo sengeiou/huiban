@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,7 +16,7 @@ import android.widget.RelativeLayout;
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.SubjectAllContract;
 import com.bshuiban.baselibrary.model.StuLearnReportBean;
-import com.bshuiban.baselibrary.present.StudyBottomBean;
+import com.bshuiban.baselibrary.model.StudyBottomBean;
 import com.bshuiban.baselibrary.present.SubjectAllPresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
 import com.bshuiban.baselibrary.view.adapter.RankPagerAdapter;
@@ -24,9 +25,7 @@ import com.bshuiban.baselibrary.view.customer.WordGridView;
 import com.bshuiban.baselibrary.view.customer.ZoomOutPageTransformer;
 import com.bshuiban.baselibrary.view.interfaces.OnReportDateListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,9 +60,11 @@ public class SubjectAllFragment extends BaseFragment<SubjectAllPresent> implemen
     }
 
     public void updateDataForDate() {
-        String date=onReportDateListener.getDate();
-        tPresent.loadStuLearnReportAll(date);
-        tPresent.loadStudyBottom(date);
+        if(onContrastData!=null) {
+            String date = onReportDateListener.getDate();
+            tPresent.loadStuLearnReportAll(date);
+            tPresent.loadStudyBottom(date);
+        }
     }
 
     private void initViewPager() {
@@ -92,11 +93,12 @@ public class SubjectAllFragment extends BaseFragment<SubjectAllPresent> implemen
 
     @Override
     public void fail(String error) {
-
+        toast("all-"+error);
     }
 
     @Override
     public void updateStudyBottom(StudyBottomBean.DataBean data) {
+        Log.e("TAG", "updateStudyBottom: "+data!=null?data.toString():"null" );
         ViewUtils.setViewData(include,data);
     }
 

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.bshuiban.baselibrary.contract.SubjectAllContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 import com.bshuiban.baselibrary.model.StuLearnReportBean;
+import com.bshuiban.baselibrary.model.StudyBottomBean;
 import com.bshuiban.baselibrary.model.User;
 
 import java.util.List;

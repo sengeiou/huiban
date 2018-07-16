@@ -71,6 +71,7 @@
         background:rgba(175,175,175,0.7);
         display:none;
     }
+
     </style>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/index.css">
@@ -111,7 +112,7 @@
             $('main').html(nowMsg + `
                 <div class="content">
                     <dl>
-                        <dt><img src="${data[i].ico}" onerror="this.src='./images/reset/default_head.png'"/></dt>
+                        <dt class="dt"><img src="${data[i].ico}" onerror="this.src='./images/reset/default_head.png'"/></dt>
                         <dd>
                             <p>${data[i].name}</p>
                             <p>${data[i].subjectName}</p>
@@ -141,20 +142,47 @@
 
 
         }
-        $('.content dl dt').bind('click', function () {
-            var ind = $(this).index();
-            console.log(ind);
-            console.log(data[ind].roleId);
-            if(data[ind].roleId == 2 || data[ind].roleId == 3){
-                var attUserId = data[ind].attUserId;
-                if(attUserId==undefined){
-                    attUserId=data[ind].userId;
+
+        var dt = document.getElementsByClassName("dt");
+
+        for(var i=0; i<dt.length; i++) {
+            (function(i){
+                dt[i].onclick = function() {
+
+                        if(data[i].roleId == 2 || data[i].roleId == 3){
+                            var attUserId = data[i].attUserId;
+                            if(attUserId==undefined){
+                                attUserId=data[i].userId;
+                            }
+                            window.android.toSpacePage(attUserId);
+                        }else {
+                            window.android.toast("学生没有个人空间");
+                        }
                 }
-                window.android.toSpacePage(attUserId);
-            }else {
-                window.android.logResult(data[ind].roleId+'');
-            }
-         })
+            })(i)
+        }
+
+
+               $(".hints").click(function(){
+                        $(this).css({
+                            "display":"none"
+                        })
+               })
+
+        <!--$('.content dl dt').bind('click', function () {-->
+            <!--var ind = $(this).index();-->
+            <!--console.log(ind);-->
+            <!--console.log(data[ind].roleId);-->
+            <!--if(data[ind].roleId == 2 || data[ind].roleId == 3){-->
+                <!--var attUserId = data[ind].attUserId;-->
+                <!--if(attUserId==undefined){-->
+                    <!--attUserId=data[ind].userId;-->
+                <!--}-->
+                <!--window.android.toSpacePage(attUserId);-->
+            <!--}else {-->
+                <!--window.android.logResult(data[ind].roleId+'');-->
+            <!--}-->
+         <!--})-->
         //取消关注
         $('.flag').bind('click', function () {
             if ($(this).children('span').text() == "取消关注") {

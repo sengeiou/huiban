@@ -15,8 +15,8 @@
            bottom:0;
            background: #2ACABA;
            color:white; 
-           height: 1rem;
-           line-height: 1rem;
+           height: .9rem;
+           line-height: .9rem;
            text-align: center;
         }
         .kind{
@@ -98,7 +98,7 @@
                 <div class="all"></div>
             </div>
                 <div class="button">
-                    <span class="sure">确定</span>
+                    确定
                 </div>
         </main>
     </div>
@@ -109,8 +109,7 @@
      //渲染筛选列表
      function sxContent(data) {
          var data = JSON.parse(data);     
-         console.log(data)  
-        //  dataType = 1;
+         console.log(data)
          if(dataType == 0){ 
             $('.type .all').html('');
            $(' .grade .all').html('');
@@ -120,7 +119,6 @@
                 var nowMsg = $(' .brand .all').html();
                 $(' .brand .all').html(nowMsg + `<span>${data[i].organName}</span>`);
             };
-            dataType = 1;
             $(' .brand span').bind('click', function () {
                 $(' .brand span').removeClass('selected');
                 $(this).addClass('selected');
@@ -128,7 +126,9 @@
                     $(' .type .all').html('');
                     $(' .grade .all').html('');
                     $(' .classes .all').html('');
+                     dataType = 0;
                 }else {
+                    dataType = 1;
                     var val = $(this).text();
                     var orgId,subjectId;
                     for (var i=0;i<data.length;i++) {
@@ -136,6 +136,7 @@
                             orgId = data[i].orgId;
                             console.log(orgId)
                             subjectId = data[i].subjectId;
+
                         }
                     } 
                     var msg = JSON.stringify({"organId": orgId,"subjectId": subjectId});
@@ -152,14 +153,16 @@
                 var nowMsg = $(' .type .all').html();
                 $(' .type .all').html(nowMsg + `<span>${data[i].typeName}</span>`);
             };
-            dataType = 2;
+
             $(' .type span').bind('click', function () {
                 $(' .type span').removeClass('selected');
                 $(this).addClass('selected');
                 if ($(this).text() == "全部") {
                     $(' .grade .all').html('');
                     $(' .classes .all').html('');
+                     dataType = 1;
                 }else {
+                 dataType = 2;
                     var val = $(this).text();
                     classTN = val;
                     for (var i=0;i<data.length;i++) {
@@ -186,7 +189,9 @@
                 $(this).addClass('selected');
                 if ($(this).text() == "全部") {
                     $(' .classes .all').html('');
+                    dataType = 2;
                 }else {
+                  dataType = 3;
                     var val = $(this).text();
                     gradeN = val;
                     for (var i=0;i<data.length;i++) {
@@ -195,13 +200,13 @@
                             subjectId = data[i].subjectId;
                             classType = data[i].vipTypeId;
                             gradeId = data[i].gradeId;
+
                         }
                     }
                     var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId});
                     window.android.loadClassTypeUse(msg);
                 }
             });
-            dataType=3;
          } 
          else if (dataType==3) {
             $('.classes .all').html('');
@@ -234,7 +239,7 @@
      }
     // sxContent(banx);
     //点击确定
-    $('.sure').bind('click', function () {
+    $('.button').bind('click', function () {
         var msg = JSON.stringify({"organId": organId,"subjectId": subjectId,"classType": classType,"gradeId":gradeId,"clType":classesId});
         window.android.sureFilter(msg);
     })

@@ -227,24 +227,27 @@ overflow: scroll;
 .button{
    position: absolute;
    bottom:0;
-   height:1rem;
+   height:.84rem;
    width:100%;
 }
 .button p{
-    height:.1rem;
+    height:.84rem;
     width:100%;
     text-align:center;
     border:1px solid #00c7b5;
-    line-height: 1rem;
+    line-height: .84rem;
     color:#00c7b5
 }
 .button button{
     background:#ffffff;
     border:1px solid #00c7b5;
     width:50%;
-    height:1rem;
+    height:.84rem;
     float: left;
     color:#00c7b5
+}
+.button button:first-of-type{
+    border-right:none;
 }
 .button button:hover{
     background:#00c7b5;
@@ -319,9 +322,6 @@ overflow: scroll;
     .list div{
     width: 100% !important;
     }
-      .list>img{
-        width: 100% !important;
-        }
     #analyze li{
     font-family:PingFangSC-Regular;
     font-size:.32rem;
@@ -587,4 +587,8 @@ float:left;
 }
 .totals{
 float: right;
+}
+#text [img-type="tex"]{
+    max-height:.32rem;
+    max-width:.32rem;
 }

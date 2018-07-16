@@ -20,6 +20,7 @@ import android.webkit.WebViewClient;
 import com.bshuiban.baselibrary.internet.ProgressResponseBody;
 import com.bshuiban.baselibrary.internet.RetrofitDownload;
 import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.utils.DialogUtils;
 import com.bshuiban.baselibrary.view.activity.ClassActivity;
 import com.bshuiban.baselibrary.view.activity.ClassScheduleActivity;
 import com.bshuiban.baselibrary.view.dialog.MessageDialog;
@@ -58,7 +59,7 @@ public class StudentHomePageFragment extends HomePageFragment {
         stuHomePageHtml.setOnListener(new MessageList.MessageListListener() {
             @Override
             public void deleteMessageItem(String messageId, String pid) {
-                tPresent.delete(messageId,pid);
+                DialogUtils.showMessageSureCancelDialog(getActivity(),"确认删除此留言？", v -> tPresent.delete(messageId,pid));
             }
 
             @Override

@@ -17,9 +17,12 @@
     <color name="grg_text">#D2D2D2</color>
     <color name="gray1">#5a5e64</color>
     <color name="gray2">#888b8e</color>
+    <color name="gray3">#bbb</color>
     <color name="black">#000</color>
     <color name="white">#ffffffff</color>
     <color name="red1">#FF6F5F</color>
     <color name="guide_light">#96FEF9</color>
     <color name="translucent_background">#4DFFFFFF</color>
+    <color name="yellow1">#f49d0a</color>
+    <color name="green">@android:color/holo_green_light</color>
 </resources>

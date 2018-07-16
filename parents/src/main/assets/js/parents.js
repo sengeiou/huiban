@@ -33,13 +33,13 @@ function getNowTime() {
 }
 getNowTime();
 // 班级页
-var classes = document.getElementsByClassName('class')[0];
+var classes = document.getElementsByClassName('classimg')[0];
 //  课表页 
-var timetable = document.getElementsByClassName('timeTable')[0];
+var timetable = document.getElementsByClassName('timeTableimg')[0];
 // 通知页 
-var notice = document.getElementsByClassName('notice')[0];
+var notice = document.getElementsByClassName('noticeimg')[0];
 // 关注页 
-var follow = document.getElementsByClassName('follow')[0];
+//var follow = document.getElementsByClassName('followimg')[0];
 // 慧辅导页 
 var homepage = document.getElementsByClassName('looktotal')[0];
 // 留言页

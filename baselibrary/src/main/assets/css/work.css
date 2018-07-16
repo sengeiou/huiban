@@ -116,7 +116,6 @@
   display: flex;
   text-align: center;
   line-height: 0.8rem;
-  color: #E7E7E7;
 }
 
 .workIndex main nav span {
@@ -345,4 +344,29 @@ background-image: url("../images/work/see@2x.png");
 .workIndex main .list .listMsg .looka {
 background-image: url("../images/work/see@2x.png");
 }
+}
+.yresult>span>img{
+  width: 70%;
+  height: 50px;
+}
+.wrongPage main .wrongMsg .examina>img{
+  height: 1rem;
+  vertical-align: bottom
+}
+.examina .lxitem_ct_frm .lxitem_ct_main p>[img-type="tex"]{
+  height: .4rem!important;
+  vertical-align: bottom
+}
+.examina .lxitem_ct_frm .lxitem_ct_main p>[img-type="img"]{
+  height:2rem!important;
+  vertical-align: bottom
+}
+.examina .lxitem_ct_frm ol>[img-type="img"]{
+  height: 1rem;
+}
+.examina .lxitem_ct_frm ol>[img-type="tex"]{
+  height: .25rem;
+}
+examina>img {
+  height: 1rem;
 }

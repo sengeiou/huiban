@@ -3,6 +3,7 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.HomeworkResultContract;
@@ -15,6 +16,7 @@ import com.bshuiban.baselibrary.model.PrepareWorkAnswerBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.model.VideoAnswerBean;
 import com.bshuiban.baselibrary.present.HomeworkResultPresent;
+import com.bshuiban.baselibrary.utils.DialogUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -81,15 +83,16 @@ public class HomeworkResultWebActivity extends BaseWebActivity<HomeworkResultPre
     class HomeworkResultHtml {
         /**
          * 提交、保存作业
-         *
+         *@param size 未做题目数量
          * @param tag true 提交，false 保存
          */
         @JavascriptInterface
-        public void commitHomework(boolean tag) {
-            if (tag) {
-                tPresent.commitService(prepareId, workId);
-            } else {
-                tPresent.saveHomework(prepareId, workId);
+        public void commitHomework(int size,boolean tag) {
+            String s=tag?"提交":"保存";
+            if(size>0){
+                DialogUtils.showMessageSureCancelDialog(HomeworkResultWebActivity.this,"还有"+size+"题未做，确认"+s+"吗？",v -> HomeworkResultWebActivity.this.commitHomework(tag));
+            }else{
+                HomeworkResultWebActivity.this.commitHomework(tag);
             }
         }
 
@@ -99,6 +102,14 @@ public class HomeworkResultWebActivity extends BaseWebActivity<HomeworkResultPre
         @JavascriptInterface
         public void backHomeworkInf() {
             startActivity(new Intent(getApplicationContext(), HomeworkListWebActivity.class).putExtra("refresh", true));
+        }
+    }
+
+    private void commitHomework(boolean tag) {
+        if (tag) {
+            tPresent.commitService(prepareId, workId);
+        } else {
+            tPresent.saveHomework(prepareId, workId);
         }
     }
 

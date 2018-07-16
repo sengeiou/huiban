@@ -3,6 +3,7 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.FilterHuiFuDaoContract;
@@ -38,6 +39,7 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tPresent = new HuiFuDaoListPresent(this);
+        setTAG(getLocalClassName());
         loadFileHtml(HTML_FILE_NAME);
         HuiFuDaoHtml messageList = new HuiFuDaoHtml();
         messageList.setOnListener(new MessageList.OnMessageListListener() {
@@ -70,16 +72,18 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
 
     @Override
     public void updateList(String json) {
-        dismissDialog();
+        Log.e(TAG, "updateList: " );
         if (jingPin) {
             loadJavascriptMethod("listMsg", json);
         } else {
             jsonListData = json;
             //loadListAndGuessData();
         }
+        dismissDialog();
     }
 
     private void loadListAndGuessData() {
+        Log.e(TAG, "loadListAndGuessData: " );
         loadJavascriptMethod("xr", (jsonListData), (jsonGuessData));
         jsonGuessData = null;
         jsonListData = null;
@@ -102,12 +106,14 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
 
     @Override
     public void loadAllSubject(String json) {
+        Log.e(TAG, "loadAllSubject: " );
         loadJavascriptMethod("getListNav", (json));
     }
 
     @Override
     public void loadGuessWhatYouThink(String json) {
         jsonGuessData = json;
+        Log.e(TAG, "loadGuessWhatYouThink: " );
         //loadJavascriptMethod("xr",replaceJson(,json));
         //loadListAndGuessData();
     }
