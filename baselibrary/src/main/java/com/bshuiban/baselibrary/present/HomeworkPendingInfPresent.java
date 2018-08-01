@@ -7,6 +7,7 @@ import com.bshuiban.baselibrary.model.Homework;
 import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.model.HomeworkInfBean;
 import com.bshuiban.baselibrary.model.ImageUploadResult;
+import com.bshuiban.baselibrary.model.LogUtils;
 import com.bshuiban.baselibrary.model.User;
 import java.util.List;
 
@@ -65,11 +66,16 @@ public class HomeworkPendingInfPresent extends HomeworkPresent<HomeworkPendingIn
 
     @Override
     public void uploadImage(String imgPath) {
+        if(isEffective()){
+            view.startDialog();
+        }
        call = RetrofitUpload.getInstance().loadFile(imgPath, new RetrofitService.CallPlaintext<ImageUploadResult>(ImageUploadResult.class) {
            @Override
            protected void error(String error) {
                if(isEffective()){
+                   view.dismissDialog();
                    view.fail(error);
+                   LogUtils.e("TAG","error="+error);
                }
            }
            @Override
@@ -77,6 +83,7 @@ public class HomeworkPendingInfPresent extends HomeworkPresent<HomeworkPendingIn
                if(isEffective()) {
                    String img = imageUploadResult.getImg();
                    view.updateAnswerResult(url+img);
+                   view.dismissDialog();
                }
            }
        });

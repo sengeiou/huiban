@@ -2,10 +2,13 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.SideCollectionListContract;
 import com.bshuiban.baselibrary.present.SideCollectionListPresent;
+import com.bshuiban.baselibrary.utils.ObserveModeGroupList;
+import com.bshuiban.baselibrary.utils.Observer;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 
 public class SideCollectionListWebActivity extends BaseWebActivity<SideCollectionListPresent> implements SideCollectionListContract.View {
@@ -29,6 +32,8 @@ public class SideCollectionListWebActivity extends BaseWebActivity<SideCollectio
             }
         });
         registerWebViewH5Interface(object);
+        startDialog();
+        //ObserveModeGroupList.getInstance().register(this);
     }
 
     @Override
@@ -38,29 +43,42 @@ public class SideCollectionListWebActivity extends BaseWebActivity<SideCollectio
 
     @Override
     protected void onResume() {
-        tPresent.loadCollectionListData();
+//        if (update) {
+//            update = false;
+//        }
+            tPresent.refresh();
         super.onResume();
     }
 
     @Override
     public void updateList(String json) {
+        dismissDialog();
         loadJavascriptMethod("rend", (json));
         //loadJavascriptMethod("getContent", json);
     }
 
     @Override
     public void startDialog() {
-
+        showLoadingDialog();
     }
 
     @Override
     public void dismissDialog() {
-
+        dismissLoadingDialog();
     }
 
     @Override
     public void fail(String error) {
+        dismissDialog();
         toast(error);
+    }
+
+    protected boolean update;
+
+    @Override
+    protected void onDestroy() {
+        //ObserveModeGroupList.getInstance().unregister(this);
+        super.onDestroy();
     }
 
     class SideCollectionHtml extends MessageList {
@@ -76,12 +94,13 @@ public class SideCollectionListWebActivity extends BaseWebActivity<SideCollectio
                 Class<?> cls = null;
                 try {
                     cls = Class.forName("com.bshuiban.teacher.view.webView.webActivity.TeacherLessonInfWebActivity");
-                    startActivity(new Intent(getApplicationContext(), cls).putExtra("courseId", courseId).putExtra("send",true));
+                    startActivity(new Intent(getApplicationContext(), cls).putExtra("courseId", courseId).putExtra("send", true));
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             });
         }
+
         @JavascriptInterface
         public void toNextHuiFuActivity(String courseId) {
             //startActivity(new Intent(getApplicationContext(), TeacherLessonInfWebActivity.class).putExtra("courseId", courseId));

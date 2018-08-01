@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -68,6 +67,11 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             className = "我的班级";
         }
         titleView.setTitle_text(className);
+        if(User.getInstance().isTeacher()){
+            titleView.setMiddleShow(true);
+        }else {
+            titleView.setMiddleShow(false);
+        }
         titleView.setOnClickListener(new TitleView.OnClickListener() {
             @Override
             public void leftClick(View v) {
@@ -136,7 +140,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(getApplication());
                 simplePagerTitleView.setNormalColor(Color.BLACK);
-                int dp = getResources().getDimensionPixelSize(R.dimen.dp_2);
+                int dp = getResources().getDimensionPixelSize(R.dimen.dp_9);
                 simplePagerTitleView.setPadding(dp, 0, dp, 0);
                 simplePagerTitleView.setSelectedColor(getResources().getColor(R.color.guide_start_btn));
                 int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.dp_15);
@@ -200,7 +204,8 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
         if (HomeworkBean.isEffictive(data)) {
             className = data.get(0).getClassName();
             titleView.setTitle_text(className);
-
+        }else {
+            titleView.setMiddleShow(false);
         }
     }
 

@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bshuiban.baselibrary.BuildConfig;
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.internet.RetrofitDownload;
 import com.bshuiban.baselibrary.model.User;
@@ -54,7 +55,9 @@ public abstract class HomePageActivity<T extends Fragment, P extends BasePresent
             }
         }));
         initNavigationView(head, ll_parent);
-        ll_parent.addView(getSlideView(R.mipmap.app_logo,"H5测试","test",ll_parent));
+//        if(BuildConfig.DEBUG) {
+//            ll_parent.addView(getSlideView(R.mipmap.app_logo,"H5测试","test",ll_parent));
+//        }
         initBottomBar(rg_container);
         new ImageUploadHeadPresent(null).loadImageHead();
     }

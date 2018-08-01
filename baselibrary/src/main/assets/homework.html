@@ -294,7 +294,7 @@
     }
     // 留言页
     messa.onclick = function () {
-        window.android.toNextActivity(6);
+        window.android.toNextActivity(3);
     }
     //个人头像点击
     $(".userImg").click(function(){
@@ -423,11 +423,12 @@
     // 留言页 回复页
     function message(list) {
         $('.box').html('');
-        if(list==''||list=='null'||list==null||list=='[]'){
-            $('.more').hide();
-            return;
+         var data = JSON.parse(list)
+        if(data.length == 0) {
+            $(".more").html("暂无数据")
+        } else {
+            $(".more").html("查看全部")
         }
-        var data = JSON.parse(list)
         console.log(data)
          if(data.length == 0) {
             $(".more").html("暂无数据")
@@ -476,7 +477,7 @@
 
         // 点击加载更多
         mores.onclick = function () {
-            window.android.getMoreData(false)
+             window.android.toNextActivity(6)
         }
         // 回复
         for (var i = 0; i < rep.length; i++) {

@@ -84,7 +84,7 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
 
     @Override
     protected void initBottomBar(BottomBar bottomBar) {
-        bottomBar.addItem(new BottomBarTab(this, R.mipmap.ic_main_tab_home, "首页"))
+        bottomBar.addItem(new BottomBarTab(this, R.mipmap.ic_main_tab_home_u, "首页").setTabPosition(0))
                 .addItem(new BottomBarTab(this, R.mipmap.ic_main_tab_work_u, "备课"))
                 .addItem(new BottomBarTab(this, R.mipmap.ic_main_tab_report_u, "报告"));
                 //.addItem(new BottomBarTab(this, R.mipmap.ic_main_tab_error_u, "错题"));
@@ -189,7 +189,7 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
             } else {
                 RequestOptions requestOptions = new RequestOptions()
                         .circleCrop()
-                        .error(R.drawable.app_logo);
+                        .error(R.mipmap.default_head);
                 Glide.with(this).load(icoPath).apply(requestOptions).into(iv_head);
             }
         }
@@ -207,7 +207,8 @@ public class TeacherHomeActivity extends HomePageActivity<InteractionBaseWebView
 
     @Override
     public void fail(String error) {
-        toast(error);
+        if(null!=error&&!error.contains("留言：暂无"))
+            toast(error);
     }
 
     @Override

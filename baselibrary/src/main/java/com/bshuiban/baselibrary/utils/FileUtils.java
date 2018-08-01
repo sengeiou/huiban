@@ -135,9 +135,10 @@ public class FileUtils {
     /*
      * 检查文件是否存在
      */
-    public static boolean isCheckFileExist(String fileName) {
+    public static String isCheckFileExist(String fileName) {
         File file = new File(fileName);
-        return file.exists();
+        String name = file.getName();
+        return name;
     }
 
     public static File saveBitmap(Bitmap bitmap, String dir, String name) {

@@ -80,7 +80,7 @@ homepage.onclick = function () {
 }
 // 留言页
 messa.onclick = function () {
-    window.android.toNextActivity(6)
+    window.android.toNextActivity(3)
 }
 //相关课程
 $(".tea1").bind("click", function () {

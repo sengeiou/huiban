@@ -105,6 +105,7 @@ public class HomeworkListPresent extends BasePresent<HomeworkListContract.View> 
             protected void fail(String error) {
                 if(isEffective()){
                     view.fail(error);
+                    view.updateSubjects(null);
                 }
             }
         });

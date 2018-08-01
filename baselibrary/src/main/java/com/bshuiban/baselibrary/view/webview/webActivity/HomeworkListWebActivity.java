@@ -131,7 +131,12 @@ public class HomeworkListWebActivity extends BaseWebActivity<HomeworkListPresent
         public int getUserType() {
             return User.getInstance().getUserType();
         }
-
+        @JavascriptInterface
+        public void toastLog(String s){
+            runOnUiThread(()->
+                HomeworkListWebActivity.this.toast(s)
+            );
+        }
         /**
          * 更改学科
          *

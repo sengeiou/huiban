@@ -8,11 +8,11 @@ import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.TeachClassPresent;
-import com.bshuiban.baselibrary.utils.TextUtils;
+import com.bshuiban.baselibrary.utils.Observed;
 import com.bshuiban.baselibrary.view.dialog.TeachClassDialog;
 import com.bshuiban.baselibrary.view.webview.webActivity.LessonInfWebActivity;
+import com.bshuiban.baselibrary.view.webview.webActivity.SideCollectionListWebActivity;
 import com.bshuiban.teacher.present.TeacherLessonInfPresent;
-import com.xinheng.date_dialog.dialog.SeleTwoDialog;
 
 import java.util.List;
 
@@ -24,6 +24,7 @@ public class TeacherLessonInfWebActivity extends LessonInfWebActivity<TeacherLes
     private TeachClassPresent teachClassPresent;
     private TeachClassDialog teachClassDialog;
     private boolean isSend;
+    private Observed observed;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,8 +73,23 @@ public class TeacherLessonInfWebActivity extends LessonInfWebActivity<TeacherLes
     }
 
     @Override
+    public void collectSuccess(String tag) {
+        super.collectSuccess(tag);
+//        observed = new Observed();
+//        ObserveModeGroupList.getInstance().subscribe(observed, SideCollectionListWebActivity.class);
+//        observed.sendNotice("0".equals(tag),null);
+    }
+
+    @Override
     public void recommendSuccess() {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(null!=observed)
+            observed.clear();
+        super.onDestroy();
     }
 
     class TeacherLessonInfHtml extends LessonInfHtml{

@@ -15,13 +15,19 @@ import java.util.List;
  * Created by xinheng on 2018/5/30.<br/>
  * describe：课程列表
  */
-public class LessonListPresent extends ListPresent<LessonListContract.View> implements LessonListContract.Present{
+public class LessonListPresent extends ListPresent<LessonListContract.View> implements LessonListContract.Present {
     private final AllSubjectPresent<LessonListContract.View> allSubjectPresent;
+    private final String key;
     private JsonObject mJson;
     private final RecommendParentParent<LessonListContract.View> recommendParentParent;
 
     public LessonListPresent(LessonListContract.View view) {
         super(view);
+        if (User.getInstance().isTeacher()) {
+            key = "getHBCourseList";
+        } else {
+            key = "getVipCourseRcomList";
+        }
         allSubjectPresent = new AllSubjectPresent<LessonListContract.View>(view) {
             @Override
             protected void loadAllSubject(SubjectBean dataBean) {
@@ -33,7 +39,7 @@ public class LessonListPresent extends ListPresent<LessonListContract.View> impl
                 loadLessonListData(null);
             }
         };
-        recommendParentParent = new RecommendParentParent<LessonListContract.View>(view){
+        recommendParentParent = new RecommendParentParent<LessonListContract.View>(view) {
             @Override
             public void success() {
                 view.fail("成功");
@@ -45,42 +51,43 @@ public class LessonListPresent extends ListPresent<LessonListContract.View> impl
     private void loadAllSubject(SubjectBean dataBean) {
         view.loadAllSubject(dataBean);
         List<SubjectBean.DataBean> data = dataBean.getData();
-        int id=-10;
-        if(HomeworkBean.isEffictive(data)){
+        int id = -10;
+        if (HomeworkBean.isEffictive(data)) {
             for (int i = 0; i < data.size(); i++) {
                 SubjectBean.DataBean dataBean1 = data.get(i);
-                if(dataBean1.getIsSelect()==1){
-                    id=dataBean1.getId();
+                if (dataBean1.getIsSelect() == 1) {
+                    id = dataBean1.getId();
                     break;
                 }
             }
         }
         //{"subjectId":""}
         String key;
-        if(id==-10){
-            key=null;
-        }else {
-            key="{\"subjectId\":"+id+"}";
+        if (id == -10) {
+            key = null;
+        } else {
+            key = "{\"subjectId\":" + id + "}";
         }
         loadLessonListData(key);
     }
 
     @Override
     public void loadLessonListData(String json) {
-        mJson=pareJsonObj(json);
-        start=0;
+        mJson = pareJsonObj(json);
+        start = 0;
         clearArray();
         getInterNetData();
     }
 
     @Override
     public void loadSearchLessonListData(String search) {
-        if(mJson==null){
-            mJson=new JsonObject();
+        if (mJson == null) {
+            mJson = new JsonObject();
         }
-        start=0;
-        mJson.addProperty("name",search);
-        //mJson.addProperty("keyword",search);
+        start = 0;
+//        mJson.addProperty("name", search);
+        clearArray();
+        mJson.addProperty("keyword",search);
         getInterNetData();
     }
 
@@ -92,10 +99,10 @@ public class LessonListPresent extends ListPresent<LessonListContract.View> impl
 
     @Override
     public void getInterNetData() {
-        mJson.addProperty("index",start);
-        mJson.addProperty("limit",limit);
-        askInternet("getVipCourseRcomList",gson.toJson(mJson),callHTMLJsonArray);
-        //askInternet("getHBCourseList",gson.toJson(mJson),callHTMLJsonArray);
+        mJson.addProperty("index", start);
+        mJson.addProperty("limit", limit);
+
+        askInternet(key, gson.toJson(mJson), callHTMLJsonArray);
     }
 
     @Override

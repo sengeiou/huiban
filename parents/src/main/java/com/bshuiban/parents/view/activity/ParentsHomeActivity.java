@@ -88,7 +88,7 @@ public class ParentsHomeActivity extends HomePageActivity<InteractionBaseWebView
 
     @Override
     protected void initBottomBar(BottomBar bottomBar) {
-        bottomBar.addItem(new BottomBarTab(this, R.mipmap.ic_main_tab_home, "首页"))
+        bottomBar.addItem(new BottomBarTab(this, R.mipmap.ic_main_tab_home_u, "首页").setTabPosition(0))
                 .addItem(new BottomBarTab(this, R.mipmap.ic_main_tab_work_u, "作业"))
                 .addItem(new BottomBarTab(this, R.mipmap.ic_main_tab_report_u, "报告"))
                 .addItem(new BottomBarTab(this, R.mipmap.ic_main_tab_error_u, "错题"));
@@ -193,7 +193,7 @@ public class ParentsHomeActivity extends HomePageActivity<InteractionBaseWebView
             } else {
                 RequestOptions requestOptions = new RequestOptions()
                         .circleCrop()
-                        .error(R.drawable.app_logo);
+                        .error(R.mipmap.default_head);
                 Glide.with(this).load(icoPath).apply(requestOptions).into(iv_head);
             }
 

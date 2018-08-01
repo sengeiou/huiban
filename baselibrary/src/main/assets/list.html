@@ -76,15 +76,23 @@
                 ul.innerHTML = str;
                     var str = "";
                     for (let i = 0; i < list.homework.length; i++) {
-                        if (list.homework[i].result == '1') {
-                            str += `<li class="wrongs" ><span class="wrongss" style="background:#d8d8d8">${i + 1}</span></li>`
-                        }
-                        if (list.homework[i].result == '0') {
-                            str += `<li class="trues"><span class="truess">${i + 1}</span></li>`
-                        }
-                        if (list.homework[i].result == '2') {
-                            str += `<li><span>${i + 1}</span></li>`
-                        }
+                             if(list.homework[i].result == 0) {
+                                str+=`
+                                <li  class="type2"><span  class="types2">${i+1}</span></li>
+                                `;
+                            } else if(list.homework[i].result == 1) {
+                                str+=`
+                                <li  class="type1"><span  class="types1">${i+1}</span></li>
+                                `;
+                            } else if(list.homework[i].result == 3) {
+                                str+=`
+                                <li  class="type3"><span  class="types3">${i+1}</span></li>
+                                `;
+                            } else {
+                                str+=`
+                                <li><span>${i+1}</span></li>
+                                `;
+                            }
                     }
                     ul.innerHTML = str;
                     but.innerHTML = `<p class="backhomelist">返回作业力列表</p>`;

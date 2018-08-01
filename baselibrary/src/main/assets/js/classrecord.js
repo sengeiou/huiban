@@ -3,6 +3,9 @@ var details = document.getElementsByClassName("details")[0];
 var filte = document.getElementById("filte");
 // 完成页
 function complatelist(data) {
+     if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+                return;
+            }
      var res2 = JSON.parse(data)
     var str2 = "";
     for (var i = 0; i < res2.length; i++) {
@@ -24,6 +27,10 @@ function complatelist(data) {
 }
 
 function complately(data) {
+     if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+             done.innerHTML =  `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
+                return;
+            }
     // 解开注释
      var res3 = JSON.parse(data)
     var str3 = "";

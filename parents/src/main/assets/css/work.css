@@ -116,7 +116,6 @@
   display: flex;
   text-align: center;
   line-height: 0.8rem;
-  color: #E7E7E7;
 }
 
 .workIndex main nav span {
@@ -132,7 +131,7 @@
 
 .workIndex main nav .active {
   border-bottom: solid 0.08rem #00CFBF;
-  color: #747474;
+  color: #00CFBF;
 }
 
 .workIndex main .list {

@@ -16,16 +16,21 @@
      -->
     <style>
         .leaveWord {
-            width: 100%;
+        width: 100%;
+         border-bottom:1px solid #eee;
+         padding-top:1%;
+        }
+        .leaveWord:last-of-type{
+        border:none
         }
 
         .box {
-            width: 100%;
-            font-family: PingFangSC-Regular;
-            font-size: .28rem;
-            color: #747474;
-            letter-spacing: 0.17px;
-            /* height: 9.36rem; */
+        width: 100%;
+        font-family: PingFangSC-Regular;
+        font-size: .28rem;
+        color: #747474;
+        letter-spacing: 0.17px;
+        /* height: 9.36rem; */
         }
         .content{
         color:#9c9c9c;
@@ -34,29 +39,27 @@
         .button span {
             display: inline-block;
             color: #ffffff;
-            letter-spacing: 0.17px;
+            letter-spacing: 1px;
+            text-indent: 1px;
             text-align: center;
-            width: .7rem;
+            width: .8rem;
             height: .4rem;
             font-size: .32rem;
-            background: #bbb;
-            line-height: .39rem;
+            background: #d8d8d8;
+            line-height:.4rem;
             float: right;
-            border-radius: 5%;
+            border-radius: 12%;
+            font-size: .3rem;
         }
-
         .button span:nth-of-type(2) {
             margin-right: .32rem;
         }
-
         .leaveWord .left dl {
             display: flex;
         }
-
         .indexWrap main .leave h3 span:nth-child(2) {
             font-size: 0.32rem;
         }
-
         .indexWrap main .leave h3 span:nth-child(2) a {
             width: 100%;
             height: 100%;
@@ -64,19 +67,16 @@
             margin-right: .6rem;
             position: relative;
         }
-
         .left dl {
             padding-right: .36rem;
             border: none;
             margin-bottom: .2rem;
         }
-
         .leaveWord .left dl dd {
             line-height: 0.6rem;
             font-size: .34rem;
             color: #1ED2BC;
         }
-
         .left dd {
             width: 100%;
         }
@@ -96,10 +96,10 @@
         }
 
         .leaveWord .left dl dt img {
-            width: 0.7rem;
-            height: 0.7rem;
+            width: 0.9rem;
+            height: 0.9rem;
             margin: 0.2rem;
-            margin-top: .14rem;
+            margin-top: .1rem;
             border-radius: 100%;
         }
 
@@ -127,7 +127,7 @@
             <span>
                 <a href="/finish_page.html"></a>
             </span>
-            <span>
+            <span class = "space">
                 我的空间
             </span>
         </header>
@@ -171,6 +171,8 @@
 </body>
 <script>
     var userName = "";
+    var aaa = "";
+    var isSelf=window.android.isSelf();
     function getMsg(data) {
         var data = JSON.parse(data);
         for (var i = 0; i < data.graSub.length; i++) {
@@ -186,8 +188,14 @@
         } else {
             $('.myMsg dl dt').html(`<img src="${data.ipIco}"  onerror="./images/reset/default_head.png" alt=""/>`);
         }
+        if(data.teaName == undefined) {
+           data.teaName = "";
+        }
         $('.myMsg dl dd h3').html(`${data.teaName}`);
         userName = data.teaName;
+        if(!isSelf){
+            $(".space").html(userName+"的空间");
+        }
         $('.myMsg dl dd .mainSub').html(`${data.subjectName}`);
         $('.myMsg dl dd .classNum').html(`${data.videoCnt}`);
         $('.text').html(`${data.summary}`);
@@ -245,9 +253,14 @@
         for (var pro of data) {
 
             console.log(pro.imgUrl)
-            if (pro.imgUrl == " ") {
+            if (pro.imgUrl == "") {
                 pro.imgUrl = './images/reset/default_head.png';
             }
+            if(isSelf || ((pro.send).toString()==userId)){
+                    aaa='<span class="dele">删除</span>';
+                }else{
+                    aaa="";
+                }
             attr += `
             <div class="leaveWord">
                         <div class="left">
@@ -261,7 +274,7 @@
                                     <p class="content">${pro.content}</p>
                                     <p class="button">
                                         <span class="rep">回复</span>
-                                        <span class="dele">删除</span>
+                                        ${aaa}
                                     </p>
                                 </dd>
                             </dl>

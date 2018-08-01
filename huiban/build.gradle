@@ -8,7 +8,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "2.0.0.0"
+        versionName "1.1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -18,7 +18,19 @@ android {
 
     }
     buildTypes {
+        debug{
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+//            shrinkResources true
+//            zipAlignEnabled true
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            // 移除无用的resource文件
+            shrinkResources true
+            //Zipalign优化
+            zipAlignEnabled true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

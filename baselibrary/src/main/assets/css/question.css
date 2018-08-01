@@ -207,13 +207,12 @@ overflow: scroll;
 
 .answerList{
     width:100%;
-    padding-left:4%;
+    padding-left: .32rem;
+    padding-top:7%;
 }
-.answerList .li {
-    width:.74rem;
-    height:.74rem;
-    border-radius: 100%;
-    border:1px solid #979797;
+.answerList li {
+    width:1.14rem;
+    height:1.14rem;
     font-family:PingFangSC-Regular;
     font-size:.32rem;
     color:#525252;
@@ -221,8 +220,60 @@ overflow: scroll;
     line-height: .7rem;
     text-align:center;
     float: left;
-    margin-right:.8rem;
-    margin-bottom: .86rem;
+    margin-bottom: .4rem;
+}
+.answerList li span{
+    display: block;
+    border-radius: 100%;
+    border:1px solid #979797;
+    height: .74rem;
+    width: .74rem;
+}
+.answerList .type1{
+    background-image: url("../images/reset/Group-2@2x.png");
+    background-size:.45rem .35rem;
+    background-repeat: no-repeat;
+    background-position: 87% 90%;
+    background-position: 87% 90%;
+}
+@media only screen and (-webkit-min-device-pixel-ratio:2){
+    .answerList .type1{background-image: url("../images/reset/Group-2@2x.png");}
+}
+@media only screen and (-webkit-min-device-pixel-ratio:3){
+    .answerList .type1{background-image: url("../images/reset/Group-2@3x.png");}
+}
+.answerList .types1{
+    border:1px solid #00c7b5;
+}
+.answerList .type2{
+    background-image: url("../images/reset/Group-4@2x.png");
+    background-size:.35rem .35rem;
+    background-repeat: no-repeat;
+     background-position: 87% 90%;
+}
+@media only screen and (-webkit-min-device-pixel-ratio:2){
+    .answerList .type2{background-image: url("../images/reset/Group-4@2x.png");}
+}
+@media only screen and (-webkit-min-device-pixel-ratio:3){
+    .answerList .type2{background-image: url("../images/reset/Group-4@3x.png");}
+}
+.answerList .types2{
+    border:1px solid #fe5043;
+}
+.answerList .type3{
+    background-image: url("../images/reset/Group-3@2x.png");
+    background-size:.45rem .35rem;
+    background-repeat: no-repeat;
+    background-position: 87% 90%;
+}
+@media only screen and (-webkit-min-device-pixel-ratio:2){
+    .answerList .type3{background-image: url("../images/reset/Group-3@2x.png");}
+}
+@media only screen and (-webkit-min-device-pixel-ratio:3){
+    .answerList .type3{background-image: url("../images/reset/Group-3@3x.png");}
+}
+.answerList .types3{
+    border:1px solid #f49d0a;
 }
 .button{
    position: absolute;
@@ -334,7 +385,7 @@ overflow: scroll;
     margin-left:2%;
     }
     #analyze li img{
-    width:100%;
+        max-width:100%;
     }
     #analyze li div{
     width: 100% !important;
@@ -343,7 +394,7 @@ overflow: scroll;
     width:100%;
     }
     #analyze li p img{
-    width:100%;
+    max-width:100%;
     }
 #analyze li:nth-of-type(1){
     color:#39ddb8;
@@ -467,8 +518,9 @@ overflow: scroll;
    top:0px;
 }
 .tkbox{
-    width:7rem;
+    width:94%;
     height: 2rem;
+    margin-left:3%;
     font-size:.35rem;
     line-height: .5rem;
     border:1px solid gray;
@@ -573,8 +625,9 @@ overflow: scroll;
     padding-bottom:.2rem;
 }
 #answer .picture img{
-    width:92%;
-    height: 500px;
+    width:94%;
+    height: 700px;
+    margin-left:2%;
 }
 #main{
     width:100%;
@@ -589,6 +642,13 @@ float:left;
 float: right;
 }
 #text [img-type="tex"]{
-    max-height:.32rem;
-    max-width:.32rem;
+    max-height:.5rem;
 }
+#text img,#text div,#text img,#text p{
+ max-width:100%!important;
+ font-size:.32rem!important;
+}
+
+
+
+

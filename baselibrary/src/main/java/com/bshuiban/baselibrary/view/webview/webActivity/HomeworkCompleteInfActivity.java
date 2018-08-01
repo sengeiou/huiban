@@ -75,7 +75,7 @@ public class HomeworkCompleteInfActivity extends BaseWebActivity{
     @Override
     protected void webViewLoadFinished() {
         HomeworkInfBean.DataBean homeworkInfBean = User.getInstance().getHomeworkInfBean();
-        homeworkBean = HomeworkBean.getHomeworkBean(homeworkInfBean);
+        homeworkBean = HomeworkBean.getHomeworkBean(homeworkInfBean,true);
         Homework<HomeworkBean> homework = new Homework();
         homework.setTitle(homeworkInfBean.getTitle());
         homework.setFTime(homeworkInfBean.getTimes());
@@ -106,7 +106,7 @@ public class HomeworkCompleteInfActivity extends BaseWebActivity{
         @JavascriptInterface
         public void toHomeworkResultPage(){
             runOnUiThread(()->{
-                startActivity(new Intent(getApplicationContext(),HomeworkResultWebActivity.class).putExtra(HOME_Work_Id,workId).putExtra(HOME_PREPARE,prepareId).putExtra("complete",true));
+                startActivity(new Intent(HomeworkCompleteInfActivity.this,HomeworkResultWebActivity.class).putExtra(HOME_Work_Id,workId).putExtra(HOME_PREPARE,prepareId).putExtra("complete",true));
             });
         }
     }

@@ -338,7 +338,7 @@
 }
 
 .indexWrap main .coach .lookAll a {
-  color: green;
+  color: #00C7B5;
 }
 
 .indexWrap main .coach .resources{
@@ -392,20 +392,23 @@
   height: .3rem;
 }
 .indexWrap main .leave h3 {
-  font-weight:normal;
   width: 100%;
   height: 1rem;
   line-height:1rem;
-  display: flex;
-  justify-content: space-between;
-  text-indent: 0.2rem;
+  font-weight: normal;
   font-size: 0.36rem;
   border-top:.1rem solid #f0f0f0;
-
-
 }
-
+.indexWrap main .leave h3 span:nth-child(1) {
+    text-indent:.5rem;
+    float:left;
+    width:40%;
+    height:98%;
+}
 .indexWrap main .leave h3 span:nth-child(2) {
+   float:right;
+    width:30%;
+    height:98%;
   font-size: 0.32rem;
 }
 .indexWrap main .leave h3 span:nth-child(2) a{
@@ -414,19 +417,24 @@
   display: block;
   margin-right:.6rem;
   position: relative;
+   text-indent:.5rem;
 }
 .indexWrap main .leave h3 span:nth-child(2) img {
   position: absolute;
   width: 0.18rem;
   height: .3rem;
-  top:36%;
-  right:20%;
-
+  top:35.4%;
+  right:19%;
 }
 
-.indexWrap main .leaveWord {
-  width: 100%;
 
+.indexWrap main .leaveWord {
+ margin-top:.1rem;
+  width: 100%;
+  border-bottom:1px solid #eee;
+}
+.indexWrap main .leaveWord:last-of-type{
+    border:none
 }
 
 .indexWrap main .leaveWord .left dl {
@@ -2099,4 +2107,21 @@
 .time{
   float:right;
   margin-top:3.5%;
+}
+.indexWrap main .coach .listlo {
+  display: flex;
+  width: 100%;
+  color: yellow;
+  font-size: 0.28rem;
+}
+
+.indexWrap main .coach .listlo .course {
+  width: 4.47rem;
+  height: 2.15rem;
+  margin: 0 0.2rem;
+}
+
+.indexWrap main .coach .listlo .course img {
+  width: 100%;
+  height: 100%;
 }

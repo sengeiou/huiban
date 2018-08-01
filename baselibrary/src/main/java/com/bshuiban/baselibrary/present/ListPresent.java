@@ -26,11 +26,17 @@ public abstract class ListPresent<T extends BaseView> extends BasePresent<T> imp
     protected RetrofitService.CallHTMLJsonArray callHTMLJsonArray= new RetrofitService.CallHTMLJsonArray() {
         @Override
         protected void success(JsonArray msg) {
-            LogUtils.e("TAG", "success: "+msg+", \n"+(null==jsonArray?0:jsonArray.size()));
+            LogUtils.e("TAG", "success: "+msg+", "+(null==jsonArray?0:jsonArray.size()));
             if(isEffective()){
                 if(null==jsonArray){
                     jsonArray=msg;
-                    updateView(gson.toJson(jsonArray));
+                    String json;
+                    if(null==jsonArray){
+                        json=null;
+                    }else {
+                        json = gson.toJson(jsonArray);
+                    }
+                    updateView(json);
                 }else{
                     if(null!=msg&&msg.size()>0) {
                         jsonArray.addAll(msg);

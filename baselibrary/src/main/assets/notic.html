@@ -92,6 +92,11 @@
 </body>
 <script>
     function getContent (data) {
+         if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+             var lisbox = document.getElementsByClassName("listBox")[0];
+                 lisbox.innerHTML = `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
+                    return;
+                }
         var data = JSON.parse(data);
         $('.listBox').html('');
         for (var i=0; i<data.length;i++) {

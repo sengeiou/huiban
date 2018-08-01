@@ -26,6 +26,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="展开"
+        android:padding="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_m_10"
+        android:visibility="gone"
         android:textColor="@color/guide_start_btn" />
 
     <View
@@ -74,6 +77,10 @@
                 android:layout_gravity="center"/>
         </FrameLayout>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/line_bord"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle"
         android:layout_width="match_parent"

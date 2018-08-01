@@ -60,7 +60,7 @@ public class SendNoticePresent extends BasePresent<SendNoticeContract.View> impl
     @Override
     public void sendNotice(@SendNoticeKey String key,String classIds, String content) {//{"userId":"","classIds":"","content":""}
         //"addClassNotices"
-        askInternet(SEND_NOTICE, "{\"userId\":\""+User.getInstance().getUserId()+"\",\"classIds\":\""+classIds+"\",\"content\":\""+content+"\"}", new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
+        askInternet(key, "{\"userId\":\""+User.getInstance().getUserId()+"\",\"classIds\":\""+classIds+"\",\"content\":\""+content+"\"}", new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
             @Override
             protected void success(ResultBean resultBean) {
                 if(isEffective()){

@@ -11,8 +11,6 @@ import com.bshuiban.baselibrary.view.adapter.LearningDynamicAdapter;
 import com.bshuiban.baselibrary.contract.LearningDynamicContract;
 import com.bshuiban.baselibrary.model.LearningDynamicBean;
 import com.bshuiban.baselibrary.present.LearningDynamicPresent;
-import com.bshuiban.baselibrary.view.pulltorefresh.BaseRefreshListener;
-import com.bshuiban.baselibrary.view.pulltorefresh.PullToRefreshLayout;
 
 import java.util.List;
 
@@ -64,7 +62,7 @@ public class LearningDynamicFragment extends RecycleViewFragment<LearningDynamic
 
     @Override
     public void fail(String error) {
-        toast(error);
+        //toast(error);
         dismissFresh();
     }
 

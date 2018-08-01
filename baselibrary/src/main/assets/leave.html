@@ -8,6 +8,95 @@
     <title>去留言</title>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/index.css">
+    <style>
+         .leaveWord {
+            width: 100%;
+            }
+
+            .leaveWord .left dl {
+            display: flex;
+            }
+
+            .left dl {
+            padding-right: .36rem;
+            border: none;
+            margin-bottom: .2rem;
+            }
+
+            .leaveWord .left dl dt img {
+            width: 0.7rem;
+            height: 0.7rem;
+            margin: 0.2rem;
+            margin-top: 0;
+            }
+
+            .leaveWord .left dl dd {
+            line-height: 0.6rem;
+            font-size: .34rem;
+            color: #1ED2BC;
+            }
+
+            .indexWrap main .leaveWord .left dl dd .name {
+            color: #1ED2BC;
+            line-height: 0.6rem;
+            }
+
+            .leaveWord .left dl dd .time {
+            width: auto;
+            font-size: 0.32rem;
+            color: #aaa;
+            line-height: 0.2rem;
+            }
+            .list{
+            padding-top:0.1px;
+            }
+            .leaveWord:first-of-type{
+            margin-top:10px;
+            }
+            .name span {
+            color: #747474;
+            margin-left: .12rem;
+            }
+
+            .time {
+            float: right;
+            margin-top: 3.5%;
+            background: none!important;
+            }
+
+            .left .content {
+            width: 6rem;
+            font-size: .32rem;
+            }
+
+            .content {
+            color: #9c9c9c;
+            line-height: .45rem;
+            }
+
+            .button {
+            width: 100%;
+            }
+            .leave main .list dl dd p span {
+            display: inline-block;
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-indent: 1px;
+            text-align: center;
+            width: .8rem;
+            height: .4rem;
+            font-size: .32rem;
+            background: #d8d8d8;
+             line-height:.4rem;
+            float: right;
+            border-radius: 12%;
+            font-size: .3rem;
+            }
+
+            .left dd {
+            width: 100%;
+            }
+    </style>
 </head>
 <script src="./js/rem.js"></script>
 <script src="./js/jquery.min.js"></script>
@@ -38,6 +127,7 @@
     var name = window.android.getName();
     var isSelf = window.android.isSelf();
     var userId = window.android.getUserId();
+    var attr="";
     console.log(isSelf);
     var recevieId = window.android.getRecevieId();
     console.log(recevieId);
@@ -51,30 +141,45 @@
         $('.list').html('');
         $('textarea').val('');
         var aaa = '';
-        for (var i=0; i<data.length; i++) {
-            var nowMsg = $('.list').html();
-            if(isSelf || ((data[i].send).toString()==userId)){
-                aaa='<span class="remove">删除</span>';
-            }
-            $('.list').html(nowMsg + `
-                <dl>
-                    <dt><img src="${data[i].imgUrl}" alt="" onerror="this.src='./images/reset/default_head.png' "/></dt>
+
+        for (var pro of data) {
+            if(isSelf || ((pro.send).toString()==userId)){
+                    console.log(pro.send+", "+isSelf);
+                    aaa='<span class="dele">删除</span>';
+                }else{
+                   aaa="";
+                }
+                    attr += `
+                    <div class="leaveWord">
+                    <div class="left">
+                    <dl>
+                    <dt>
+                    <img src=${pro.imgUrl} class="userImg" onerror="this.src='./images/reset/default_head.png'">
+                    </dt>
                     <dd>
-                        <h3>${data[i].sendName}</h3>
-                        <p class="message">${data[i].content}</p>
-                        <p>${data[i].addTime}<span class="reply">回复</span>${aaa}</p>
+                    <p class="name">${pro.sendName}
+                    <span class="time">${pro.addTime}</span></p >
+                    <p class="content">${pro.content}</p >
+                    <p class="button">
+                    <span class="rep">回复</span>
+                    ${aaa}
+                    </p >
                     </dd>
-                </dl>
-            `);    
-        }
+                    </dl>
+                    </div>
+                    </div>
+                    `;
+                    }
+                    var xbox = document.getElementsByClassName("list")[0];
+                    xbox.innerHTML = attr;
         //点击删除
-        $('.remove').bind('click', function () {
+        $('.dele').bind('click', function () {
             var ind = $(this).parents('dl').index();
             var msgid = data[ind].id;
             window.android.deleteMessageItem(msgid, null)
         });
         //点击回复弹出
-        $('.reply').bind('click', function () {
+        $('.rep').bind('click', function () {
             var ind = $(this).parents('dl').index();
             window.android.reply(ind);
         });

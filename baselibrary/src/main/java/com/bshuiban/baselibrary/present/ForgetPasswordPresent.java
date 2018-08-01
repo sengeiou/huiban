@@ -3,6 +3,10 @@ package com.bshuiban.baselibrary.present;
 import com.bshuiban.baselibrary.contract.ForgetPasswordContract;
 import com.bshuiban.baselibrary.internet.RetrofitService;
 import com.bshuiban.baselibrary.model.ResultBean;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Created by xinheng on 2018/7/3.<br/>
@@ -15,6 +19,25 @@ public class ForgetPasswordPresent extends BasePresent<ForgetPasswordContract.Vi
 
     @Override
     public void loadSendCode(String phone) {//{"mobile":""}
+        /*askInternet("getVcode", "{\"mobile\":\"" + phone + "\"}", new RetrofitService.CallTest() {
+            @Override
+            protected void result(String s) {
+                if(null!=s){
+                    JsonElement parse = new JsonParser().parse(s);
+                    if(null!=parse){
+                        JsonObject asJsonObject = parse.getAsJsonObject();
+                        String code = asJsonObject.get("code").getAsString();
+                        if(ResultBean.isSuccess(code)){
+                            if (isEffective()){
+                                view.sendSuccess();
+                            }
+                        }else{
+
+                        }
+                    }
+                }
+            }
+        });*/
         askInternet("getVcode", "{\"mobile\":\""+phone+"\"}", new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
             @Override
             protected void success(ResultBean resultBean) {
@@ -26,7 +49,7 @@ public class ForgetPasswordPresent extends BasePresent<ForgetPasswordContract.Vi
             @Override
             protected void error(String error) {
                 if(isEffective()){
-                    view.fail("验证码-"+error);
+                    view.fail(error);
                 }
             }
         });

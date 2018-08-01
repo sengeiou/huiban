@@ -79,7 +79,8 @@ public class MySpaceWebActivity extends BaseWebActivity<MySpacePresent>implement
 
     @Override
     public void fail(String error) {
-        toast(error);
+        if(null!=error&&!error.contains("留言：暂无"))
+            toast(error);
     }
 
     @Override
@@ -127,7 +128,7 @@ public class MySpaceWebActivity extends BaseWebActivity<MySpacePresent>implement
          */
         @JavascriptInterface
         public void playVideo(String url){
-            runOnUiThread(()-> PlayerVideoActivity.startPlayerVideoActivity(getApplicationContext(),url));
+            runOnUiThread(()-> PlayerVideoActivity.startPlayerVideoActivity(MySpaceWebActivity.this,url));
         }
     }
     private void toNextActivity(Class<?> cls,String s){

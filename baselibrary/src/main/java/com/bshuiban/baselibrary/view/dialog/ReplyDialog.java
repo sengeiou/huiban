@@ -31,6 +31,8 @@ public class ReplyDialog extends MoveDialog {
     private String pid;
     private String recevieId;
     private boolean deleteTag;
+    private ReplayAdapter replayAdapter;
+
     public ReplyDialog(@NonNull Context context) {
         super(context);
         setContentView(getReplyDialogView());
@@ -87,8 +89,12 @@ public class ReplyDialog extends MoveDialog {
         int size = 0;
         if (null != slist && slist.size() > 0) {
             size = slist.size();
-            ReplayAdapter replayAdapter = new ReplayAdapter(slist);
-            recycleView.setAdapter(replayAdapter);
+            if(null==replayAdapter) {
+                replayAdapter = new ReplayAdapter(slist);
+                recycleView.setAdapter(replayAdapter);
+            }else{
+                replayAdapter.updateData(slist);
+            }
         }
         titleView.setTitle_text(size + "条回复");
     }
@@ -103,7 +109,10 @@ public class ReplyDialog extends MoveDialog {
         public ReplayAdapter(List<MessageBean.DataBean.SlistBean> slistBeans) {
             mSlistBeans = slistBeans;
         }
-
+        public void updateData(List<MessageBean.DataBean.SlistBean> slistBeans){
+            mSlistBeans = slistBeans;
+            notifyDataSetChanged();
+        }
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

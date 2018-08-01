@@ -78,11 +78,12 @@ public class BottomBarTab extends LinearLayout {
     }
 
 
-    public void setTabPosition(int position) {
+    public BottomBarTab setTabPosition(int position) {
         mTabPosition = position;
         if (position == 0) {
             setSelected(true);
         }
+        return this;
     }
 
     public int getTabPosition() {

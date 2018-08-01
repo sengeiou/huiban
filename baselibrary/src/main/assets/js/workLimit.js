@@ -40,7 +40,11 @@ nodo.onclick = function () {
 // 点击筛选页完成课表
 details.onclick = function () {
     // filte.style.display = "block";
-    $("#filte").fadeToggle()
+    if(res2==undefined){
+        window.android.toastLog("暂无科目");
+    }else{
+        $("#filte").fadeToggle()
+    }
 }
 var back = document.getElementsByClassName("back")[0];
 // 点击返回
@@ -49,6 +53,10 @@ back.onclick = function () {
 }
 // 未完成页
 function nocomplate(data) {
+    if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+         done.innerHTML =  `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
+            return;
+        }
     res = JSON.parse(data)
     var str = "";
     var str2 = "";
@@ -109,9 +117,14 @@ function nocomplate(data) {
     }
 
 }
-
+//toastLog
 // 完成页
 function complatelist(data) {
+    if(data==undefined||data==null||data=="null"){
+        res2=undefined;
+        filte.innerHTML="";
+        return;
+    }
     res2 = JSON.parse(data);
     var str2 = "";
     for (var i = 0; i < res2.length; i++) {
@@ -134,12 +147,17 @@ function complatelist(data) {
 }
 
 function complately(data) {
+ if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+         done.innerHTML =  `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
+            return;
+        }
     // 解开注释
     var res3 = JSON.parse(data);
     var str3 = "";
     for (var i = 0; i < res3.length; i++) {
         var addtime = new Date(res3[i].addTime * 1000).toLocaleDateString();
         var endtime = new Date(res3[i].endTime * 1000).toLocaleDateString();
+        if(res3[i].status == 3) {
         str3 += `
                 <div class="listMsg">
                 <dl>
@@ -155,6 +173,23 @@ function complately(data) {
                 <p class="time">${addtime}--${endtime}</p>
             </div>
                 `;
+                } else {
+                str3 += `
+                        <div class="listMsg">
+                        <dl>
+                            <dt>
+                                <h3>${res3[i].theme}</h3>
+                                <p>${res3[i].descInfo}</p>
+                            </dt>
+                            <dd>
+                            <span class="look" style="margin-right:15%"></span>
+                            </dd>
+                        </dl>
+                        <p class="time">${addtime}--${endtime}</p>
+                    </div>
+                        `;
+                }
+
     }
     done.innerHTML = str3;
     $('.listoo').css('height',$('.done').height()+100);

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.bshuiban.baselibrary.contract.GeneralSituationContract;
 import com.bshuiban.baselibrary.model.GeneralBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.GeneralSituationPresent;
+import com.bshuiban.baselibrary.utils.SpaceItemDecoration;
 import com.bshuiban.baselibrary.view.adapter.GeneralSituationAdapter;
 import com.bshuiban.baselibrary.view.customer.LineTextView;
 import com.bshuiban.baselibrary.view.webview.webActivity.LiuYanMsgListActivity;
@@ -45,16 +47,26 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
         super.onCreate(savedInstanceState);
         tPresent=new GeneralSituationPresent(this);
     }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_general_situation, container, false);
         init(view);
         classId=User.getInstance().getClassId();
-        tPresent.askInterNetForData();
+        if(getUserVisibleHint()) {
+            tPresent.askInterNetForData();
+        }
         return view;
     }
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        if(isVisibleToUser){
+//            tPresent.askInterNetForData();
+//        }
+//        super.setUserVisibleHint(isVisibleToUser);
+//    }
+
     private int color;
     private int color1;
     private String classId;
@@ -66,6 +78,7 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
         tv_student = view.findViewById(R.id.tv_student);
         recycle = view.findViewById(R.id.recycle);
         recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recycle.addItemDecoration(new SpaceItemDecoration(getActivity(),LinearLayoutManager.VERTICAL,getResources().getDimensionPixelSize(R.dimen.dp_1), ContextCompat.getColor(getActivity(),R.color.line_bord)));
         teaInfoBeanGeneralSituationAdapter.setContext(getActivity());
         teaInfoBeanGeneralSituationAdapter.setTeacher(true);
         stuInfoBeanGeneralSituationAdapter.setContext(getActivity());
@@ -89,6 +102,9 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
     }
     @Override
     public void updateView(GeneralBean.DataBean data) {
+        if(null==data){
+            return;
+        }
         String ipImgUrl = data.getIpImgUrl();
         if(TextUtils.isEmpty(ipImgUrl)){
             iv.setImageResource(R.mipmap.default_class);
@@ -147,7 +163,7 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
         protected void toPeopleSpace(int position) {
             int userId = mList.get(position).getTeacherId();
             Intent intent = new Intent("com.bshuiban.teacher.webView.webActivity.MySpaceWebActivity")
-                    .putExtra("userId", userId);
+                    .putExtra("userId", userId+"");
             startActivity(intent);
         }
 
@@ -234,13 +250,13 @@ public class GeneralSituationFragment extends BaseFragment<GeneralSituationPrese
     private void onClick(View v) {
         int i = v.getId();
         if (i == R.id.tv_teacher) {
-            tv_teacher.setSelectColor(Color.BLACK, color);
-            tv_student.setSelectColor(color1, -1);
+            tv_teacher.setSelectColor(color, color);
+            tv_student.setSelectColor(Color.BLACK, -1);
             recycle.setAdapter(teaInfoBeanGeneralSituationAdapter);
             isTeacher=true;
         } else if (i == R.id.tv_student) {
-            tv_student.setSelectColor(Color.BLACK, color);
-            tv_teacher.setSelectColor(color1, -1);
+            tv_student.setSelectColor(color, color);
+            tv_teacher.setSelectColor(Color.BLACK, -1);
             recycle.setAdapter(stuInfoBeanGeneralSituationAdapter);
             isTeacher=false;
         } else if (i == R.id.tv_show) {

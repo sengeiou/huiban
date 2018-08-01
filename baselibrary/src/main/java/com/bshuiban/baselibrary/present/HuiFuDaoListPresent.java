@@ -35,6 +35,7 @@ public class HuiFuDaoListPresent extends ListPresent<HuiFuDaoListContract.View> 
 
     @Override
     public void screeningLesson(String key, String json) {
+        clearArray();
         this.key = key;
         this.json=json;
         getInterNetData();

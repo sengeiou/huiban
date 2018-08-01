@@ -119,10 +119,10 @@
 }
 .moreWrong .typeList span {
   padding: 0 0.4rem;
-  height: 0.46rem;
-  line-height: 0.46rem;
+  height: 0.5rem;
+  line-height: 0.5rem;
   text-align: center;
-  font-size: 0.24rem;
+  font-size: 0.32rem;
   color: #9b9b9b;
   border:1px solid #f4f4f4;
   border-radius:1px;
@@ -279,7 +279,7 @@ width: 98%!important;
     height: 80%;
 }
 .practive .msgBox .question .lxitem_ct_frm ol {
-  margin-left: -0.3rem;
+  margin-left: 0.3rem;
 }
 .practive .msgBox .question img {
   min-width: 0.3rem;
@@ -342,4 +342,33 @@ width: 98%!important;
 }
 .question ol li p, .wrongPage ol li p {
     display: inline;
+}
+.yresult>span>img{
+  width: 70%;
+  height: 50px;
+}
+.wrongPage main .wrongMsg .examina>img{
+  height: 1rem;
+  vertical-align: bottom
+}
+.examina .lxitem_ct_frm .lxitem_ct_main p>[img-type="tex"]{
+  height: .4rem!important;
+  vertical-align: bottom
+}
+.examina .lxitem_ct_frm .lxitem_ct_main p>[img-type="img"]{
+  height:2rem!important;
+  vertical-align: bottom
+}
+.examina .lxitem_ct_frm ol [img-type="img"]{
+  height: 1rem;
+}
+.examina .lxitem_ct_frm ol [img-type="tex"]{
+  height: .25rem;
+}
+examina>img {
+  height: 1rem;
+}
+.wrongMsg div div>img{
+  max-width:100%;
+  height:1rem;
 }

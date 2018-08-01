@@ -62,7 +62,11 @@ public class SendNoticeActivity extends BaseActivity<SendNoticePresent> implemen
     private void startSendNoticeDialog(List<TeachClassBean.DataBean> teachClassData, String content) {
         if(null==teachClassDialog) {
             teachClassDialog = new TeachClassDialog(SendNoticeActivity.this);
-            teachClassDialog.setSendClickListener(v1 -> tPresent.sendNotice(send_type==0? SendNoticePresent.SEND_NOTICE:SendNoticePresent.SEND_ACTIVITY,teachClassDialog.getSelectClass(), content));
+            teachClassDialog.setSendClickListener(v1 -> {
+                String selectClass = teachClassDialog.getSelectClass();
+                String key = send_type == 0 ? SendNoticePresent.SEND_NOTICE : SendNoticePresent.SEND_ACTIVITY;
+                tPresent.sendNotice(key, selectClass, content);
+            });
         }
         teachClassDialog.setTexts(teachClassData);
         teachClassDialog.show();

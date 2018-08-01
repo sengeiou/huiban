@@ -19,6 +19,11 @@ import java.util.List;
 public class HomePageParent extends ListPresent<HomePageContract.View> implements HomePageContract.Parent {
     private String userId ;
     private List<MessageBean.DataBean> dataBeans;
+    /**
+     * 回复留言数据第几条
+     */
+    private int dataIndex;
+    private boolean refreshHuiFu;
 
     public HomePageParent(HomePageContract.View view) {
         super(view);
@@ -49,7 +54,7 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
             @Override
             protected void fail(String error) {
                 if (isEffective())
-                    view.fail("今日课表结果："+error);
+                    view.fail("获取今日课表信息失败，请检查网络或重试");
             }
         });
     }
@@ -88,6 +93,10 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
             dataBeans = gson.fromJson(json, new TypeToken<List<MessageBean.DataBean>>() {
             }.getType());
             //Log.e("TAG", "updateView: "+dataBeans.size() );
+            if(refreshHuiFu&&dataBeans!=null&&dataBeans.size()>dataIndex) {
+                refreshHuiFu=false;
+                view.updateReplyDialog(dataBeans.get(dataIndex));
+            }
         }
     }
 
@@ -137,12 +146,14 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
             protected void success(String msg) {
                 if (isEffective()) {
                     //getMessageList(User.getInstance().getUserId());
+                    refreshHuiFu=true;
                     refresh();
                 }
             }
 
             @Override
             protected void fail(String error) {
+                refreshHuiFu=false;
                 if (isEffective()) {
                     view.fail(error);
                 }
@@ -152,6 +163,7 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
 
     @Override
     public void getReplyMessage(int index) {
+        this.dataIndex=index;
         if(isEffective()&&null!=dataBeans&&dataBeans.size()>index){
             view.startReplyDialog(dataBeans.get(index));
         }

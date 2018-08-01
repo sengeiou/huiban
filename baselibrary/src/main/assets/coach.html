@@ -229,6 +229,11 @@
     //渲染精品页
     function listMsg(data) {
         $('.courseList .list').html('');
+          if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+          var listone = document.getElementsByClassName("list")[0];
+         listone.innerHTML = `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
+            return;
+        }
         var data = JSON.parse(data);
         for (var i=0;i<data.length;i++) {
             var nowMsg = $('.courseList .list').html();
@@ -269,7 +274,10 @@
                 <span>${guess.gradeName}</span>
             `);
         }
-        if (data == 'null' || data == undefined || data == '') {
+        if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+         $('.courseList:eq(1) .list').html("");
+          var listtwo = document.getElementsByClassName("list")[1];
+         listtwo.innerHTML = `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
             return;
         }
         var data = JSON.parse(data);

@@ -1,5 +1,6 @@
 package com.bshuiban.baselibrary.view.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,7 +25,13 @@ public class PlayerVideoActivity extends BaseActivity {
     private MessageDialog messageDialog;
 
     public static void startPlayerVideoActivity(Context context, String videoPath){
-        context.startActivity(new Intent(context,PlayerVideoActivity.class).putExtra("path",videoPath));
+        Intent path = new Intent(context, PlayerVideoActivity.class).putExtra("path", videoPath);
+        if(context instanceof Activity) {
+            context.startActivity(path);
+        }else {
+            path.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(path);
+        }
     }
     private FullJCVideoPlayer jcVideoPlayerStandard;
     @Override

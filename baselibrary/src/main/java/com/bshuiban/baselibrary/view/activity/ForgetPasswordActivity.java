@@ -105,7 +105,6 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresent> 
             this.phone=phone1;
             tv_send_code.setEnabled(false);
             tPresent.loadSendCode(phone);
-            handler.sendEmptyMessage(0);
         } else if (i == R.id.bt_submit) {
             if(null==phone) {
                 phone = et_phone.getText().toString();
@@ -142,6 +141,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresent> 
     @Override
     public void sendSuccess() {
         //et_phone.setEnabled(false);
+        handler.sendEmptyMessage(0);
         tv_send_code.setEnabled(false);
         bt_submit.setEnabled(true);
     }
@@ -165,6 +165,9 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresent> 
     }
 
     private String getPhoneError(String phone) {
+        if(TextUtils.isEmpty(phone)){
+            return "请输入手机号";
+        }
         String regex = "^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$";
         if (phone.length() != 11) {
             return "手机号应为11位数";

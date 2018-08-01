@@ -103,6 +103,11 @@
 <script>
    function getContent (data) {
         $('main').html('');
+        if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+        var mainbox = document.getElementsByTagName("main")[0];
+         mainbox.innerHTML = `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
+            return;
+        }
         var data = JSON.parse(data);   
         for (var i=0; i<data.length; i++) {
             var nowMsg = $('main').html();
@@ -187,36 +192,12 @@
         $('.flag').bind('click', function () {
             if ($(this).children('span').text() == "取消关注") {
                 var ind = $(this).parents('.content').index();
-                $(".hint").css({
-                    "display":"block"
-                })
-                   $("#graybackg").css({
-                    "display":"block"
-                    })
-                $(".span").eq(0).click(function() {
-                    $(".hint").css({
-                        "display":"none"
-                    })
-                       $("#graybackg").css({
-                    "display":"none"
-                    })
-
-                })
-                $(".span").eq(1).click(function() {
-                    $(".hint").css({
-                        "display":"none"
-                    })
-                       $("#graybackg").css({
-                    "display":"none"
-                    })
-
-                    var attUserId = data[ind].attUserId;
-                    if(attUserId==undefined){
-                        attUserId=data[ind].userId;
-                    }
-                    console.log("取消关注"+attUserId);
-                    window.android.dealWithAttention(false,attUserId,ind);
-                })
+                var attUserId = data[ind].attUserId;
+                if(attUserId==undefined){
+                    attUserId=data[ind].userId;
+                }
+                console.log("取消关注"+attUserId);
+                window.android.dealWithAttention(false,attUserId,ind);
             }else {
                 var ind = $(this).parents('.content').index();
                 var attUserId = data[ind].attUserId;

@@ -29,19 +29,20 @@ function rende(data) {
         <div id="answer">
             <p>答案<span class="pen"></span></p>
             <div class="picture">
+                <p class="texts"></p>
                 <img class="answerimg" src="" alt="">
             </div>
         </div>`;
         var imgtype = document.querySelectorAll('[img-type="tex"]');
         answerimg = document.getElementsByClassName("answerimg")[0];
-        texts = document.getElementsByClassName("picture")[0];
+        texts = document.getElementsByClassName("texts")[0];
         trans = document.getElementsByClassName('Trans')[0];
         answer = document.getElementById("answer");
         pen = document.getElementsByClassName('pen')[0];
        if(res.stuAnswer != "") {
-        answer.style.display = 'block';
-        trans.style.display = 'none';
-          texts.innerHTML=res.stuAnswer
+            answer.style.display = 'block';
+            trans.style.display = 'none';
+           subproblem(res.stuAnswer)
        }
         for (var i = 0; i < imgtype.length; i++) {
             imgtype[i].style.height = '0.4rem';
@@ -263,17 +264,25 @@ function rende(data) {
 }
 // 图片、拍摄、文本
 function subproblem(data) {
-
+   console.log(data)
     res.stuAnswer = data;
     var regex = /^http\.bmp|\.jpg|\.jpeg|\.png|\.tiff|\.gif|\.pcx|\.tga|\.exif|\.fpx|\.svg|\.psd|\.cdr|\.pcd|\.dxf|\.ufo|\.eps|\.ai|\.raw|\.WMF|\.webp$/;
     if (regex.test(data)) {
      trans.style.display = "none";
+     answerimg.style.display = "block";
         answerimg.src = data;
         answer.style.display = 'block';
+        texts.style.display = "none";
     } else {
-     trans.style.display = "none";
+       texts.style.display = "block";
+        trans.style.display = "none";
         answer.style.display = 'block';
         answerimg.style.display = "none";
         texts.innerHTML = data;
     }
 }
+    // 点击图片放大
+        $("#text").find("img").click(function(){
+            var src = $(this).attr("src");
+            window.android.imageClick(src);
+        })

@@ -12,13 +12,22 @@ public class SideCollectionListPresent extends ListPresent<SideCollectionListCon
         super(view);
     }
 
+    /**
+     * 开始限制
+     */
+    private boolean start;
     @Override
     public void loadCollectionListData() {
+        start=true;
+        clearArray();
         getInterNetData();
     }
     @Override
     public void getInterNetData() {
-        askInternet("getUserCollectVipCourseList", "{\"userId\":\""+ User.getInstance().getReallyUserId()+"\",\"index\":"+start+",\"limit\":"+limit+"}", callHTMLJsonArray);
+        if(!start){
+            return;
+        }
+        askInternet("getUserCollectVipCourseList", "{\"userId\":\""+ User.getInstance().getReallyUserId()+"\",\"index\":"+super.start+",\"limit\":"+limit+"}", callHTMLJsonArray);
     }
 
     @Override

@@ -40,7 +40,6 @@ import static com.bshuiban.baselibrary.view.webview.webActivity.HomeworkListWebA
  * 待完成作业
  * 做题
  * HTML
- * 几套试卷列表 - item
  */
 public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingInfPresent> implements HomeworkPendingInfContract.View {
     private int homeType, workId, prepareId;
@@ -146,19 +145,19 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
 
     @Override
     public void startDialog() {
-
+        showLoadingDialog();
     }
 
     @Override
     public void dismissDialog() {
-
+        dismissLoadingDialog();
     }
 
     @Override
     public void fail(String error) {
         toast(error);
-        TitleView titleView=findViewById(R.id.titleView);
-        titleView.setRight_text(null,-1,1);
+//        TitleView titleView=findViewById(R.id.titleView);
+//        titleView.setRight_text(null,-1,1);
     }
 
     private File imageFile;
@@ -183,27 +182,13 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
             case CameraActivity.TAKE_PICTURE://拍照
                 if (resultCode == RESULT_OK) {
                     String imagePath = data.getStringExtra("path");
-                    if (!TextUtils.isEmpty(imagePath)) {
-                        if (FileUtils.isCheckFileExist(imagePath)) {
-                            BitMapUtils.saveBitmap(imagePath, BitMapUtils.duplicateBitmap(BitmapFactory.decodeFile(imagePath), 800, 500));
-                            tPresent.uploadImage(imagePath);
-                        } else {
-                            Log.i("info", "取消拍照------>" + data);
-                        }
-                    }
+                    updateImage(imagePath);
                 }
                 break;
             case SelectImgActivity.SELECT_PICTURE://选择照片
                 if (resultCode == RESULT_OK) {
                     String imagePath = data.getStringExtra("path");
-                    if (!TextUtils.isEmpty(imagePath)) {
-                        if (FileUtils.isCheckFileExist(imagePath)) {
-                            BitMapUtils.saveBitmap(imagePath, BitMapUtils.duplicateBitmap(BitmapFactory.decodeFile(imagePath), 800, 500));
-                            tPresent.uploadImage(imagePath);
-                        } else {
-                            //Log.i("info", "取消拍照------>" + data);
-                        }
-                    }
+                    updateImage(imagePath);
                 }
                 break;
             case TextActivity.TEXT_HOMEWORK:
@@ -216,7 +201,17 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
                 break;
         }
     }
-
+    private void updateImage(String imagePath){
+        if (!TextUtils.isEmpty(imagePath)) {
+            String name = FileUtils.isCheckFileExist(imagePath);
+            if (!TextUtils.isEmpty(name)) {
+                BitMapUtils.saveBitmap(User.imagePath+name, BitMapUtils.duplicateBitmap(BitmapFactory.decodeFile(imagePath), 800, 500));
+                tPresent.uploadImage(imagePath);
+            } else {
+                //Log.i("info", "取消拍照------>" + data);
+            }
+        }
+    }
     class HomeworkPendingHtml extends HomeworkInfHtml {
         @JavascriptInterface
         public int getUserType(){

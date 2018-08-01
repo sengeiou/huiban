@@ -103,7 +103,7 @@ public class LessonInfWebActivity<T extends LessonInfPresent> extends BaseWebAct
             runOnUiThread(()->{
                 //播放视频
                 Log.e(TAG, "playLesson: "+playUrl );
-                PlayerVideoActivity.startPlayerVideoActivity(getApplicationContext(),playUrl);
+                PlayerVideoActivity.startPlayerVideoActivity(LessonInfWebActivity.this,playUrl);
             });
         }
     }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,15 @@ public class ErrorHomeworkWebFragment extends InteractionBaseWebViewFragment<Err
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        Log.e(TAG, "onHiddenChanged: "+hidden );
+        if(!hidden){
+            tPresent.refresh();
+        }
+        super.onHiddenChanged(hidden);
+    }
+
+    @Override
     protected void webViewLoadFinished() {
         tPresent.loadErrorHomeworkData();
     }
@@ -73,6 +83,7 @@ public class ErrorHomeworkWebFragment extends InteractionBaseWebViewFragment<Err
 
     @Override
     public void fail(String error) {
+        Log.e(TAG, "fail: "+error );
         toast(error);
     }
 

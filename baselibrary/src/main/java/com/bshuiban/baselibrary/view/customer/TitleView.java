@@ -42,7 +42,7 @@ public class TitleView extends View {
     private Drawables drawables;
     private Paint paint;
     private int drawablePadding = (int) getResources().getDimension(R.dimen.dp_9);
-    private Rect left_rect, right_rect,center_rect;
+    private Rect left_rect, right_rect, center_rect;
     private String TAG = getClass().getSimpleName();
     private boolean left_click_intercept = true;
     private Paint mPaintMiddle;
@@ -80,7 +80,7 @@ public class TitleView extends View {
             } else if (index == R.styleable.TitleView_title_size) {
                 //title_text_size = array.getDimensionPixelSize(index, title_text_size);
                 //Log.e(TAG, "TitleView: "+title_text_size+", "+getResources().getDimensionPixelSize(R.dimen.dp_15) );
-                title_text_size=getResources().getDimensionPixelSize(R.dimen.dp_16);
+                title_text_size = getResources().getDimensionPixelSize(R.dimen.dp_16);
             } else if (index == R.styleable.TitleView_right_size) {
                 right_text_size = array.getDimensionPixelSize(index, right_text_size);
             } else if (index == R.styleable.TitleView_title_color) {
@@ -104,8 +104,8 @@ public class TitleView extends View {
             } else if (index == R.styleable.TitleView_src_right) {
                 drawableRight = array.getDrawable(index);
 
-            }else if(index == R.styleable.TitleView_middle_show){
-                middleShow = array.getBoolean(index,middleShow);
+            } else if (index == R.styleable.TitleView_middle_show) {
+                middleShow = array.getBoolean(index, middleShow);
             }
         }
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -115,8 +115,8 @@ public class TitleView extends View {
         if (leftP == 0) {
             leftP = (int) TypedValue.applyDimension(1, 10, getResources().getDisplayMetrics());
         }
-        if(middleShow){
-            mPaintMiddle=new Paint();
+        if (middleShow) {
+            mPaintMiddle = new Paint();
             mPaintMiddle.setDither(true);
             mPaintMiddle.setAntiAlias(true);
             mPaintMiddle.setColor(Color.WHITE);
@@ -170,7 +170,7 @@ public class TitleView extends View {
             setDrawableParameter(drawableLeft, compoundRect, state);
             setDrawableParameter(drawableCenter, compoundRect, state);
             setDrawableParameter(drawableRight, compoundRect, state);
-        }else {
+        } else {
             if (drawables == null) {
                 drawables = new Drawables();
             }
@@ -199,9 +199,11 @@ public class TitleView extends View {
             }
         }
     }
-    public boolean isRightTextEffic(){
-        return right_text!=null;
+
+    public boolean isRightTextEffic() {
+        return right_text != null;
     }
+
     public void setRight_text(String right_text, int color, int right_text_size) {
         if (right_text == null && this.right_text != null) {
             this.right_text = null;
@@ -235,7 +237,7 @@ public class TitleView extends View {
             //bounds.set(bounds.left,bounds.top,bounds.left+(Math.min(getMeasuredWidth(),bounds.width())),bounds.top+Math.min(getMeasuredHeight(),bounds.height()));
             reSetRect(bounds);
             if (left_rect == null) left_rect = new Rect();
-            left_rect.set(0, 0, bounds.width() + getPaddingLeft(), getMeasuredHeight());
+            left_rect.set(0, 0, bounds.width() + getPaddingLeft()+getResources().getDimensionPixelSize(R.dimen.dp_15), getMeasuredHeight());
             canvas.translate(getPaddingLeft(), (getMeasuredHeight() - bounds.height()) / 2f);
             drawables.mDrawableLeft.draw(canvas);
             canvas.restoreToCount(saveCount);
@@ -323,7 +325,7 @@ public class TitleView extends View {
             paint.setColor(title_text_color);
             text_width = com.bshuiban.baselibrary.utils.TextUtils.getTextWidth(title_text, paint);
         }
-        if (!middleShow&&drawables.mDrawableCenter != null) {
+        if (!middleShow && drawables.mDrawableCenter != null) {
             int saveCount = canvas.getSaveCount();
             canvas.save();
             Rect bounds = drawables.mDrawableCenter.getBounds();
@@ -336,18 +338,18 @@ public class TitleView extends View {
             canvas.restoreToCount(saveCount);
             if (text_width > 0) {
                 if (center_rect == null) center_rect = new Rect();
-                center_rect.set((int) dx - 5, 0, (int) (dx - 5+bounds.width()+text_width), getMeasuredHeight());
+                center_rect.set((int) dx - 5, 0, (int) (dx - 5 + bounds.width() + text_width), getMeasuredHeight());
                 canvas.drawText(title_text, dx + width_drawable + drawablePadding, com.bshuiban.baselibrary.utils.TextUtils.getTextBaseLine(getMeasuredHeight() / 2f, paint), paint);
             }
         } else {
             if (text_width > 0) {
                 float x = (getMeasuredWidth() - text_width) / 2f;
                 if (center_rect == null) center_rect = new Rect();
-                center_rect.set((int) x - 5, 0, (int) (x-5+text_width), getMeasuredHeight());//10*24
+                center_rect.set((int) x - 5, 0, (int) (x - 5 + text_width), getMeasuredHeight());//10*24
                 canvas.drawText(title_text, x, com.bshuiban.baselibrary.utils.TextUtils.getTextBaseLine(getMeasuredHeight() / 2f, paint), paint);
-                if(middleShow){
-                    int heightR = com.bshuiban.baselibrary.utils.TextUtils.getTextHeightR(title_text, paint);
-                    int widthR = heightR*10/24;//三角形 高=宽
+                if (middleShow) {
+                    int heightR = com.bshuiban.baselibrary.utils.TextUtils.getTextHeightR(title_text, paint)-13;
+                    int widthR = heightR * 10 / 24;//三角形 高=宽
                     Path path = new Path();
                     float left = x + text_width + 15;
                     float top = (getMeasuredHeight() - heightR) / 2f;
@@ -356,21 +358,22 @@ public class TitleView extends View {
                     float bottom1 = top + heightR / 2f;
                     path.lineTo(left, bottom1);
                     float right = left + widthR;
-                    center_rect.right= (int) (center_rect.right+right)+1;
-                    path.lineTo(right,bottom1);
-                    canvas.drawPath(path,mPaintMiddle);
+                    center_rect.right = (int) right + 1;
+                    path.lineTo(right, bottom1);
+                    canvas.drawPath(path, mPaintMiddle);
                     path.close();
                     Path path1 = new Path();
-                    float top1=bottom1+(heightR-widthR)/2f;
-                    path1.moveTo(left,top1);
-                    path1.lineTo(right,top1);
-                    path1.lineTo(middleX,top1+widthR);
-                    canvas.drawPath(path1,mPaintMiddle);
+                    float top1 = bottom1 + (heightR - widthR) / 2f;
+                    path1.moveTo(left, top1);
+                    path1.lineTo(right, top1);
+                    path1.lineTo(middleX, top1 + widthR);
+                    canvas.drawPath(path1, mPaintMiddle);
                     path1.close();
                 }
             }
         }
     }
+
     private void drawLine(Canvas canvas) {
         if (have_line) {
             int strokeWidth = (int) TypedValue.applyDimension(1, 1, getResources().getDisplayMetrics());
@@ -420,7 +423,7 @@ public class TitleView extends View {
             listener.rightClick(this);
             return true;
         }
-        if (isContain(center_rect, x, y) && listener != null) {
+        if (middleShow && isContain(center_rect, x, y) && listener != null) {
             listener.centerClick(this);
             return true;
         }
@@ -449,17 +452,23 @@ public class TitleView extends View {
         this.left_click_intercept = left_click_intercept;
     }
 
+    public void setMiddleShow(boolean middleShow) {
+        this.middleShow = middleShow;
+    }
+
     private OnClickListener listener;
     private View.OnClickListener l;
 
     public void setOnClickListener(@Nullable OnClickListener l) {
         listener = l;
     }
-    public abstract static class OnClickListener implements IOnClickListener{
+
+    public abstract static class OnClickListener implements IOnClickListener {
         @Override
         public void centerClick(View v) {
         }
     }
+
     public interface IOnClickListener {
         void leftClick(View v);
 

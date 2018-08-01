@@ -2,12 +2,12 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import com.bshuiban.baselibrary.contract.FilterHuiFuDaoContract;
 import com.bshuiban.baselibrary.contract.HuiFuDaoListContract;
+import com.bshuiban.baselibrary.model.LogUtils;
 import com.bshuiban.baselibrary.present.HuiFuDaoListPresent;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 import com.google.gson.Gson;
@@ -72,18 +72,22 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
 
     @Override
     public void updateList(String json) {
-        Log.e(TAG, "updateList: " );
+        LogUtils.e(TAG, "updateList: ");
         if (jingPin) {
             loadJavascriptMethod("listMsg", json);
         } else {
             jsonListData = json;
             //loadListAndGuessData();
         }
-        dismissDialog();
+        if (null != myLoadingDialog && myLoadingDialog.isShowing()) {
+            new Handler().postDelayed(() ->
+                    dismissDialog()
+            ,1500);
+        }
     }
 
     private void loadListAndGuessData() {
-        Log.e(TAG, "loadListAndGuessData: " );
+        LogUtils.e(TAG, "loadListAndGuessData: ");
         loadJavascriptMethod("xr", (jsonListData), (jsonGuessData));
         jsonGuessData = null;
         jsonListData = null;
@@ -106,21 +110,21 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
 
     @Override
     public void loadAllSubject(String json) {
-        Log.e(TAG, "loadAllSubject: " );
+        LogUtils.e(TAG, "loadAllSubject: ");
         loadJavascriptMethod("getListNav", (json));
     }
 
     @Override
     public void loadGuessWhatYouThink(String json) {
         jsonGuessData = json;
-        Log.e(TAG, "loadGuessWhatYouThink: " );
+        LogUtils.e(TAG, "loadGuessWhatYouThink: ");
         //loadJavascriptMethod("xr",replaceJson(,json));
         //loadListAndGuessData();
     }
 
     @Override
     public void addTag() {
-        if(!jingPin) {
+        if (!jingPin) {
             ++tag;
             if (tag >= 2) {
                 loadListAndGuessData();
@@ -141,14 +145,15 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
         }
 
         @JavascriptInterface
-        public void loadMoreJingping(){
-            if(tPresent.getSubjectId()==-1){
+        public void loadMoreJingping() {
+            if (tPresent.getSubjectId() == -1) {
                 tPresent.clearArray();
                 tPresent.loadMoreData();
-            }else {
+            } else {
                 loadJingPing();
             }
         }
+
         @JavascriptInterface
         public void dealWithJson(String key, String json) {
             if ("getHBCourseList".equals(key)) {
@@ -156,31 +161,34 @@ public class HuiFuDaoListActivity extends BaseWebActivity<HuiFuDaoListPresent> i
                 jingPin = false;
                 tPresent.screeningLesson("getHBCourseList", json);
             } else {//获取筛选条件
-                tPresent.getScreeningData(key,json);
+                tPresent.getScreeningData(key, json);
             }
         }
+
         @JavascriptInterface
-        public void updateSubjectId(String subjectId){
-            HuiFuDaoListActivity.this.subjectId=subjectId;
-            jingPin=false;
+        public void updateSubjectId(String subjectId) {
+            HuiFuDaoListActivity.this.subjectId = subjectId;
+            jingPin = false;
             startFilterPage();
         }
+
         @JavascriptInterface
         public void itemClick(String courseId) {
             startActivity(new Intent(getApplicationContext(), LessonInfWebActivity.class).putExtra("courseId", courseId));
         }
-        private void startFilterPage(){
-            startActivityForResult(new Intent(getApplicationContext(), FilterHuiFuDaoWebActivity.class).putExtra("subjectId",subjectId),100);
+
+        private void startFilterPage() {
+            startActivityForResult(new Intent(getApplicationContext(), FilterHuiFuDaoWebActivity.class).putExtra("subjectId", subjectId), 100);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case 100:
-                if(null!=data){
+                if (null != data) {
                     String json = data.getStringExtra("json");
-                    tPresent.getScreeningData("getHBCourseList",json);
+                    tPresent.screeningLesson("getHBCourseList", json);
                 }
                 break;
         }

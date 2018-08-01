@@ -243,7 +243,7 @@ public class ClassSchedule extends View {
                 //x = 2 * everyLength;
                 for (int j = 2; j < xCenter.length; j++) {
                     if (dataBeans.size() > j) {
-                        dataBean = dataBeans.get(j);
+                        dataBean = dataBeans.get(j-2);
                         if (null != dataBean) {
                             String subjectName = dataBean.getSubjectName();
                             //dataBean.get

@@ -9,6 +9,7 @@ import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.ErrorHomeworkAnalysisContract;
 import com.bshuiban.baselibrary.present.ErrorHomeworkAnalysisPresent;
+import com.bshuiban.baselibrary.view.activity.ImageActivity;
 import com.bshuiban.baselibrary.view.activity.PlayerVideoActivity;
 import com.bshuiban.baselibrary.view.dialog.MessageDialog;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.UserTypeHtml;
@@ -59,7 +60,7 @@ public class ErrorHomeworkAnalysisActivity extends BaseWebActivity<ErrorHomework
         @JavascriptInterface
         public void playVideo(String videoUrl) {
             runOnUiThread(() -> {
-                PlayerVideoActivity.startPlayerVideoActivity(getApplicationContext(), videoUrl);
+                PlayerVideoActivity.startPlayerVideoActivity(ErrorHomeworkAnalysisActivity.this, videoUrl);
             });
         }
 
@@ -85,6 +86,11 @@ public class ErrorHomeworkAnalysisActivity extends BaseWebActivity<ErrorHomework
         public void deleteErrorHomework(int examId) {
             tPresent.deleteErrorHomework(examId);
         }
-
+        @JavascriptInterface
+        public void imageClick(String src){
+            runOnUiThread(()->
+                    ImageActivity.startImageActivity(getApplicationContext(),src)
+            );
+        }
     }
 }

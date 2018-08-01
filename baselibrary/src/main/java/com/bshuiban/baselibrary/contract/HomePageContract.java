@@ -26,6 +26,8 @@ public interface HomePageContract {
          */
         void updateMessageList(String json);
         void startReplyDialog(MessageBean.DataBean dataBean);
+
+        void updateReplyDialog(MessageBean.DataBean dataBean);
     }
     interface Parent{
         /**

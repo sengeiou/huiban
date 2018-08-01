@@ -91,6 +91,7 @@ public class ChangeUserActivity extends BaseActivity<ChangeUserPresent> implemen
 
     @Override
     public void updateView(List<UserMoreBean.DataBean> data) {
+        dismissDialog();
         if (data != null) {
             Iterator<UserMoreBean.DataBean> iterator = data.iterator();
             while (iterator.hasNext()) {
@@ -147,6 +148,7 @@ public class ChangeUserActivity extends BaseActivity<ChangeUserPresent> implemen
 
     @Override
     public void fail(String error) {
+        dismissDialog();
         toast(error);
         setRecycleData(null);
     }

@@ -67,8 +67,8 @@
             if(data[i].gradeRate == "-1"){
                 data[i].gradeRate = "--";
             }
-            var nowMsg = $('tBody').html();
-            $('tBody').html(nowMsg + `
+            $('tBody').html(" ");
+            $('tBody').html(`
                 <tr>
                     <td>${data[i].className}</td>
                     <td>${data[i].classRate}</td>

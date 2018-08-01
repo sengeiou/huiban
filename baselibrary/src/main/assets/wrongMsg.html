@@ -114,7 +114,11 @@
 		})
 		$("input").attr({disabled:"disabled"});
 	};
-
+	// 点击图片放大
+    $(".wrongBox").find("img").click(function(){
+        var src = $(this).attr("src");
+        window.android.imageClick(src);
+    })
 
 </script>
 </html>

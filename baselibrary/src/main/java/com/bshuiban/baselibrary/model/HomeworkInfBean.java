@@ -388,6 +388,9 @@ public class HomeworkInfBean extends ResultBean {
                 private String stuAnss;
                 private int stuAnswerKey;
                 private Object stuAnswer;
+                /**
+                 * 0未批阅1正确2错误3半对半错
+                 */
                 private int status;
                 private String resourceName;
                 private Object otherId;

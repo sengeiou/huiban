@@ -18,9 +18,7 @@ import com.google.gson.JsonSyntaxException;
  * 巩固练习
  */
 public class ConsolidationWebActivity extends BaseWebActivity<ConsolidationPresent> implements ConsolidationContract.View {
-
     private int examId;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

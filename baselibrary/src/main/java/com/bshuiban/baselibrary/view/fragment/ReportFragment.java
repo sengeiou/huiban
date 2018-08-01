@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,6 +167,7 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
                 simplePagerTitleView.setPadding(15, 0, 15, 0);
                 simplePagerTitleView.setSelectedColor(Color.WHITE);
                 simplePagerTitleView.setOnClickListener((v) -> viewPager.setCurrentItem(index, false));
+                simplePagerTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimensionPixelSize(R.dimen.dp_15));
                 simplePagerTitleView.setText(arrayList.get(index).getSubjectName());
                 return simplePagerTitleView;
             }

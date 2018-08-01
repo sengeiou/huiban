@@ -29,6 +29,7 @@ public class TeachClassPresent extends BasePresent<TeachClassContract.View> impl
             protected void error(String error) {
                 if(isEffective()){
                     //view.fail(error);
+                    view.updateData(null);
                 }
             }
         });

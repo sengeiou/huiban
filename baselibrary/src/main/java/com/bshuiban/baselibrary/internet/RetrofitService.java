@@ -177,15 +177,15 @@ public class RetrofitService extends BaseRetrofit {
                     success(t);
                 } else {
                     String msg = t.getMsg();
-                    if(msg.contains("暂无")){
-                        createEmptyTClass();
-                    }else {
+//                    if(msg.contains("暂无")){
+//                        createEmptyTClass();
+//                    }else {
                         error(msg);
-                    }
+//                    }
                 }
             } else {
-                //error("暂无数据");
-                createEmptyTClass();
+                error("暂无数据");
+                //createEmptyTClass();
             }
         }
 

@@ -4,13 +4,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.utils.SpaceItemDecoration;
 import com.bshuiban.baselibrary.view.adapter.RefreshLoadAdapter;
 import com.bshuiban.baselibrary.present.BasePresent;
@@ -40,6 +45,8 @@ public abstract class RecycleViewFragment<T, A extends RefreshLoadAdapter, P ext
      */
     protected int start = 0;
     protected A adapter;
+    private ImageView child;
+    private View view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,12 +61,25 @@ public abstract class RecycleViewFragment<T, A extends RefreshLoadAdapter, P ext
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutResourcesId(), container, false);
+        FrameLayout frameLayout=new FrameLayout(getActivity());
+        frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        child = new ImageView(getActivity());
+        child.setImageResource(R.mipmap.no_data);
+        child.setVisibility(View.VISIBLE);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(getResources().getDimensionPixelOffset(R.dimen.dp_167),getResources().getDimensionPixelOffset(R.dimen.dp_247));
+        params.gravity= Gravity.CENTER;
+        params.topMargin=getResources().getDimensionPixelOffset(R.dimen.dp_m_20);
+        child.setLayoutParams(params);
+        child.setScaleType(ImageView.ScaleType.FIT_XY);
+        frameLayout.addView(child);
+        view = inflater.inflate(getLayoutResourcesId(), container, false);
+        frameLayout.addView(view);
         recyclerView = getRecycleView(view);
         initView(view);
         initRecycleView();
         startPresent();
-        return view;
+        view.setVisibility(View.GONE);
+        return frameLayout;
     }
 
     /**
@@ -80,7 +100,6 @@ public abstract class RecycleViewFragment<T, A extends RefreshLoadAdapter, P ext
     protected void initView(View view) {
         pullToRefreshLayout = (PullToRefreshLayout) view.findViewById(R.id.pullToRefreshView);
         pullToRefreshLayout.setRefreshListener(new BaseRefreshListener() {
-
             @Override
             public void refresh() {
                 start = 0;
@@ -97,8 +116,6 @@ public abstract class RecycleViewFragment<T, A extends RefreshLoadAdapter, P ext
         });
     }
 
-    ;
-
     protected abstract A getAdapter();
 
 
@@ -112,6 +129,13 @@ public abstract class RecycleViewFragment<T, A extends RefreshLoadAdapter, P ext
             } else {
                 adapter.setList(list);
             }
+        }
+        if(adapter.isEffictive()){
+            child.setVisibility(View.GONE);
+            view.setVisibility(View.VISIBLE);
+        }else{
+            child.setVisibility(View.VISIBLE);
+            view.setVisibility(View.GONE);
         }
     }
 
@@ -128,6 +152,7 @@ public abstract class RecycleViewFragment<T, A extends RefreshLoadAdapter, P ext
         }
         LinearLayoutManager layout = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layout);
+        recyclerView.addItemDecoration(new SpaceItemDecoration(getActivity(),LinearLayoutManager.VERTICAL,getResources().getDimensionPixelSize(R.dimen.dp_10), ContextCompat.getColor(getActivity(),R.color.line_space)));
         adapter = getAdapter();
         if (null != adapter) {
             recyclerView.setAdapter(adapter);

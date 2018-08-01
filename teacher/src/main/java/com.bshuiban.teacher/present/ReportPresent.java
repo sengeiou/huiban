@@ -91,6 +91,7 @@ public class ReportPresent extends BasePresent<ReportContract.View> implements R
 
     @Override
     public void loadSubjectList() {
+
         askInternet("getSubjectList","{\"siteId\":\""+User.getInstance().getSchoolId()+"\"}", new RetrofitService.CallResult<SubjectListBean>(SubjectListBean.class) {
             @Override
             protected void success(SubjectListBean subjectListBean) {

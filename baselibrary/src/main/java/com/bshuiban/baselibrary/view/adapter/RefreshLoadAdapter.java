@@ -2,6 +2,8 @@ package com.bshuiban.baselibrary.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.bshuiban.baselibrary.model.HomeworkBean;
+
 import java.util.List;
 
 /**
@@ -22,7 +24,9 @@ public abstract class RefreshLoadAdapter<T, V extends RecyclerView.ViewHolder> e
         this.mList=list;
         notifyDataSetChanged();
     }
-
+    public boolean isEffictive(){
+        return HomeworkBean.isEffictive(mList);
+    }
     /**
      * 更新mList集合
      * @param list

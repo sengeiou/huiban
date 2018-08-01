@@ -56,6 +56,7 @@ public class GradeClassDialog extends BaseDialog {
         rightWheel = (WheelView) dialogView.findViewById(R.id.select_time_wheel_right);
         if (leftList != null) {
             leftWheel.setWheelItemList(TextUtils.getListString(leftList.getData()));
+            leftS=leftWheel.getCurrentItemValue();
             leftWheel.setOnSelectListener(new WheelView.SelectListener() {
                 @Override
                 public void onSelect(int index, String text) {

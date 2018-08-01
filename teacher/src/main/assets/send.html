@@ -27,7 +27,7 @@
                     <span class="sendBtn">发送</span>
                 </p>
                 <div class="classes">
-                    
+
                 </div>
             </div>
         </main>
@@ -35,6 +35,11 @@
 </body>
 <script>
     function getClass (data) {
+       if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+             var lisbox = document.getElementsByClassName("classes")[0];
+                 lisbox.innerHTML = `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
+                    return;
+                }
         var data = JSON.parse(data);
         for (var i = 0; i < data.length; i++) {
             var nowMsg = $('.classes').html();

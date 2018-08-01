@@ -138,7 +138,7 @@ public class StatisticalChartActivity extends BaseActivity<StatisticalChartPrese
     private void initLineChart(final LineChart chart) {
         int xSizeId = R.dimen.dp_8;
 
-        chart.setTouchEnabled(true); // 设置是否可以触摸
+        chart.setTouchEnabled(false); // 设置是否可以触摸
         //chart.setDragEnabled(false);// 是否可以拖拽
         //chart.setDoubleTapToZoomEnabled(false);
         chart.setScaleEnabled(false);
@@ -157,17 +157,17 @@ public class StatisticalChartActivity extends BaseActivity<StatisticalChartPrese
 
         Legend legend = chart.getLegend();
         // 不显示图例
-        legend.setEnabled(false);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setEnabled(true);
+        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         legend.setTextSize(13);
         legend.setXEntrySpace(20);
         float px80 = getResources().getDimension(R.dimen.dp_27);// value * metrics.density;
         float dp80 = px80 / getResources().getDisplayMetrics().density;
-        legend.setYOffset(dp80);
+        legend.setYOffset(-getResources().getDimensionPixelOffset(R.dimen.dp_5));
         legend.setXOffset(0);
-        legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setForm(Legend.LegendForm.LINE);
         legend.setFormLineWidth(10);
         legend.setFormSize(15);
         //legend.setYOffset(20);

@@ -6,6 +6,7 @@ import com.bshuiban.baselibrary.model.ClassActivityBean;
 import com.bshuiban.baselibrary.model.ClassScheduleBean;
 import com.bshuiban.baselibrary.model.ResultBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +14,8 @@ import java.util.List;
  * describe：
  */
 public class ClassActivityPresent extends BasePresent<ClassActivityContract.View>implements ClassActivityContract.Present {
+    private boolean deleteTag;
+
     public ClassActivityPresent(ClassActivityContract.View view) {
         super(view);
     }
@@ -25,6 +28,9 @@ public class ClassActivityPresent extends BasePresent<ClassActivityContract.View
                 if(isEffective()) {
                     List<ClassActivityBean.DataBean> data = classActivityBean.getData();
                     view.updateViewForData(data);
+                    if(deleteTag){
+                        deleteTag=false;
+                    }
                 }
             }
 
@@ -32,6 +38,10 @@ public class ClassActivityPresent extends BasePresent<ClassActivityContract.View
             protected void error(String error) {
                 if(isEffective()){
                     view.fail(error);
+                    if(deleteTag){
+                        view.updateViewForData(new ArrayList<ClassActivityBean.DataBean>());
+                        deleteTag=false;
+                    }
                 }
             }
         });
@@ -49,6 +59,7 @@ public class ClassActivityPresent extends BasePresent<ClassActivityContract.View
             protected void success(ResultBean resultBean) {
                 if(isEffective()) {
                     view.refresh();
+                    deleteTag=true;
                 }
             }
 

@@ -87,7 +87,7 @@ public class MainWeiClassWebActivity extends BaseWebActivity<MainWeiClassPresent
          */
         @JavascriptInterface
         public void playVideo(String url){
-            runOnUiThread(()-> PlayerVideoActivity.startPlayerVideoActivity(getApplicationContext(),url));
+            runOnUiThread(()-> PlayerVideoActivity.startPlayerVideoActivity(MainWeiClassWebActivity.this,url));
         }
     }
 }

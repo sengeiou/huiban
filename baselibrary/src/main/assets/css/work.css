@@ -131,7 +131,7 @@
 
 .workIndex main nav .active {
   border-bottom: solid 0.08rem #00CFBF;
-  color: #747474;
+  color:#00CFBF;
 }
 
 .workIndex main .list {
@@ -344,29 +344,4 @@ background-image: url("../images/work/see@2x.png");
 .workIndex main .list .listMsg .looka {
 background-image: url("../images/work/see@2x.png");
 }
-}
-.yresult>span>img{
-  width: 70%;
-  height: 50px;
-}
-.wrongPage main .wrongMsg .examina>img{
-  height: 1rem;
-  vertical-align: bottom
-}
-.examina .lxitem_ct_frm .lxitem_ct_main p>[img-type="tex"]{
-  height: .4rem!important;
-  vertical-align: bottom
-}
-.examina .lxitem_ct_frm .lxitem_ct_main p>[img-type="img"]{
-  height:2rem!important;
-  vertical-align: bottom
-}
-.examina .lxitem_ct_frm ol>[img-type="img"]{
-  height: 1rem;
-}
-.examina .lxitem_ct_frm ol>[img-type="tex"]{
-  height: .25rem;
-}
-examina>img {
-  height: 1rem;
 }

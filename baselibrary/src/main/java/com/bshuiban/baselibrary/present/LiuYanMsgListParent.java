@@ -34,6 +34,7 @@ public class LiuYanMsgListParent extends ListPresent<LiuYanMsgListContract.View>
      */
     private final String messageUserId;
     private List<MessageBean.DataBean> dataBeans;
+    private ReplyDialog replyDialog;
 
     public LiuYanMsgListParent(LiuYanMsgListContract.View view, String messageUserId) {
         super(view);
@@ -51,6 +52,12 @@ public class LiuYanMsgListParent extends ListPresent<LiuYanMsgListContract.View>
         if (!android.text.TextUtils.isEmpty(json)) {
             dataBeans = gson.fromJson(json, new TypeToken<List<MessageBean.DataBean>>() {
             }.getType());
+            if(refreshHuiFu&&dataBeans!=null&&dataBeans.size()>indexData){
+                if(null!=replyDialog) {
+                    replyDialog.setViewData(dataBeans.get(indexData));
+                    refreshHuiFu=false;
+                }
+            }
         }
     }
 
@@ -109,12 +116,14 @@ public class LiuYanMsgListParent extends ListPresent<LiuYanMsgListContract.View>
             RetrofitService.getInstance().getServiceResult("addLeaveMessage", json, new RetrofitService.CallResult<ResultBean>(ResultBean.class) {
                 @Override
                 protected void success(ResultBean resultBean) {
+                    refreshHuiFu =true;
                     refresh();
                     view.fail("成功");
                 }
 
                 @Override
                 protected void error(String error) {
+                    refreshHuiFu =false;
                     if (isEffective()) {
                         view.fail(error);
                     }
@@ -125,36 +134,45 @@ public class LiuYanMsgListParent extends ListPresent<LiuYanMsgListContract.View>
 
     @Override
     public void getReplyMessage(int index) {
+        indexData=index;
         if (isEffective() && null != dataBeans && dataBeans.size() > index) {
             view.startReplyDialog(dataBeans.get(index));
         }
     }
-
+    private int indexData;
+    private boolean refreshHuiFu;
     public void startReplyDialog(FragmentManager fragmentManager, Context activity, MessageBean.DataBean dataBean, boolean isSelf) {
-        ReplyDialog replyDialog = new ReplyDialog(activity, isSelf);
+        if(refreshHuiFu){
+            refreshHuiFu=false;
+        }
+        if(null==replyDialog) {
+            replyDialog = new ReplyDialog(activity, isSelf);
+            replyDialog.setMessageListListener(new ReplyDialog.MessageListListener() {
+                @Override
+                public void deleteMessageItem(String messageId, String pid) {
+                    DialogUtils.showMessageSureCancelDialog(view.getActivity(), "确认删除此留言？", v -> {
+                        LiuYanMsgListParent.this.deleteMessageItem(messageId, pid);
+                    });
+                }
+                @Override
+                public void showCommitDialog() {
+                    CommentDialog commentDialog = new CommentDialog("请输入内容", inputText -> {
+                        //recevieId= ;//int,接收人id，给谁留言
+                        //String sendId= User.getInstance().getUserId();//int,留言人、发送人id
+                        //messageId		//int，消息id，评论时传空
+                        //String content			//string 回复的内容
+                        //"recevieId":,"messageId":,"content":"","sendId":""
+                        LiuYanMsgListParent.this.replayMessage("{\"recevieId\":\"" + dataBean.getSend() + "\",\"messageId\":\"" + dataBean.getId() + "\",\"content\":\"" + inputText + "\"}");
+
+                        //replyDialog.dismiss();
+                    });
+                    commentDialog.show(fragmentManager, "commit");
+                }
+            });
+        }
         replyDialog.setViewData(dataBean);
         replyDialog.show();
-        replyDialog.setMessageListListener(new ReplyDialog.MessageListListener() {
-            @Override
-            public void deleteMessageItem(String messageId, String pid) {
-                DialogUtils.showMessageSureCancelDialog(view.getActivity(), "确认删除此留言？", v -> {
-                    LiuYanMsgListParent.this.deleteMessageItem(messageId, pid);
-                });
-            }
-            @Override
-            public void showCommitDialog() {
-                CommentDialog commentDialog = new CommentDialog("请输入内容", inputText -> {
-                    //recevieId= ;//int,接收人id，给谁留言
-                    //String sendId= User.getInstance().getUserId();//int,留言人、发送人id
-                    //messageId		//int，消息id，评论时传空
-                    //String content			//string 回复的内容
-                    //"recevieId":,"messageId":,"content":"","sendId":""
-                    LiuYanMsgListParent.this.replayMessage("{\"recevieId\":\"" + dataBean.getSend() + "\",\"messageId\":\"" + dataBean.getId() + "\",\"content\":\"" + inputText + "\"}");
-                    replyDialog.dismiss();
-                });
-                commentDialog.show(fragmentManager, "commit");
-            }
-        });
+
     }
 
     public MessageList.MessageListListener getMessageListListener() {

@@ -76,6 +76,10 @@
             android:name=".view.activity.SelectImgActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.ImageActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
             android:name=".view.webview.webActivity.ErrorFilterActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -22,7 +22,7 @@ import com.bshuiban.baselibrary.view.dialog.HuiBanLoadingDialog;
 public class BaseActivity<T extends BasePresent> extends AppCompatActivity {
     protected T tPresent;
     private Toast toast;
-    private HuiBanLoadingDialog myLoadingDialog;
+    protected HuiBanLoadingDialog myLoadingDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

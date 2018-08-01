@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class User {
     public static final String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/HuiBan/";
+    public static final String imagePath=path+"coach/";
     private SubjectBean subjectBean;
     private LoginResultBean.Data data;
     private static User user;

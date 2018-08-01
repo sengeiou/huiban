@@ -123,7 +123,7 @@ public class HomeworkBean extends Homework.Data {
      * @param typeIndex       第几类
      * @param problemIndex    第几个
      */
-    public static void setProblemAnswer(HomeworkBean bean,String stuAnswer, int indexAnswer, HomeworkInfBean.DataBean homeworkInfBean, String type, int pageIndex, int typeIndex, int problemIndex) {
+    public static void setProblemAnswer(HomeworkBean bean, String stuAnswer, int indexAnswer, HomeworkInfBean.DataBean homeworkInfBean, String type, int pageIndex, int typeIndex, int problemIndex) {
         String optionName;
         bean.setComplete(!TextUtils.isEmpty(stuAnswer));
         switch (type) {
@@ -143,9 +143,9 @@ public class HomeworkBean extends Homework.Data {
                         break;
                     default:
                         nextBean.setStuAnswer(stuAnswer);
-                        if(isSelect(optionName)){
-                           bean.setCorrect(true);
-                           bean.setResult(isRight((String) nextBean.getAnswer(),stuAnswer)?1:0);
+                        if (isSelect(optionName)) {
+                            bean.setCorrect(true);
+                            bean.setResult(isRight((String) nextBean.getAnswer(), stuAnswer) ? 1 : 0);
                         }
                 }
             }
@@ -163,9 +163,9 @@ public class HomeworkBean extends Homework.Data {
                         break;
                     default:
                         nextBeanX.setStuAnswer(stuAnswer);
-                        if(isSelect(optionName)){
+                        if (isSelect(optionName)) {
                             bean.setCorrect(true);
-                            bean.setResult(isRight((String) nextBeanX.getAnswer(),stuAnswer)?1:0);
+                            bean.setResult(isRight((String) nextBeanX.getAnswer(), stuAnswer) ? 1 : 0);
                         }
                 }
             }
@@ -175,9 +175,9 @@ public class HomeworkBean extends Homework.Data {
                 optionName = exam.getOptionName();
             {
                 exam.setStuAnswer(stuAnswer);
-                if(isSelect(optionName)){
+                if (isSelect(optionName)) {
                     bean.setCorrect(true);
-                    bean.setResult(isRight((String) exam.getAnswer(),stuAnswer)?1:0);
+                    bean.setResult(isRight((String) exam.getAnswer(), stuAnswer) ? 1 : 0);
                 }
             }
             break;
@@ -191,15 +191,16 @@ public class HomeworkBean extends Homework.Data {
         strings.add(answer);
         return strings;
     }
+
     private static String addImgAnswer(String answer) {
         String s;
-        if(TextUtils.isEmpty(answer)){
-           s="";
-        }else {
-            if(answer.indexOf("http")==0) {
+        if (TextUtils.isEmpty(answer)) {
+            s = "";
+        } else {
+            if (answer.indexOf("http") == 0) {
                 s = "<img src=\"" + answer + "\"/>";
-            }else {
-                s=answer;
+            } else {
+                s = answer;
             }
         }
         return s;
@@ -231,6 +232,15 @@ public class HomeworkBean extends Homework.Data {
     }
 
     public static List<HomeworkBean> getHomeworkBean(HomeworkInfBean.DataBean homeworkInfBean) {
+        return getHomeworkBean(homeworkInfBean, false);
+    }
+
+    /**
+     * @param homeworkInfBean
+     * @param tag             是否已经完成
+     * @return
+     */
+    public static List<HomeworkBean> getHomeworkBean(HomeworkInfBean.DataBean homeworkInfBean, boolean tag) {
         if (null == homeworkInfBean) {
             return null;
         }
@@ -248,13 +258,20 @@ public class HomeworkBean extends Homework.Data {
                         HomeworkInfBean.DataBean.OnLineBean.NextBean nextBean = next.get(j);
                         if (null != nextBean) {
                             String optionName = nextBean.getOptionName();
-                            homeworkBean.setProblemId("5___0___"+nextBean.getExamId());
+                            homeworkBean.setProblemId("5___0___" + nextBean.getExamId());
                             if (isSelect(optionName)) {
                                 homeworkBean.setCorrect(true);
                                 homeworkBean.setObjective(true);
                                 String stuAnswer = (String) nextBean.getStuAnswer();
                                 homeworkBean.setComplete(!TextUtils.isEmpty(stuAnswer));
                                 homeworkBean.setResult(isRight((String) nextBean.getAnswer(), stuAnswer) ? 1 : 0);
+                            } else {
+                                homeworkBean.setCorrect(false);
+                                homeworkBean.setObjective(false);
+                                homeworkBean.setComplete(!isEmpty(nextBean.getStuAnswer()));
+                                if (tag) {
+                                    homeworkBean.setResult(getResult(nextBean.getStatus()));
+                                }
                             }
                         }
                         list.add(homeworkBean);
@@ -276,13 +293,20 @@ public class HomeworkBean extends Homework.Data {
                                 HomeworkInfBean.DataBean.ExamPaperBean.ExamBean.NextBeanX nextBeanX = next.get(k);
                                 if (null != next) {
                                     String optionName = nextBeanX.getOptionName();
-                                    homeworkBean.setProblemId("6___"+nextBeanX.getPaperId()+"___"+nextBeanX.getExamId());
+                                    homeworkBean.setProblemId("6___" + nextBeanX.getPaperId() + "___" + nextBeanX.getExamId());
                                     if (isSelect(optionName)) {
                                         homeworkBean.setCorrect(true);
                                         homeworkBean.setObjective(true);
                                         String stuAnswer = (String) nextBeanX.getStuAnswer();
                                         homeworkBean.setComplete(!TextUtils.isEmpty(stuAnswer));
                                         homeworkBean.setResult(isRight((String) nextBeanX.getAnswer(), stuAnswer) ? 1 : 0);
+                                    } else {
+                                        homeworkBean.setCorrect(false);
+                                        homeworkBean.setObjective(false);
+                                        homeworkBean.setComplete(!isEmpty(nextBeanX.getStuAnswer()));
+                                        if (tag) {
+                                            homeworkBean.setResult(getResult(nextBeanX.getStatus()));
+                                        }
                                     }
                                 }
                                 list.add(homeworkBean);
@@ -301,13 +325,20 @@ public class HomeworkBean extends Homework.Data {
                     HomeworkInfBean.DataBean.VideoBean.Exam exam1 = exam.get(j);
                     if (null != exam1) {
                         String optionName = exam1.getOptionName();
-                        homeworkBean.setProblemId("8___"+exam1.getVideoId()+"___"+exam1.getExamId());
+                        homeworkBean.setProblemId("8___" + exam1.getVideoId() + "___" + exam1.getExamId());
                         if (isSelect(optionName)) {
                             homeworkBean.setCorrect(true);
                             homeworkBean.setObjective(true);
                             String stuAnswer = exam1.getStuAnswer();
                             homeworkBean.setComplete(!TextUtils.isEmpty(stuAnswer));
                             homeworkBean.setResult(isRight(exam1.getAnswer(), stuAnswer) ? 1 : 0);
+                        } else {
+                            homeworkBean.setCorrect(false);
+                            homeworkBean.setObjective(false);
+                            homeworkBean.setComplete(!isEmpty(exam1.getStuAnswer()));
+                            if (tag) {
+                                homeworkBean.setResult(getResult(exam1.getStatus()));
+                            }
                         }
                     }
                     list.add(homeworkBean);
@@ -329,7 +360,7 @@ public class HomeworkBean extends Homework.Data {
     }
 
     public static boolean isRight(String answer, String stuAnswer) {
-        Log.e("TAG", "isRight: "+answer+", "+stuAnswer );
+        Log.e("TAG", "isRight: " + answer + ", " + stuAnswer);
         if (TextUtils.isEmpty(answer) || TextUtils.isEmpty(stuAnswer)) {
             return false;
         }
@@ -342,5 +373,53 @@ public class HomeworkBean extends Homework.Data {
             return true;
         }
         return false;
+    }
+
+    public static boolean isEmpty(Object stuAnswer) {
+        if (null == stuAnswer) {
+            return true;
+        }
+        if (stuAnswer instanceof String) {
+            return ((String) stuAnswer).length() == 0;
+        }
+        if (stuAnswer instanceof List) {//填空题，只要有一个空未填，即未做完
+            List stuAnswer1 = (List) stuAnswer;
+            if (stuAnswer1.size() == 0) {
+                return true;
+            } else {
+                for (int i = 0; i < stuAnswer1.size(); i++) {
+                    Object o = stuAnswer1.get(i);//字符串，其它不考虑
+                    if (o == null || TextUtils.isEmpty(o.toString())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param statue 0未批阅1正确2错误3半对半错
+     * @return 0 错误，1正确，2 未知，3 半对
+     */
+    private static int getResult(Object statue) {
+        int parseInt = 0;
+        try {
+            parseInt = Integer.parseInt(statue+"");
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        switch (parseInt) {
+            case 0:
+                return 2;
+            case 1:
+                return 1;
+            case 2:
+                return 0;
+            case 3:
+                return 3;
+            default:
+                return 2;
+        }
     }
 }

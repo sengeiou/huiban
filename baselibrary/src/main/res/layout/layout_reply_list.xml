@@ -38,10 +38,15 @@
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/tv_write_msg"
+        android:layout_above="@+id/line_write"
         android:layout_below="@+id/tv"
         android:background="@android:color/white"/>
-
+    <View
+        android:id="@+id/line_write"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/tv_write_msg"
+        android:background="@color/line_bord"/>
     <TextView
         android:id="@+id/tv_write_msg"
         android:layout_width="match_parent"

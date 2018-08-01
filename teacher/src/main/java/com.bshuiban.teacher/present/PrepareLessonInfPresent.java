@@ -16,7 +16,7 @@ public class PrepareLessonInfPresent extends BasePresent<PrepareLessonInfContrac
 
     @Override
     public void loadPrepareLessonInf(int wtype, String preId) {//{"wtype":,"preId":""}
-        askInternet("getHBPreReleaseClass","{\"wtype\":"+wtype+",\"preId\":\""+preId+"\"}", new RetrofitService.CallResult<PrepareLessonBean>(PrepareLessonBean.class) {
+        askInternet("getHBPreReleaseClass","{\"type\":"+wtype+",\"preId\":\""+preId+"\"}", new RetrofitService.CallResult<PrepareLessonBean>(PrepareLessonBean.class) {
             @Override
             protected void success(PrepareLessonBean prepareLessonBean) {
                 if(isEffective()){

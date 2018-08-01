@@ -22,6 +22,7 @@ import com.bshuiban.baselibrary.view.dialog.ReplyDialog;
 public class HomePageFragment extends InteractionBaseWebViewFragment<HomePageParent> implements HomePageContract.View {
     private boolean tagToast=true;
     private boolean tagResume;
+    private ReplyDialog replyDialog;
 
     @Override
     public void onResume() {
@@ -80,7 +81,8 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
     @Override
     public void fail(String error) {
         if(tagToast) {
-            toast(error);
+            if(null!=error&&!error.contains("留言：暂无"))
+                toast(error);
         }else {
             tagToast=true;
         }
@@ -103,31 +105,41 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
     }
     @Override
     public void startReplyDialog(MessageBean.DataBean dataBean){
-        ReplyDialog replyDialog=new ReplyDialog(getActivity());
+        if(null==replyDialog) {
+            replyDialog = new ReplyDialog(getActivity());
+            replyDialog.setMessageListListener(new ReplyDialog.MessageListListener() {
+                @Override
+                public void deleteMessageItem(String messageId, String pid) {
+                    DialogUtils.showMessageSureCancelDialog(getActivity(), "确认删除此留言？", v -> {
+                        tPresent.delete(messageId, pid);
+                        replyDialog.dismiss();
+                    });
+                }
+
+                @Override
+                public void showCommitDialog() {
+                    CommentDialog commentDialog = new CommentDialog("请输入内容", inputText -> {
+                        //recevieId= ;//int,接收人id，给谁留言
+                        String sendId= User.getInstance().getUserId();//int,留言人、发送人id
+                        //messageId		//int，消息id，评论时传空
+                        //String content			//string 回复的内容
+                        //"recevieId":,"messageId":,"content":"","sendId":""
+                        tPresent.addRecevier("{\"recevieId\":\""+dataBean.getSend()+"\",\"messageId\":\""+dataBean.getId()+"\",\"content\":\""+inputText+"\",\"sendId\":\""+sendId+"\"}");
+                        //replyDialog.dismiss();
+                    });
+                    commentDialog.show(getChildFragmentManager(),"commit");
+                }
+            });
+        }
         replyDialog.setViewData(dataBean);
         replyDialog.show();
-        replyDialog.setMessageListListener(new ReplyDialog.MessageListListener() {
-            @Override
-            public void deleteMessageItem(String messageId, String pid) {
-                DialogUtils.showMessageSureCancelDialog(getActivity(), "确认删除此留言？", v -> {
-                    tPresent.delete(messageId, pid);
-                    replyDialog.dismiss();
-                });
-            }
 
-            @Override
-            public void showCommitDialog() {
-                CommentDialog commentDialog = new CommentDialog("请输入内容", inputText -> {
-                    //recevieId= ;//int,接收人id，给谁留言
-                    String sendId= User.getInstance().getUserId();//int,留言人、发送人id
-                    //messageId		//int，消息id，评论时传空
-                    //String content			//string 回复的内容
-                    //"recevieId":,"messageId":,"content":"","sendId":""
-                    tPresent.addRecevier("{\"recevieId\":\""+dataBean.getSend()+"\",\"messageId\":\""+dataBean.getId()+"\",\"content\":\""+inputText+"\",\"sendId\":\""+sendId+"\"}");
-                    replyDialog.dismiss();
-                });
-                commentDialog.show(getChildFragmentManager(),"commit");
-            }
-        });
+    }
+
+    @Override
+    public void updateReplyDialog(MessageBean.DataBean dataBean) {
+        if(null!=replyDialog) {
+            replyDialog.setViewData(dataBean);
+        }
     }
 }

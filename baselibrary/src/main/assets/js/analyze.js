@@ -3,6 +3,7 @@ var text = document.getElementById("text");
 var usertype = window.android.getUserType();
 var isParentsLook = window.android.isParentsLook();
 var type;
+var jie="解析：";
 if(usertype == 1) {
     type = "你的答案：";
 } else  {
@@ -17,23 +18,33 @@ function rende(data) {
         if(res.stuAnswer == undefined) {
         res.content = ""
         }
-        if(res.Answer == undefined) {
-        res.Answer = ""
+        if(res.answer == undefined) {
+        res.answer = ""
         }
         if(res.analysis == undefined) {
         res.analysis = ""
         }
     if (res.optionName == "subjective") {
+        if(res.analysis != undefined) {
+            if(res.analysis.indexOf("解析") != -1) {
+            jie="";
+            }
+        }
          text.innerHTML = `<ul class="list">${res.content}</ul> 
                     <div id="analyze">
                     <ul>
-                    <li class="dis">${type}${res.stuAnswer}</li>
-                    <li><span>${res.Answer}</span></li>
-                    <li>${res.analysis} </li>
+                    <li>${type}${res.stuAnswer}</li>
+                    <li><span>${res.answer}</span></li>
+                    <li>${jie} ${res.analysis} </li>
                     </ul>
                     </div>`;
     }
     if (res.optionName == "judge") {
+        if(res.analysis != undefined) {
+                    if(res.analysis.indexOf("解析") != -1) {
+                    jie="";
+                    }
+                }
         text.innerHTML = `<div class="judge">
                         <h3>${res.content}</ul></h3>
                         <span class="img1" style="margin-top:25px"></span> 
@@ -41,13 +52,13 @@ function rende(data) {
                         </div>
                         <div id="analyze">
                         <ul>
-                          <li>正确答案：<span>${res.Answer}</span></li>
-                            <li class="dis">${type}${res.stuAnswer}</li>
-                        <li>${res.analysis} </li>
+                          <li>正确答案：<span>${res.answer}</span></li>
+                            <li>${type}${res.stuAnswer}</li>
+                            <li>${jie} ${res.analysis} </li>
                         </ul>
                         </div>`;
         var imgs = document.getElementsByTagName('span');
-        if (res.Answer == "对") {
+        if (res.answer == "对") {
             img[0].className = "img1"
             img[1].className = "img4"
         } else {
@@ -57,12 +68,18 @@ function rende(data) {
     };
     // 填空题
     if (res.optionName == "fill") {
+        if(res.analysis != undefined) {
+                    if(res.analysis.indexOf("解析") != -1) {
+                    jie="";
+                    }
+                }
         text.innerHTML = `<ul class="list">${res.content}</ul> 
                     <div id="analyze">
                     <ul>
-                    <li class="dis">${type}${res.stuAnswer}</li>
-                    <li><span>${res.Answer}</span></li>
-                    <li>${res.analysis} </li>
+                        <li>正确答案：<span>${res.answer}</span></li>
+                        <li>${type}${res.stuAnswer}</li>
+//                        <li><span>${res.answer}</span></li>
+                        <li>${jie} ${res.analysis} </li>
                     </ul>
                     </div>`;
         var tkbox = document.getElementsByClassName('tkbox')[0];
@@ -70,7 +87,7 @@ function rende(data) {
         var answ = document.getElementsByClassName("lxitem_ans_frm")[0]
         tkbox.style.display = "none"
         for (var pro of button) {
-            if (res.Answer == pro.innerHTML) {
+            if (res.answer == pro.innerHTML) {
                 pro.style.background = "#07cab9";
                 pro.style.color = "white";
             }
@@ -83,6 +100,11 @@ function rende(data) {
     };
     // 单选题
     if (res.optionName == "radio") {
+        if(res.analysis != undefined) {
+                    if(res.analysis.indexOf("解析") != -1) {
+                    jie="";
+                    }
+                }
         text.innerHTML = `<ul class="list">${res.content}</ul> <div id="xuan"> 
                 <span class="span">A</span>
                 <span class="span">B</span>
@@ -91,14 +113,15 @@ function rende(data) {
                  </div>
                 <div id="analyze">
                 <ul>
-              <li>正确答案：<span>${res.Answer}</span></li>
-               <li class="dis">${type}${res.stuAnswer}</li>
-                <li>${res.analysis} </li>
+              <li>正确答案：<span>${res.answer}</span></li>
+               <li >${type}${res.stuAnswer}</li>
+                <li>${jie} ${res.analysis} </li>
                 </ul>
                 </div>`;
+        console.log(type);
         var button = document.getElementsByClassName('span');
         for (var pro of button) {
-            if (res.Answer == pro.innerHTML) {
+            if (res.stuAnswer == pro.innerHTML) {
                 pro.style.background = "#07cab9";
                 pro.style.color = "white";
             }
@@ -106,6 +129,11 @@ function rende(data) {
     }
     // 多选题
     if (res.optionName == "check") {
+        if(res.analysis != undefined) {
+                    if(res.analysis.indexOf("解析") != -1) {
+                    jie="";
+                    }
+                }
         text.innerHTML = `<ul class="list">${res.content}</ul> <div id="xuan"> 
                     <span class="span">A</span>
                     <span class="span">B</span>
@@ -114,15 +142,15 @@ function rende(data) {
                      </div>
                     <div id="analyze">
                     <ul>
-                    <li>正确答案：<span>${res.Answer}</span></li>
-                    <li class="dis">${type}${res.stuAnswer}</li>
-                    <li>${res.analysis} </li>
+                    <li>正确答案：<span>${res.answer}</span></li>
+                    <li >${type}${res.stuAnswer}</li>
+                    <li>${jie}${res.analysis} </li>
                     </ul>
                     </div>`;
         var button = document.getElementsByClassName('span');
         for (var pro of button) {
-            for (var j = 0; i < res.Answer.length; j++) {
-                if (res.Answer[j] == pro.innerHTML) {
+            for (var j = 0; i < res.stuAnswer.length; j++) {
+                if (res.stuAnswer[j] == pro.innerHTML) {
                     pro.style.background = "#07cab9";
                     pro.style.color = "white";
                 }
@@ -131,7 +159,7 @@ function rende(data) {
     }
 
     console.log(isParentsLook);
-    if(isParentsLook) {
+    if(!isParentsLook) {
         console.log("aaaaaa")
         $(".dis").html('');
     }

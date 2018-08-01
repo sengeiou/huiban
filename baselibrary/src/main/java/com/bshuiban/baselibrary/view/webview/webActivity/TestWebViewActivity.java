@@ -2,6 +2,7 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -24,7 +25,8 @@ public class TestWebViewActivity extends BaseWebActivity {
         setWebViewSetting(mWebView);
         TextView tv_sure=findViewById(R.id.tv_sure);
         et_content=findViewById(R.id.et_content);
-        et_content.setText("字体大小");
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        et_content.setText("宽x高 ："+displayMetrics.widthPixels+"x"+displayMetrics.heightPixels+", "+displayMetrics.density+", "+displayMetrics.densityDpi+", "+displayMetrics.scaledDensity+", \n"+displayMetrics.toString());
         et_content.setTextColor(Color.BLACK);
         et_content.setBackgroundColor(Color.WHITE);
         et_content.setPadding(10,10,10,10);

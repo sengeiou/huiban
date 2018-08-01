@@ -13,6 +13,8 @@ public class HuiBanApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //CrashHandler.getInstance().init(this);
+        if(!BuildConfig.LOG_DEBUG) {
+            CrashHandler.getInstance().init(this);
+        }
     }
 }

@@ -28,6 +28,9 @@ public class ChangeUserPresent extends BasePresent<ChangeUserContract.View> impl
             return;
         }
         //phone="13426480529";
+        if(isEffective()){
+            view.startDialog();
+        }
         askInternet("getUserRoleByMobile","{\"mobile\":\""+phone+"\"}", new RetrofitService.CallResult<UserMoreBean>(UserMoreBean.class) {
             @Override
             protected void success(UserMoreBean userMoreBean) {

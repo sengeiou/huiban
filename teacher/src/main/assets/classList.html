@@ -28,21 +28,26 @@
 </body>
 <script>
     function getContent (data) {
-        var data = JSON.parse(data);
         $('.listBox').html('');
+         if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+         var lisbox = document.getElementsByClassName("listBox")[0];
+             lisbox.innerHTML =  `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
+                return;
+         }
+        var data = JSON.parse(data);
         for (var i=0; i<data.length; i++) {
             var nowMsg = $('.listBox').html();
             if (data[i].noMarkCnt>0) {
                 $('.listBox').html(nowMsg + `
                     <ul>
-                        <li>${data[i].chapName}<span></span></li>
+                        <li>${data[i].title}<span></span></li>
                         <li>${data[i].info}</li>
                     </ul>
                 `);
             }else {
                 $('.listBox').html(nowMsg + `
                     <ul>
-                        <li>${data[i].chapName}</li>
+                        <li>${data[i].title}</li>
                         <li>${data[i].info}</li>
                     </ul>
                 `);

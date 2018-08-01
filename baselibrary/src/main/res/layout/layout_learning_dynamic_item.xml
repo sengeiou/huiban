@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_80"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
     <ImageView
         android:id="@+id/iv"
         android:layout_width="@dimen/dp_43"
         android:layout_height="@dimen/dp_43"
-        android:src="@mipmap/default_head"/>
+        android:src="@mipmap/default_head"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"/>
     <TextView
         android:id="@+id/tv_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/iv"/>
+        android:layout_toRightOf="@+id/iv"
+        android:layout_marginTop="@dimen/dp_20"
+        android:paddingLeft="0dp"
+        android:paddingRight="@dimen/dp_10"/>
     <TextView
         android:id="@+id/tv_date"
         android:layout_toRightOf="@+id/iv"
@@ -21,5 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingLeft="0dp"
+        android:layout_marginBottom="@dimen/dp_12"/>
 </RelativeLayout>

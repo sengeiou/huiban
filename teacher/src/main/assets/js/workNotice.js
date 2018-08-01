@@ -15,6 +15,11 @@ $(".navs").delegate("i", "click", function () {
 })
 // 作业提醒
 function worknotice(data) {
+     if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+             var lisbox = document.getElementsByClassName("list")[0];
+                 lisbox.innerHTML =  `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
+                    return;
+                }
     res = JSON.parse(data);
     for (var i = 0; i < res.length; i++) {
         var str2 = "";
