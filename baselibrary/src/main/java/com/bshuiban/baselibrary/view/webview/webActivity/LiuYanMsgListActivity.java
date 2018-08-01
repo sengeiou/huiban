@@ -26,10 +26,6 @@ public class LiuYanMsgListActivity extends BaseWebActivity<LiuYanMsgListParent> 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FrameLayout frameLayout = ViewUtils.getFrameLayout(this);
-        mWebView=getWebView(getApplicationContext());
-        frameLayout.addView(mWebView);
-        setContentView(frameLayout);
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
         messageUserId = intent.getStringExtra("userId");

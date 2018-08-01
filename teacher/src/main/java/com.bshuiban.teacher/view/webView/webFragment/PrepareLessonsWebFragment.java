@@ -58,10 +58,6 @@ public class PrepareLessonsWebFragment extends InteractionBaseWebViewFragment<Pr
         });
         registerWebViewH5Interface(lessonsHtml);
     }
-    /*@Override
-    protected View getFragmentView() {
-        return null;
-    }*/
 
     @Override
     protected void webViewLoadFinished() {

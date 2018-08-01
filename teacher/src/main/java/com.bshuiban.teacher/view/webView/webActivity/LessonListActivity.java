@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Created by xinheng on 2018/5/30.<br/>
- * describe：课程列表
+ * describe：课程列表，学习资源
  */
 public class LessonListActivity extends BaseWebActivity<LessonListPresent> implements LessonListContract.View, TeachClassContract.View {
     private List<TeachClassBean.DataBean> data;

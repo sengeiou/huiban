@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -17,6 +17,7 @@ import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.TeachClassPresent;
+import com.bshuiban.baselibrary.utils.ClassChange;
 import com.bshuiban.baselibrary.view.adapter.ClassViewPagerAdapter;
 import com.bshuiban.baselibrary.view.customer.TitleView;
 import com.bshuiban.baselibrary.view.fragment.ClassActivityFragment;
@@ -47,6 +48,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
     private ClassViewPagerAdapter classViewPagerAdapter;
     private int mPosition;
     private String className;
+    private ClassChange classChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +69,6 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             className = "我的班级";
         }
         titleView.setTitle_text(className);
-        if(User.getInstance().isTeacher()){
-            titleView.setMiddleShow(true);
-        }else {
-            titleView.setMiddleShow(false);
-        }
         titleView.setOnClickListener(new TitleView.OnClickListener() {
             @Override
             public void leftClick(View v) {
@@ -82,22 +79,28 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             public void rightClick(View v) {
                 if (User.getInstance().isTeacher()) {
                     //SendClassActivityWebActivity
-                    Intent intent = new Intent(getApplicationContext(), SendNoticeActivity.class)
-                            .putExtra("send_type", 1);
-                    startActivityForResult(intent, 100);
+                    try {
+                        Class<?> aClass = Class.forName("com.bshuiban.teacher.view.webView.webActivity.SendClassActivityWebActivity");
+                        Intent intent = new Intent(getApplicationContext(), aClass);
+                        startActivityForResult(intent,100);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
 
             @Override
             public void centerClick(View v) {
-                if (User.getInstance().isTeacher() && HomeworkBean.isEffictive(data)) {
+                if (User.getInstance().isTeacher()&&HomeworkBean.isEffictive(data)) {
                     startClassDialog();
                 }
             }
         });
         MagicIndicator magicIndicator = findViewById(R.id.magic);
         ViewPager viewPager = findViewById(R.id.viewPager);
-        classViewPagerAdapter = new ClassViewPagerAdapter(getSupportFragmentManager(), arrayList);
+        classChange = new ClassChange();
+        classViewPagerAdapter = new ClassViewPagerAdapter(getSupportFragmentManager(), arrayList, classChange);
         viewPager.setAdapter(classViewPagerAdapter);
         magicIndicator.setBackgroundColor(Color.WHITE);
 
@@ -106,7 +109,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if (User.getInstance().isTeacher()) {
-                    mPosition = position;
+                    mPosition=position;
                     switch (position) {
                         case 2:
                             titleView.setTitle_text(className);
@@ -140,13 +143,9 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(getApplication());
                 simplePagerTitleView.setNormalColor(Color.BLACK);
-                int dp = getResources().getDimensionPixelSize(R.dimen.dp_9);
-                simplePagerTitleView.setPadding(dp, 0, dp, 0);
+                simplePagerTitleView.setPadding(15, 0, 15, 0);
                 simplePagerTitleView.setSelectedColor(getResources().getColor(R.color.guide_start_btn));
-                int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.dp_15);
-                float dimension = getResources().getDimension(R.dimen.dp_15);
-                Log.e("TAG", "getTitleView: "+dimensionPixelSize+", "+dimension );
-                simplePagerTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimensionPixelSize);
+                simplePagerTitleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, getResources().getDimension(R.dimen.dp_4));
                 simplePagerTitleView.setText(arrayList.get(index));
                 simplePagerTitleView.setOnClickListener((v) -> {
                     viewPager.setCurrentItem(index, false);
@@ -169,7 +168,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
     }
 
     private void startClassDialog() {
-        List<String> list = new ArrayList<>();
+        List<String> list=new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
             String className = data.get(i).getClassName();
             list.add(className);
@@ -179,14 +178,15 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             public boolean onSure(String left, int leftIndex, String right, int rightIndex) {
                 TeachClassBean.DataBean dataBean = data.get(leftIndex);
                 String classId = dataBean.getClassId();
-                Fragment fragment = classViewPagerAdapter.getFragment(mPosition);
-                if (fragment instanceof ClassScheduleFragment) {
-                    ((ClassScheduleFragment) fragment).updateSchedule(classId);
-                } else if (fragment instanceof GeneralSituationFragment) {
-                    ((GeneralSituationFragment) fragment).update(classId);
-                } else if (fragment instanceof ClassActivityFragment) {
-                    ((ClassActivityFragment) fragment).update(classId);
-                }
+//                Fragment fragment = classViewPagerAdapter.getFragment(mPosition);
+//                if(fragment instanceof ClassScheduleFragment) {
+//                    ((ClassScheduleFragment) fragment).updateSchedule(classId);
+//                }else if(fragment instanceof GeneralSituationFragment){
+//                    ((GeneralSituationFragment) fragment).update(classId);
+//                }else if(fragment instanceof ClassActivityFragment){
+//                    ((ClassActivityFragment) fragment).update(classId);
+//                }
+                classChange.setDataBean(dataBean);
                 titleView.setTitle_text(dataBean.getClassName());
                 return false;
             }
@@ -204,8 +204,6 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
         if (HomeworkBean.isEffictive(data)) {
             className = data.get(0).getClassName();
             titleView.setTitle_text(className);
-        }else {
-            titleView.setMiddleShow(false);
         }
     }
 
@@ -226,13 +224,22 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
+        switch (requestCode){
             case 100:
                 Fragment fragment = classViewPagerAdapter.getFragment(mPosition);
-                if (fragment instanceof ClassActivityFragment) {
+                if(fragment instanceof ClassActivityFragment){
                     ((ClassActivityFragment) fragment).update(null);
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(classChange!=null){
+            classChange.clear();
+            classChange=null;
+        }
+        super.onDestroy();
     }
 }

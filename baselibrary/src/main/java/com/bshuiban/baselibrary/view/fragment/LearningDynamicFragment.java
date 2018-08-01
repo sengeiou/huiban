@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.utils.ClassChange;
 import com.bshuiban.baselibrary.view.adapter.LearningDynamicAdapter;
 import com.bshuiban.baselibrary.contract.LearningDynamicContract;
 import com.bshuiban.baselibrary.model.LearningDynamicBean;
@@ -18,7 +20,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  * 学习动态
  */
-public class LearningDynamicFragment extends RecycleViewFragment<LearningDynamicBean.DataBean, LearningDynamicAdapter, LearningDynamicPresent> implements LearningDynamicContract.View {
+public class LearningDynamicFragment extends RecycleViewFragment<LearningDynamicBean.DataBean, LearningDynamicAdapter, LearningDynamicPresent> implements LearningDynamicContract.View,ClassChange.OnChangeListener {
 
     @Override
     protected void initPresent() {
@@ -69,5 +71,10 @@ public class LearningDynamicFragment extends RecycleViewFragment<LearningDynamic
     @Override
     public void updateViewForData(List<LearningDynamicBean.DataBean> list) {
         super.updateView(list);
+    }
+
+    @Override
+    public void changeClass(TeachClassBean.DataBean dataBean) {
+
     }
 }

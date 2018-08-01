@@ -11,8 +11,10 @@ import android.widget.ScrollView;
 import com.bshuiban.baselibrary.contract.ClassScheduleContract;
 import com.bshuiban.baselibrary.model.ClassScheduleBean;
 import com.bshuiban.baselibrary.model.StudentClassClassScheduleBean;
+import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.ClassSchedulePresent;
+import com.bshuiban.baselibrary.utils.ClassChange;
 import com.bshuiban.baselibrary.view.customer.ClassSchedule;
 
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.List;
  * Created by xinheng on 2018/5/4.<br/>
  * describe：
  */
-public class ClassScheduleFragment extends BaseFragment<ClassSchedulePresent> implements ClassScheduleContract.View{
+public class ClassScheduleFragment extends BaseFragment<ClassSchedulePresent> implements ClassScheduleContract.View,ClassChange.OnChangeListener{
     private ClassSchedule classSchedule;
 
     @Override
@@ -69,5 +71,10 @@ public class ClassScheduleFragment extends BaseFragment<ClassSchedulePresent> im
     public void fail(String error) {
         toast(error);
         //classSchedule.setData(null);
+    }
+
+    @Override
+    public void changeClass(TeachClassBean.DataBean dataBean) {
+        updateSchedule(dataBean.getClassId());
     }
 }

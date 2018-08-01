@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.bshuiban.baselibrary.utils.ClassChange;
 import com.bshuiban.baselibrary.view.fragment.ClassActivityFragment;
 import com.bshuiban.baselibrary.view.fragment.ClassScheduleFragment;
 import com.bshuiban.baselibrary.view.fragment.GeneralSituationFragment;
@@ -19,11 +20,12 @@ public class ClassViewPagerAdapter extends FragmentPagerAdapter {
     private ArrayList<String> mList;
     private ArrayList<Fragment> mListFragment;
     //private ClassScheduleFragment fragment;
-
-    public ClassViewPagerAdapter(FragmentManager fm, ArrayList<String> list) {
+    private ClassChange classChange;
+    public ClassViewPagerAdapter(FragmentManager fm, ArrayList<String> list, ClassChange classChange) {
         super(fm);
         this.mList = list;
         mListFragment=new ArrayList<>();
+        this.classChange=classChange;
     }
 
     @Override
@@ -54,6 +56,7 @@ public class ClassViewPagerAdapter extends FragmentPagerAdapter {
                 fragment = new ClassScheduleFragment();
             }
         }
+        classChange.setOnChangeListener((ClassChange.OnChangeListener) fragment);
         mListFragment.add(fragment);
         return fragment;
     }

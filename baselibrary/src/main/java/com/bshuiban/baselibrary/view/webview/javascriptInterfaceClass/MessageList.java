@@ -14,8 +14,13 @@ public class MessageList extends UserTypeHtml{
     private MessageListListener onListener;
     private ListRunnable runnable;
 
+    //TODO 必须主线程创建
     public MessageList() {
-        handler = new Handler(Looper.myLooper());
+        if(Looper.myLooper()==Looper.getMainLooper()) {
+            handler = new Handler(Looper.myLooper());
+        }else {
+            throw new RuntimeException("必须主线程创建MessageList对象");
+        }
     }
 
     private static final String TAG = "HTML5";

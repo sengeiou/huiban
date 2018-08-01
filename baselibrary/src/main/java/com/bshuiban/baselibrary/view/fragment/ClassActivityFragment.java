@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bshuiban.baselibrary.R;
+import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
+import com.bshuiban.baselibrary.utils.ClassChange;
 import com.bshuiban.baselibrary.utils.DialogUtils;
 import com.bshuiban.baselibrary.view.adapter.ClassActivityAdapter;
 import com.bshuiban.baselibrary.contract.ClassActivityContract;
@@ -23,14 +25,13 @@ import java.util.List;
  * Created by xinheng on 2018/5/9.<br/>
  * describe：班级活动页面
  */
-public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean.DataBean, ClassActivityAdapter, ClassActivityPresent> implements ClassActivityContract.View {
+public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean.DataBean,ClassActivityAdapter,ClassActivityPresent> implements ClassActivityContract.View,ClassChange.OnChangeListener {
     private String classId;
     private boolean creat;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        creat = true;
+        creat=true;
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -51,8 +52,8 @@ public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean
 
     @Override
     public void refresh() {
-        start = 0;
-        tPresent.askInternetForClassActivityData(classId, start, limit);
+        start=0;
+        tPresent.askInternetForClassActivityData(classId, start,limit);
     }
 
     @Override
@@ -67,13 +68,13 @@ public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean
 
     @Override
     public void fail(String error) {
-        //toast(error);
+        toast(error);
         dismissFresh();
     }
 
     @Override
     protected void initPresent() {
-        tPresent = new ClassActivityPresent(this);
+        tPresent=new ClassActivityPresent(this);
     }
 
     @Override
@@ -97,14 +98,19 @@ public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean
     @Override
     protected void startPresent() {
         classId = User.getInstance().getClassId();
-        tPresent.askInternetForClassActivityData(classId, start, limit);
+        tPresent.askInternetForClassActivityData(classId, start,limit);
     }
 
     public void update(String classId) {
-        if (null != classId) {
+        if(null!=classId) {
             this.classId = classId;
         }
-        start = 0;
-        tPresent.askInternetForClassActivityData(this.classId, start, limit);
+        start=0;
+        tPresent.askInternetForClassActivityData(this.classId, start,limit);
+    }
+
+    @Override
+    public void changeClass(TeachClassBean.DataBean dataBean) {
+        update(dataBean.getClassId());
     }
 }

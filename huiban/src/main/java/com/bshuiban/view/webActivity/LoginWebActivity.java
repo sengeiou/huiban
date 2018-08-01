@@ -50,13 +50,10 @@ public class LoginWebActivity extends BaseWebActivity<LoginPresent> implements L
         }
     }
     private void init() {
-        setWebViewSetting(mWebView);
         loadFileHtml(HTML_NAME);
-        //registerWebViewH5Interface();
-        mWebView.addJavascriptInterface(new LoginHtml(),"android");
+        registerWebViewH5Interface(new LoginHtml());
         String resUserJson = UserSharedPreferencesUtils.getUserResJson(getApplicationContext());
         if (!TextUtils.isEmpty(resUserJson)) {
-            //String userJson = AESUtils.desEncrypt(resUserJson);
             String userJson = resUserJson;
             LoginResultBean.Data data = null;
             try {
@@ -72,11 +69,6 @@ public class LoginWebActivity extends BaseWebActivity<LoginPresent> implements L
                 loadJavascriptMethod("setLoginData", userId, passWord);
             }
         }
-    }
-
-    @Override
-    protected void dealWidth(String key, String json) {
-        tPresent.askInternet(key,json);
     }
 
     @Override

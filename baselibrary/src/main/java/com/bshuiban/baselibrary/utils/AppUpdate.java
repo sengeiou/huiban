@@ -13,7 +13,7 @@ import java.io.File;
 
 /**
  * Created by xinheng on 2018/6/25.<br/>
- * describe：
+ * describe：app升级安装
  */
 public class AppUpdate {
 

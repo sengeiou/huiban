@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * Created by xinheng on 2018/6/26.<br/>
- * describe：
+ * describe：崩溃信息收集
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private static final String TAG = "CrashHandler";
