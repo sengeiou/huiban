@@ -7,7 +7,7 @@ import com.bshuiban.baselibrary.model.User;
 
 /**
  * Created by xinheng on 2018/5/21.<br/>
- * describe：
+ * describe：所有学科
  */
 public class AllSubjectPresent<V extends BaseView> extends BasePresent<V> {
     public AllSubjectPresent(V v) {

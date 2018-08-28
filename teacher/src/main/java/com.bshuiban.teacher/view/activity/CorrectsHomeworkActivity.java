@@ -88,6 +88,7 @@ public class CorrectsHomeworkActivity extends BaseActivity<CorrectsHomeworkPrese
                         .putExtra("preparationId", preId)
                         .putExtra("classId", classId)
                         .putExtra(HOME_Work_Id, workId)
+                        .putExtra(HOME_TYPE,home_type)
                         .putExtra("json", new Gson().toJson(adapter.getList())));
             }
 

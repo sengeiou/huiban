@@ -7,11 +7,24 @@ import com.bshuiban.baselibrary.utils.aes.AESUtils;
 
 /**
  * Created by xinheng on 2018/5/14.<br/>
- * describe：
+ * describe：用户信息密文存储（aes）
  */
 public class UserSharedPreferencesUtils {
+    /**
+     * xml文件名
+     */
     private static final String NAME="userData";
+    /**
+     * xml存储中的key值
+     */
     private static final String keyName="resUserJson";
+
+    /**
+     * 保存
+     * @param context 上下文
+     * @param dataRes 密文
+     * @return 成功与否
+     */
     public static boolean saveUserData(Context context,String dataRes){
         SharedPreferences sharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
@@ -19,6 +32,12 @@ public class UserSharedPreferencesUtils {
         edit.putString(keyName,dataRes);
         return edit.commit();
     }
+
+    /**
+     * 获取
+     * @param context 上下文
+     * @return 内容
+     */
     public static String getUserResJson(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         String string = sharedPreferences.getString(keyName, null);
@@ -27,6 +46,12 @@ public class UserSharedPreferencesUtils {
         }
         return string;
     }
+
+    /**
+     * 清除
+     * @param context 上下文
+     * @return 成功与否
+     */
     public static boolean cleanUserData(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         return sharedPreferences.edit().clear().commit();

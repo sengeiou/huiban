@@ -57,12 +57,26 @@ public class RetrofitService extends BaseRetrofit {
 
     }
 
+    /**
+     * json数据访问
+     * @param modu key值
+     * @param map map数据集合
+     * @param callback 回调
+     * @return 接口响应
+     */
     public retrofit2.Call<ResponseBody> getServiceMapResult(String modu, Map<String, Object> map, Callback<ResponseBody> callback) {
         String json = gson.toJson(map);
         map.clear();
         return getServiceResult(modu, json, callback);
     }
 
+    /**
+     * json数据访问
+     * @param modu key值
+     * @param data json串
+     * @param callback 回调
+     * @return 接口响应
+     */
     public retrofit2.Call<ResponseBody> getServiceResult(String modu, String data, Callback<ResponseBody> callback) {
         String encrypt = null;
         if (!android.text.TextUtils.isEmpty(data)) {
@@ -115,8 +129,9 @@ public class RetrofitService extends BaseRetrofit {
         @Override
         public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
             if (null != t) {
-                error(t.getMessage());
+                t.printStackTrace();
             }
+            error("访问网络失败");
         }
     }
 
@@ -153,7 +168,7 @@ public class RetrofitService extends BaseRetrofit {
         public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
             if (null != t) {
                 t.printStackTrace();
-                error(t.getMessage());
+                error("访问网络失败");
             } else {
                 error("internet-error");
             }
@@ -266,7 +281,9 @@ public class RetrofitService extends BaseRetrofit {
 
         @Override
         public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
-
+            if(null!=t)
+                t.printStackTrace();
+            fail("访问网络失败");
         }
 
         /**
@@ -354,7 +371,8 @@ public class RetrofitService extends BaseRetrofit {
         @Override
         public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
             if (null != t) {
-                fail(t.getMessage());
+                t.printStackTrace();
+                fail("访问网络失败");
             }
         }
     }
@@ -391,7 +409,7 @@ public class RetrofitService extends BaseRetrofit {
             }
             //Log.e(TAG, "onResponse: result = 网络错误" );
             //System.out.print("网络错误");
-            error("网络错误");
+            error("访问网络失败");
         }
     }
 

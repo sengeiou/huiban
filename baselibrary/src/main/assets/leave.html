@@ -96,6 +96,50 @@
             .left dd {
             width: 100%;
             }
+            /* 刷新区域 */
+        #main {
+            height: 80%;
+            width:100%;
+            overflow-Y: auto;
+            position: relative;
+            }
+            #main .listoo {
+            position: relative;
+            }
+            main {
+            overflow: hidden;
+            }
+            #main .listoo:before,
+            .listoo:after {
+            width: 100%;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            z-index: 9;
+            position: absolute;
+            display: block;
+            left: 0;
+            }
+
+            #main .listoo:before {
+            content: attr(uptext);
+            top: -50px;
+            }
+
+            #main .listoo:after {
+            content: attr(downtext);
+            bottom: -40px;
+            }
+
+            .done {
+            width:100%;
+            /* height: 1000px; */
+            }
+
+            .list {
+            min-height: 400px;
+            }
     </style>
 </head>
 <script src="./js/rem.js"></script>
@@ -115,14 +159,17 @@
                     留言......
                 </div>
             </div>
-            <button class="inputMsg">发布</button>
-            <div class="list"></div>
-            <div class="replyBox">
-                <p class="close">X</p>
+            <button class="inputMsg" style="margin-bottom:15px">发布</button>
+            <!-- 刷新区域 -->
+            <div id="main">
+                <div class="listoo" text="下拉刷新">
+                    <div class="list"></div>
+                </div>
             </div>
         </main>
     </div>
 </body>
+<script src="./js/iscroll-probe.js"></script>
 <script>
     var name = window.android.getName();
     var isSelf = window.android.isSelf();
@@ -138,7 +185,9 @@
     //渲染列表
     function getContent (data) {
         var data = JSON.parse(data);
-        $('.list').html('');
+       console.log(data.length);
+        $('.list').html(' ');
+        attr = "";
         $('textarea').val('');
         var aaa = '';
 
@@ -172,17 +221,25 @@
                     }
                     var xbox = document.getElementsByClassName("list")[0];
                     xbox.innerHTML = attr;
-        //点击删除
-        $('.dele').bind('click', function () {
-            var ind = $(this).parents('dl').index();
-            var msgid = data[ind].id;
-            window.android.deleteMessageItem(msgid, null)
-        });
-        //点击回复弹出
-        $('.rep').bind('click', function () {
-            var ind = $(this).parents('dl').index();
-            window.android.reply(ind);
-        });
+                     $('.listoo').css('height',$('.list').height()+50);
+        myIscroll.refresh();
+      //点击删除
+        var dele = document.getElementsByClassName("leaveWord");
+        for(var i=0; i<dele.length; i++) {
+        (function(i){
+        dele[i].addEventListener('click',function(e){
+        if(e.target.innerHTML == "删除") {
+        console.log(i+", "+data[i].id)
+        var msgid = data[i].id;
+        window.android.deleteMessageItem(msgid, null)
+        }
+         if(e.target.innerHTML == "回复") {
+            window.android.reply(i);
+        }
+        })
+        })(i)
+        }
+
     };
 
     //点击发布
@@ -196,5 +253,49 @@
             window.android.replayMessage(data);
         }
     });
+
+var list = document.querySelector('.listoo');
+var myIscroll = new IScroll('#main', {
+scrollbars: true,
+probeType: 3
+});
+var flag = true;
+    var y,y2,y3;
+    var listo = document.getElementsByClassName("list")[0];
+    listo.ontouchstart = function(e) {
+        y = 0;
+    e=e || window.event;
+        y2=e.touches[0].pageY;
+        listo.ontouchmove = function(e) {
+      e = e|| window.event
+    }
+  }
+  listo.ontouchend = function(e) {
+        e=e || window.event;
+        y3=e.changedTouches[0].pageY;
+        y = y3-y2;
+  }
+myIscroll.on('scroll', function () {
+if (this.y > 40) {
+
+} else if (this.y < 40 && this.y > 0) {
+
+} else if (this.y < this.maxScrollY - 60) {
+list.setAttribute('downtext', '释放刷新');
+flag = true;
+} else {
+list.setAttribute('downtext', '上拉加载');
+}
+})
+myIscroll.on('scrollEnd', function () {
+
+if (this.y === this.maxScrollY) {
+console.log("上拉");
+window.android.getMoreData(false);
+} else if (this.y === 0) {
+console.log("下拉");
+}
+})
+
 </script>
 </html>

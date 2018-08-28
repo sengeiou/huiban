@@ -6,7 +6,7 @@ import com.bshuiban.baselibrary.model.User;
 
 /**
  * Created by xinheng on 2018/6/5.<br/>
- * describe：
+ * describe：家长确认学科详情列表
  */
 public abstract class ParentConfirmSubjectPresent extends BasePresent<ParentConfirmSubjectContract.View> implements ParentConfirmSubjectContract.Present{
     public ParentConfirmSubjectPresent(ParentConfirmSubjectContract.View view) {

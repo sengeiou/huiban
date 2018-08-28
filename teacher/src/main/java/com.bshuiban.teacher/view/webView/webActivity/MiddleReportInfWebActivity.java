@@ -42,13 +42,14 @@ public class MiddleReportInfWebActivity extends BaseWebActivity<MiddleReportInfP
     @Override
     protected void webViewLoadFinished() {
         tPresent.loadHBTeaPreKnowRate(preId, wtype, workId, classId);
+        //获取班级学生各题测试情况列表
         tPresent.loadHBTeaPreExamRate(preId, wtype, workId, classId);
     }
 
     @Override
     public void updateView(int type, String json) {
         switch (type) {
-            case 1:
+            case 1://知识点
                 loadJavascriptMethod("getData",json);
                 break;
             default:

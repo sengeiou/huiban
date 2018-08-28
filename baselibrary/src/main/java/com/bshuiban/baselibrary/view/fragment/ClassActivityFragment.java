@@ -36,16 +36,6 @@ public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean
     }
 
     @Override
-    public void onResume() {
-//        if(!creat){
-//            tPresent.askInternetForClassActivityData(classId,start,limit);
-//        }else {
-//            creat=false;
-//        }
-        super.onResume();
-    }
-
-    @Override
     public void updateViewForData(List<ClassActivityBean.DataBean> data) {
         super.updateView(data);
     }
@@ -68,7 +58,7 @@ public class ClassActivityFragment extends RecycleViewFragment<ClassActivityBean
 
     @Override
     public void fail(String error) {
-        toast(error);
+        //toast(error);
         dismissFresh();
     }
 

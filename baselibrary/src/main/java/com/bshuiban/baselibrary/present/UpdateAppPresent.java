@@ -27,6 +27,7 @@ public class UpdateAppPresent extends BasePresent<UpdateAppContract.View> implem
            @Override
            protected void error(String error) {
                if(isEffective()){
+                   view.updateView(null);
                    view.fail(error);
                }
            }

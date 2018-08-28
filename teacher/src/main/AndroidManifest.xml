@@ -49,6 +49,9 @@
             android:name=".view.activity.HomeworkAnswerInfActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.TeacherStatisticalChartActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".view.activity.TeachScheduleActivity"
             android:screenOrientation="portrait" />
         <activity

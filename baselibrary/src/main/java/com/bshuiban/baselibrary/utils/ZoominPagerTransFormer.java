@@ -6,7 +6,7 @@ import android.view.View;
 /**
  * Author：weidanyan
  * Email：1022664273@qq.com
- * Description：This is ZoominPagerTransFormer
+ * Description：This is ZoominPagerTransFormer，viewpager滑动设置
  * Time: 2018/4/19
  */
 public class ZoominPagerTransFormer implements ViewPager.PageTransformer {

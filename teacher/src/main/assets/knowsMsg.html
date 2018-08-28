@@ -11,46 +11,56 @@
     <script src="./js/rem.js"></script>
 </head>
 <body>
-    <div class="wrap knows">
-        <header>
+<div class="wrap knows">
+    <header>
             <span>
                 <a href="/finish_page.html"></a>
-            </span>	
-            <span>我的备课</span>
-        </header>
-        <main>
-            <nav>
-                <span class="active">知识点掌握详情</span>
-                <span>各题测试详情</span>
-            </nav>
-            <div class="knowsList">
-                
-            </div>
-            <div class="cslist hide">
-                <p>正确率<span class="msg"><img src="./images/teacher/watch@2x.png" alt=""></span></p>
-                <div class="mainBox">
+            </span>
+        <span>我的备课</span>
+    </header>
+    <main>
+        <nav>
+            <span class="active">知识点掌握详情</span>
+            <span>各题测试详情</span>
+        </nav>
+        <div class="knowsList">
 
-                </div>
+        </div>
+        <div class="cslist hide">
+            <p>正确率<span class="msg"><img src="./images/teacher/watch@2x.png" alt=""></span></p>
+            <div class="mainBox">
+
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+</div>
 </body>
 <script>
     $('header span').eq(1).html(window.android.getClassName());
     //知识点
     function getData (data) {
+    if(data == undefined || data == "" || data == null || data == '[]') {
+            return;
+            }
         var data = JSON.parse(data);        
         for (var i=0; i<data.length; i++) {
+            console.log(JSON.stringify(data[i]));
             var nowMsg = $('.knowsList').html();
+            var aaa;
             if (data[i].rate == "-1") {
-                data[i].rate = 0;
+                aaa = "--";
+            } else{
+                aaa = data[i].rate+"%";
             }
+            console.log(data[i].branName);
+            console.log(data[i].rate);
             $('.knowsList').html(nowMsg + `
             <div class="list" style="position:relative">
-            <span class="name">${data[i].branName}${data[i].branName}${data[i].branName}${data[i].branName}</span>
-            <span class="jd" style="position:absolute"></span><i class="righ" style="position:absolute">正确率:${data[i].rate}%</i>
+            <span class="name">${data[i].branName}</span>
+            <span class="jd" style="position:absolute"></span><i class="righ" style="position:absolute">正确率:${aaa}</i>
             </div>
             `);
+            var rate = data[i].rate;
             var count = 150*rate/100/50+"rem";
             var indx = i;
             var he = $(".list").eq(indx).height();
@@ -65,24 +75,28 @@
     function getMsg (data) {
         var data = JSON.parse(data);
         for (var i=0; i<data.length; i++) {
-            var nowMsg = $('.mainBox').html();
+             var bbb;
             if (data[i].classRate == "-1") {
-                data[i].classRate = 0;
+                bbb = "--";
+            } else{
+               bbb = data[i].classRate +"%"
             }
-            $('.knowsList').html(nowMsg + `
-            <div class="list" style="position:relative">
-            <span class="name">${data[i].branName}${data[i].branName}${data[i].branName}${data[i].branName}</span>
-            <span class="jd" style="position:absolute"></span><i class="righ" style="position:absolute">正确率:${data[i].rate}%</i>
-            </div>
-            `);
-            var count = 150*rate/100/50+"rem";
-            var indx = i;
-            var he = $(".list").eq(indx).height();
-            console.log(he)
-            var top = (he/2-10)/50+"rem";
-            console.log(top)
-            $('.knowsList .jd').eq(indx).css({"width":count,"background":"#00c7b5","top":top});
-            $(".righ").eq(indx).css({"margin-left":"3.4rem","top":top})
+            var nowMsg = $('.mainBox').html();
+        $('.mainBox').html(nowMsg + `
+        <div class="list" style="position:relative">
+        <span class="name">第${data[i].sort}题</span>
+        <span class="jd" style="position:absolute"></span><i class="righx" style="position:absolute">正确率:${bbb}</i>
+        </div>
+        `);
+        var rate = data[i].classRate;
+        var count = 150*rate/100/50+"rem";
+        var indx = i;
+        var he = $(".mainBox .list").eq(indx).height();
+        console.log(he)
+        var top = (he/2)/50+"rem";
+        console.log(top)
+        $('.mainBox .jd').eq(indx).css({"width":count,"background":"#00c7b5","top":top});
+        $(".righx").eq(indx).css({"right":".5rem","top":top});
         }
     }
     $('nav span').bind('click', function () {
@@ -90,16 +104,17 @@
         if($(this).index() == 0){
             $('.knowsList').show();
             $('.cslist').hide();
-            window.android.changeItem(0);
+            //window.android.changeItem(0);
         } else {
             $('.knowsList').hide();
             $('.cslist').show();
-            window.android.changeItem(1);
+            //window.android.changeItem(1);
         }
     });
     $('.msg').bind('click', function () {
         console.log("查看");
         window.android.toNextPage();
     })
+
 </script>
 </html>

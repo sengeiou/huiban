@@ -34,11 +34,13 @@
 }
 .wrongPage main .list:before{
   content: attr(uptext);
+  font-size:20px;
   top:-40px;
 }
 .wrongPage main .list:after{
   content: attr(downtext);
   bottom:-40px;
+  font-size:20px;
 }
 .wrongPage header .more {
   display: block;
@@ -345,7 +347,7 @@ width: 98%!important;
 }
 .yresult>span>img{
   width: 70%;
-  height: 50px;
+  height: 100%;
 }
 .wrongPage main .wrongMsg .examina>img{
   height: 1rem;
@@ -372,3 +374,4 @@ examina>img {
   max-width:100%;
   height:1rem;
 }
+

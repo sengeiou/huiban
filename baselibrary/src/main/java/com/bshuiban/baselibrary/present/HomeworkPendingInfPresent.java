@@ -82,6 +82,10 @@ public class HomeworkPendingInfPresent extends HomeworkPresent<HomeworkPendingIn
            protected void result(ImageUploadResult imageUploadResult) {
                if(isEffective()) {
                    String img = imageUploadResult.getImg();
+                   if(null==img||img.trim().length()==0){
+                       error("上传失败");
+                       return;
+                   }
                    view.updateAnswerResult(url+img);
                    view.dismissDialog();
                }

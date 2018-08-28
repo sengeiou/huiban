@@ -19,12 +19,6 @@ import com.bshuiban.baselibrary.view.pulltorefresh.view.FooterView;
 import com.bshuiban.baselibrary.view.pulltorefresh.view.HeadRefreshView;
 import com.bshuiban.baselibrary.view.pulltorefresh.view.HeadView;
 import com.bshuiban.baselibrary.view.pulltorefresh.view.LoadMoreView;
-//import com.jwenfeng.library.R;
-//import com.jwenfeng.library.pulltorefresh.util.DisplayUtil;
-//import com.jwenfeng.library.pulltorefresh.view.FooterView;
-//import com.jwenfeng.library.pulltorefresh.view.HeadRefreshView;
-//import com.jwenfeng.library.pulltorefresh.view.HeadView;
-//import com.jwenfeng.library.pulltorefresh.view.LoadMoreView;
 
 /**
  * 当前类注释:

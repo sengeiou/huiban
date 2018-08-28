@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Created by xinheng on 2018/6/1.<br/>
- * describe：
+ * describe：试题处理
  */
 public class HomeworkBean extends Homework.Data {
     public static final String ONLINE = "onLine";
@@ -22,7 +22,7 @@ public class HomeworkBean extends Homework.Data {
      */
     private boolean correct;
     /**
-     * 试题Id 拼接的
+     * 试题Id （拼接的）
      */
     private String problemId;
     /**
@@ -98,10 +98,24 @@ public class HomeworkBean extends Homework.Data {
         this.problemId = problemId;
     }
 
+    /**
+     * @param type         {@link com.bshuiban.baselibrary.model.HomeworkBean#type}
+     * @param pageIndex    {@link HomeworkBean#pageIndex}
+     * @param typeIndex    {@link HomeworkBean#typeIndex}
+     * @param problemIndex {@link HomeworkBean#problemIndex}
+     * @return 作业类
+     */
     private static HomeworkBean getHomeworkBean(String type, int pageIndex, int typeIndex, int problemIndex) {
         return getHomeworkBean(false, type, pageIndex, typeIndex, problemIndex);
     }
 
+    /**
+     * @param correct      {@link HomeworkBean#correct}
+     * @param pageIndex    {@link HomeworkBean#pageIndex}
+     * @param typeIndex    {@link HomeworkBean#typeIndex}
+     * @param problemIndex {@link HomeworkBean#problemIndex}
+     * @return 作业类
+     */
     private static HomeworkBean getHomeworkBean(boolean correct, String type, int pageIndex, int typeIndex, int problemIndex) {
         HomeworkBean homeworkBean = new HomeworkBean();
         homeworkBean.setType(type);
@@ -116,7 +130,7 @@ public class HomeworkBean extends Homework.Data {
      * 填入问题答案
      *
      * @param stuAnswer       学生答案
-     * @param indexAnswer     学生答案位置（多个填空）
+     * @param indexAnswer     学生答案位置（多个填空，暂未用）
      * @param homeworkInfBean 作业
      * @param type            试卷类型
      * @param pageIndex       第几个试卷
@@ -186,17 +200,32 @@ public class HomeworkBean extends Homework.Data {
 
     }
 
+    /**
+     * 填空题答题
+     *
+     * @param answer
+     * @return
+     */
     private static List<String> dealWithAnswerList(String answer) {
         ArrayList<String> strings = new ArrayList<>(0);
         strings.add(answer);
         return strings;
     }
 
-    private static String addImgAnswer(String answer) {
+    /**
+     * 图片链接添加img网页便签
+     *
+     * @param answer
+     * @return String
+     */
+    public static String addImgAnswer(String answer) {
         String s;
         if (TextUtils.isEmpty(answer)) {
             s = "";
         } else {
+            if (answer.trim().indexOf("<img") == 0) {
+                return answer;
+            }
             if (answer.indexOf("http") == 0) {
                 s = "<img src=\"" + answer + "\"/>";
             } else {
@@ -206,6 +235,17 @@ public class HomeworkBean extends Homework.Data {
         return s;
     }
 
+    /**
+     * 获取一道题的内容
+     *
+     * @param homeworkInfBean 全部试题
+     * @param homeworkInfBean 作业
+     * @param type            试卷类型
+     * @param pageIndex       第几个试卷
+     * @param typeIndex       第几类
+     * @param problemIndex    第几个
+     * @return 一个试题内容（json）
+     */
     public static String getProblemContent(HomeworkInfBean.DataBean homeworkInfBean, String type, int pageIndex, int typeIndex, int problemIndex) {
         Gson gson = new Gson();
         String json;
@@ -236,7 +276,7 @@ public class HomeworkBean extends Homework.Data {
     }
 
     /**
-     * @param homeworkInfBean
+     * @param homeworkInfBean 全部试题
      * @param tag             是否已经完成
      * @return
      */
@@ -348,10 +388,22 @@ public class HomeworkBean extends Homework.Data {
         return list;
     }
 
+    /**
+     * 集合是否有效
+     *
+     * @param list 集合
+     * @return 是否有效
+     */
     public static boolean isEffictive(List list) {
         return null != list && list.size() > 0;
     }
 
+    /**
+     * 是否为选择、多选、判断
+     *
+     * @param name 题目类型
+     * @return boolean
+     */
     public static boolean isSelect(String name) {
         if (null != name && ("check".equals(name) || "radio".equals(name) || "judge".equals(name))) {
             return true;
@@ -359,6 +411,13 @@ public class HomeworkBean extends Homework.Data {
         return false;
     }
 
+    /**
+     * 是否正确
+     *
+     * @param answer    正确答案
+     * @param stuAnswer 学生答案
+     * @return boolean
+     */
     public static boolean isRight(String answer, String stuAnswer) {
         Log.e("TAG", "isRight: " + answer + ", " + stuAnswer);
         if (TextUtils.isEmpty(answer) || TextUtils.isEmpty(stuAnswer)) {
@@ -375,6 +434,12 @@ public class HomeworkBean extends Homework.Data {
         return false;
     }
 
+    /**
+     * 作业是否已做完
+     *
+     * @param stuAnswer
+     * @return true ->未做完，false->已做完
+     */
     public static boolean isEmpty(Object stuAnswer) {
         if (null == stuAnswer) {
             return true;
@@ -405,7 +470,7 @@ public class HomeworkBean extends Homework.Data {
     private static int getResult(Object statue) {
         int parseInt = 0;
         try {
-            parseInt = Integer.parseInt(statue+"");
+            parseInt = Integer.parseInt(statue + "");
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }

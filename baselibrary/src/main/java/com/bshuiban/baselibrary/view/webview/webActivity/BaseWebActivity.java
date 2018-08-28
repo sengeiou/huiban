@@ -8,18 +8,18 @@ import android.widget.FrameLayout;
 
 import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
-import com.bshuiban.baselibrary.utils.WebViewFactory;
+import com.bshuiban.baselibrary.utils.WebViewUtil;
 import com.bshuiban.baselibrary.view.activity.BaseActivity;
 
 public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
     protected WebView mWebView;
-    private WebViewFactory mWebViewFactory;
+    private WebViewUtil mWebViewUtil;
     protected String TAG="TAG"+getClass().getSimpleName();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mWebViewFactory = new WebViewFactory();
-        mWebViewFactory.setOnWebViewListener(new WebViewFactory.OnWebViewListener() {
+        mWebViewUtil = new WebViewUtil();
+        mWebViewUtil.setOnWebViewListener(new WebViewUtil.OnWebViewListener() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 webViewLoadFinished();
@@ -32,7 +32,7 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
         });
         if(initWebView()) {
             FrameLayout frameLayout = ViewUtils.getFrameLayout(this);
-            mWebView = mWebViewFactory.createNewWebView(getApplicationContext());
+            mWebView = mWebViewUtil.createNewWebView(getApplicationContext());
             frameLayout.addView(mWebView);
             setContentView(frameLayout);
         }
@@ -41,14 +41,17 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
         return true;
     }
     protected void setTAG(String tag){
-        mWebViewFactory.setTAG(tag);
+        mWebViewUtil.setTAG(tag);
     }
     /**
      * 加载本地网页
      * @param name
      */
     protected void loadFileHtml(String name){
-        mWebViewFactory.loadFileHtml(name);
+        if(null== mWebViewUtil.getWebView()){
+            mWebViewUtil.setWebView(mWebView);
+        }
+        mWebViewUtil.loadFileHtml(name);
     }
 
     /**
@@ -66,15 +69,15 @@ public class BaseWebActivity<T extends BasePresent> extends BaseActivity<T> {
      */
     @SuppressLint("JavascriptInterface")
     protected void registerWebViewH5Interface(Object object){
-        mWebViewFactory.registerWebViewH5Interface(object);
+        mWebViewUtil.registerWebViewH5Interface(object);
     }
     protected void loadJavascriptMethod(String methodName,String... datas){
-        mWebViewFactory.loadJavascriptMethod(methodName,datas);
+        mWebViewUtil.loadJavascriptMethod(methodName,datas);
     }
 
     @Override
     protected void onDestroy() {
-        mWebViewFactory.destroy();
+        mWebViewUtil.destroy();
         mWebView=null;
         super.onDestroy();
     }

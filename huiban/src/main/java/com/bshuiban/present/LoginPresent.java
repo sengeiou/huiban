@@ -45,6 +45,9 @@ public class LoginPresent extends BasePresent<LoginContract.View> implements Log
             protected void error(String t) {
                 if (isEffective()) {
                     view.dismissDialog();
+                    if(null!=t&&t.equals("failure")){
+                        t="登录失败";
+                    }
                     view.fail(t);
                 }
             }

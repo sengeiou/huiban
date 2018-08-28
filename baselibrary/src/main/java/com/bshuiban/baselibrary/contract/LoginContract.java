@@ -10,17 +10,6 @@ import java.util.Map;
  */
 public interface LoginContract {
     interface View extends BaseView{
-        /**
-         * 获取用户输入的账号
-         * @return
-         */
-        //String getUserAccountNumber();
-
-        /**
-         * 获取用户输入的密码
-         * @return
-         */
-        //String getPassWord();
         void loginSuccessToNextActivity(Class<?> cls, LoginResultBean.Data loginData);
     }
     interface Present{
@@ -35,7 +24,7 @@ public interface LoginContract {
         /**
          * 获取下一个启动的Activity
          * @param userType 类型 1学生、2老师、3管理者、4家长，
-         * @return
+         * @return 启动哪一类
          */
         Class<?> getNextActivity(int userType);
     }

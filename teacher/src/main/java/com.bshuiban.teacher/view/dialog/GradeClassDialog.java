@@ -57,6 +57,21 @@ public class GradeClassDialog extends BaseDialog {
         if (leftList != null) {
             leftWheel.setWheelItemList(TextUtils.getListString(leftList.getData()));
             leftS=leftWheel.getCurrentItemValue();
+            //未滑动前
+            int gradeId = leftList.getData().get(leftWheel.getCurrentItem()).getGradeId();
+            if(null!=rightList) {
+                classList = rightList.getClassList(gradeId);
+                rightWheel.setWheelItemList(TextUtils.getListString(classList));
+                if (classList.size() > 0) {
+                    rightS = classList.get(0).getClassName();
+                    rightIndex = 0;
+                } else {
+                    rightS = null;
+                }
+            }else{
+                ArrayList<String> rightList1 = new ArrayList<>();
+                rightWheel.setWheelItemList(rightList1);
+            }
             leftWheel.setOnSelectListener(new WheelView.SelectListener() {
                 @Override
                 public void onSelect(int index, String text) {
@@ -76,6 +91,8 @@ public class GradeClassDialog extends BaseDialog {
         } else {
             ArrayList<String> leftList1 = new ArrayList<String>();
             leftWheel.setWheelItemList(leftList1);
+            ArrayList<String> rightList1 = new ArrayList<>();
+            rightWheel.setWheelItemList(rightList1);
         }
 
         rightWheel.setOnSelectListener(new WheelView.SelectListener() {
@@ -85,8 +102,6 @@ public class GradeClassDialog extends BaseDialog {
                 rightIndex = index;
             }
         });
-        ArrayList<String> rightList1 = new ArrayList<>();
-        rightWheel.setWheelItemList(rightList1);
 
         dialog = new AlertDialog.Builder(context).setView(dialogView).create();
         dialog.setCancelable(cancelable);

@@ -9,9 +9,16 @@ function updateStudentAnswer(){
         }
     }
 }
+function b64DecodeUnicode(str) {
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
 function rende(data) {
     updateStudentAnswer();
-    res = JSON.parse(data);
+    //console.log(data);
+    res = JSON.parse(b64DecodeUnicode(data));
+    console.log(res.ansType);
     stu = data.stuAnswer;
     oldStu = stu;
     var problemType=res.optionName;
@@ -129,22 +136,87 @@ function rende(data) {
     };
     // 是填空题的调件
     if (res.optionName == "fill") {
-        text.innerHTML = `<ul class="list">${res.content}<textarea class="tkbox" placeholder="请在此处填写答案..."></textarea></ul>`;
-        if(res.stuAnswer != ""){
-            $(".tkbox").val(res.stuAnswer[0])
-        }
-        var imgtype = document.querySelectorAll('[img-type="tex"]');
-        var tkbox = document.getElementsByClassName("tkbox")[0];
-        tkbox.style.display = "none";
-        for (var i = 0; i < imgtype.length; i++) {
-            imgtype[i].style.width = '0.32rem';
-            imgtype[i].style.height = '0.32rem';
-        }
-        $(".tkbox").bind('input propertychange', function () {
-            res.stuAnswer = $(this).val();
-            stu = res.stuAnswer;
-            //console.log(res.stuAnswer);
-        });
+//        text.innerHTML = `<ul class="list">${res.content}<textarea class="tkbox" placeholder="请在此处填写答案..."></textarea></ul>`;
+//        if(res.stuAnswer != ""){
+//            $(".tkbox").val(res.stuAnswer[0])
+//        }
+//        var imgtype = document.querySelectorAll('[img-type="tex"]');
+//        var tkbox = document.getElementsByClassName("tkbox")[0];
+//        tkbox.style.display = "none";
+//        for (var i = 0; i < imgtype.length; i++) {
+//            imgtype[i].style.width = '0.32rem';
+//            imgtype[i].style.height = '0.32rem';
+//        }
+//        $(".tkbox").bind('input propertychange', function () {
+//            res.stuAnswer = $(this).val();
+//            stu = res.stuAnswer;
+//            //console.log(res.stuAnswer);
+//        });
+          text.innerHTML = `${res.content}
+                <ul class="Trans">
+                <li class="camera"></li><li class="drawing"></li><li class="words"></li>
+                </ul>
+                <div id="answer">
+                    <p>答案<span class="pen"></span></p>
+                    <div class="picture">
+                        <p class="texts"></p>
+                        <img class="answerimg" src="" alt="">
+                    </div>
+                </div>`;
+                 var tkbox = document.getElementsByClassName("tkbox")[0];
+                        tkbox.style.display = "none"
+                var imgtype = document.querySelectorAll('[img-type="tex"]');
+                answerimg = document.getElementsByClassName("answerimg")[0];
+                texts = document.getElementsByClassName("texts")[0];
+                trans = document.getElementsByClassName('Trans')[0];
+                answer = document.getElementById("answer");
+                pen = document.getElementsByClassName('pen')[0];
+               if(res.stuAnswer != "") {
+                    answer.style.display = 'block';
+                    trans.style.display = 'none';
+                   subproblem(res.stuAnswer)
+               }
+                for (var i = 0; i < imgtype.length; i++) {
+                    imgtype[i].style.height = '0.4rem';
+                }
+                // 相机
+                function camera(data) {
+                    // 拍照点击事件
+                    document.getElementsByClassName("camera")[0].onclick = function () {
+                        console.log("111")
+
+
+                        console.log(res)
+                        window.android.startAnswerPage(1);
+
+                    }
+                }
+                // 调取本地图片
+                camera(data)
+                // 图片点击事件
+                function drawing(data) {
+                    document.getElementsByClassName("drawing")[0].onclick = function () {
+
+
+                        window.android.startAnswerPage(2);
+                    }
+                }
+                // 写字
+                drawing(data)
+                // 写字点击事件
+                function words(data) {
+                    document.getElementsByClassName("words")[0].onclick = function () {
+
+
+                        window.android.startAnswerPage(3);
+                    }
+                }
+                // 调取写字
+                words(data)
+
+                pen.onclick = function () {
+                    trans.style.display = "block"
+                }
     };
     if (res.optionName == "radio") {
         text.innerHTML = `<ul class="list">${res.content}</ul> <div id="xuan"> 
@@ -177,13 +249,13 @@ function rende(data) {
         })
     }
     // 是多选题的调件
-    if (res.optionName == "check") {
-        text.innerHTML = `<ul class="list">${res.content}</ul> <div id="xuan"> 
-    <span class="span">A</span>
-    <span class="span">B</span>
-    <span class="span">C</span>
-    <span class="span">D</span>
-</div>`;
+        if (res.optionName == "check") {
+            text.innerHTML = `<ul class="list">${res.content}</ul> <div id="xuan">
+        <span class="span">A</span>
+        <span class="span">B</span>
+        <span class="span">C</span>
+        <span class="span">D</span>
+    </div>`;
         var flag = [true, true, true, true];
         var button = document.getElementsByClassName('span');
         var strs;
@@ -262,14 +334,28 @@ function rende(data) {
         }
     }
 }
+  function fn(str) {
+     if(str.indexOf("<img") != -1) {
+            var index1 = str.indexOf("src=\"");
+            console.log(index1)
+             var index2 = str.indexOf("/>");
+             console.log(index2)
+             var num = index1+5;
+            var b = str.slice(num,index2-1)
+            return b;
+            }
+            return str;
+  }
 // 图片、拍摄、文本
 function subproblem(data) {
    console.log(data)
-    res.stuAnswer = data;
+   data = fn(data)
+   //<img src="http://192.168.0.4:8090/group/M00/00/1F/wKgABFtr9dqATP6hAFI_1hdsPS8355.jpg"/>
+    res.stuAnswer = data;//http://192.168.0.4:8090/
     var regex = /^http\.bmp|\.jpg|\.jpeg|\.png|\.tiff|\.gif|\.pcx|\.tga|\.exif|\.fpx|\.svg|\.psd|\.cdr|\.pcd|\.dxf|\.ufo|\.eps|\.ai|\.raw|\.WMF|\.webp$/;
     if (regex.test(data)) {
-     trans.style.display = "none";
-     answerimg.style.display = "block";
+        trans.style.display = "none";
+        answerimg.style.display = "block";
         answerimg.src = data;
         answer.style.display = 'block';
         texts.style.display = "none";

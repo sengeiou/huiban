@@ -41,21 +41,21 @@ import java.util.List;
 /**
  * 班级容器
  */
-public class ClassActivity extends BaseActivity<TeachClassPresent> implements TeachClassContract.View {
+public class ClassActivity extends BaseActivity<TeachClassPresent> implements TeachClassContract.View{
 
     private TitleView titleView;
     private List<TeachClassBean.DataBean> data;
     private ClassViewPagerAdapter classViewPagerAdapter;
     private int mPosition;
-    private String className;
     private ClassChange classChange;
-
+    private TeachClassBean.DataBean dataBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
         titleView = findViewById(R.id.titleView);
         if (User.getInstance().isTeacher()) {
+            titleView.setMiddleShow(true);
             tPresent = new TeachClassPresent(this);
             tPresent.loadTeachClass();
         }
@@ -64,7 +64,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
         arrayList.add("学习动态");
         arrayList.add("班级活动");
         arrayList.add("班级课表");
-        className = User.getInstance().getClassName();
+        String className = User.getInstance().getClassName();
         if (TextUtils.isEmpty(className)) {
             className = "我的班级";
         }
@@ -79,14 +79,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             public void rightClick(View v) {
                 if (User.getInstance().isTeacher()) {
                     //SendClassActivityWebActivity
-                    try {
-                        Class<?> aClass = Class.forName("com.bshuiban.teacher.view.webView.webActivity.SendClassActivityWebActivity");
-                        Intent intent = new Intent(getApplicationContext(), aClass);
-                        startActivityForResult(intent,100);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-
+                    startActivityForResult(new Intent(getApplicationContext(), SendNoticeActivity.class).putExtra("send_type",1),100);
                 }
             }
 
@@ -99,6 +92,7 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
         });
         MagicIndicator magicIndicator = findViewById(R.id.magic);
         ViewPager viewPager = findViewById(R.id.viewPager);
+        viewPager.setOffscreenPageLimit(3);
         classChange = new ClassChange();
         classViewPagerAdapter = new ClassViewPagerAdapter(getSupportFragmentManager(), arrayList, classChange);
         viewPager.setAdapter(classViewPagerAdapter);
@@ -108,26 +102,27 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                if (User.getInstance().isTeacher()) {
+                if (dataBean!=null&&User.getInstance().isTeacher()) {
+                    String className = dataBean.getClassName();
                     mPosition=position;
                     switch (position) {
                         case 2:
                             titleView.setTitle_text(className);
-                            titleView.setRight_text("新建", Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
+                            titleView.setRight_text("新建", Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14),true);
                             //titleView.setCompoundDrawablesWithIntrinsicBounds(null,null, ContextCompat.getDrawable(getApplicationContext(),R.mipmap.add_activity));
                             //titleView.invalidate();
                             break;
                         case 3:
                             titleView.setTitle_text(className);
-                            titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
+                            titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14),true);
                             break;
                         case 1:
                             titleView.setTitle_text("学习动态");
-                            titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
+                            titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14),false);
                             break;
                         default:
                             titleView.setTitle_text(className);
-                            titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14));
+                            titleView.setRight_text(null, Color.WHITE, (int) getResources().getDimension(R.dimen.dp_14),true);
                     }
                 }
             }
@@ -174,18 +169,11 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
             list.add(className);
         }
         new SeleTwoDialog(this, new SeleTwoDialog.OnClickListener() {
+
             @Override
             public boolean onSure(String left, int leftIndex, String right, int rightIndex) {
-                TeachClassBean.DataBean dataBean = data.get(leftIndex);
-                String classId = dataBean.getClassId();
-//                Fragment fragment = classViewPagerAdapter.getFragment(mPosition);
-//                if(fragment instanceof ClassScheduleFragment) {
-//                    ((ClassScheduleFragment) fragment).updateSchedule(classId);
-//                }else if(fragment instanceof GeneralSituationFragment){
-//                    ((GeneralSituationFragment) fragment).update(classId);
-//                }else if(fragment instanceof ClassActivityFragment){
-//                    ((ClassActivityFragment) fragment).update(classId);
-//                }
+                dataBean = data.get(leftIndex);
+                //String classId = dataBean.getClassId();
                 classChange.setDataBean(dataBean);
                 titleView.setTitle_text(dataBean.getClassName());
                 return false;
@@ -202,7 +190,8 @@ public class ClassActivity extends BaseActivity<TeachClassPresent> implements Te
     public void updateData(List<TeachClassBean.DataBean> data) {
         this.data = data;
         if (HomeworkBean.isEffictive(data)) {
-            className = data.get(0).getClassName();
+            dataBean = data.get(0);
+            String className = dataBean.getClassName();
             titleView.setTitle_text(className);
         }
     }

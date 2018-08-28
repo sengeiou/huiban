@@ -36,7 +36,7 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
     }
     @Override
     public void onHiddenChanged(boolean hidden) {
-        Log.e(TAG, "onHiddenChanged: "+hidden );
+        //Log.e(TAG, "onHiddenChanged: "+hidden );
         if(hidden){
             tagToast=false;
         }
@@ -112,14 +112,14 @@ public class HomePageFragment extends InteractionBaseWebViewFragment<HomePagePar
                 }
 
                 @Override
-                public void showCommitDialog() {
+                public void showCommitDialog(String send,String id) {
                     CommentDialog commentDialog = new CommentDialog("请输入内容", inputText -> {
                         //recevieId= ;//int,接收人id，给谁留言
                         String sendId= User.getInstance().getUserId();//int,留言人、发送人id
                         //messageId		//int，消息id，评论时传空
                         //String content			//string 回复的内容
                         //"recevieId":,"messageId":,"content":"","sendId":""
-                        tPresent.addRecevier("{\"recevieId\":\""+dataBean.getSend()+"\",\"messageId\":\""+dataBean.getId()+"\",\"content\":\""+inputText+"\",\"sendId\":\""+sendId+"\"}");
+                        tPresent.addRecevier("{\"recevieId\":\""+send+"\",\"messageId\":\""+id+"\",\"content\":\""+inputText+"\",\"sendId\":\""+sendId+"\"}");
                         //replyDialog.dismiss();
                     });
                     commentDialog.show(getChildFragmentManager(),"commit");

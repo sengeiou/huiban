@@ -81,13 +81,10 @@ public class HomeworkFragment extends InteractionBaseWebViewFragment implements 
                 ImageView imageView = mImageViewList.get(position);
                 // ImageLoaderUtil.LoadImage(getActivity(), mDrawable[position],imageView);
                 container.addView(imageView);
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), HomeworkListWebActivity.class);
-                        intent.putExtra(HomeworkListWebActivity.HOME_TYPE,position+1);
-                        startActivity(intent);
-                    }
+                imageView.setOnClickListener(v -> {
+                    Intent intent = new Intent(getActivity(), HomeworkListWebActivity.class);
+                    intent.putExtra(HomeworkListWebActivity.HOME_TYPE,position+1);
+                    startActivity(intent);
                 });
                 return imageView;
             }

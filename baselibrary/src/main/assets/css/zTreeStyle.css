@@ -56,8 +56,8 @@ website:	http://code.google.com/p/jquerytree/
 .ztree li span.button.switch {width:18px; height:18px}
 .ztree li span.button.root_open{background-position:-92px -54px}
 .ztree li span.button.root_close{background-position:-168px -108px}
-.ztree li span.button.roots_open{background-position:-92px 0}
-.ztree li span.button.roots_close{background-position:-148px 0}
+.ztree li span.button.roots_open{background-position:-192px -118px}
+.ztree li span.button.roots_close{background-position:-156px -10px}
 .ztree li span.button.center_open{background-position:-192px -118px}
 .ztree li span.button.center_close{background-position:-156px -10px}
 .ztree li span.button.bottom_open{background-position:-192px -118px}
@@ -88,10 +88,10 @@ ul.ztree.zTreeDragUL {margin:0; padding:0; position:absolute; width:auto; height
 .zTreeMask {z-index:10000; background-color:#cfcfcf; opacity:0.0; filter:alpha(opacity=0); position:absolute}
 
 /* level style*/
-/*.ztree li span.button.level0 {
-	display:none;
-}
-.ztree li ul.level0 {
-	padding:0;
-	background:none;
-}*/
+   /*.ztree li span.button.level0 {
+   	display:none;
+   }
+   .ztree li ul.level0 {
+   	padding:0;
+   	background:none;
+   }

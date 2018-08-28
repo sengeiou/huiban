@@ -53,10 +53,16 @@ back.onclick = function () {
 }
 // 未完成页
 function nocomplate(data) {
-    if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
-         done.innerHTML =  `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
-            return;
-        }
+             $('.list').html('');
+             var main = document.getElementById("main");
+             main.style.background = '';
+            if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+            main.style.background = 'url("./images/no_data.png")';
+            main.style.backgroundRepeat = "no-repeat";
+            main.style.backgroundSize = "3.48rem 5.1rem";
+            main.style.backgroundPosition = "center 3rem"
+             return;
+            }
     res = JSON.parse(data)
     var str = "";
     var str2 = "";
@@ -147,10 +153,16 @@ function complatelist(data) {
 }
 
 function complately(data) {
- if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
-         done.innerHTML =  `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
-            return;
-        }
+                         $('.list').html('');
+                      var main = document.getElementById("main");
+                      main.style.background = '';
+                     if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+                     main.style.background = 'url("./images/no_data.png")';
+                     main.style.backgroundRepeat = "no-repeat";
+                     main.style.backgroundSize = "3.48rem 5.1rem";
+                     main.style.backgroundPosition = "center 3rem"
+                      return;
+                     }
     // 解开注释
     var res3 = JSON.parse(data);
     var str3 = "";
@@ -252,15 +264,19 @@ myIscroll.on('scrollEnd', function () {
      if ( y<-300 && this.y === this.maxScrollY){
         if(num == 0) {
             console.log("上拉1");
+            window.android.getMoreData(false);
         } else {
             console.log("上拉2");
+            window.android.getMoreData(false);
         }
        
     } else if (this.y === 0 && y>300) {
         if(num == 0) {
             console.log("下拉1");
+            window.android.getMoreData(true);
         } else {
             console.log("下拉2");
+            window.android.getMoreData(true);
         }
     }
 })

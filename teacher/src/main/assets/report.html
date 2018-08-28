@@ -60,6 +60,8 @@
     //班级掌握详情
     function getContent (data) {
         var data = JSON.parse(data);
+        $('tBody').html("");
+        console.log(data.length);
         for (var i=0; i<data.length; i++) {
             if(data[i].classRate == "-1"){
                 data[i].classRate = "--";
@@ -67,8 +69,9 @@
             if(data[i].gradeRate == "-1"){
                 data[i].gradeRate = "--";
             }
-            $('tBody').html(" ");
-            $('tBody').html(`
+            var nowMsg = $('tBody').html();
+            console.log(nowMsg)
+            $('tBody').html(nowMsg+`
                 <tr>
                     <td>${data[i].className}</td>
                     <td>${data[i].classRate}</td>
@@ -80,15 +83,23 @@
         }
     }
     //学生掌握详情
-    function getMsg(data) {        
-        var data = JSON.parse(data);
+    function getMsg(data) {
+        if(data==null||data==undefined||data=='null'||data=='[]'||data==''){
+            $('.mainBox').html("");
+            return;
+        }
+        var data = JSON.parse(data)[0];
         $('.className span:eq(1)').text(data.className);
+        $('.mainBox').html("");
+        console.log(data.stuArr)
+        //2018年8月8日13:45:34，班级默认仅有一个
         for (var i=0; i<data.stuArr.length; i++) {
             var nowMsg = $('.mainBox').html();
+
             $('.mainBox').html(nowMsg + `
-                <div class="list">
+                <div class="list" style="padding-left:5%">
                     <span class="name">${data.stuArr[i].name}</span>
-                    <span class="jd"></span><i>${data.stuArr[i].rate}%</i>                   
+                    <span class="jd"></span><i>${data.stuArr[i].rate}%</i>
                 </div>
             `);
             var rate = parseInt(data.stuArr[i].rate);

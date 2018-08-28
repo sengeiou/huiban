@@ -18,11 +18,6 @@ public class BasePresent<T extends BaseView> {
 
     public BasePresent(T t) {
         this.view = t;
-        initCallHtml();
-    }
-
-    protected void initCallHtml() {
-
     }
 
     public void cancel() {

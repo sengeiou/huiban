@@ -55,9 +55,9 @@ public abstract class HomePageActivity<T extends Fragment, P extends BasePresent
             }
         }));
         initNavigationView(head, ll_parent);
-//        if(BuildConfig.DEBUG) {
-//            ll_parent.addView(getSlideView(R.mipmap.app_logo,"H5测试","test",ll_parent));
-//        }
+        if(BuildConfig.DEBUG) {
+            ll_parent.addView(getSlideView(R.mipmap.app_logo,"H5测试","test",ll_parent));
+        }
         initBottomBar(rg_container);
         new ImageUploadHeadPresent(null).loadImageHead();
     }
@@ -103,7 +103,7 @@ public abstract class HomePageActivity<T extends Fragment, P extends BasePresent
     private View.OnClickListener onClickListener = v -> {
         String tag = (String) v.getTag();
         if (tag.equals("test")) {
-            startActivity(new Intent(getApplicationContext(), TestWebViewActivity.class));
+            startActivity(new Intent(getApplicationContext(), TestActivity.class));
         } else {
             itemSelectedId(tag);
         }

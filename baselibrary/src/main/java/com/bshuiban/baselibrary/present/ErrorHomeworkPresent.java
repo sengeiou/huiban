@@ -1,5 +1,7 @@
 package com.bshuiban.baselibrary.present;
 
+import android.content.Intent;
+
 import com.bshuiban.baselibrary.contract.ErrorHomeworkContract;
 import com.bshuiban.baselibrary.model.User;
 import com.google.gson.Gson;
@@ -20,6 +22,8 @@ public class ErrorHomeworkPresent extends ListPresent<ErrorHomeworkContract.View
     private String mFasId;            //int，分册id
     private String mChapBranId;   //int，章节id
     private String mSeriBrandId;   //int，知识点id
+    private String mStageId;   //int，学段 id
+    private String mOrgans;   //int，机构
 
     public ErrorHomeworkPresent(ErrorHomeworkContract.View view) {
         super(view);
@@ -56,28 +60,40 @@ public class ErrorHomeworkPresent extends ListPresent<ErrorHomeworkContract.View
         map.put("index",start);
         map.put("limit",limit);
 
-        map.put("subjectId", mSubjectId);
-        map.put("versionId",mVersionId);
-        map.put("fasId",mFasId);
-        map.put("chapBranId",mChapBranId);
-        map.put("seriBrandId",mSeriBrandId);
+        map.put("subjectId", clear100(mSubjectId));
+        map.put("versionId",clear100(mVersionId));
+        map.put("fasId",clear100(mFasId));
+        map.put("chapBranId",clear100(mChapBranId));
+        map.put("seriBrandId",clear100(mSeriBrandId));
+
+        map.put("stageId",clear100(mStageId));
+        map.put("schoolId",clear100(mOrgans));
+        //ErrorFilterActivity.class
         return map;
     }
-
-    public boolean setSelectInf(int subjectId, int versionId, int fasId, int chapBranId, int seriBrandId) {
-        if (Integer.toString(subjectId).equals(mSeriBrandId) &&
+    private Object clear100(String tag){
+        if("-100".equals(tag)){
+            return "";
+        }
+        return tag;
+    }
+    public boolean setSelectInf(int subjectId, int versionId, int fasId, int chapBranId, int seriBrandId,int stageId,String organs) {
+        if (Integer.toString(subjectId).equals(mSubjectId) &&
                 Integer.toString(versionId).equals(mVersionId) &&
                 Integer.toString(fasId).equals(mFasId) &&
                 Integer.toString(chapBranId).equals(mChapBranId) &&
-                Integer.toString(seriBrandId).equals(mSeriBrandId)
-                ) {
+                Integer.toString(seriBrandId).equals(mSeriBrandId)&&
+                Integer.toString(stageId).equals(mStageId)&&
+                organs.equals(mOrgans)) {
             return false;
         }
-        mSeriBrandId = Integer.toString(subjectId);
+        mSubjectId = Integer.toString(subjectId);
         mVersionId = Integer.toString(versionId);
         mFasId = Integer.toString(fasId);
         mChapBranId = Integer.toString(chapBranId);
         mSeriBrandId = Integer.toString(seriBrandId);
+        mStageId = Integer.toString(stageId);
+        mOrgans = organs;
         getInterNetData();
         return true;
     }

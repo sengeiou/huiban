@@ -16,8 +16,11 @@ function exercise(data) {
         }
     // 单、多选题
     if (res.optionName == "radio" || res.optionName == "check") {
+        var rates;
         if (res.classRate == -1) {
-            res.classRate = "--"
+            rates = "--"
+        } else {
+             rates = res.classRate+"%";
         }
         $(".boxx").html(`<ul class="list">${res.content}</ul>
      <div id="xuan"> 
@@ -28,7 +31,7 @@ function exercise(data) {
      </div>
     <div id="analyze">
     <ul>
-    <li>正确率：<span>${res.classRate}%</span></li>
+    <li>正确率：<span>${rates}</span></li>
     <li class="fenb"></li>
     <li class="wrongs">答错的人：${res.stuList}</li>
     <li>${res.analysis} </li>
@@ -58,13 +61,16 @@ function exercise(data) {
     }
     // 主观题、填空题
     if (res.optionName == "subjective" || res.optionName == "fill") {
-        if (res.classRate == -1) {
-            res.classRate = "--"
-        }
+         var rates;
+                if (res.classRate == -1) {
+                    rates = "--"
+                } else {
+                    rates = res.classRate+"%";
+                }
         $(".boxx").html(`<ul class="list">${res.content}</ul>
         <div id="analyze">
         <ul>
-        <li>正确率：<span>${res.classRate}%</span></li>
+        <li>正确率：<span>${rates}</span></li>
         <li class="wrongs">答错的人：${res.stuList}</li>
         <li>${res.analysis} </li>
         </ul>
@@ -73,9 +79,12 @@ function exercise(data) {
     }
     // 判断题
     if (res.optionName == "judge") {
-        if (res.classRate == -1) {
-            res.classRate = "--"
-        }
+         var rates;
+                if (res.classRate == -1) {
+                    rates = "--"
+                } else {
+                     rates = res.classRate+"%";
+                }
         $(".boxx").html(`<ul class="list">${res.content}</ul>
             <div id="judge"> 
             <span class="img1"></span> 
@@ -83,7 +92,7 @@ function exercise(data) {
             </div>
            <div id="analyze">
            <ul>
-           <li>正确率：<span>${res.classRate}%</span></li>
+           <li>正确率：<span>${rates}</span></li>
            <li class="fenb"></li>
            <li class="wrongs">答错的人：${res.stuList}</li>
            <li>${res.analysis} </li>
@@ -98,5 +107,7 @@ function exercise(data) {
             imgs[1].className = "img4";
         }
     }
+    $("input").attr("readonly","true")
 }
+
 // 题目渲染

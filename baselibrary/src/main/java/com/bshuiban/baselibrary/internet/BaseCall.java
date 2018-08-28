@@ -9,10 +9,16 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 public interface BaseCall {
-    //key param
+    /**
+     * 加密数据获取
+     * @param module key值
+     * @param cipherText 密文（aes）
+     * @return
+     */
     @GET("interface/HuiBanApi.php")
     Call<ResponseBody> getCipherText(@Query("key") String module, @Query("param") String cipherText);
 //    @POST("interface/HuiBanApi.php")
@@ -33,5 +39,6 @@ public interface BaseCall {
      * @return
      */
     @GET
+    @Streaming
     Call<ResponseBody> downloadFile(@Url String fileUrl);
 }

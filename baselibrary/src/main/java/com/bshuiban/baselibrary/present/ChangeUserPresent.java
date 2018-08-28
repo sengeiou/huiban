@@ -27,7 +27,7 @@ public class ChangeUserPresent extends BasePresent<ChangeUserContract.View> impl
             }
             return;
         }
-        //phone="13426480529";
+        //phone="13426480529"; //测试
         if(isEffective()){
             view.startDialog();
         }

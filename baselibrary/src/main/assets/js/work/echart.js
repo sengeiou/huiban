@@ -17,6 +17,7 @@ function count(data) {
     }
     var str =  `<caption>知识掌握详情</caption>`;
    for(var i=0; i<data.knowArr.length; i++) {
+    console.log(parseInt(data.knowArr[i].rate))
            if(parseInt(data.knowArr[i].rate)<0) {
            data.knowArr[i].rate = "--";
             var  rate = (data.knowArr[i].rate)*(2)/50 +'rem';
@@ -47,39 +48,37 @@ function count(data) {
        }
    }
    table.innerHTML = str;
+   	var m,f;
+   		f = parseInt(data.times/60);
+   		m = (data.times)%60;
+   		if(f<10) {
+   			f = "0"+f;
+   		}
+   		if(m<10) {
+   			m = "0"+m;
+   		}
+   		data.times = f+":"+m;
+   		var aaa,bbb;
    if(parseInt(data.userRate)<0) {
-    data.userRate = "--"
+        aaa = "--"
+    } else {
+        aaa = data.userRate+"%"
+    }
+    if(parseInt(data.classRate)<0) {
+
+            bbb = "--"
+        } else {
+            bbb = data.classRate+"%"
+        }
     title.innerHTML = `<p>${data.title}</p>
     <p>
         <span>${data.addtime}</span> --
         <span>${data.endtime}</span> </p>`;
     num.innerHTML = data.examCnt;
     pie.innerHTML = `<li>提交名次：${data.rank.commitSeo}</li>
-        <li>本次作业所用时间：${data.times}</li>
-        <li>正确率：${data.userRate}</li>
-        <li>班级平均正确率：${data.classRate}</li>`;
-   } else if(parseInt(data.classRate)<0){
-    data.classRate = "--";
-    title.innerHTML = `<p>${data.title}</p>
-    <p>
-        <span>${data.addtime}</span> --
-        <span>${data.endtime}</span> </p>`;
-    num.innerHTML = data.examCnt;
-    pie.innerHTML = `<li>提交名次：${data.rank.commitSeo}</li>
-        <li>本次作业所用时间：${data.times}</li>
-        <li>正确率：${data.userRate}</li>
-        <li>班级平均正确率：${data.classRate}</li>`;
-   } else {
-    title.innerHTML = `<p>${data.title}</p>
-    <p>
-        <span>${data.addtime}</span> --
-        <span>${data.endtime}</span> </p>`;
-    num.innerHTML = data.examCnt;
-    pie.innerHTML = `<li>提交名次：${data.rank.commitSeo}</li>
-        <li>本次作业所用时间：${data.times}</li>
-        <li>正确率：${data.userRate}%</li>
-        <li>班级平均正确率：${data.classRate}%</li>`;
-   }
+        <li>本次作业所用时间：${data.times} </li>
+        <li>正确率：${aaa}</li>
+        <li>班级平均正确率：${bbb}</li>`;
 var myChart = echarts.init(document.getElementById('main'));
 var a = `答对${data.rw.right}题` ;  
 var b = `答错${data.rw.wrong}题` ;    

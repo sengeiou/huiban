@@ -63,8 +63,8 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
             @Override
             protected void success(ResultBean resultBean) {
                 if(isEffective()){
-                    //view.commitSuccess();
-                    view.fail("保存成功");
+                    view.commitSuccess();
+                    //view.fail("保存成功");
                 }
             }
 
@@ -143,6 +143,7 @@ public class HomeworkResultPresent extends BasePresent<HomeworkResultContract.Vi
         homeWorkCommitBean.setPrepareId(-1);
         homeWorkCommitBean.setTimes(toInt(homeworkInfBean.getTimes()));
         homeWorkCommitBean.setUserId(User.getInstance().getUserId());
+        homeWorkCommitBean.setUserName(User.getInstance().getUserName());
         //homeWorkCommitBean.setWorkId(workId);
         //homeWorkCommitBean.setPrepareId(prepareId);//列表接口提供
 

@@ -14,15 +14,15 @@ import com.bshuiban.baselibrary.model.StudyBottomBean;
 
 /**
  * Created by xinheng on 2018/4/26.<br/>
- * describe：
+ * describe：view工具类
  */
 public class ViewUtils {
-    public static StateListDrawable getSeleDrawable(Context context,int selectedId, int unSelectedId) {
+    public static StateListDrawable getSelectDrawable(Context context, int selectedId, int unSelectedId) {
         Drawable selected = context.getResources().getDrawable(selectedId);
         Drawable unSelected = context.getResources().getDrawable(unSelectedId);
-        return getSeleDrawable(selected,unSelected);
+        return getSelectDrawable(selected,unSelected);
     }
-    public static StateListDrawable getSeleDrawable(Drawable selected, Drawable unSelected) {
+    public static StateListDrawable getSelectDrawable(Drawable selected, Drawable unSelected) {
         StateListDrawable drawable = new StateListDrawable();
         drawable.addState(new int[]{android.R.attr.state_pressed},selected);
         drawable.addState(new int[]{-android.R.attr.state_pressed},unSelected);

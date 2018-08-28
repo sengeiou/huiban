@@ -1,10 +1,9 @@
 package com.bshuiban.teacher.present;
 
 import com.bshuiban.baselibrary.internet.RetrofitService;
-import com.bshuiban.baselibrary.model.HomeworkBean;
-import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.teacher.contract.HomeworkAnswerInfContract;
+import com.bshuiban.teacher.model.HomeworkAnswerInfBean;
 import com.google.gson.Gson;
 
 import java.util.List;

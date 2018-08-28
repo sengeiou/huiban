@@ -11,7 +11,7 @@
         app:title_text="班级"
         app:src_left="@mipmap/iv_back"
         app:right_color="@color/white"
-        app:middle_show="true"/>
+        />
     <net.lucode.hackware.magicindicator.MagicIndicator
         android:id="@+id/magic"
         android:layout_width="match_parent"

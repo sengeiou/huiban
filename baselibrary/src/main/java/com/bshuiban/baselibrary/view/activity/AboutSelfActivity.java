@@ -94,13 +94,16 @@ public class AboutSelfActivity extends BaseActivity<UpdateAppPresent> implements
     }
 
     private void detectionUpdate(String url, String versionName) {
-        url = "http://dz.80txt.com/71356/%E7%8E%84%E7%95%8C%E6%97%85%E8%A1%8C%E7%A4%BE.zip";
-        String name = "huiban" + versionName + ".apk";
+        url = "http://yddown.21cnjy.com/NSoftMoved/2018/06/29/21cnjycom20180629191701_3_3614369_web.zip?st=S5NbZE3-wO3LQwFO0b-_JA&e=1535011380&n=19三个小伙三个小伙伴(第一课时课件)";
+        url = "http://xiazai.xqishu.com/txt/%E4%B8%87%E5%8F%A4%E5%A4%A9%E5%B8%9D.txt";
+
+        String name = "huiban111" + versionName + ".apk";
         String path = User.path + "app/" + name;
         if(new File(path).exists()){
-            AppUpdate.installApk(getApplicationContext(),path);
-            installApp(path);
-            return;
+            new File(path).getAbsoluteFile().delete();
+//            AppUpdate.installApk(getApplicationContext(),path);
+//            installApp(path);
+//            return;
         }
         ProgressResponseBody.ProgressListener progressListener = (progress, total, done) -> {
             //Log.e(TAG, "onProgress: "+progress +", "+(int) (progress*100f/total));
@@ -117,7 +120,7 @@ public class AboutSelfActivity extends BaseActivity<UpdateAppPresent> implements
         retrofitDownload.setDownloadListener(new RetrofitDownload.DownloadListener() {
             @Override
             public void loadFinish(String downLoadPath) {
-                AppUpdate.installApk(getApplicationContext(),downLoadPath);
+                //AppUpdate.installApk(getApplicationContext(),downLoadPath);
             }
 
             @Override
@@ -129,12 +132,16 @@ public class AboutSelfActivity extends BaseActivity<UpdateAppPresent> implements
 
     @Override
     public void updateView(UploadAppBean.DataBean dataBean) {
+        if(dataBean==null){
+            updateDialogPrompt("1.1.1", "啦啦啦");
+            return;
+        }
         downUrl = dataBean.getDownUrl();
         String describe = dataBean.getDescribe();
         int verNum = dataBean.getVerNum();
         version = dataBean.getVersion();
         dismissDialog();
-        if (verNum > versionCode) {
+        if (verNum <= versionCode) {
             //detectionUpdate(downUrl,version);
             updateDialogPrompt(version, describe);
         } else {

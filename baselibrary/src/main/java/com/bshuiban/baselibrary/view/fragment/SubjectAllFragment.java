@@ -3,6 +3,7 @@ package com.bshuiban.baselibrary.view.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -17,8 +18,11 @@ import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.SubjectAllContract;
 import com.bshuiban.baselibrary.model.StuLearnReportBean;
 import com.bshuiban.baselibrary.model.StudyBottomBean;
+import com.bshuiban.baselibrary.model.observebean.ReportUpdateBean;
 import com.bshuiban.baselibrary.present.SubjectAllPresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
+import com.bshuiban.baselibrary.utils.observer.ObserveModeGroupList;
+import com.bshuiban.baselibrary.utils.observer.OnObserver;
 import com.bshuiban.baselibrary.view.adapter.RankPagerAdapter;
 import com.bshuiban.baselibrary.view.customer.BarsCharView;
 import com.bshuiban.baselibrary.view.customer.WordGridView;
@@ -40,10 +44,41 @@ public class SubjectAllFragment extends BaseFragment<SubjectAllPresent> implemen
     private WordGridView wordGridView;
     private RelativeLayout classHonor;
     private RankPagerAdapter adapter;
+    private OnObserver<ReportUpdateBean> observer;
+    private String date;
 
     public SubjectAllFragment() {
         // Required empty public constructor
         tPresent=new SubjectAllPresent(this);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        Log.e("TAG", "setUserVisibleHint: all="+isVisibleToUser );
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onStart() {
+        Log.e("TAG", "onStart: all" );
+        super.onStart();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        observer = new OnObserver<ReportUpdateBean>() {
+            @Override
+            public void dealWithNotice(boolean isUpdate, ReportUpdateBean bean) {
+                if(isUpdate){
+                    if(bean.isUpdate()||!bean.getDate().equals(date)) {
+                        date = bean.getDate();
+                        updateDataForDate();
+                    }
+                }
+            }
+        };
+        ObserveModeGroupList.getInstance().register(ReportUpdateBean.class, observer);
     }
 
     @Override
@@ -55,13 +90,28 @@ public class SubjectAllFragment extends BaseFragment<SubjectAllPresent> implemen
         barsCharView=view.findViewById(R.id.barsChar);
         initViewPager();
         include = view.findViewById(R.id.include);
+        date = getArguments().getString("date");
         updateDataForDate();
         return view;
     }
 
+    @Override
+    public void onResume() {
+        Log.e("TAG", "onResume: all " );
+        super.onResume();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        Log.e("TAG", "onHiddenChanged: all= "+hidden );
+        if(!hidden){
+            updateDataForDate();
+        }
+        super.onHiddenChanged(hidden);
+    }
+
     public void updateDataForDate() {
         if(onContrastData!=null) {
-            String date = onReportDateListener.getDate();
             tPresent.loadStuLearnReportAll(date);
             tPresent.loadStudyBottom(date);
         }
@@ -134,11 +184,6 @@ public class SubjectAllFragment extends BaseFragment<SubjectAllPresent> implemen
         barsCharView.setXArray(xArray);
     }
     private OnContrastData onContrastData;
-    private OnReportDateListener onReportDateListener;
-
-    public void setOnReportDateListener(OnReportDateListener onReportDateListener) {
-        this.onReportDateListener = onReportDateListener;
-    }
 
     public void setOnContrastData(OnContrastData onContrastData) {
         this.onContrastData = onContrastData;
@@ -146,5 +191,11 @@ public class SubjectAllFragment extends BaseFragment<SubjectAllPresent> implemen
 
     public interface OnContrastData {
         void setContrasts(List<StuLearnReportBean.DataBean.ContrastBean> contrastBeans);
+    }
+
+    @Override
+    public void onDetach() {
+        ObserveModeGroupList.getInstance().unregister(ReportUpdateBean.class,observer);
+        super.onDetach();
     }
 }

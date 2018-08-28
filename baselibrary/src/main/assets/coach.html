@@ -32,7 +32,7 @@
             position: relative;
             height: 6rem;
         }
-        .coachBox #wrap .lists:before,.list:after{
+        .coachBox #wrap .lists:before,.lists:after{
             width: 100%;
             text-align: center;
             height: 40px;
@@ -518,6 +518,9 @@ myIscroll.on('scroll',function(){
     list.setAttribute('uptext','下拉刷新');
   }else if(this.y < this.maxScrollY - 40 ){
     flag = true;
+        list.setAttribute('downtext', '释放刷新');
+    } else{
+        list.setAttribute('downtext', '上拉加载');
     }
 })
 myIscroll.on('scrollEnd', function () {

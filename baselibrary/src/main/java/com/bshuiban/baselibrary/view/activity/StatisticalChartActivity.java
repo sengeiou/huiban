@@ -1,10 +1,8 @@
 package com.bshuiban.baselibrary.view.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -14,6 +12,7 @@ import android.widget.TextView;
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.StatisticalChartContract;
 import com.bshuiban.baselibrary.model.StatisticalChartBean;
+import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.StatisticalChartPresent;
 import com.bshuiban.baselibrary.utils.DensityUtil;
 import com.github.mikephil.charting.charts.LineChart;
@@ -29,7 +28,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -256,12 +254,11 @@ public class StatisticalChartActivity extends BaseActivity<StatisticalChartPrese
             chart.invalidate();
         } else {
             List<ILineDataSet> lineDataSets = new ArrayList<>();
-
             if (list_class.size() > 0) {
                 lineDataSet2 = getLineDataSet(list_class, "班级", "#77baff", false);
                 lineDataSets.add(lineDataSet2);
             }
-            if (list_mine.size() > 0) {
+            if (list_mine.size() > 0 && !User.getInstance().isTeacher()) {
                 lineDataSet1 = getLineDataSet(list_mine, "我的", "#ffa777", true);
                 lineDataSets.add(lineDataSet1);
             }

@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,11 @@ import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.contract.ReportContract;
 import com.bshuiban.baselibrary.model.StuLearnReportBean;
 import com.bshuiban.baselibrary.model.SubjectBean;
+import com.bshuiban.baselibrary.model.observebean.ReportUpdateBean;
 import com.bshuiban.baselibrary.present.ReportPresent;
+import com.bshuiban.baselibrary.utils.observer.ObserveModeGroupList;
+import com.bshuiban.baselibrary.utils.observer.Observer;
+import com.bshuiban.baselibrary.utils.observer.OnObserver;
 import com.bshuiban.baselibrary.view.activity.BaseFragmentActivity;
 import com.bshuiban.baselibrary.view.adapter.ClassViewPagerAdapter;
 import com.bshuiban.baselibrary.view.interfaces.OnReportDateListener;
@@ -55,12 +60,14 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
     private TextView tv_date;
     private int mYear, mMonth;
     private CommonNavigatorAdapter commonNavigatorAdapter;
+    private OnObserver<ReportUpdateBean> observer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tPresent = new ReportPresent(this);
         arrayList = new ArrayList<>();
+
     }
 
     @Override
@@ -105,6 +112,18 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
         return view;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        Log.e(TAG, "onHiddenChanged: Report="+hidden );
+        if(!hidden) {
+            ReportUpdateBean bean = new ReportUpdateBean();
+            bean.setDate(getDate());
+            bean.setUpdate(true);
+            ObserveModeGroupList.getInstance().postNotice(true, bean);
+        }
+        super.onHiddenChanged(hidden);
+    }
+
     private int nowMonth, nowYear;
 
     private void setDate() {
@@ -115,14 +134,12 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
     }
 
     private void updateTVDate(boolean tag) {
-
         tv_date.setText(String.format("%d年%02d月统计报告", mYear, mMonth));
-        if (tag) {
-            if (nowFragment instanceof SubjectAllFragment) {
-                ((SubjectAllFragment) nowFragment).updateDataForDate();
-            } else {
-                ((SubjectChildFragment) nowFragment).updateDataForDate();
-            }
+        if (tag) {//发送更新消息
+            ReportUpdateBean bean = new ReportUpdateBean();
+            bean.setUpdate(false);
+            bean.setDate(getDate());
+            ObserveModeGroupList.getInstance().postNotice(true, bean);
         }
     }
 
@@ -210,7 +227,6 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
         return String.format("%d%02d", mYear, mMonth);
     }
 
-    private Fragment nowFragment;
 
     private class ReportViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -220,22 +236,21 @@ public class ReportFragment extends InteractionBaseWebViewFragment<ReportPresent
 
         @Override
         public Fragment getItem(int position) {
+            Bundle bundle = new Bundle();
+            bundle.putString("date",getDate());
             if (position == 0) {
                 SubjectAllFragment subjectAllFragment = new SubjectAllFragment();
+                subjectAllFragment.setArguments(bundle);
                 subjectAllFragment.setOnContrastData(contrastBeans -> {
                     //List<StuLearnReportBean.DataBean.ContrastBean> contrastBeans;
                     updateTitleBar1(contrastBeans);
                 });
-                subjectAllFragment.setOnReportDateListener(ReportFragment.this);
-                nowFragment = subjectAllFragment;
                 return subjectAllFragment;
             } else {
-                Bundle bundle = new Bundle();
                 bundle.putInt("subjectId", arrayList.get(position).getSubjectId());
                 SubjectChildFragment subjectChildFragment = new SubjectChildFragment();
                 subjectChildFragment.update(bundle);
-                subjectChildFragment.setOnReportDateListener(ReportFragment.this);
-                nowFragment = subjectChildFragment;
+                subjectChildFragment.setArguments(bundle);
                 return subjectChildFragment;
             }
         }

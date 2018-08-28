@@ -97,6 +97,18 @@ public class TextUtils {
         }
         return s;
     }
+
+    /**
+     * -1 转化--
+     * @param s 内容
+     * @return 转化值
+     */
+    public static String clearStringForMinusone(String s){
+        if("-1".equals(cleanNull(s))){
+            s="- - ";
+        }
+        return s;
+    }
     public static String getMaxLengthS(String... values){
         int max=0;
         String sTag="";
@@ -111,6 +123,13 @@ public class TextUtils {
         }
         return sTag;
     }
+
+    /**
+     * 集合转化
+     * 重写toString() 方法
+     * @param list 集合
+     * @return 字符串类型集合
+     */
     public static List<String> getListString(List list){
         List<String> strings = new ArrayList<>();
         if(null==list||list.size()==0){

@@ -435,6 +435,7 @@
         } else {
             $(".more").html("查看全部")
         }
+        //http://192.168.0.4:8090/
         var attr = "";
         var attr2 = "";
         // var attr;
@@ -478,6 +479,8 @@
         // 点击加载更多
         mores.onclick = function () {
              window.android.toNextActivity(6)
+             //scheme1://host1:8080/path1?query1=1&query2=true
+             //location.href="liuyan://huiban?p=12&d=1";
         }
         // 回复
         for (var i = 0; i < rep.length; i++) {

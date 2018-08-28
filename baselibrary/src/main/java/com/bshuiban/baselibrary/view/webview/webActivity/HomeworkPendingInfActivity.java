@@ -21,14 +21,13 @@ import com.bshuiban.baselibrary.utils.BitMapUtils;
 import com.bshuiban.baselibrary.utils.DialogUtils;
 import com.bshuiban.baselibrary.utils.FileUtils;
 import com.bshuiban.baselibrary.utils.SpaceItemDecoration;
+import com.bshuiban.baselibrary.utils.aes.Base64;
 import com.bshuiban.baselibrary.view.activity.CameraActivity;
 import com.bshuiban.baselibrary.view.activity.SelectImgActivity;
 import com.bshuiban.baselibrary.view.activity.TextActivity;
 import com.bshuiban.baselibrary.view.adapter.HomeworkCountAdapter;
-import com.bshuiban.baselibrary.view.adapter.SortHomeworkAdapter;
 import com.bshuiban.baselibrary.view.customer.TitleView;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.HomeworkInfHtml;
-import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.List;
@@ -48,8 +47,12 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
     /**
      * 当前题目
      */
-    private HomeworkBean bean,shouldBean;
+    private HomeworkBean bean, shouldBean;
     private long startTime;
+    /**
+     * 试卷内容
+     */
+    private String jsonExam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
         prepareId = intent.getIntExtra(HOME_PREPARE, -1);
 
         mWebView = findViewById(R.id.webview);
+
         recycleView = findViewById(R.id.recycleView);
         TitleView titleView = findViewById(R.id.titleView);
         titleView.setOnClickListener(new TitleView.OnClickListener() {
@@ -77,8 +81,8 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
         tPresent = new HomeworkPendingInfPresent(this);
         if (User.getInstance().isParents()) {
             loadFileHtml("homework_details");
-            titleView.setRight_text(null,-1,0);
-        }else {
+            titleView.setRight_text(null, -1, 0);
+        } else {
             loadFileHtml("workMsg");
         }
         registerWebViewH5Interface(new HomeworkPendingHtml());
@@ -102,22 +106,22 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
     @Override
     public void updateHomeworkTitleList(List<HomeworkBean> list, int time) {
         this.homeworkBean = list;
-        startTime -= time;
+        startTime -= (time * 1000);
         if (HomeworkBean.isEffictive(list)) {
-            LogUtils.e(TAG, "updateHomeworkTitleList: "+new Gson().toJson(list));
+            //LogUtils.e(TAG, "updateHomeworkTitleList: "+new Gson().toJson(list));
             HomeworkCountAdapter adapter = new HomeworkCountAdapter(0);
             adapter.setList(list);
             recycleView.setAdapter(adapter);
             adapter.setOnItemClickListener(this::loadHtmlData);
             loadHtmlData(list.get(0));
-        }else {
-            TitleView titleView=findViewById(R.id.titleView);
-            titleView.setRight_text(null,-1,1);
+        } else {
+            TitleView titleView = findViewById(R.id.titleView);
+            titleView.setRight_text(null, -1, 1);
         }
     }
 
     private void loadHtmlData(HomeworkBean bean1) {
-        shouldBean=this.bean;
+        shouldBean = this.bean;
         this.bean = bean1;
         String type = this.bean.getType();
         int pageIndex = this.bean.getPageIndex();
@@ -129,11 +133,17 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
 
     @Override
     public void updateAnswerResult(String answer) {
-        LogUtils.e("TAG","url="+answer);
+        LogUtils.e("TAG", "url=" + answer);
         changeHomeworkStuAnswer(bean, answer);
         loadJavascriptMethod("subproblem", answer);
     }
 
+    /**
+     * 修改/填写 答案
+     *
+     * @param bean
+     * @param answer
+     */
     private void changeHomeworkStuAnswer(HomeworkBean bean, String answer) {
         String type = bean.getType();
         int pageIndex = bean.getPageIndex();
@@ -201,26 +211,30 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
                 break;
         }
     }
-    private void updateImage(String imagePath){
+
+    private void updateImage(String imagePath) {
         if (!TextUtils.isEmpty(imagePath)) {
             String name = FileUtils.isCheckFileExist(imagePath);
             if (!TextUtils.isEmpty(name)) {
-                BitMapUtils.saveBitmap(User.imagePath+name, BitMapUtils.duplicateBitmap(BitmapFactory.decodeFile(imagePath), 800, 500));
+                BitMapUtils.saveBitmap(User.imagePath + name, BitMapUtils.duplicateBitmap(BitmapFactory.decodeFile(imagePath), 800, 500));
                 tPresent.uploadImage(imagePath);
             } else {
                 //Log.i("info", "取消拍照------>" + data);
             }
         }
     }
+
     class HomeworkPendingHtml extends HomeworkInfHtml {
         @JavascriptInterface
-        public int getUserType(){
+        public int getUserType() {
             return User.getInstance().getUserType();
         }
+
         @JavascriptInterface
-        public boolean isParentsLook(){
+        public boolean isParentsLook() {
             return User.getInstance().isParents();
         }
+
         /**
          * 启动答题页
          *
@@ -246,19 +260,26 @@ public class HomeworkPendingInfActivity extends BaseWebActivity<HomeworkPendingI
             Log.e(TAG, "setStuAnswer: " + stuAnswer);
             changeHomeworkStuAnswer(shouldBean, stuAnswer);
         }
+
         @JavascriptInterface
-        public void openImage(String src){
-            Log.e(TAG, "openImage: "+src );
-            runOnUiThread(()-> DialogUtils.showImageDialog(HomeworkPendingInfActivity.this,src));
+        public void openImage(String src) {
+            Log.e(TAG, "openImage: " + src);
+            runOnUiThread(() -> DialogUtils.showImageDialog(HomeworkPendingInfActivity.this, src));
+        }
+
+        @JavascriptInterface
+        public String getExamContent() {
+            return jsonExam;
         }
     }
 
     boolean check;
+
     private void toNextPage() {
         if (!check) {
             check = true;
             long time = (System.currentTimeMillis() - startTime) / 1000;
-            shouldBean=bean;
+            shouldBean = bean;
             loadJavascriptMethod("updateStudentAnswer");
             User.getInstance().getHomeworkInfBean().setTimes(time + "");
             new Handler().postDelayed(() -> {

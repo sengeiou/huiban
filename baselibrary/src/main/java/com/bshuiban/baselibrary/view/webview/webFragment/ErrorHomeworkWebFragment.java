@@ -110,8 +110,10 @@ public class ErrorHomeworkWebFragment extends InteractionBaseWebViewFragment<Err
                     int mFasId = i.getIntExtra("mFasId",-1);
                     int mChapBranId = i.getIntExtra("mChapBranId",-1);
                     int mSeriBrandId = i.getIntExtra("mSeriBrandId",-1);
+                    int stageId = i.getIntExtra("stageId",-1);
+                    String organs = i.getStringExtra("organs");
                     tPresent.clearArray();
-                    tPresent.setSelectInf(mSubjectId,mVersionId,mFasId,mChapBranId,mSeriBrandId);
+                    tPresent.setSelectInf(mSubjectId,mVersionId,mFasId,mChapBranId,mSeriBrandId,stageId,organs);
                 }
                 break;
 

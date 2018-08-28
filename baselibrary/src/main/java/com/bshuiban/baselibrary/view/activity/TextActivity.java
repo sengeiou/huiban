@@ -1,8 +1,6 @@
 package com.bshuiban.baselibrary.view.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +9,9 @@ import android.widget.EditText;
 import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.view.customer.TitleView;
 
+/**
+ * 文本答题
+ */
 public class TextActivity extends BaseActivity {
     EditText et;
     public static final int TEXT_HOMEWORK = 0x000009;

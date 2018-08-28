@@ -32,7 +32,7 @@ public interface CorrectResultContract {
          * @param workId 作业id，选传
          * @param studentId 批阅的学生id
          * @param scoreStr 题对错
-         * @return
+         * @return Map集合
          */
         Map<String,Object> getjsonMap(String classId,String userId,String preId,int type,int workId,String studentId,String scoreStr);
     }

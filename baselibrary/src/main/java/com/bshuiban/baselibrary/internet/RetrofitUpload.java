@@ -13,7 +13,7 @@ import retrofit2.Retrofit;
 
 /**
  * Created by xinheng on 2018/6/7.<br/>
- * describe：
+ * describe：文件上传
  */
 public class RetrofitUpload extends BaseRetrofit {
     private static RetrofitUpload retrofitService;
@@ -37,6 +37,12 @@ public class RetrofitUpload extends BaseRetrofit {
         return loadFile(new File(path), callback);
     }
 
+    /**
+     * 图片上传
+     * @param file 图片地址
+     * @param callback 回调
+     * @return 接口响应体
+     */
     public Call<ResponseBody> loadFile(File file, Callback<ResponseBody> callback) {
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/png"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("img_file", UUID.randomUUID().toString() + file.getName(), requestFile);

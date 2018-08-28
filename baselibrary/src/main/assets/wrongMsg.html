@@ -76,9 +76,14 @@
 		console.log(data.myAnswer);
 		if(data.myAnswer === undefined){
 			$('.yourAnswer').html(`你的答案：<b>暂无答案</b>`);
+		}else if(data.myAnswer.indexOf('<img')==0){
+			console.log(1);
+			 $('.yourAnswer').html(`你的答案：<b>${data.myAnswer}</b>`);
 		}else if (regex.test(data.myAnswer)) {
-			$('.yourAnswer').html(`你的答案：${data.myAnswer}`);
+			console.log(2);
+			$('.yourAnswer').html(`你的答案：<img src = "${data.myAnswer}"/>`);
 		}else {
+			console.log(3);
 			$('.yourAnswer').html(`你的答案：<b>${data.myAnswer}</b>`);
 		}
 		if(data.rightAnswer === undefined){

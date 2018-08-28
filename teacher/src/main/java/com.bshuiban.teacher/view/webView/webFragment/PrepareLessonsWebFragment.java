@@ -33,11 +33,12 @@ import static com.bshuiban.teacher.view.activity.PrepareLessonInfActivity.PREID;
  * describe：备课
  */
 public class PrepareLessonsWebFragment extends InteractionBaseWebViewFragment<PrepareLessonsPresent> implements PrepareLessonsContract.View {
-    private static final int SEARCH_REQUESTCODE=111;
+    private static final int SEARCH_REQUESTCODE = 111;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tPresent=new PrepareLessonsPresent(this);
+        tPresent = new PrepareLessonsPresent(this);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class PrepareLessonsWebFragment extends InteractionBaseWebViewFragment<Pr
         super.onViewCreated(view, savedInstanceState);
         loadFileHtml("classList");
         PrepareLessonsHtml lessonsHtml = new PrepareLessonsHtml();
-        lessonsHtml.setOnListener(new MessageList.OnMessageListListener(){
+        lessonsHtml.setOnListener(new MessageList.OnMessageListListener() {
             @Override
             public void refresh() {
                 tPresent.refresh();
@@ -66,7 +67,7 @@ public class PrepareLessonsWebFragment extends InteractionBaseWebViewFragment<Pr
 
     @Override
     public void updateList(String json) {
-        loadJavascriptMethod("getContent",json);
+        loadJavascriptMethod("getContent", json);
     }
 
     @Override
@@ -88,56 +89,72 @@ public class PrepareLessonsWebFragment extends InteractionBaseWebViewFragment<Pr
     public void update(Bundle bundle) {
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent i) {
-        switch (requestCode){
+        switch (requestCode) {
             case SEARCH_REQUESTCODE:
-                if(i!=null){
-                    int mSubjectId = i.getIntExtra("mSubjectId",-1);
-                    int mVersionId = i.getIntExtra("mVersionId",-1);
-                    int mFasId = i.getIntExtra("mFasId",-1);
-                    int mChapBranId = i.getIntExtra("mChapBranId",-1);
-                    int mSeriBrandId = i.getIntExtra("mSeriBrandId",-1);
+                if (i != null) {
+                    int mSubjectId = i.getIntExtra("mSubjectId", -1);
+                    int mVersionId = i.getIntExtra("mVersionId", -1);
+                    int mFasId = i.getIntExtra("mFasId", -1);
+                    int mChapBranId = i.getIntExtra("mChapBranId", -1);
+                    int mSeriBrandId = i.getIntExtra("mSeriBrandId", -1);
+                    int stageId = i.getIntExtra("stageId", -1);
+                    String organs = i.getStringExtra("organs");
+
                     tPresent.clearArray();
                     //tPresent.setSelectInf(mSubjectId,mVersionId,mFasId,mChapBranId,mSeriBrandId);
-                    String json = new Gson().toJson(getJsonMap(mSubjectId, mVersionId, mFasId, mChapBranId, mSeriBrandId));
+                    String json = new Gson().toJson(getJsonMap(mSubjectId, mVersionId, mFasId, mChapBranId, mSeriBrandId, stageId, organs));
                     tPresent.loadLessons(json);
                 }
                 break;
 
         }
     }
-    private Map<String, Object> getJsonMap(int mSubjectId,int mVersionId,int mFasId,int mChapBranId,int mSeriBrandId) {
+
+    private Map<String, Object> getJsonMap(int mSubjectId, int mVersionId, int mFasId, int mChapBranId, int mSeriBrandId, int stageId, String organs) {
         Map<String, Object> map = new HashMap<>();
 //        map.put("userId", userId);
 //        map.put("index",start);
 //        map.put("limit",limit);
 
-        map.put("subjectId", mSubjectId);
-        map.put("versionId",mVersionId);
-        map.put("fasId",mFasId);
-        map.put("chapBranId",mChapBranId);
-        map.put("seriBrandId",mSeriBrandId);
+        map.put("subjectId",clean100(mSubjectId));
+        map.put("versionId",clean100(mVersionId));
+        map.put("fasId",clean100(mFasId));
+        map.put("chapBranId",clean100(mChapBranId));
+        map.put("seriBrandId",clean100(mSeriBrandId));
+        map.put("stageId",clean100(stageId));
+        map.put("schoolId", organs);
         return map;
     }
-    class PrepareLessonsHtml extends MessageList{
+
+    private Object clean100(int tag) {
+        if (tag == -100) {
+            return "";
+        }
+        return tag;
+    }
+
+    class PrepareLessonsHtml extends MessageList {
         /**
          * 跳转搜索页面
          */
         @JavascriptInterface
-        public void toSearchPage(){
-            getActivity().runOnUiThread(()->{
-                startActivityForResult(new Intent(getActivity(),ErrorFilterActivity.class),SEARCH_REQUESTCODE);
+        public void toSearchPage() {
+            getActivity().runOnUiThread(() -> {
+                startActivityForResult(new Intent(getActivity(), ErrorFilterActivity.class), SEARCH_REQUESTCODE);
             });
         }
 
         /**
          * item点击
+         *
          * @param preId
          */
         @JavascriptInterface
-        public void itemClick(String preId){
-            startActivity(new Intent(getActivity(),PrepareLessonInfActivity.class).putExtra(PREID,preId));
+        public void itemClick(String preId) {
+            startActivity(new Intent(getActivity(), PrepareLessonInfActivity.class).putExtra(PREID, preId));
         }
     }
 }

@@ -50,8 +50,10 @@ function exercise(data) {
         <p class="p">学生答案：</p>
         <div class="room"><div>`
     );
-        var reg =  /^png|jpg|svg|gif|bmp|swf|tiff|psd$/;
-        if(reg.test(res.stuAnswer)) {
+        var reg = /^http\.bmp|\.jpg|\.jpeg|\.png|\.tiff|\.gif|\.pcx|\.tga|\.exif|\.fpx|\.svg|\.psd|\.cdr|\.pcd|\.dxf|\.ufo|\.eps|\.ai|\.raw|\.WMF|\.webp$/;
+        if(res.stuAnswer.indexOf('<img')==0){
+            $(".room").html(`<p class="answerimgs">${res.stuAnswer}</p>`);
+        }else if(reg.test(res.stuAnswer)) {
             $(".room").html(`<img class="answerimg" src=${res.stuAnswer}>`);
         } else {
             $(".room").html(`<p class="answertext">${res.stuAnswer}</p>`);
@@ -92,4 +94,4 @@ function exercise(data) {
     }
 }
 // 题目渲染
-exercise(data)
+//exercise(data)

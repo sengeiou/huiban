@@ -100,7 +100,7 @@ $(".tea2").bind("click", function () {
     })
 //切换课表
 function switchs(list) {
-var data = JSON.parse(list);
+var data = b64DecodeUnicodeJson(list);
 var tab = document.getElementsByClassName("tab")[0];
 var str1 = "";
 var str2 = "";
@@ -118,32 +118,32 @@ res3.push(pro)
 }
 }
 for (pro of res1) {
-if (pro.subjectName == "") {
-pro.subjectName = "无课";
+if (pro.subName == "") {
+pro.subName = "无课";
 }
-str1 += `<span>${pro.subjectName}</span>`;
+str1 += `<span>${pro.subName}</span>`;
 }
-if (res1[0].subjectName == "无课" && res1[1].subjectName == "无课" && res1[2].subjectName == "无课" && res1[3].subjectName == "无课") {
+if (res1[0].subName == "无课" && res1[1].subName == "无课" && res1[2].subName == "无课" && res1[3].subName == "无课") {
 str1 = `<span>上午没有课程 </span>`;
 }
 for (pro of res2) {
-if (pro.subjectName == "") {
-pro.subjectName = "无课";
+if (pro.subName == "") {
+pro.subName = "无课";
 }
-str2 += `<span>${pro.subjectName}</span>`;
+str2 += `<span>${pro.subName}</span>`;
 $(".teachtime").html("下午课程")
 }
-if (res2[0].subjectName == "无课" && res2[1].subjectName == "无课" && res2[2].subjectName == "无课" && res2[3].subjectName == "无课") {
+if (res2[0].subName == "无课" && res2[1].subName == "无课" && res2[2].subName == "无课" && res2[3].subName == "无课") {
 str2 = `<span>下午没有课程 </span>`;
 }
 for (pro of res3) {
-if (pro.subjectName == "") {
-pro.subjectName = "无课";
+if (pro.subName == "") {
+pro.subName = "无课";
 }
-str3 += `<span>${pro.subjectName}</span>`;
+str3 += `<span>${pro.subName}</span>`;
 $(".teachtime").html("晚上课程")
 }
-if (res3[0].subjectName == "无课" && res3[1].subjectName == "无课") {
+if (res3[0].subName == "无课" && res3[1].subName == "无课") {
 console.log("1111")
 str3 = `<span>今晚没有课程 </span>`;
 }
@@ -160,7 +160,7 @@ curriculum.html(str3)
 }
 // 慧辅导导航
 function imag(list) {
-    var data = JSON.parse(list)
+    var data = b64DecodeUnicodeJson(list)
     var str = "";
     var list = document.getElementsByClassName("list")[0];
     str += `
@@ -184,7 +184,7 @@ function imag(list) {
 
 // 留言页 回复页
 function message(list) {
-    var data = JSON.parse(list)
+    var data = b64DecodeUnicodeJson(list)
      if(data.length == 0) {
             $(".more").html("暂无数据")
         } else {

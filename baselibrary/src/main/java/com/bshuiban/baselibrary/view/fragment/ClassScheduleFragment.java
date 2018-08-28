@@ -69,7 +69,7 @@ public class ClassScheduleFragment extends BaseFragment<ClassSchedulePresent> im
 
     @Override
     public void fail(String error) {
-        toast(error);
+        //toast(error);
         //classSchedule.setData(null);
     }
 

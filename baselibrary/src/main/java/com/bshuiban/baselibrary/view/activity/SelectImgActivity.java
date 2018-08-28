@@ -21,23 +21,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.bshuiban.baselibrary.R;
-import com.bshuiban.baselibrary.utils.ViewUtils;
+import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.view.customer.TitleView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
-import io.reactivex.FlowableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -50,6 +42,7 @@ public class SelectImgActivity extends BaseActivity {
     private MyAdapter adapter;
     private boolean effic = true;
     public static final int SELECT_PICTURE = 0x000008;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +60,7 @@ public class SelectImgActivity extends BaseActivity {
 
             @Override
             public void rightClick(View v) {
-                if(TextUtils.isEmpty(select_path)){
+                if (TextUtils.isEmpty(select_path)) {
                     toast("请选择图片");
                     return;
                 }
@@ -77,7 +70,7 @@ public class SelectImgActivity extends BaseActivity {
                 finish();
             }
         });
-        mRecycleView.setPadding(0,0,40,0);
+        mRecycleView.setPadding(0, 0, 40, 0);
         initRecycleView();
         if (adapter != null) {
             mRecycleView.setAdapter(adapter);
@@ -86,43 +79,36 @@ public class SelectImgActivity extends BaseActivity {
 
     @SuppressLint("CheckResult")
     private void add_img_path() {
-        Flowable.create((FlowableOnSubscribe<String>) e -> {
-            //Log.e("TAG", "add_img_path");
-            Cursor mCursor = getContentResolver().query(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
-            if (mCursor == null) {
-                e.onComplete();
+        showLoadingDialog();
+        new Thread() {
+            @Override
+            public void run() {
+                Cursor mCursor = getContentResolver().query(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
+                if (mCursor != null) {
+                    while (mCursor.moveToNext()) {
+                        //获取图片的路径
+                        String path = mCursor.getString(mCursor
+                                .getColumnIndex(MediaStore.Images.Media.DATA));
+                        //Log.e("TAG", "path=" + path);
+                        list_path.add(path);
+                    }
+                    runOnUiThread(() -> {
+                        dismissLoadingDialog();
+                        if (HomeworkBean.isEffictive(list_path)) {
+                            //刷新adapter
+                            if (adapter == null) {
+                                adapter = new MyAdapter();
+                            }
+                            if (mRecycleView != null) {
+                                mRecycleView.setAdapter(adapter);
+                            }
+                        }
+                    });
+                }
             }
-            while (mCursor.moveToNext()) {
-                //获取图片的路径
-                String path = mCursor.getString(mCursor
-                        .getColumnIndex(MediaStore.Images.Media.DATA));
-                //Log.e("TAG", "path=" + path);
-                list_path.add(path);
-            }
-            e.onNext("");
-            e.onComplete();
-        }, BackpressureStrategy.ERROR).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> {
-                    //Log.e("TAG", "accept");
-                    if (list_path.size() == 0) {
-                        return;
-                    }
-                    //刷新adapter
-                    if (adapter == null) {
-                        adapter = new MyAdapter();
-                    }
-                    if (mRecycleView != null) {
-                        mRecycleView.setAdapter(adapter);
-                    }
-                });
+        }.start();
 
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
     }
 
     private void initRecycleView() {
@@ -138,12 +124,13 @@ public class SelectImgActivity extends BaseActivity {
             @Override
             public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
                 //super.getItemOffsets(outRect, itemPosition, parent);
-                int x40 = (int) getResources().getDimension(R.dimen.dp_13);
-                int x38 = (int) getResources().getDimension(R.dimen.dp_12);
+                //int x40 = (int) getResources().getDimension(R.dimen.dp_13);
+                //int x38 = (int) getResources().getDimension(R.dimen.dp_12);
                 outRect.set(40, 38, 0, 0);
             }
         });
     }
+
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         @Override
         public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {

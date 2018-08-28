@@ -4,23 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.present.BasePresent;
-import com.bshuiban.baselibrary.utils.ActivityH5Utils;
 import com.bshuiban.baselibrary.utils.ViewUtils;
-import com.bshuiban.baselibrary.view.fragment.InteractionBaseFragment;
 import com.bshuiban.baselibrary.view.interfaces.OnFragmentInteractionListener;
 
 /**
@@ -49,16 +39,16 @@ public abstract class InteractionBaseWebViewFragment<T extends BasePresent> exte
         View fragmentView = getFragmentView();
         if(null== fragmentView) {
             View inflate = inflater.inflate(getLayoutResource(), container, false);
-            mWebViewFactory.initTestWebView(inflate);
+            mWebViewUtil.initTestWebView(inflate);
             return inflate;
         }else{
             return fragmentView;
         }
     }
     protected View getFragmentView(){
-        String className = getClass().getSimpleName();
-        String activityHtml5Name = ActivityH5Utils.getActivityHtml5Name(className);
-        Log.e(TAG, "getFragmentView: "+className+", "+activityHtml5Name );
+        //String className = getClass().getSimpleName();
+        //String activityHtml5Name = ActivityH5Utils.getActivityHtml5Name(className);
+        //Log.e(TAG, "getFragmentView: "+className+", "+activityHtml5Name );
         //if(!TextUtils.isEmpty(activityHtml5Name)){
             //return null;
         //}

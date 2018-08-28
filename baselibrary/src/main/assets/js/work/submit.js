@@ -18,10 +18,10 @@ function answer(data) {
 
   for(let i=0; i<list.homework.length; i++) {
       if(list.homework[i].complete == true) {
-        str+=`<li class="li" style="background:#eee">${i+1}</li>`;
+        str+=`<li class="li" style=""><span  style="background:#d8d8d8">${i+1}</span></li>`;
 
       } else {
-        str+=`<li class="li">${i+1}</li>`
+        str+=`<li class="li"><span>${i+1}</span></li>`
         console.log(count)
         count++;
       }

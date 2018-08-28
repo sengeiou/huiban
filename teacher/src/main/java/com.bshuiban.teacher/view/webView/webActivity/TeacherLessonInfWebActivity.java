@@ -8,10 +8,9 @@ import com.bshuiban.baselibrary.model.HomeworkBean;
 import com.bshuiban.baselibrary.model.TeachClassBean;
 import com.bshuiban.baselibrary.model.User;
 import com.bshuiban.baselibrary.present.TeachClassPresent;
-import com.bshuiban.baselibrary.utils.Observed;
+import com.bshuiban.baselibrary.utils.observer.Observed;
 import com.bshuiban.baselibrary.view.dialog.TeachClassDialog;
 import com.bshuiban.baselibrary.view.webview.webActivity.LessonInfWebActivity;
-import com.bshuiban.baselibrary.view.webview.webActivity.SideCollectionListWebActivity;
 import com.bshuiban.teacher.present.TeacherLessonInfPresent;
 
 import java.util.List;

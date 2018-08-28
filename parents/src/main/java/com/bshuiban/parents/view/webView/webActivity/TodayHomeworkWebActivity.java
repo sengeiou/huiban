@@ -9,6 +9,9 @@ import com.bshuiban.baselibrary.view.webview.webActivity.BaseWebActivity;
 import com.bshuiban.parents.contract.TodayHomeworkContract;
 import com.bshuiban.parents.present.TodayHomeworkPresent;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by xinheng on 2018/6/5.<br/>
  * describe：家长端 今日作业
@@ -33,7 +36,6 @@ public class TodayHomeworkWebActivity extends BaseWebActivity<TodayHomeworkPrese
         String name="worknotice";
         loadJavascriptMethod(name,json);
     }
-
     @Override
     public void startDialog() {
 

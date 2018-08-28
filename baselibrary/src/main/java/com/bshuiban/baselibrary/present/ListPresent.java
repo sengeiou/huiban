@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 
 /**
  * Created by xinheng on 2018/5/18.<br/>
- * describe：
+ * describe：列表数据
  */
 public abstract class ListPresent<T extends BaseView> extends BasePresent<T> implements ListContract.Present {
     protected int limit=10;
@@ -26,7 +26,7 @@ public abstract class ListPresent<T extends BaseView> extends BasePresent<T> imp
     protected RetrofitService.CallHTMLJsonArray callHTMLJsonArray= new RetrofitService.CallHTMLJsonArray() {
         @Override
         protected void success(JsonArray msg) {
-            LogUtils.e("TAG", "success: "+msg+", "+(null==jsonArray?0:jsonArray.size()));
+            LogUtils.e("TAG", "success: "+", "+(null==jsonArray?0:jsonArray.size()));
             if(isEffective()){
                 if(null==jsonArray){
                     jsonArray=msg;
@@ -92,6 +92,6 @@ public abstract class ListPresent<T extends BaseView> extends BasePresent<T> imp
         }
     }
     protected JsonObject pareJsonObj(String json){
-        return JsonUtils.parseJsonObjetNotNull(json);
+        return JsonUtils.parseJsonObjectNotNull(json);
     }
 }

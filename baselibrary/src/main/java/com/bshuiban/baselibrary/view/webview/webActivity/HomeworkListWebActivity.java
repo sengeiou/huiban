@@ -107,7 +107,9 @@ public class HomeworkListWebActivity extends BaseWebActivity<HomeworkListPresent
 
     @Override
     public void updateSubjects(String json) {
-        tPresent.setTag(0);
+        if(home_type!=Middle_Class) {//不是课中
+            tPresent.setTag(0);
+        }
         loadJavascriptMethod("complatelist", json);
     }
 
@@ -163,9 +165,9 @@ public class HomeworkListWebActivity extends BaseWebActivity<HomeworkListPresent
             //workId prepareId
             runOnUiThread(() -> {
                 if (tPresent.getTAg() || home_type == Middle_Class) {//已完成
-                    startActivity(new Intent(getApplicationContext(), HomeworkReportActivity.class).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId));
+                    startActivity(new Intent(getApplicationContext(), HomeworkReportActivity.class).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId).putExtra(HOME_TYPE,home_type));
                 } else {//未完成
-                    startActivity(new Intent(getApplicationContext(), HomeworkPendingInfActivity.class).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId));
+                    startActivity(new Intent(getApplicationContext(), HomeworkPendingInfActivity.class).putExtra(HOME_Work_Id, workId).putExtra(HOME_PREPARE, prepareId).putExtra(HOME_TYPE,home_type));
                 }
 
             });

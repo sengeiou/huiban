@@ -10,7 +10,7 @@ import com.bshuiban.student.model.StudentUser;
 
 /**
  * Created by xinheng on 2018/5/19.<br/>
- * describe：
+ * describe：学生首页用户信息获取
  */
 public class StudentHomePresent extends BasePresent<StudentHomeContract.View> implements StudentHomeContract.Present{
     public StudentHomePresent(StudentHomeContract.View view) {

@@ -2,13 +2,10 @@ package com.bshuiban.baselibrary.view.webview.webActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.bshuiban.baselibrary.contract.SideCollectionListContract;
 import com.bshuiban.baselibrary.present.SideCollectionListPresent;
-import com.bshuiban.baselibrary.utils.ObserveModeGroupList;
-import com.bshuiban.baselibrary.utils.Observer;
 import com.bshuiban.baselibrary.view.webview.javascriptInterfaceClass.MessageList;
 
 public class SideCollectionListWebActivity extends BaseWebActivity<SideCollectionListPresent> implements SideCollectionListContract.View {

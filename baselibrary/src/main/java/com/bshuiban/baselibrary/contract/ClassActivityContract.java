@@ -27,7 +27,7 @@ public interface ClassActivityContract {
          * @param classId
          * @param start
          * @param limit
-         * @return
+         * @return json数据
          */
         String getJsonString(String classId, int start, int limit);
         void deleteActivity(String classId,String activityId);

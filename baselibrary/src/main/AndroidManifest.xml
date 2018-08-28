@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application>
-
         <activity
             android:name=".view.activity.ClassActivity"
             android:screenOrientation="portrait" />
@@ -39,7 +38,19 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.webview.webActivity.LiuYanMsgListActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- TOPICID://aa.bb:80/test?p=12&d=1 -->
+                <!-- scheme类似http和https，注意要转换为小写 -->
+                <data
+                    android:host="huiban"
+                    android:scheme="liuyan" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.webview.webActivity.HomeworkReportActivity"
             android:screenOrientation="portrait" />
@@ -76,9 +87,12 @@
             android:name=".view.activity.SelectImgActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.TestActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activity.ImageActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.webview.webActivity.ErrorFilterActivity"
             android:screenOrientation="portrait" />
@@ -91,19 +105,23 @@
         <activity
             android:name=".view.activity.PlayerVideoActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".view.activity.ForgetPasswordActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ChangeUserActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.webview.webActivity.FilterHuiFuDaoWebActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.webview.webActivity.TestWebViewActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.SendNoticeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ChangeUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.FilterHuiFuDaoWebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.webview.webActivity.TestWebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SendNoticeActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

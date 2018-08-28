@@ -16,6 +16,7 @@ import com.bshuiban.baselibrary.view.activity.StatisticalChartActivity;
 import com.bshuiban.baselibrary.view.webview.webFragment.InteractionBaseWebViewFragment;
 import com.bshuiban.teacher.contract.ReportContract;
 import com.bshuiban.teacher.present.ReportPresent;
+import com.bshuiban.teacher.view.activity.TeacherStatisticalChartActivity;
 import com.bshuiban.teacher.view.dialog.GradeClassDialog;
 import com.xinheng.date_dialog.dialog.SeleTwoDialog;
 import com.xinheng.date_dialog.dialog.SelectDateDialog;
@@ -27,7 +28,7 @@ import java.util.Locale;
 
 /**
  * Created by xinheng on 2018/6/3.<br/>
- * describe：
+ * describe：老师报告
  */
 public class ReportWebFragment extends InteractionBaseWebViewFragment<ReportPresent> implements ReportContract.View {
     private int mYear = 2018, mMonth;
@@ -72,7 +73,7 @@ public class ReportWebFragment extends InteractionBaseWebViewFragment<ReportPres
                 tPresent.loadReportsOfClasses(subjectId, gradeId, getStringDate());
         } else {
             if (subjectId1 != -1 && gradeId1 != -1)
-                tPresent.loadGraspingOfStudents(subjectId1, gradeId, getStringDate(),classId);
+                tPresent.loadGraspingOfStudents(subjectId1, gradeId1, getStringDate(),classId);
         }
     }
 
@@ -109,8 +110,10 @@ public class ReportWebFragment extends InteractionBaseWebViewFragment<ReportPres
             toast("请选择学科");
             return;
         }
-        startActivity(new Intent(getActivity(), StatisticalChartActivity.class)
+        int gradeId_=classData?gradeId:gradeId1;
+        startActivity(new Intent(getActivity(), TeacherStatisticalChartActivity.class)
                 .putExtra("time", getStringDate())
+                .putExtra("gradeId",gradeId_+"")
                 .putExtra("subjectId", subjectId+""));
     }
     class ReportHtml {
@@ -243,7 +246,7 @@ public class ReportWebFragment extends InteractionBaseWebViewFragment<ReportPres
             public boolean onSure(String left, int gradeId, String right, int classId) {
                 ReportWebFragment.this.gradeId1=gradeId;
                 ReportWebFragment.this.classId=classId;
-                LogUtils.e(LogUtils.TAG, "onSure class=" + left + ", " + right);
+                LogUtils.e(LogUtils.TAG, "onSure class=" + left+"-"+gradeId1 + ", " + right+"-"+classId);
                 loadJavascriptMethod("changeclass", left + TextUtils.cleanNull(right));
                 loadData();
                 return false;

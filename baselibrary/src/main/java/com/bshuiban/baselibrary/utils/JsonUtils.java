@@ -12,9 +12,9 @@ public class JsonUtils {
     /**
      * 解析为jsonObject
      * @param json json字符串
-     * @return
+     * @return json对象
      */
-    public static JsonObject parseJsonObjetNotNull(String json) {
+    public static JsonObject parseJsonObjectNotNull(String json) {
         JsonObject mJson;
         if (android.text.TextUtils.isEmpty(json)) {
             mJson = new JsonObject();

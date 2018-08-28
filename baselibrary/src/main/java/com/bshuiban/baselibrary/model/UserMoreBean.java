@@ -40,6 +40,15 @@ public class UserMoreBean extends ResultBean {
         private String classId;
         private String gradeId;
         private String schoolId;
+        private String className;
+
+        public String getClassName() {
+            return className;
+        }
+
+        public void setClassName(String className) {
+            this.className = className;
+        }
 
         public String getGradeId() {
             return gradeId;

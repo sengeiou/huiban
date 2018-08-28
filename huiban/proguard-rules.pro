@@ -156,7 +156,7 @@
 -keep class com.bshuiban.baselibrary.model.** { *; }
 -keep class com.bshuiban.teacher.model.** { *; }
 -keep class com.bshuiban.student.model.** { *; }
--keep class com.bshuiban.parent.model.** { *; }
+-keep class com.bshuiban.parents.modul.** { *; }
 
 # OkHttp3
 #-dontwarn okhttp3.logging.**

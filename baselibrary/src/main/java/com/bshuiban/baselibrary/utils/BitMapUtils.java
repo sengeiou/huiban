@@ -55,7 +55,7 @@ public class BitMapUtils {
 	 * @param bmpSrc
 	 * @param width
 	 * @param height
-	 * @return
+	 * @return bitmap 位图
 	 */
 	public static Bitmap duplicateBitmap(Bitmap bmpSrc, int width, int height) {
 		if (null == bmpSrc) {
@@ -89,7 +89,7 @@ public class BitMapUtils {
 	 * 未指定长宽复制bitmap
 	 * 
 	 * @param bmpSrc
-	 * @return
+	 * @return bitmap位图
 	 */
 	public static Bitmap duplicateBitmap(Bitmap bmpSrc) {
 		if (null == bmpSrc) {
@@ -114,7 +114,7 @@ public class BitMapUtils {
 	 * 将bitmap转为字节数组
 	 * 
 	 * @param bitmap
-	 * @return
+	 * @return 数组
 	 */
 	public static byte[] bitampToByteArray(Bitmap bitmap) {
 		byte[] array = null;

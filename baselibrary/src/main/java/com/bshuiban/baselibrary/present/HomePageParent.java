@@ -44,7 +44,13 @@ public class HomePageParent extends ListPresent<HomePageContract.View> implement
      * 今日课表
      */
     public void getTodaySchedule(String userId) {
-        askInternet("getTodayCourseListBySid", getJsonString(userId), new RetrofitService.CallHTML() {
+        String key;
+        if(User.getInstance().isTeacher()){
+            key="getTodayCourseListByTid";
+        }else{
+            key="getTodayCourseListBySid";
+        }
+        askInternet(key, getJsonString(userId), new RetrofitService.CallHTML() {
             @Override
             protected void success(String msg) {
                 if (isEffective())

@@ -83,7 +83,7 @@ public class HomeworkListData {
      * 获取一个试卷
      * @param type
      * @param index
-     * @return
+     * @return 试卷内容
      */
     public static String getHomeworkInfJson(String type,int index){
         Gson gson=new Gson();

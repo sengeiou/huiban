@@ -33,8 +33,8 @@ function rende(data) {
          text.innerHTML = `<ul class="list">${res.content}</ul> 
                     <div id="analyze">
                     <ul>
+                    <li>正确答案：<span>${res.answer}</span></li>
                     <li>${type}${res.stuAnswer}</li>
-                    <li><span>${res.answer}</span></li>
                     <li>${jie} ${res.analysis} </li>
                     </ul>
                     </div>`;
@@ -73,12 +73,21 @@ function rende(data) {
                     jie="";
                     }
                 }
+                var stuAnswe;
+                var stuAnswerIndexFirst=res.stuAnswer[0];
+                var regex = /^http\.bmp|\.jpg|\.jpeg|\.png|\.tiff|\.gif|\.pcx|\.tga|\.exif|\.fpx|\.svg|\.psd|\.cdr|\.pcd|\.dxf|\.ufo|\.eps|\.ai|\.raw|\.WMF|\.webp$/;
+              if(stuAnswerIndexFirst.indexOf("<img")==0){
+                    stuAnswe = res.stuAnswer;
+              }else if (regex.test(stuAnswerIndexFirst)) {
+                    stuAnswe = `<img src=${res.stuAnswer}>`;
+              }else {
+                    stuAnswe = stuAnswerIndexFirst;
+              }
         text.innerHTML = `<ul class="list">${res.content}</ul> 
                     <div id="analyze">
                     <ul>
                         <li>正确答案：<span>${res.answer}</span></li>
-                        <li>${type}${res.stuAnswer}</li>
-//                        <li><span>${res.answer}</span></li>
+                        <li>${type}${stuAnswe}</li>
                         <li>${jie} ${res.analysis} </li>
                     </ul>
                     </div>`;

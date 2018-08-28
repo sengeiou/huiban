@@ -8,7 +8,7 @@ import com.google.gson.JsonArray;
 
 /**
  * Created by xinheng on 2018/6/3.<br/>
- * describe：
+ * describe：未用
  */
 public class SelectSlidingPresent extends BasePresent<SelectSlidingContract.View> implements SelectSlidingContract.Present {
     public SelectSlidingPresent(SelectSlidingContract.View view) {

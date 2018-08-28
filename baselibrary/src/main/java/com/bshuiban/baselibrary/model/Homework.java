@@ -65,6 +65,12 @@ public class Homework<T extends Homework.Data> {
         }
         setTime(getTime(aFloat));
     }
+
+    /**
+     * 时间格式化
+     * @param time 时间戳
+     * @return 格式化后的时间
+     */
     public static String getTime(float time){
         int h= (int) (time/3600);
         int m=(int)(time-h*3600)/60;

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -23,7 +24,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.Iterator;
+import java.util.Set;
 
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -35,7 +41,7 @@ import static com.bshuiban.baselibrary.model.LogUtils.TAG;
 
 /**
  * Created by xinheng on 2018/6/25.<br/>
- * describe：
+ * describe：下载
  */
 public class RetrofitDownload {
     private final Retrofit retrofit;
@@ -79,6 +85,27 @@ public class RetrofitDownload {
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+
+                Headers headers = response.headers();
+                Log.e(TAG, "onResponse: " + headers.names().contains("Content-Disposition"));
+                String downloadFileName = null;
+                for (int i = 0; i < headers.size(); i++) {
+                    Log.e("TAG", "" + headers.name(i) + ": " + headers.value(i));
+                    if ("Content-Disposition".equals(headers.name(i))) {
+                        downloadFileName = headers.value(i);
+                        downloadFileName = getResponseFileName(downloadFileName, "utf-8");
+                        break;
+                    }
+                }
+                if (downloadFileName == null) {
+                    String string = call.request().url().toString();
+                    downloadFileName = string.substring(string.lastIndexOf("/") + 1);
+                    int endIndex = downloadFileName.indexOf("?");
+                    if (endIndex > -1) {
+                        downloadFileName = downloadFileName.substring(0, endIndex);
+                    }
+                }
+                Log.e(TAG, "onResponse: fileName=" + downloadFileName);
                 FileOutputStream fos = null;
                 BufferedInputStream bis = null;
                 InputStream is = null;
@@ -142,6 +169,33 @@ public class RetrofitDownload {
         });
     }
 
+    private static String getResponseFileName(String disposition, String charset) {
+        if (!TextUtils.isEmpty(disposition)) {
+            int startIndex = disposition.indexOf("filename=");
+            if (startIndex > 0) {
+                startIndex += 9; // "filename=".length()
+                int endIndex = disposition.indexOf(";", startIndex);
+                if (endIndex < 0) {
+                    endIndex = disposition.length();
+                }
+                if (endIndex > startIndex) {
+                    try {
+                        String name = URLDecoder.decode(
+                                disposition.substring(startIndex, endIndex),
+                                charset);
+                        if (name.startsWith("\"") && name.endsWith("\"")) {
+                            name = name.substring(1, name.length() - 1);
+                        }
+                        return name;
+                    } catch (UnsupportedEncodingException ex) {
+                        Log.e("TAG", ex.getMessage(), ex);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private DownloadListener downloadListener;
 
     public void setDownloadListener(DownloadListener downloadListener) {
@@ -154,26 +208,32 @@ public class RetrofitDownload {
         void loadFail(String error);
     }
 
-    public Dialog showDialog(Context mContext,float progress) {
-        if(null==dialog){
-            dialog=new Dialog(mContext);
+    public Dialog showDialog(Context mContext, float progress) {
+        if (null == dialog) {
+            dialog = new Dialog(mContext);
             Window window = dialog.getWindow();
             window.requestFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.layout_update_progress);
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            window.getDecorView().setPadding(0,0,0,0);
+            window.getDecorView().setPadding(0, 0, 0, 0);
             TextView tv_sure = dialog.findViewById(R.id.tv_sure);
             TextView tv_cancel = dialog.findViewById(R.id.tv_cancel);
-            View.OnClickListener onClickListener=v -> {
+            View.OnClickListener onClickListener = v -> {
                 int i = v.getId();
                 if (i == R.id.tv_sure) {
-                    if(null!=responseBodyCall&&responseBodyCall.isCanceled()){
+                    if (null != responseBodyCall && responseBodyCall.isCanceled()) {
                         responseBodyCall.cancel();
                         dialog.dismiss();
                     }
                 } else if (i == R.id.tv_cancel) {
-                    if(null!=dialog&&dialog.isShowing()) {
-                        dialog.dismiss();
+                    //if (null != responseBodyCall && responseBodyCall.isCanceled()) {
+                        if (null != dialog && dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
+                    try {
+                        responseBodyCall.cancel();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             };
@@ -182,7 +242,7 @@ public class RetrofitDownload {
         }
         LineView lineView = dialog.findViewById(R.id.lineView);
         TextView tv_progress = dialog.findViewById(R.id.tv_progress);
-        tv_progress.setText((int)(progress*100)+"%");
+        tv_progress.setText((int) (progress * 100) + "%");
         lineView.setProgress(progress);
         if (dialog.isShowing()) {
 
@@ -190,7 +250,7 @@ public class RetrofitDownload {
             dialog.show();
             Window window = dialog.getWindow();
             WindowManager.LayoutParams attributes = window.getAttributes();
-            attributes.width= (int) mContext.getResources().getDimension(R.dimen.dp_258);
+            attributes.width = (int) mContext.getResources().getDimension(R.dimen.dp_258);
             window.setAttributes(attributes);
             window.setGravity(Gravity.CENTER);
         }

@@ -155,14 +155,14 @@ public class LiuYanMsgListParent extends ListPresent<LiuYanMsgListContract.View>
                     });
                 }
                 @Override
-                public void showCommitDialog() {
+                public void showCommitDialog(String send,String id) {
                     CommentDialog commentDialog = new CommentDialog("请输入内容", inputText -> {
                         //recevieId= ;//int,接收人id，给谁留言
                         //String sendId= User.getInstance().getUserId();//int,留言人、发送人id
                         //messageId		//int，消息id，评论时传空
                         //String content			//string 回复的内容
                         //"recevieId":,"messageId":,"content":"","sendId":""
-                        LiuYanMsgListParent.this.replayMessage("{\"recevieId\":\"" + dataBean.getSend() + "\",\"messageId\":\"" + dataBean.getId() + "\",\"content\":\"" + inputText + "\"}");
+                        LiuYanMsgListParent.this.replayMessage("{\"recevieId\":\"" + send + "\",\"messageId\":\"" + id + "\",\"content\":\"" + inputText + "\"}");
 
                         //replyDialog.dismiss();
                     });
@@ -206,17 +206,17 @@ public class LiuYanMsgListParent extends ListPresent<LiuYanMsgListContract.View>
     }
 
     public static class LiuYanMsgListHtml extends MessageList {
-        private Handler handler;
         private String name;
         private boolean isSelf;
         private WeakReference<LiuYanMsgListParent> reference;
 
         public LiuYanMsgListHtml(String name, boolean isSelf, LiuYanMsgListParent liuYanMsgListParent) {
+            super();
             reference = new WeakReference<>(liuYanMsgListParent);
             this.name=name;
             this.isSelf=isSelf;
             //TODO 必须主线程创建，此处没做限制
-            handler = new Handler(Looper.getMainLooper());
+            //handler = new Handler(Looper.getMainLooper());
         }
 
         @JavascriptInterface

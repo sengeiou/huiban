@@ -30,8 +30,9 @@
 <script>
     function getMsg (data) {
         $('.listBox').html('');
+         var main = document.getElementById("wrap");
+         main.style.background = '';
         if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
-        var main = document.getElementById("wrap");
         main.style.background = 'url("./images/no_data.png")';
         main.style.backgroundRepeat = "no-repeat";
         main.style.backgroundSize = "3.48rem 5.1rem";
@@ -39,7 +40,7 @@
          return;
         }
         var data = JSON.parse(data);
-        var regex = /^http\.bmp|\.jpg|\.jpeg|\.png|\.tiff|\.gif|\.pcx|\.tga|\.exif|\.fpx|\.svg|\.psd|\.cdr|\.pcd|\.dxf|\.ufo|\.eps|\.ai|\.raw|\.WMF|\.webp$/;     
+        var regex = /^[http]\.bmp|\.jpg|\.jpeg|\.png|\.tiff|\.gif|\.pcx|\.tga|\.exif|\.fpx|\.svg|\.psd|\.cdr|\.pcd|\.dxf|\.ufo|\.eps|\.ai|\.raw|\.WMF|\.webp$/;
         for (var i=0; i<data.length; i++) {         
             var nowMsg = $('.listBox').html();
             if(data[i].content == undefined){
@@ -51,10 +52,13 @@
                     <p class="yresult">你的答案：<span></span></p>
                 </div>
             `);
+            console.log(i+", "+data[i].myAnswer);
             if (data[i].myAnswer == '') {
                 $('.wrongMsg .yresult:eq('+i+') span').html(`---`);
+            }else if(data[i].myAnswer.indexOf("<img")==0){
+                $('.wrongMsg .yresult:eq('+i+') span').html(`${data[i].myAnswer}`);
             }else if (regex.test(data[i].myAnswer)) {
-                $('.wrongMsg .yresult:eq('+i+') span').html(data[i].myAnswer);
+                $('.wrongMsg .yresult:eq('+i+') span').html('<img src="'+data[i].myAnswer+'"/>');
             }else {
                 $('.wrongMsg .yresult:eq('+i+') span').html(`${data[i].myAnswer}`);
             }
@@ -66,8 +70,10 @@
             window.android.itemClick(ind);
         });
   		$("input").attr({disabled:"disabled"});
-        $('.list').css('height',$('.listBox').height()+100);
-        myIscroll.refresh();
+  			 setTimeout(function(){
+  		             $('.list').css('height',$('.listBox').height()+100);
+                    myIscroll.refresh();
+  	    	},200)
     };
     $(".wrongMsg").bind('click', function () {
 	    $(this).css("border", "2px solid #00c7b5").siblings().css("border", "2px solid #fff");
@@ -85,16 +91,16 @@
     });
     var flag = true;
     var y,y2,y3;
-    var list = document.getElementsByClassName("list")[0];
-    list.ontouchstart = function(e) {
+    var listo = document.getElementsByClassName("listBox")[0];
+    listo.ontouchstart = function(e) {
         y = 0;
     e=e || window.event;
         y2=e.touches[0].pageY;
-        list.ontouchmove = function(e) {
+        listo.ontouchmove = function(e) {
       e = e|| window.event
     }
   }
-  list.ontouchend = function(e) {
+  listo.ontouchend = function(e) {
         e=e || window.event;
         y3=e.changedTouches[0].pageY;
         y = y3-y2;
@@ -104,8 +110,11 @@
 			list.setAttribute('uptext','释放刷新');
 		}else if(this.y < 100 && this.y > 0){
 			list.setAttribute('uptext','下拉刷新');
-		}else if(this.y < this.maxScrollY - 40 ){
+		}else if(this.y < this.maxScrollY - 100 ){
+		    list.setAttribute('downtext', '释放刷新')
 			flag = true;
+        } else{
+            list.setAttribute('downtext', '上拉加载');
         }
 	})
 	myIscroll.on('scrollEnd', function () {

@@ -49,7 +49,7 @@ public class ReplyDialog extends MoveDialog {
         recycleView = view.findViewById(R.id.recycleView);
         view.findViewById(R.id.tv_write_msg).setOnClickListener(v->{
             if(null!=messageListListener){
-                messageListListener.showCommitDialog();
+                messageListListener.showCommitDialog(recevieId,pid);
             }
         });
         recycleView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -89,13 +89,12 @@ public class ReplyDialog extends MoveDialog {
         int size = 0;
         if (null != slist && slist.size() > 0) {
             size = slist.size();
-            if(null==replayAdapter) {
-                replayAdapter = new ReplayAdapter(slist);
-                recycleView.setAdapter(replayAdapter);
-            }else{
-                replayAdapter.updateData(slist);
-            }
         }
+        if(null==replayAdapter) {
+            replayAdapter = new ReplayAdapter(slist);
+            recycleView.setAdapter(replayAdapter);
+        }
+        replayAdapter.updateData(slist);
         titleView.setTitle_text(size + "条回复");
     }
 
@@ -169,6 +168,6 @@ public class ReplyDialog extends MoveDialog {
     public interface MessageListListener{
         void deleteMessageItem(String messageId, String pid);
         //void replayMessage(String json);
-        void showCommitDialog();
+        void showCommitDialog(String send, String id);
     }
 }

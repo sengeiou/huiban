@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,12 @@ import com.bshuiban.baselibrary.contract.SubjectChildContract;
 
 import com.bshuiban.baselibrary.model.StudyBottomBean;
 import com.bshuiban.baselibrary.model.StudyReportBean;
+import com.bshuiban.baselibrary.model.observebean.ReportUpdateBean;
 import com.bshuiban.baselibrary.present.SubjectChildPresent;
 import com.bshuiban.baselibrary.utils.TextUtils;
 import com.bshuiban.baselibrary.utils.ViewUtils;
+import com.bshuiban.baselibrary.utils.observer.ObserveModeGroupList;
+import com.bshuiban.baselibrary.utils.observer.OnObserver;
 import com.bshuiban.baselibrary.view.activity.StatisticalChartActivity;
 import com.bshuiban.baselibrary.view.customer.CircleColorProgressView;
 import com.bshuiban.baselibrary.view.interfaces.OnReportDateListener;
@@ -35,11 +39,37 @@ public class SubjectChildFragment extends InteractionBaseFragment<SubjectChildPr
     private View tv_look_statistical_inf;
     private View include;
     private int subjectId;
+    private OnObserver<ReportUpdateBean> observer;
+    private String date;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        Log.e("TAG", "setUserVisibleHint: child="+isVisibleToUser );
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onStart() {
+        Log.e("TAG", "onStart: child" );
+        super.onStart();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tPresent = new SubjectChildPresent(this);
+        observer = new OnObserver<ReportUpdateBean>() {
+            @Override
+            public void dealWithNotice(boolean isUpdate, ReportUpdateBean bean) {
+                if(isUpdate){
+                    if(bean.isUpdate()||!bean.getDate().equals(date)) {
+                        date = bean.getDate();
+                        updateDataForDate();
+                    }
+                }
+            }
+        };
+        ObserveModeGroupList.getInstance().register(ReportUpdateBean.class, observer);
     }
 
     @Override
@@ -60,15 +90,29 @@ public class SubjectChildFragment extends InteractionBaseFragment<SubjectChildPr
         tv_look_statistical_inf = view.findViewById(R.id.tv_look_statistical_inf);
         tv_look_statistical_inf.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), StatisticalChartActivity.class)
-                    .putExtra("time", onReportDateListener.getDate())
+                    .putExtra("time", date)
                     .putExtra("subjectId", subjectId+""));
         });
         include = view.findViewById(R.id.include);
+        date=getArguments().getString("date");
         updateDataForDate();
         return view;
     }
+    @Override
+    public void onResume() {
+        Log.e("TAG", "onResume: child " );
+        super.onResume();
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        Log.e("TAG", "onHiddenChanged:child= "+hidden );
+        if(!hidden){
+            updateDataForDate();
+        }
+        super.onHiddenChanged(hidden);
+    }
+
     public void updateDataForDate() {
-        String date=onReportDateListener.getDate();
         tPresent.loadStudyBottom(subjectId,date);
         tPresent.loadStudyReportData(subjectId, date);
     }
@@ -86,9 +130,9 @@ public class SubjectChildFragment extends InteractionBaseFragment<SubjectChildPr
                     e.printStackTrace();
                 }
                 circleProgressView.setProgress(v);
-                tv_class_ranking.setText(TextUtils.cleanNull(mine.getCrank()));
-                tv_class_progress.setText(TextUtils.cleanNull(mine.getProgress() + ""));
-                tv_gradle_ranking.setText(TextUtils.cleanNull(mine.getGrank()));
+                tv_class_ranking.setText(TextUtils.clearStringForMinusone(mine.getCrank()));
+                tv_class_progress.setText(TextUtils.clearStringForMinusone(mine.getProgress() + ""));
+                tv_gradle_ranking.setText(TextUtils.clearStringForMinusone(mine.getGrank()));
             }
 
         }
@@ -111,10 +155,11 @@ public class SubjectChildFragment extends InteractionBaseFragment<SubjectChildPr
 
     @Override
     public void fail(String error) {
-        toast("child-"+error);
+        toast(error);
     }
-    private OnReportDateListener onReportDateListener;
-    public void setOnReportDateListener(OnReportDateListener l){
-        onReportDateListener=l;
+    @Override
+    public void onDetach() {
+        ObserveModeGroupList.getInstance().unregister(ReportUpdateBean.class,observer);
+        super.onDetach();
     }
 }

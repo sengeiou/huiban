@@ -13,11 +13,13 @@ function complatelist(data) {
     }
     filte.innerHTML = str2;
     var lis = document.getElementsByClassName('li');
+    window.android.changeSubjectId(res2[0].id);
     for (var j = 0; j < lis.length; j++) {
         (function (j) {
             lis[j].onclick = function () {
                 $("#filte").hide();
                 //获取对应科目完成列表
+                //console.log(res2[j].id)
                  window.android.changeSubjectId(res2[j].id)
                 // 渲染完成页
                 //complately(res)
@@ -27,16 +29,22 @@ function complatelist(data) {
 }
 
 function complately(data) {
-     if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
-             done.innerHTML =  `<img src="./images/no_data.png" style="width:3.48rem;height:5.1rem;display:block;margin:2.5rem auto">`
-                return;
-            }
+                         $('.complate').html('');
+                           var main = document.getElementById("main");
+                           main.style.background = '';
+                          if(data==undefined||data==null||data=='null'||data=='[]'||data.length==0||data==""){
+                          main.style.background = 'url("./images/no_data.png")';
+                          main.style.backgroundRepeat = "no-repeat";
+                          main.style.backgroundSize = "3.48rem 5.1rem";
+                          main.style.backgroundPosition = "center 3rem"
+                           return;
+                          }
     // 解开注释
      var res3 = JSON.parse(data)
+     console.log(res3)
     var str3 = "";
     for (var i = 0; i < res3.length; i++) {
         var addtime = new Date(res3[i].addTime * 1000).toLocaleDateString();
-        var endtime = new Date(res3[i].endTime * 1000).toLocaleDateString();
         str3 += `
                 <div class="listMsg">
                 <dl>
@@ -49,11 +57,11 @@ function complately(data) {
                     <span class="looks"></span>
                     </dd>
                 </dl>
-                <p class="time">${addtime}--${endtime}</p>
+                <p class="time">${addtime}</p>
             </div>
                 `;
     }
-//    done.innerHTML = str3;
+    done.innerHTML = str3;
      $('.listoo').css('height',$('.done').height()+100);
         myIscroll.refresh();
     var look = document.getElementsByClassName("looks");

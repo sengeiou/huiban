@@ -2,7 +2,7 @@ package com.bshuiban.baselibrary.contract;
 
 /**
  * Created by xinheng on 2018/7/3.<br/>
- * describe：
+ * describe：忘记密码
  */
 public interface ForgetPasswordContract {
     interface View extends BaseView{

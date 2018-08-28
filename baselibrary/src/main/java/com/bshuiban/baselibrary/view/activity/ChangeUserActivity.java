@@ -63,6 +63,10 @@ public class ChangeUserActivity extends BaseActivity<ChangeUserPresent> implemen
                     userData.setClassId1(dataBean.getClassId());
                     userData.setSchoolId(dataBean.getSchoolId());
                     userData.setGradeId(dataBean.getGradeId());
+                    ArrayList<String> className = new ArrayList<>();
+                    className.add(dataBean.getClassName());
+                    userData.setClassName(className);
+
                     finish();
                     return;
                 }
@@ -119,6 +123,7 @@ public class ChangeUserActivity extends BaseActivity<ChangeUserPresent> implemen
                 dataBean.setClassId(stuArrBean.getClassId() + "");
                 dataBean.setGradeId(stuArrBean.getGradeId() + "");
                 dataBean.setSchoolId(stuArrBean.getSchoolId() + "");
+                dataBean.setClassName(stuArrBean.getClassName());
                 data.add(dataBean);
             }
             for (int d = 0; d < data.size(); d++) {

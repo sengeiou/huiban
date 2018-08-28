@@ -1,18 +1,14 @@
 package com.bshuiban.baselibrary.utils;
 
-import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,6 +25,10 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 
+/**
+ * 文件处理
+ * 同电子书包FileUtils
+ */
 public class FileUtils {
     public static void close(InputStream in) {
         if (in != null) {
@@ -377,7 +377,7 @@ public class FileUtils {
      * 读取文本文件
      *
      * @param path
-     * @return
+     * @return 文本内容
      */
     public static String getTxt(String path) {
         String data = null;

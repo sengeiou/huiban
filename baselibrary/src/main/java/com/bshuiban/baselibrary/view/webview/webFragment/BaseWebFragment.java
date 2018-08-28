@@ -5,23 +5,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import com.bshuiban.baselibrary.R;
 import com.bshuiban.baselibrary.present.BasePresent;
 import com.bshuiban.baselibrary.utils.ViewUtils;
-import com.bshuiban.baselibrary.utils.WebViewFactory;
+import com.bshuiban.baselibrary.utils.WebViewUtil;
 import com.bshuiban.baselibrary.view.fragment.BaseFragment;
 
 /**
@@ -31,13 +24,13 @@ import com.bshuiban.baselibrary.view.fragment.BaseFragment;
 public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
     protected WebView mWebView;
     protected String TAG = "HTML5";
-    protected WebViewFactory mWebViewFactory;
+    protected WebViewUtil mWebViewUtil;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mWebViewFactory = new WebViewFactory();
-        mWebViewFactory.setOnWebViewListener(new WebViewFactory.OnWebViewListener() {
+        mWebViewUtil = new WebViewUtil();
+        mWebViewUtil.setOnWebViewListener(new WebViewUtil.OnWebViewListener() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 webViewLoadFinished();
@@ -51,11 +44,11 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
     }
 
     protected void setTAG(String tag) {
-        mWebViewFactory.setTAG(tag);
+        mWebViewUtil.setTAG(tag);
     }
 
     protected WebView getWebView(Context context) {
-        return mWebViewFactory.createNewWebView(context);
+        return mWebViewUtil.createNewWebView(context);
     }
 
     protected WebSettings setWebViewSetting(WebView webView) {
@@ -76,13 +69,13 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
     }
 
     protected int getLayoutResource() {
-        return mWebViewFactory.getTestLayoutResource();
+        return mWebViewUtil.getTestLayoutResource();
     }
 
 
 
     protected void loadPathHtml(String name) {
-        mWebViewFactory.loadPathHtml(name);
+        mWebViewUtil.loadPathHtml(name);
     }
 
     /**
@@ -91,7 +84,7 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
      * @param name
      */
     protected void loadFileHtml(String name) {
-        mWebViewFactory.loadFileHtml(name);
+        mWebViewUtil.loadFileHtml(name);
     }
     /**
      * 网页加载完之后
@@ -108,16 +101,16 @@ public class BaseWebFragment<T extends BasePresent> extends BaseFragment<T> {
      */
     @SuppressLint("JavascriptInterface")
     protected void registerWebViewH5Interface(Object object) {
-        mWebViewFactory.registerWebViewH5Interface(object);
+        mWebViewUtil.registerWebViewH5Interface(object);
     }
 
     protected void loadJavascriptMethod(String methodName, String... datas) {
-        mWebViewFactory.loadJavascriptMethod(methodName, datas);
+        mWebViewUtil.loadJavascriptMethod(methodName, datas);
     }
 
     @Override
     public void onDetach() {
-        mWebViewFactory.destroy();
+        mWebViewUtil.destroy();
         mWebView = null;
         super.onDetach();
     }

@@ -74,7 +74,6 @@ public class TitleView extends View {
             int index = array.getIndex(i);
             if (index == R.styleable.TitleView_title_text) {
                 title_text = array.getString(index);
-
             } else if (index == R.styleable.TitleView_right_text) {
                 right_text = array.getString(index);
             } else if (index == R.styleable.TitleView_title_size) {
@@ -85,25 +84,18 @@ public class TitleView extends View {
                 right_text_size = array.getDimensionPixelSize(index, right_text_size);
             } else if (index == R.styleable.TitleView_title_color) {
                 title_text_color = array.getColor(index, title_text_color);
-
             } else if (index == R.styleable.TitleView_right_color) {
                 right_text_color = array.getColor(index, right_text_color);
-
             } else if (index == R.styleable.TitleView_line_color) {
                 line_color = array.getColor(index, line_color);
-
             } else if (index == R.styleable.TitleView_have_line) {
                 have_line = array.getBoolean(index, have_line);
-
             } else if (index == R.styleable.TitleView_src_left) {
                 drawableLeft = array.getDrawable(index);
-
             } else if (index == R.styleable.TitleView_src_center) {
                 drawableCenter = array.getDrawable(index);
-
             } else if (index == R.styleable.TitleView_src_right) {
                 drawableRight = array.getDrawable(index);
-
             } else if (index == R.styleable.TitleView_middle_show) {
                 middleShow = array.getBoolean(index, middleShow);
             }
@@ -115,13 +107,13 @@ public class TitleView extends View {
         if (leftP == 0) {
             leftP = (int) TypedValue.applyDimension(1, 10, getResources().getDisplayMetrics());
         }
-        if (middleShow) {
+        //if (middleShow) {
             mPaintMiddle = new Paint();
             mPaintMiddle.setDither(true);
             mPaintMiddle.setAntiAlias(true);
             mPaintMiddle.setColor(Color.WHITE);
             mPaintMiddle.setStyle(Paint.Style.FILL);
-        }
+        //}
         setPadding(leftP, getPaddingTop(), getPaddingRight(), getPaddingBottom());
         setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableCenter, drawableRight);
     }
@@ -204,6 +196,10 @@ public class TitleView extends View {
         return right_text != null;
     }
 
+    public void setRight_text(String right_text, int color, int right_text_size,boolean middleShow) {
+        this.middleShow=middleShow;
+        setRight_text(right_text,color,right_text_size);
+    }
     public void setRight_text(String right_text, int color, int right_text_size) {
         if (right_text == null && this.right_text != null) {
             this.right_text = null;
